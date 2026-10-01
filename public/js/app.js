@@ -1401,14 +1401,26 @@ function animateSpinner(strip, winningIndex, winningItem) {
   });
 
   // Calculate destination offset
-  // Card width = 170px + border
-  const cardWidth = 171;
-  const viewportWidth = track.parentElement.offsetWidth;
-  const centerTarget = viewportWidth / 2;
-  
-  // Random jitter inside target card
-  const jitter = Math.floor(Math.random() * 80) - 40;
-  const targetX = -((winningIndex * cardWidth) + (cardWidth / 2) - centerTarget + jitter);
+  // Measure exact rendered card width directly from DOM (strictly 170px)
+  const firstCard = track.children[0];
+  const cardWidth = (firstCard && firstCard.offsetWidth) ? firstCard.offsetWidth : 170;
+
+  // Measure exact pixel center of the red indicator needle relative to the track viewport
+  const needleEl = document.querySelector('.spinner-needle');
+  const parentEl = track.parentElement;
+  let needleCenter = parentEl.offsetWidth / 2;
+  if (needleEl && parentEl) {
+    const nRect = needleEl.getBoundingClientRect();
+    const pRect = parentEl.getBoundingClientRect();
+    needleCenter = (nRect.left + (nRect.width / 2)) - pRect.left;
+  }
+
+  // Calculate center of winning card relative to track
+  const winningCardCenter = (winningIndex * cardWidth) + (cardWidth / 2);
+
+  // Safe subtle jitter: Maximum ±10px so the needle NEVER touches or approaches the card border (85px half-width)
+  const jitter = Math.floor(Math.random() * 21) - 10;
+  const targetX = -(winningCardCenter - needleCenter + jitter);
 
   // Audio tick counter
   let lastCardIndex = 0;
@@ -1450,6 +1462,13 @@ function animateSpinner(strip, winningIndex, winningItem) {
     const btnText = document.getElementById('openCurrentCaseBtnText');
     if (btnText) {
       btnText.textContent = `KASAYI AÇ (${cost} ANAHTAR)`;
+    }
+
+    // Highlight winning card on the track
+    if (track.children[winningIndex]) {
+      const winCardEl = track.children[winningIndex];
+      winCardEl.style.boxShadow = '0 0 25px rgba(250, 204, 21, 0.8), inset 0 0 15px rgba(250, 204, 21, 0.4)';
+      winCardEl.style.borderColor = '#facc15';
     }
 
     // Play victory sound
