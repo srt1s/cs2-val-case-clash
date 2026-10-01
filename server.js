@@ -133,11 +133,11 @@ setInterval(() => {
     creditRewardCountdown = 60; // Reset to 1 minute
 
     const rewardedUserIds = new Set();
-    for (const session of activeSockets.values()) {
+    for (const [socketId, session] of activeSockets.entries()) {
       if (session.userId && !rewardedUserIds.has(session.userId)) {
         rewardedUserIds.add(session.userId);
         const newBalance = db.updateBalance(session.userId, 1);
-        const targetSocket = io.sockets.sockets.get(session.socketId);
+        const targetSocket = io.sockets.sockets.get(socketId);
         if (targetSocket) {
           targetSocket.emit('credit:reward', {
             added: 1,

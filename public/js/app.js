@@ -825,10 +825,6 @@ socket.on('auth:success', (data) => {
   }
   renderCases();
 
-  if (data.isNewHwid && data.bonusGiven) {
-    showInAppToast('5 Anahtar hesabınıza tanımlandı.', true);
-    try { window.soundEngine.playRareFanfare(true); } catch(e) {}
-  }
 
   if (data.luckEvent) {
     updateLuckEventUI(data.luckEvent);

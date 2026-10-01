@@ -115,7 +115,7 @@ module.exports = {
       const hasBackup = backupData && typeof backupData === 'object' && (Array.isArray(backupData.inventory) || typeof backupData.balance === 'number');
       const newUserId = (hasBackup && backupData.id) ? backupData.id : ('usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 6));
       
-      const initialBalance = hasBackup && typeof backupData.balance === 'number' ? backupData.balance : (isNewHwid ? 5 : 0);
+      const initialBalance = hasBackup && typeof backupData.balance === 'number' ? backupData.balance : 0;
       const initialTL = hasBackup && typeof backupData.tlBalance === 'number' ? backupData.tlBalance : 0;
       const initialInv = hasBackup && Array.isArray(backupData.inventory) ? backupData.inventory : [];
 
