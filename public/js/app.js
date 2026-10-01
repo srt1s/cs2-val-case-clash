@@ -212,6 +212,65 @@ function setupEventListeners() {
   document.getElementById('btnCancelMarketList').addEventListener('click', () => {
     marketListModal.style.display = 'none';
   });
+
+  // Wallet Modal Actions
+  const walletModal = document.getElementById('walletModal');
+  const btnOpenWallet = document.getElementById('btnOpenWalletModal');
+  const btnCloseWallet = document.getElementById('btnCloseWalletModal');
+  const convertInput = document.getElementById('convertCaseInput');
+  const convertRequiredTL = document.getElementById('convertRequiredTL');
+  const btnConvert = document.getElementById('btnConvertTLToCase');
+
+  if (btnOpenWallet && walletModal) {
+    btnOpenWallet.addEventListener('click', () => {
+      updateBalanceUI();
+      walletModal.style.display = 'flex';
+    });
+  }
+
+  if (btnCloseWallet && walletModal) {
+    btnCloseWallet.addEventListener('click', () => {
+      walletModal.style.display = 'none';
+    });
+  }
+
+  if (convertInput && convertRequiredTL) {
+    convertInput.addEventListener('input', () => {
+      const count = parseInt(convertInput.value, 10) || 0;
+      convertRequiredTL.textContent = count * 40;
+    });
+  }
+
+  document.querySelectorAll('.quick-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cases = btn.getAttribute('data-cases');
+      if (convertInput && convertRequiredTL) {
+        convertInput.value = cases;
+        convertRequiredTL.textContent = parseInt(cases, 10) * 40;
+      }
+    });
+  });
+
+  if (btnConvert && convertInput) {
+    btnConvert.addEventListener('click', () => {
+      const count = parseInt(convertInput.value, 10);
+      if (!count || count <= 0) {
+        showInAppToast('Lütfen geçerli bir bakiye miktarı girin.', false);
+        return;
+      }
+      socket.emit('wallet:convert_tl', { caseCount: count });
+    });
+  }
+
+  // Demo TL Buttons
+  ['100', '500', '2000'].forEach(amount => {
+    const btn = document.getElementById(`btnDemoTL${amount}`);
+    if (btn) {
+      btn.addEventListener('click', () => {
+        socket.emit('wallet:deposit_demo', { amount: Number(amount) });
+      });
+    }
+  });
 }
 
 function switchView(viewName) {
@@ -337,7 +396,8 @@ socket.on('auth:success', (data) => {
   }
   
   currentUser = data.user;
-  updateBalanceUI(currentUser.balance);
+  if (currentUser.tlBalance === undefined) currentUser.tlBalance = 0;
+  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   userNameText.textContent = currentUser.username;
   marketListings = data.market || [];
 
@@ -443,8 +503,9 @@ socket.on('rare_drop:broadcast', (data) => {
 socket.on('case:result', (data) => {
   lastOpenedItem = data.item;
   currentUser.balance = data.newBalance;
+  if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
   currentUser.inventory.push(data.item);
-  updateBalanceUI(currentUser.balance);
+  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
 
   // Animate horizontal spinner
   animateSpinner(data.strip, data.winningIndex, data.item);
@@ -462,6 +523,12 @@ socket.on('market:updated', (updatedMarket) => {
   renderMarket();
 });
 
+socket.on('market:listed_success', (data) => {
+  if (data.inventory) currentUser.inventory = data.inventory;
+  renderInventory();
+  showInAppToast('✅ Eşyanız pazarda başarıyla listelendi!', true);
+});
+
 socket.on('market:warning_5min', (data) => {
   window.soundEngine.playNotification();
   alert(`⚠️ PAZAR UYARISI:\n"${data.itemName}" eşyanızın satılması için son 5 dakika!\nSüre bitince sistem botu eşyanızı %86 fiyatına otomatik alacak.`);
@@ -469,24 +536,27 @@ socket.on('market:warning_5min', (data) => {
 
 socket.on('market:bot_bought', (data) => {
   window.soundEngine.playNotification();
-  currentUser.balance = data.newBalance;
-  updateBalanceUI(currentUser.balance);
-  alert(`🤖 BOT SATIN ALDI:\n"${data.itemName}" eşyanız 30 dakika satılmadığı için bot tarafından %86 fiyatına (₺${data.botPrice}) satın alındı ve bakiyenize eklendi!`);
+  if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
+  if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
+  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+  alert(`🤖 BOT SATIN ALDI:\n"${data.itemName}" eşyanız 30 dakika satılmadığı için bot tarafından %86 fiyatına (₺${data.botPrice} TL) satın alındı ve TL bakiyenize eklendi!`);
 });
 
 socket.on('market:item_sold_to_player', (data) => {
   window.soundEngine.playNotification();
-  currentUser.balance = data.newBalance;
-  updateBalanceUI(currentUser.balance);
-  alert(`💰 EŞYANIZ SATILDI!\n"${data.itemName}" eşyanızı ${data.buyerName} oyuncusu ₺${data.price} fiyata satın aldı!`);
+  if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
+  if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
+  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+  alert(`💰 EŞYANIZ SATILDI!\n"${data.itemName}" eşyanızı ${data.buyerName} oyuncusu ₺${data.price} TL fiyata satın aldı!`);
 });
 
 socket.on('market:buy_success', (data) => {
-  currentUser.balance = data.newBalance;
+  if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
+  if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
   currentUser.inventory = data.inventory;
-  updateBalanceUI(currentUser.balance);
+  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   renderInventory();
-  alert(`✅ Eşya başarıyla satın alındı ve envanterinize eklendi: ${data.item.name}`);
+  showInAppToast(`✅ Eşya başarıyla satın alındı ve envanterinize eklendi: ${data.item.name}`, true);
 });
 
 socket.on('market:error', (data) => {
@@ -495,10 +565,33 @@ socket.on('market:error', (data) => {
 
 // 7. Instant Sell
 socket.on('inventory:sold', (data) => {
-  currentUser.balance = data.newBalance;
+  if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
+  if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
   currentUser.inventory = data.inventory;
-  updateBalanceUI(currentUser.balance);
+  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   renderInventory();
+  showInAppToast(`💰 Eşya satıldı: +₺${data.sellPrice} TL bakiyenize eklendi!`, true);
+});
+
+// 8. Wallet Events (TL -> Kasa Bakiye Çevirme)
+socket.on('wallet:converted', (data) => {
+  currentUser.balance = data.newBalance;
+  currentUser.tlBalance = data.newTL;
+  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+  showInAppToast(`🎉 ₺${data.costTL} TL karşılığında ${data.convertedCases} Kasa Bakiyesi alındı!`, true);
+  try { window.soundEngine.playWin(); } catch(e) {}
+});
+
+socket.on('wallet:demo_deposited', (data) => {
+  currentUser.tlBalance = data.newTLBalance;
+  if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
+  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+  showInAppToast(`💳 +₺${data.addedAmount} Demo TL hesabınıza yüklendi!`, true);
+  try { window.soundEngine.playNotification(); } catch(e) {}
+});
+
+socket.on('wallet:error', (data) => {
+  showInAppToast(data.message || 'Cüzdan işlem hatası!', false);
 });
 
 // 8. Online Players & Trading
@@ -572,8 +665,19 @@ function addChatMessage(msg) {
 // RENDERERS & ANIMATIONS
 // ==========================================
 
-function updateBalanceUI(balance) {
-  userBalanceText.textContent = balance;
+function updateBalanceUI(balance, tlBalance) {
+  const caseBal = balance !== undefined ? balance : (currentUser ? currentUser.balance : 0);
+  const tlBal = tlBalance !== undefined ? tlBalance : (currentUser && currentUser.tlBalance !== undefined ? currentUser.tlBalance : 0);
+
+  if (userBalanceText) userBalanceText.textContent = caseBal;
+  const userTlText = document.getElementById('userTlText');
+  if (userTlText) userTlText.textContent = `${Number(tlBal).toLocaleString()}`;
+
+  const modalTl = document.getElementById('modalTlBalance');
+  if (modalTl) modalTl.textContent = `₺${Number(tlBal).toLocaleString()}`;
+  const modalCase = document.getElementById('modalCaseBalance');
+  if (modalCase) modalCase.textContent = caseBal;
+
   if (currentUser && currentUser.inventory) {
     invCountBadge.textContent = currentUser.inventory.length;
     invCountBadge.style.display = currentUser.inventory.length > 0 ? 'inline-block' : 'none';
@@ -852,6 +956,8 @@ function openMarketListModal(item) {
     }
     socket.emit('market:list_item', { instanceId: item.instanceId, price });
     modal.style.display = 'none';
+    showInAppToast(`🏷️ "${item.name}" pazara ₺${price} TL fiyatla ilana konuldu!`, true);
+    try { window.soundEngine.playNotification(); } catch(e) {}
   };
 
   modal.style.display = 'flex';

@@ -133,7 +133,7 @@ body {
 
 .balance-pill {
   background: linear-gradient(135deg, #1e2638, #171d2b);
-  border: 1px solid rgba(0, 230, 118, 0.3);
+  border: 1px solid rgba(56, 189, 248, 0.4);
   padding: 0.4rem 0.9rem;
   border-radius: 8px;
   display: flex;
@@ -142,7 +142,29 @@ body {
   font-weight: 700;
   font-size: 1rem;
   color: var(--accent-green);
-  box-shadow: 0 0 15px rgba(0, 230, 118, 0.15);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+  transition: all 0.2s ease;
+}
+
+.balance-pill:hover {
+  border-color: rgba(56, 189, 248, 0.8);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3);
+}
+
+.quick-preset-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-preset-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.5);
+  color: #fff;
 }
 
 .user-tag {

@@ -152,15 +152,16 @@ setInterval(() => {
 
     // 30-minute expiry -> BOT BUYOUT AT 86%
     if (timeLeft <= 0) {
-      // Calculate 86% of item's base price
+      // Calculate 86% of item's base price (in TL)
       const botPrice = Math.max(1, Math.round(listing.item.basePrice * 0.86));
       
       // Remove from market
       db.removeMarketListing(listing.id);
       notified5MinListings.delete(listing.id);
 
-      // Credit seller
-      const newBal = db.updateBalance(listing.sellerId, botPrice);
+      // Credit seller with TL
+      const newTLBal = db.updateTLBalance(listing.sellerId, botPrice);
+      const seller = db.getUserById(listing.sellerId);
 
       // Notify seller
       for (const [sId, info] of activeSockets.entries()) {
@@ -168,7 +169,8 @@ setInterval(() => {
           io.to(sId).emit('market:bot_bought', {
             itemName: listing.item.name,
             botPrice,
-            newBalance: newBal
+            newTLBalance: newTLBal,
+            newBalance: seller ? seller.balance : 0
           });
         }
       }
@@ -277,6 +279,7 @@ io.on('connection', (socket) => {
           id: user.id,
           username: user.username,
           balance: user.balance,
+          tlBalance: user.tlBalance !== undefined ? user.tlBalance : 0,
           inventory: user.inventory
         },
         cases: CASES,
@@ -339,40 +342,43 @@ io.on('connection', (socket) => {
       winningIndex,
       strip,
       newBalance: user.balance,
+      newTLBalance: user.tlBalance || 0,
       isBoosted
     });
 
-    // Check if rare drop (Covert/Red or Knife/Gold) -> BROADCAST TO ALL PLAYERS!
-    // "diğer oyunculara kasadan sadece kırmızı ve sarı çıkarırsa bildirim gitsin"
+    // Check if rare drop (Covert/Red or Knife/Gold) -> BROADCAST TO ALL PLAYERS AFTER SPIN FINISHES (6100ms)!
+    // "daha spin animasyonu bitmeden bildirim geldi" -> fixed!
     const r = wonSkin.rarity;
     const isRed = r === 'covert' || r === 'exclusive';
     const isGold = r === 'knife';
 
     if (isRed || isGold) {
-      io.emit('rare_drop:broadcast', {
-        username: user.username,
-        caseName: caseObj.name,
-        item: savedItem,
-        rarity: r,
-        isGold,
-        timestamp: Date.now()
-      });
+      setTimeout(() => {
+        io.emit('rare_drop:broadcast', {
+          username: user.username,
+          caseName: caseObj.name,
+          item: savedItem,
+          rarity: r,
+          isGold,
+          timestamp: Date.now()
+        });
 
-      // Also post celebratory message in chat
-      const alertMsg = {
-        id: 'sys_' + Date.now(),
-        userId: 'system',
-        username: '🏆 SERVER DROP',
-        text: `🔥 [${user.username}] az önce "${caseObj.name}" kasasından ${isGold ? '★ EFSANEVİ BIÇAK' : 'GİZLİ (KIRMIZI)'} ${wonSkin.name} çıkardı! (Değer: ₺${wonSkin.basePrice})`,
-        timestamp: Date.now(),
-        isHighlight: true
-      };
-      db.addChatMessage(alertMsg);
-      io.emit('chat:message', alertMsg);
+        // Also post celebratory message in chat
+        const alertMsg = {
+          id: 'sys_' + Date.now(),
+          userId: 'system',
+          username: '🏆 SERVER DROP',
+          text: `🔥 [${user.username}] az önce "${caseObj.name}" kasasından ${isGold ? '★ EFSANEVİ BIÇAK' : 'GİZLİ (KIRMIZI)'} ${wonSkin.name} çıkardı! (Değer: ₺${wonSkin.basePrice})`,
+          timestamp: Date.now(),
+          isHighlight: true
+        };
+        db.addChatMessage(alertMsg);
+        io.emit('chat:message', alertMsg);
+      }, 6100);
     }
   });
 
-  // Instant Sell Item
+  // Instant Sell Item (Awards TL: 75% of base price)
   socket.on('inventory:sell_instant', ({ instanceId }) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
@@ -385,14 +391,15 @@ io.on('connection', (socket) => {
       return socket.emit('inventory:error', { message: 'Eşya envanterde bulunamadı.' });
     }
 
-    // Instant sell value = 75% of base price
+    // Instant sell value = 75% of base price (in TL)
     const sellPrice = Math.max(1, Math.round(removedItem.basePrice * 0.75));
-    const newBal = db.updateBalance(user.id, sellPrice);
+    const newTL = db.updateTLBalance(user.id, sellPrice);
 
     socket.emit('inventory:sold', {
       instanceId,
       sellPrice,
-      newBalance: newBal,
+      newTLBalance: newTL,
+      newBalance: user.balance,
       inventory: user.inventory
     });
   });
@@ -425,7 +432,7 @@ io.on('connection', (socket) => {
     io.emit('market:updated', db.db.market);
   });
 
-  // Market: Buy skin from player
+  // Market: Buy skin from player (Transacts in TL)
   socket.on('market:buy_item', ({ listingId }) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
@@ -442,20 +449,23 @@ io.on('connection', (socket) => {
       return socket.emit('market:error', { message: 'Kendi ilanınızı satın alamazsınız.' });
     }
 
-    if (buyer.balance < listing.price) {
-      return socket.emit('market:error', { message: 'Yetersiz bakiye!' });
+    const buyerTL = buyer.tlBalance !== undefined ? buyer.tlBalance : 0;
+    if (buyerTL < listing.price) {
+      return socket.emit('market:error', { message: `Yetersiz TL bakiyesi! İlan fiyatı: ₺${listing.price} TL, Mevcut: ₺${buyerTL} TL.` });
     }
 
-    // Process transaction
+    // Process transaction in TL
     db.removeMarketListing(listingId);
-    const newBuyerBal = db.updateBalance(buyer.id, -listing.price);
-    const newSellerBal = db.updateBalance(listing.sellerId, listing.price);
+    const newBuyerTL = db.updateTLBalance(buyer.id, -listing.price);
+    const newSellerTL = db.updateTLBalance(listing.sellerId, listing.price);
 
     const receivedItem = db.addItemToUser(buyer.id, listing.item);
+    const seller = db.getUserById(listing.sellerId);
 
     socket.emit('market:buy_success', {
       item: receivedItem,
-      newBalance: newBuyerBal,
+      newTLBalance: newBuyerTL,
+      newBalance: buyer.balance,
       inventory: buyer.inventory
     });
 
@@ -466,12 +476,51 @@ io.on('connection', (socket) => {
           itemName: listing.item.name,
           price: listing.price,
           buyerName: buyer.username,
-          newBalance: newSellerBal
+          newTLBalance: newSellerTL,
+          newBalance: seller ? seller.balance : 0
         });
       }
     }
 
     io.emit('market:updated', db.db.market);
+  });
+
+  // Wallet: Convert TL to Kasa Balance (40 TL = 1 Bakiye)
+  socket.on('wallet:convert_tl', ({ caseCount }) => {
+    const session = activeSockets.get(socket.id);
+    if (!session) return;
+
+    const res = db.convertTLToCaseBalance(session.userId, caseCount);
+    if (!res.success) {
+      return socket.emit('wallet:error', { message: res.message });
+    }
+
+    socket.emit('wallet:converted', {
+      convertedCases: res.convertedCases,
+      costTL: res.costTL,
+      newTL: res.newTL,
+      newBalance: res.newBalance
+    });
+  });
+
+  // Wallet: Deposit Demo TL
+  socket.on('wallet:deposit_demo', ({ amount }) => {
+    const session = activeSockets.get(socket.id);
+    if (!session) return;
+
+    const val = Number(amount);
+    if (isNaN(val) || val <= 0 || val > 100000) {
+      return socket.emit('wallet:error', { message: 'Geçersiz TL miktarı.' });
+    }
+
+    const newTL = db.depositDemoTL(session.userId, val);
+    const user = db.getUserById(session.userId);
+
+    socket.emit('wallet:demo_deposited', {
+      addedAmount: val,
+      newTLBalance: newTL,
+      newBalance: user ? user.balance : 0
+    });
   });
 
   // Trading: Propose trade offer

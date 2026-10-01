@@ -4,7 +4,7 @@
 // VAL: 'select' (Blue), 'deluxe' (Purple), 'premium' (Pink), 'exclusive' (Red), 'knife' (Gold)
 
 const CS2_SKINS = {
-  // Knives (Gold)
+  // Knives (Gold) - Verified 200 OK Steam CDN
   bfk_fade: {
     id: 'cs2_bfk_fade',
     name: '★ Butterfly Knife | Fade',
@@ -30,7 +30,7 @@ const CS2_SKINS = {
     game: 'cs2',
     rarity: 'knife',
     basePrice: 2400,
-    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL5mJfn-BNZ-ua-bbZrLeuQHG2vxeEkoOVrQBymkEslkTrQxNmvISyWPlZ0CsZyFfIK4Ri4k9TiY-y15gfa2dYUGSiZd5Q'
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SD1iWwOpzj-1gSCGn20tztm_UyIn_JHKUbgYlWMcmQ-ZcskSwldS0MOnntAfd3YlMzH35jntXrnE8SOGRGG8'
   },
   m9_lore: {
     id: 'cs2_m9_lore',
@@ -39,7 +39,7 @@ const CS2_SKINS = {
     game: 'cs2',
     rarity: 'knife',
     basePrice: 1650,
-    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL5kZfn9B1Z-ua-bbZrLeuQD2evxeAjoOlsXBajnBgwlW6GlAqqcyqTbhZ0D8VxFP0K4Ri4k9TiY-y15gfY2dYUGSiZd5Q'
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Wts2sab1iLvWHMWSF_uMvj-NoVha_mg8ijDGMnYftbyrBOw52D5R0FOYPtkG6ltOxNrjl4FPdiN0WzC723SxP6ypp6u8LVKY7uvqAFpeI3XY'
   },
   skeleton_slaughter: {
     id: 'cs2_skeleton_slaughter',
@@ -48,7 +48,7 @@ const CS2_SKINS = {
     game: 'cs2',
     rarity: 'knife',
     basePrice: 1100,
-    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL7mZrn-B1Z-ua-bbZrLeuQHmWvx-02oO1kSxOmmx8wlG7Qk9mpdnjFP1U4CcFxEOELtRbum9XgYuvm5wfW2tYUGSiZd5Q'
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1I5PeibbBiLs-SA1iKxOxksd5lRi67gVMh62_RzdygJHORZlAlDpZwQOYM4Ri5k4HhNezg4wOLg49Nyy772y9J8G81tBUopZdW'
   },
 
   // Covert (Red)
@@ -77,7 +77,7 @@ const CS2_SKINS = {
     game: 'cs2',
     rarity: 'covert',
     basePrice: 950,
-    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiFO0PSneqF-JeKDC2mE_u995LZWTTuygxIYvzSCkpu3cnvFPQB2DpUkROFY4Rntw93lP7i241DbiI1BxSuviHlKunk_6-sHU71lpPMTRLyP4Q'
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0PSneqF-JeKDC2mE_u995LZWTTuygxIYvzSCkpu3cnvFPQB2DpUkROFY4Rntw93lP7i241DbiI1BxSuviHlKunk_6-sHU71lpPMTRLyP4Q'
   },
   asiimov: {
     id: 'cs2_asiimov',
@@ -162,7 +162,7 @@ const CS2_SKINS = {
     game: 'cs2',
     rarity: 'restricted',
     basePrice: 7,
-    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwkYbf7mZX6vytbbZSI-WsGW2B_uF6su9nQi67gVNwsDrRwoqudXrVbwg-SZdwQulcuRPtx4DuNbnq5QbbitgTyyX6jixL7i5qteYLA6Mh-vWGkUifZkSF3e67'
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk7uW-V7JkMPWBMWuZxuZi_rZsS3zgzU8isW3dnIr6eHKfPVAhDpojEe9YsUW4xta1Nuzm5FDci4NbjXKpmWVQppo'
   },
 
   // Mil-Spec (Blue)
@@ -173,7 +173,7 @@ const CS2_SKINS = {
     game: 'cs2',
     rarity: 'milspec',
     basePrice: 1.5,
-    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwkZrn9h1f6OyrZaJuLPqSG2yBx-Nyu7c1Qi67gVNwsDrFwoqucSrQbgU-SswnzDatg2g'
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1a7s24bbZ5KfecMWWc1OtJvOhuRz39zU5yt2vQntn9dC3Dbw8iDJQhF-IJ5xDqkdSxMr6251aMiI5BynqtiTQJsHhqpMNExQ'
   },
   cortex: {
     id: 'cs2_cortex',
@@ -182,12 +182,12 @@ const CS2_SKINS = {
     game: 'cs2',
     rarity: 'milspec',
     basePrice: 3.5,
-    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL5mZrn-B1Z-ua-bbZrLeuQG2qvx-12tupqQhajnBgwlG7RktmrISyVP1U4D8R3EO4K4Ri4k9TiY-y15gfa2dYUGSiZd5Q'
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_u1jpN5lRi67gVNz4G7Qm938cS_Da1AhXpB1EeVb4xm4mtDjN7vj4A3b2NpGyCr52i4Y8G81tMzdoYZ7'
   }
 };
 
 const VAL_SKINS = {
-  // SARI (Gold / Knives) - Exactly 1 per case
+  // SARI (Gold / Knives)
   kuronami_yaiba: {
     id: 'val_kuronami_yaiba',
     name: 'Kuronami no Yaiba',
@@ -206,15 +206,6 @@ const VAL_SKINS = {
     basePrice: 3100,
     image: 'https://media.valorant-api.com/weaponskins/b73d7b16-4652-bc5b-5c4c-068aabb19d0a/displayicon.png'
   },
-  champions_2021_karambit: {
-    id: 'val_champions_2021_karambit',
-    name: 'Champions 2021 Karambit',
-    weapon: 'Melee',
-    game: 'val',
-    rarity: 'knife',
-    basePrice: 3900,
-    image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
-  },
   ignite_fan: {
     id: 'val_ignite_fan',
     name: 'Ignite Fan (Flâneur Yelpaze)',
@@ -225,7 +216,81 @@ const VAL_SKINS = {
     image: 'https://media.valorant-api.com/weaponskins/1cd09fbd-43cb-a5f6-90fa-08994342d747/displayicon.png'
   },
 
-  // KIRMIZI (Exclusive / Red) - Exactly 2 per case
+  // CHAMPIONS ALL YEARS (All SARI / Gold!)
+  champions_2021_karambit: {
+    id: 'val_champions_2021_karambit',
+    name: 'Champions 2021 Karambit',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3900,
+    image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
+  },
+  champions_2021_vandal: {
+    id: 'val_champions_2021_vandal',
+    name: 'Champions 2021 Vandal',
+    weapon: 'Vandal',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3200,
+    image: 'https://media.valorant-api.com/weaponskins/9bf19b77-4b33-7203-9f2c-16932970622f/displayicon.png'
+  },
+  champions_2022_butterfly: {
+    id: 'val_champions_2022_butterfly',
+    name: 'Champions 2022 Butterfly Knife',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3600,
+    image: 'https://media.valorant-api.com/weaponskins/6946cd0e-4e4a-ec4f-9238-dfb71715722b/displayicon.png'
+  },
+  champions_2022_phantom: {
+    id: 'val_champions_2022_phantom',
+    name: 'Champions 2022 Phantom',
+    weapon: 'Phantom',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 2800,
+    image: 'https://media.valorant-api.com/weaponskins/8c72ae0b-4357-1a75-ad62-fbaec7b64f92/displayicon.png'
+  },
+  champions_2023_kunai: {
+    id: 'val_champions_2023_kunai',
+    name: 'Champions 2023 Kunai',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3400,
+    image: 'https://media.valorant-api.com/weaponskins/27f27500-491c-32d4-1db6-1f85e479c103/displayicon.png'
+  },
+  champions_2023_vandal: {
+    id: 'val_champions_2023_vandal',
+    name: 'Champions 2023 Vandal',
+    weapon: 'Vandal',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3100,
+    image: 'https://media.valorant-api.com/weaponskins/b0f65660-4c51-13b7-9d01-e29a1e2879b0/displayicon.png'
+  },
+  champions_2024_blade: {
+    id: 'val_champions_2024_blade',
+    name: 'Champions 2024 Blade (Katana)',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3500,
+    image: 'https://media.valorant-api.com/weaponskins/30300aea-4d8a-320d-5cb0-0e8badc8d3df/displayicon.png'
+  },
+  champions_2024_phantom: {
+    id: 'val_champions_2024_phantom',
+    name: 'Champions 2024 Phantom',
+    weapon: 'Phantom',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 2900,
+    image: 'https://media.valorant-api.com/weaponskins/cc1da8cd-452f-a007-0bf8-b68a471c3a6e/displayicon.png'
+  },
+
+  // KIRMIZI (Exclusive / Red)
   kuronami_vandal: {
     id: 'val_kuronami_vandal',
     name: 'Kuronami Vandal',
@@ -357,8 +422,6 @@ const VAL_SKINS = {
 };
 
 // CASES DEFINITION
-// CS2 uses REAL official CS2 case names and images!
-// Valorant uses EXACTLY 1 SARI, 2 KIRMIZI, and the rest ÇÖP!
 const CASES = [
   // ==========================================
   // === CS2 CASES (REAL OFFICIAL NAMES & ICONS)
@@ -366,7 +429,7 @@ const CASES = [
   {
     id: 'cs2_kilowatt',
     name: 'Kilowatt Kasası',
-    subtitle: 'İlk Resmi CS2 Kasası & Kukri/Kelebek Bıçak',
+    subtitle: 'İlk Resmi CS2 Kasası & Kelebek Bıçak Şansı',
     game: 'cs2',
     cost: 1,
     icon: '⚡',
@@ -385,7 +448,7 @@ const CASES = [
   {
     id: 'cs2_dreams_nightmares',
     name: 'Rüyalar ve Kâbuslar Kasası',
-    subtitle: '★ Doppler Kelebek & Asiimov Heyecanı',
+    subtitle: '★ Doppler Kelebek & Karambit Heyecanı',
     game: 'cs2',
     cost: 1,
     icon: '🌙',
@@ -439,8 +502,38 @@ const CASES = [
   },
 
   // ==========================================
-  // === VALORANT CASES (1 SARI, 2 KIRMIZI, KALAN ÇÖP)
+  // === VALORANT CASES
   // ==========================================
+  // 1. ÖZEL CHAMPIONS KASASI (Her senenin Champions skini Sarı!)
+  {
+    id: 'val_champions_vault',
+    name: 'Champions Kasası (Özel)',
+    subtitle: '2021-2024 Tüm Champions Skinleri Sarı!',
+    game: 'val',
+    cost: 1,
+    icon: '🏆',
+    image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png',
+    items: [
+      // TÜM SENELERİN CHAMPIONS SKİNLERİ (SARI / GOLD)
+      { skin: VAL_SKINS.champions_2021_karambit, weight: 0.08 },
+      { skin: VAL_SKINS.champions_2021_vandal, weight: 0.08 },
+      { skin: VAL_SKINS.champions_2022_butterfly, weight: 0.08 },
+      { skin: VAL_SKINS.champions_2022_phantom, weight: 0.08 },
+      { skin: VAL_SKINS.champions_2023_kunai, weight: 0.08 },
+      { skin: VAL_SKINS.champions_2023_vandal, weight: 0.08 },
+      { skin: VAL_SKINS.champions_2024_blade, weight: 0.08 },
+      { skin: VAL_SKINS.champions_2024_phantom, weight: 0.08 },
+      // 2 KIRMIZI
+      { skin: VAL_SKINS.kuronami_vandal, weight: 3.5 },
+      { skin: VAL_SKINS.araxys_vandal, weight: 3.5 },
+      // ÇÖP SKİNLER
+      { skin: VAL_SKINS.smite_classic, weight: 25.0 },
+      { skin: VAL_SKINS.luxe_ghost, weight: 22.0 },
+      { skin: VAL_SKINS.convex_judge, weight: 18.0 },
+      { skin: VAL_SKINS.schema_stinger, weight: 15.0 },
+      { skin: VAL_SKINS.infantry_operator, weight: 12.86 }
+    ]
+  },
   {
     id: 'val_kuronami_edition',
     name: 'Kuronami Koleksiyon Kasası',
@@ -486,13 +579,13 @@ const CASES = [
     ]
   },
   {
-    id: 'val_champions_edition',
-    name: 'Şampiyonlar Kasası',
+    id: 'val_araxys_glitchpop',
+    name: 'Araxys & Kaos Kasası',
     subtitle: '1 Sarı (2021 Karambit) + 2 Kırmızı + Çöpler',
     game: 'val',
     cost: 1,
     icon: '👑',
-    image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png',
+    image: 'https://media.valorant-api.com/weaponskins/4c926aa9-4f26-bc80-c486-9b888333373f/displayicon.png',
     items: [
       // 1 SARI (Gold / Knife)
       { skin: VAL_SKINS.champions_2021_karambit, weight: 0.35 },

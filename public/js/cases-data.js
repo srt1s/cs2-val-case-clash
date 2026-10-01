@@ -2,7 +2,7 @@ window.INITIAL_CASES = [
   {
     "id": "cs2_kilowatt",
     "name": "Kilowatt Kasası",
-    "subtitle": "İlk Resmi CS2 Kasası & Kukri/Kelebek Bıçak",
+    "subtitle": "İlk Resmi CS2 Kasası & Kelebek Bıçak Şansı",
     "game": "cs2",
     "cost": 1,
     "icon": "⚡",
@@ -40,7 +40,7 @@ window.INITIAL_CASES = [
           "game": "cs2",
           "rarity": "covert",
           "basePrice": 950,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiFO0PSneqF-JeKDC2mE_u995LZWTTuygxIYvzSCkpu3cnvFPQB2DpUkROFY4Rntw93lP7i241DbiI1BxSuviHlKunk_6-sHU71lpPMTRLyP4Q"
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0PSneqF-JeKDC2mE_u995LZWTTuygxIYvzSCkpu3cnvFPQB2DpUkROFY4Rntw93lP7i241DbiI1BxSuviHlKunk_6-sHU71lpPMTRLyP4Q"
         },
         "weight": 1.5
       },
@@ -100,7 +100,7 @@ window.INITIAL_CASES = [
           "game": "cs2",
           "rarity": "milspec",
           "basePrice": 1.5,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwkZrn9h1f6OyrZaJuLPqSG2yBx-Nyu7c1Qi67gVNwsDrFwoqucSrQbgU-SswnzDatg2g"
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1a7s24bbZ5KfecMWWc1OtJvOhuRz39zU5yt2vQntn9dC3Dbw8iDJQhF-IJ5xDqkdSxMr6251aMiI5BynqtiTQJsHhqpMNExQ"
         },
         "weight": 35
       }
@@ -109,7 +109,7 @@ window.INITIAL_CASES = [
   {
     "id": "cs2_dreams_nightmares",
     "name": "Rüyalar ve Kâbuslar Kasası",
-    "subtitle": "★ Doppler Kelebek & Asiimov Heyecanı",
+    "subtitle": "★ Doppler Kelebek & Karambit Heyecanı",
     "game": "cs2",
     "cost": 1,
     "icon": "🌙",
@@ -135,7 +135,7 @@ window.INITIAL_CASES = [
           "game": "cs2",
           "rarity": "knife",
           "basePrice": 2400,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL5mJfn-BNZ-ua-bbZrLeuQHG2vxeEkoOVrQBymkEslkTrQxNmvISyWPlZ0CsZyFfIK4Ri4k9TiY-y15gfa2dYUGSiZd5Q"
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SD1iWwOpzj-1gSCGn20tztm_UyIn_JHKUbgYlWMcmQ-ZcskSwldS0MOnntAfd3YlMzH35jntXrnE8SOGRGG8"
         },
         "weight": 0.35
       },
@@ -195,7 +195,7 @@ window.INITIAL_CASES = [
           "game": "cs2",
           "rarity": "restricted",
           "basePrice": 7,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwkYbf7mZX6vytbbZSI-WsGW2B_uF6su9nQi67gVNwsDrRwoqudXrVbwg-SZdwQulcuRPtx4DuNbnq5QbbitgTyyX6jixL7i5qteYLA6Mh-vWGkUifZkSF3e67"
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk7uW-V7JkMPWBMWuZxuZi_rZsS3zgzU8isW3dnIr6eHKfPVAhDpojEe9YsUW4xta1Nuzm5FDci4NbjXKpmWVQppo"
         },
         "weight": 36.4
       }
@@ -218,7 +218,7 @@ window.INITIAL_CASES = [
           "game": "cs2",
           "rarity": "knife",
           "basePrice": 2400,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL5mJfn-BNZ-ua-bbZrLeuQHG2vxeEkoOVrQBymkEslkTrQxNmvISyWPlZ0CsZyFfIK4Ri4k9TiY-y15gfa2dYUGSiZd5Q"
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SD1iWwOpzj-1gSCGn20tztm_UyIn_JHKUbgYlWMcmQ-ZcskSwldS0MOnntAfd3YlMzH35jntXrnE8SOGRGG8"
         },
         "weight": 0.3
       },
@@ -290,7 +290,7 @@ window.INITIAL_CASES = [
           "game": "cs2",
           "rarity": "milspec",
           "basePrice": 3.5,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL5mZrn-B1Z-ua-bbZrLeuQG2qvx-12tupqQhajnBgwlG7RktmrISyVP1U4D8R3EO4K4Ri4k9TiY-y15gfa2dYUGSiZd5Q"
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_u1jpN5lRi67gVNz4G7Qm938cS_Da1AhXpB1EeVb4xm4mtDjN7vj4A3b2NpGyCr52i4Y8G81tMzdoYZ7"
         },
         "weight": 30
       },
@@ -302,7 +302,7 @@ window.INITIAL_CASES = [
           "game": "cs2",
           "rarity": "milspec",
           "basePrice": 1.5,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwkZrn9h1f6OyrZaJuLPqSG2yBx-Nyu7c1Qi67gVNwsDrFwoqucSrQbgU-SswnzDatg2g"
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1a7s24bbZ5KfecMWWc1OtJvOhuRz39zU5yt2vQntn9dC3Dbw8iDJQhF-IJ5xDqkdSxMr6251aMiI5BynqtiTQJsHhqpMNExQ"
         },
         "weight": 31.8
       }
@@ -325,7 +325,7 @@ window.INITIAL_CASES = [
           "game": "cs2",
           "rarity": "knife",
           "basePrice": 1650,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL5kZfn9B1Z-ua-bbZrLeuQD2evxeAjoOlsXBajnBgwlW6GlAqqcyqTbhZ0D8VxFP0K4Ri4k9TiY-y15gfY2dYUGSiZd5Q"
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Wts2sab1iLvWHMWSF_uMvj-NoVha_mg8ijDGMnYftbyrBOw52D5R0FOYPtkG6ltOxNrjl4FPdiN0WzC723SxP6ypp6u8LVKY7uvqAFpeI3XY"
         },
         "weight": 0.35
       },
@@ -337,7 +337,7 @@ window.INITIAL_CASES = [
           "game": "cs2",
           "rarity": "knife",
           "basePrice": 1100,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL7mZrn-B1Z-ua-bbZrLeuQHmWvx-02oO1kSxOmmx8wlG7Qk9mpdnjFP1U4CcFxEOELtRbum9XgYuvm5wfW2tYUGSiZd5Q"
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1I5PeibbBiLs-SA1iKxOxksd5lRi67gVMh62_RzdygJHORZlAlDpZwQOYM4Ri5k4HhNezg4wOLg49Nyy772y9J8G81tBUopZdW"
         },
         "weight": 0.45
       },
@@ -397,9 +397,200 @@ window.INITIAL_CASES = [
           "game": "cs2",
           "rarity": "milspec",
           "basePrice": 3.5,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL5mZrn-B1Z-ua-bbZrLeuQG2qvx-12tupqQhajnBgwlG7RktmrISyVP1U4D8R3EO4K4Ri4k9TiY-y15gfa2dYUGSiZd5Q"
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_u1jpN5lRi67gVNz4G7Qm938cS_Da1AhXpB1EeVb4xm4mtDjN7vj4A3b2NpGyCr52i4Y8G81tMzdoYZ7"
         },
         "weight": 38.7
+      }
+    ]
+  },
+  {
+    "id": "val_champions_vault",
+    "name": "Champions Kasası (Özel)",
+    "subtitle": "2021-2024 Tüm Champions Skinleri Sarı!",
+    "game": "val",
+    "cost": 1,
+    "icon": "🏆",
+    "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png",
+    "items": [
+      {
+        "skin": {
+          "id": "val_champions_2021_karambit",
+          "name": "Champions 2021 Karambit",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3900,
+          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
+        },
+        "weight": 0.08
+      },
+      {
+        "skin": {
+          "id": "val_champions_2021_vandal",
+          "name": "Champions 2021 Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3200,
+          "image": "https://media.valorant-api.com/weaponskins/9bf19b77-4b33-7203-9f2c-16932970622f/displayicon.png"
+        },
+        "weight": 0.08
+      },
+      {
+        "skin": {
+          "id": "val_champions_2022_butterfly",
+          "name": "Champions 2022 Butterfly Knife",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3600,
+          "image": "https://media.valorant-api.com/weaponskins/6946cd0e-4e4a-ec4f-9238-dfb71715722b/displayicon.png"
+        },
+        "weight": 0.08
+      },
+      {
+        "skin": {
+          "id": "val_champions_2022_phantom",
+          "name": "Champions 2022 Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 2800,
+          "image": "https://media.valorant-api.com/weaponskins/8c72ae0b-4357-1a75-ad62-fbaec7b64f92/displayicon.png"
+        },
+        "weight": 0.08
+      },
+      {
+        "skin": {
+          "id": "val_champions_2023_kunai",
+          "name": "Champions 2023 Kunai",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/27f27500-491c-32d4-1db6-1f85e479c103/displayicon.png"
+        },
+        "weight": 0.08
+      },
+      {
+        "skin": {
+          "id": "val_champions_2023_vandal",
+          "name": "Champions 2023 Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3100,
+          "image": "https://media.valorant-api.com/weaponskins/b0f65660-4c51-13b7-9d01-e29a1e2879b0/displayicon.png"
+        },
+        "weight": 0.08
+      },
+      {
+        "skin": {
+          "id": "val_champions_2024_blade",
+          "name": "Champions 2024 Blade (Katana)",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3500,
+          "image": "https://media.valorant-api.com/weaponskins/30300aea-4d8a-320d-5cb0-0e8badc8d3df/displayicon.png"
+        },
+        "weight": 0.08
+      },
+      {
+        "skin": {
+          "id": "val_champions_2024_phantom",
+          "name": "Champions 2024 Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 2900,
+          "image": "https://media.valorant-api.com/weaponskins/cc1da8cd-452f-a007-0bf8-b68a471c3a6e/displayicon.png"
+        },
+        "weight": 0.08
+      },
+      {
+        "skin": {
+          "id": "val_kuronami_vandal",
+          "name": "Kuronami Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 480,
+          "image": "https://media.valorant-api.com/weaponskins/d8d5d7a1-4d81-8560-54bc-0692ab40f69b/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_araxys_vandal",
+          "name": "Araxys Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 440,
+          "image": "https://media.valorant-api.com/weaponskins/4c926aa9-4f26-bc80-c486-9b888333373f/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_smite_classic",
+          "name": "Smite Classic (Çöp)",
+          "weapon": "Classic",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 1.2,
+          "image": "https://media.valorant-api.com/weaponskins/22fdc42d-4ad6-2bec-8033-8a8bdf178826/displayicon.png"
+        },
+        "weight": 25
+      },
+      {
+        "skin": {
+          "id": "val_luxe_ghost",
+          "name": "Luxe Ghost (Çöp)",
+          "weapon": "Ghost",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 1.8,
+          "image": "https://media.valorant-api.com/weaponskins/cb98b0d6-4e26-973c-c10d-a38637d04b65/displayicon.png"
+        },
+        "weight": 22
+      },
+      {
+        "skin": {
+          "id": "val_convex_judge",
+          "name": "Convex Judge (Çöp)",
+          "weapon": "Judge",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 1.6,
+          "image": "https://media.valorant-api.com/weaponskins/03751fa0-46db-0df3-b8cb-99adf373ecda/displayicon.png"
+        },
+        "weight": 18
+      },
+      {
+        "skin": {
+          "id": "val_schema_stinger",
+          "name": "Schema Stinger (Çöp)",
+          "weapon": "Stinger",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 1.5,
+          "image": "https://media.valorant-api.com/weaponskins/46c8b165-4ba5-d42c-79e9-4fba8951ca48/displayicon.png"
+        },
+        "weight": 15
+      },
+      {
+        "skin": {
+          "id": "val_infantry_operator",
+          "name": "Infantry Operator (Çöp)",
+          "weapon": "Operator",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 2.5,
+          "image": "https://media.valorant-api.com/weaponskins/341ef273-43fb-7911-71e8-50adada4cee1/displayicon.png"
+        },
+        "weight": 12.86
       }
     ]
   },
@@ -618,13 +809,13 @@ window.INITIAL_CASES = [
     ]
   },
   {
-    "id": "val_champions_edition",
-    "name": "Şampiyonlar Kasası",
+    "id": "val_araxys_glitchpop",
+    "name": "Araxys & Kaos Kasası",
     "subtitle": "1 Sarı (2021 Karambit) + 2 Kırmızı + Çöpler",
     "game": "val",
     "cost": 1,
     "icon": "👑",
-    "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png",
+    "image": "https://media.valorant-api.com/weaponskins/4c926aa9-4f26-bc80-c486-9b888333373f/displayicon.png",
     "items": [
       {
         "skin": {

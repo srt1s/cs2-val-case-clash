@@ -87,6 +87,7 @@ module.exports = {
         username: cleanUsername,
         hwid: cleanHwid,
         balance: initialBalance,
+        tlBalance: 0,
         inventory: [],
         createdAt: Date.now()
       };
@@ -94,6 +95,9 @@ module.exports = {
       dbData.users[newUserId] = user;
       dbData.usernames[lowerUser] = newUserId;
     }
+
+    if (user.tlBalance === undefined) user.tlBalance = 0;
+    if (user.balance === undefined) user.balance = 0;
 
     // Mark HWID as registered
     if (isNewHwid) {
@@ -139,13 +143,63 @@ module.exports = {
     return removed;
   },
 
-  // Modify balance
+  // Modify Kasa Opening Balance (1 Kasa = 1 Bakiye)
   updateBalance(userId, delta) {
     const user = dbData.users[userId];
     if (!user) return null;
     user.balance = Math.max(0, Math.round((user.balance + delta) * 100) / 100);
     saveDb();
     return user.balance;
+  },
+
+  // Modify Turkish Liras Balance (₺ TL)
+  updateTLBalance(userId, delta) {
+    const user = dbData.users[userId];
+    if (!user) return null;
+    if (user.tlBalance === undefined) user.tlBalance = 0;
+    user.tlBalance = Math.max(0, Math.round((user.tlBalance + delta) * 100) / 100);
+    saveDb();
+    return user.tlBalance;
+  },
+
+  // Convert TL to Kasa Balance (40 TL = 1 Bakiye)
+  convertTLToCaseBalance(userId, count) {
+    const user = dbData.users[userId];
+    if (!user) return { success: false, message: 'Kullanıcı bulunamadı.' };
+    const caseCount = parseInt(count, 10);
+    if (isNaN(caseCount) || caseCount <= 0) {
+      return { success: false, message: 'Geçersiz bakiye miktarı.' };
+    }
+    const requiredTL = caseCount * 40;
+    if (user.tlBalance === undefined) user.tlBalance = 0;
+    if (user.tlBalance < requiredTL) {
+      return { 
+        success: false, 
+        message: `Yetersiz TL bakiyesi! ${caseCount} bakiye almak için ₺${requiredTL} gerekiyor. Mevcut TL: ₺${user.tlBalance}` 
+      };
+    }
+
+    user.tlBalance = Math.round((user.tlBalance - requiredTL) * 100) / 100;
+    user.balance = (user.balance || 0) + caseCount;
+    saveDb();
+
+    return {
+      success: true,
+      convertedCases: caseCount,
+      costTL: requiredTL,
+      newTL: user.tlBalance,
+      newBalance: user.balance
+    };
+  },
+
+  // Deposit Demo TL
+  depositDemoTL(userId, amount) {
+    const user = dbData.users[userId];
+    if (!user) return null;
+    if (user.tlBalance === undefined) user.tlBalance = 0;
+    user.tlBalance = Math.round((user.tlBalance + Number(amount)) * 100) / 100;
+    saveDb();
+    return user.tlBalance;
   },
 
   // Market methods
