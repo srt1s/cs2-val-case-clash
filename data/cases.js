@@ -242,15 +242,6 @@ const CS2_SKINS = {
 
 const VAL_SKINS = {
   // SARI (Gold / Knives)
-  champions_mystery: {
-    id: 'val_champions_mystery',
-    name: 'Gizemli Champions Skin',
-    weapon: 'Champions Limited',
-    game: 'val',
-    rarity: 'knife',
-    basePrice: 4743,
-    image: 'img/mystery_gold.svg'
-  },
   kuronami_yaiba: {
     id: 'val_kuronami_yaiba',
     name: 'Kuronami no Yaiba',
@@ -644,8 +635,6 @@ const CASES = [
     icon: 'fa-trophy',
     image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png',
     items: [
-      // 1 SARI (Gizemli Champions Skin - Rastgele Champions) +%21 (4743 TL)
-      { skin: VAL_SKINS.champions_mystery, weight: 0.6 },
       // 2 KIRMIZI (+%21: 538 -> 651, 493 -> 597)
       { skin: { ...VAL_SKINS.kuronami_vandal, basePrice: 651 }, weight: 3.5 },
       { skin: { ...VAL_SKINS.araxys_vandal, basePrice: 597 }, weight: 3.5 },

@@ -462,18 +462,6 @@ window.INITIAL_CASES = [
     "items": [
       {
         "skin": {
-          "id": "val_champions_mystery",
-          "name": "Gizemli Champions Skin",
-          "weapon": "Champions Limited",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 4743,
-          "image": "img/mystery_gold.svg"
-        },
-        "weight": 0.6
-      },
-      {
-        "skin": {
           "id": "val_kuronami_vandal",
           "name": "Kuronami Vandal",
           "weapon": "Vandal",
