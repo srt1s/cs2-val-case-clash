@@ -217,6 +217,9 @@ function pickWinningItem(caseObj, isBoosted) {
 // 5. WEBSOCKET CONNECTION LIFECYCLE
 // ==========================================
 io.on('connection', (socket) => {
+  // Send cases list immediately on connection
+  socket.emit('cases:list', CASES);
+
   // Handle User Login & HWID Auth
   socket.on('auth:login', ({ username, hwid, tabId }) => {
     try {
@@ -276,6 +279,7 @@ io.on('connection', (socket) => {
           balance: user.balance,
           inventory: user.inventory
         },
+        cases: CASES,
         isNewHwid: result.isNewHwid,
         bonusGiven: result.bonusGiven,
         luckEvent,

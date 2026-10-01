@@ -5,7 +5,7 @@ const socket = io();
 let currentUser = null;
 let currentHwid = null;
 let activeGame = 'cs2'; // 'cs2' or 'val'
-let allCases = [];
+let allCases = (window.INITIAL_CASES && Array.isArray(window.INITIAL_CASES)) ? window.INITIAL_CASES : [];
 let selectedCase = null;
 let activeLuckEvent = null;
 let marketListings = [];
@@ -53,6 +53,9 @@ window.handleLoginSubmit = function() {
 
 // Initialize App
 function initApp() {
+  // Render cases immediately on startup
+  renderCases();
+
   // 1. Attach Event Listeners IMMEDIATELY
   setupEventListeners();
 
@@ -338,6 +341,11 @@ socket.on('auth:success', (data) => {
   userNameText.textContent = currentUser.username;
   marketListings = data.market || [];
 
+  if (data.cases && Array.isArray(data.cases) && data.cases.length > 0) {
+    allCases = data.cases;
+  }
+  renderCases();
+
   if (data.isNewHwid && data.bonusGiven) {
     showInAppToast('🎉 HOŞ GELDİNİZ! Cihazınıza özel 5 ÜCRETSİZ BAKİYE (5 KASA) hesabınıza eklendi!', true);
     try { window.soundEngine.playRareFanfare(true); } catch(e) {}
@@ -358,6 +366,14 @@ socket.on('auth:success', (data) => {
 
   renderInventory();
   renderMarket();
+});
+
+// Cases list push from server
+socket.on('cases:list', (casesList) => {
+  if (casesList && Array.isArray(casesList) && casesList.length > 0) {
+    allCases = casesList;
+    renderCases();
+  }
 });
 
 socket.on('auth:error', (data) => {
@@ -567,9 +583,21 @@ function updateBalanceUI(balance) {
 // Render Cases Grid
 function renderCases() {
   const grid = document.getElementById('casesGrid');
+  if (!grid) return;
   grid.innerHTML = '';
 
-  const filtered = allCases.filter(c => c.game === activeGame);
+  const list = (allCases && allCases.length > 0) ? allCases : (window.INITIAL_CASES || []);
+  const filtered = list.filter(c => c.game === activeGame);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="color:var(--text-muted); font-size:1.1rem; grid-column: 1/-1; text-align:center; padding:3rem 0;">
+        <i class="fa-solid fa-box-open" style="margin-right: 8px;"></i> Kasalar yükleniyor veya bu kategoride kasa bulunamadı.
+      </div>
+    `;
+    return;
+  }
+
   filtered.forEach(c => {
     const isBoosted = activeLuckEvent && activeLuckEvent.active && activeLuckEvent.caseId === c.id;
     const card = document.createElement('div');
