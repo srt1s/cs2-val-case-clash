@@ -58,8 +58,8 @@ module.exports = {
     return dbData.users[userId] || null;
   },
 
-  // HWID-based login & 5 balance initial bonus
-  loginOrRegister(username, hwid) {
+  // HWID-based login & 5 balance initial bonus with backup restore support
+  loginOrRegister(username, hwid, backupData) {
     const cleanUsername = String(username || 'Oyuncu').trim() || 'Oyuncu_' + Math.floor(Math.random() * 1000);
     const cleanHwid = String(hwid || ('HWID_' + Date.now().toString(36))).trim();
     const lowerUser = cleanUsername.toLowerCase();
@@ -75,20 +75,35 @@ module.exports = {
       user = dbData.users[existingUserId];
       // Update HWID association
       user.hwid = cleanHwid;
-    } else {
-      // Create new user
-      const newUserId = 'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 6);
       
-      // If HWID is first time, give 5 balance. Otherwise, multi-account on same HWID starts with 0
-      const initialBalance = isNewHwid ? 5 : 0;
+      // If server was restarted and had empty/stale data but client has backup, merge/restore:
+      if (backupData && typeof backupData === 'object') {
+        if (Array.isArray(backupData.inventory) && backupData.inventory.length > (user.inventory ? user.inventory.length : 0)) {
+          user.inventory = backupData.inventory;
+        }
+        if (typeof backupData.balance === 'number' && backupData.balance > user.balance) {
+          user.balance = backupData.balance;
+        }
+        if (typeof backupData.tlBalance === 'number' && backupData.tlBalance > (user.tlBalance || 0)) {
+          user.tlBalance = backupData.tlBalance;
+        }
+      }
+    } else {
+      // Create new user (restore from backup if available)
+      const hasBackup = backupData && typeof backupData === 'object' && (Array.isArray(backupData.inventory) || typeof backupData.balance === 'number');
+      const newUserId = (hasBackup && backupData.id) ? backupData.id : ('usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 6));
+      
+      const initialBalance = hasBackup && typeof backupData.balance === 'number' ? backupData.balance : (isNewHwid ? 5 : 0);
+      const initialTL = hasBackup && typeof backupData.tlBalance === 'number' ? backupData.tlBalance : 0;
+      const initialInv = hasBackup && Array.isArray(backupData.inventory) ? backupData.inventory : [];
 
       user = {
         id: newUserId,
         username: cleanUsername,
         hwid: cleanHwid,
         balance: initialBalance,
-        tlBalance: 0,
-        inventory: [],
+        tlBalance: initialTL,
+        inventory: initialInv,
         createdAt: Date.now()
       };
 
@@ -98,6 +113,7 @@ module.exports = {
 
     if (user.tlBalance === undefined) user.tlBalance = 0;
     if (user.balance === undefined) user.balance = 0;
+    if (!Array.isArray(user.inventory)) user.inventory = [];
 
     // Mark HWID as registered
     if (isNewHwid) {
@@ -112,7 +128,7 @@ module.exports = {
     return {
       user,
       isNewHwid,
-      bonusGiven: isNewHwid
+      bonusGiven: isNewHwid && (!backupData || !backupData.inventory || backupData.inventory.length === 0)
     };
   },
 

@@ -76,14 +76,22 @@ function initApp() {
     console.error('Failed to load cases:', err);
   });
 
-  // 4. Check for saved username in localStorage
+  // 4. Auto-Login if saved username exists in localStorage
   try {
     const savedUsername = localStorage.getItem('case_clash_username');
-    if (savedUsername) {
+    const modal = document.getElementById('loginModal');
+    if (savedUsername && savedUsername.trim()) {
       const input = document.getElementById('loginUsernameInput');
-      if (input) input.value = savedUsername;
+      if (input) input.value = savedUsername.trim();
+      if (modal) modal.style.display = 'none';
+      attemptLogin(savedUsername.trim());
+    } else {
+      if (modal) modal.style.display = 'flex';
     }
-  } catch(e) {}
+  } catch(e) {
+    const modal = document.getElementById('loginModal');
+    if (modal) modal.style.display = 'flex';
+  }
 
   // 5. Start live market countdowns
   setInterval(renderMarketTimers, 1000);
@@ -197,6 +205,31 @@ function setupEventListeners() {
   document.getElementById('btnCloseChat').addEventListener('click', () => {
     chatDrawer.classList.add('minimized');
   });
+
+  // Logout / Switch User
+  const btnLogout = document.getElementById('btnLogout');
+  if (btnLogout) {
+    btnLogout.addEventListener('click', () => {
+      if (confirm('Mevcut hesaptan çıkış yapmak istiyor musunuz?')) {
+        try {
+          localStorage.removeItem('case_clash_username');
+        } catch(e) {}
+        currentUser = null;
+        userNameText.textContent = 'Giriş Yapılmadı';
+        updateBalanceUI(0, 0);
+        renderInventory();
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+          modal.style.display = 'flex';
+          const input = document.getElementById('loginUsernameInput');
+          if (input) {
+            input.value = '';
+            input.focus();
+          }
+        }
+      }
+    });
+  }
 
   // Chat Send
   document.getElementById('chatForm').addEventListener('submit', (e) => {
@@ -320,6 +353,32 @@ function showInAppToast(text, isSuccess = true) {
   }, 4500);
 }
 
+// Local Backup Storage Helpers (Protects balance & inventory across server reboots)
+function saveUserBackup(user) {
+  if (!user || !user.username) return;
+  try {
+    const data = {
+      id: user.id,
+      username: user.username,
+      balance: user.balance,
+      tlBalance: user.tlBalance !== undefined ? user.tlBalance : 0,
+      inventory: Array.isArray(user.inventory) ? user.inventory : [],
+      updatedAt: Date.now()
+    };
+    localStorage.setItem('case_clash_backup_' + user.username.toLowerCase(), JSON.stringify(data));
+  } catch(e) {}
+}
+
+function getUserBackup(username) {
+  if (!username) return null;
+  try {
+    const raw = localStorage.getItem('case_clash_backup_' + username.toLowerCase());
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) {
+    return null;
+  }
+}
+
 // Attempt login via HWID
 async function attemptLogin(username) {
   const cleanUser = String(username || '').trim();
@@ -361,9 +420,12 @@ async function attemptLogin(username) {
 
   userNameText.textContent = cleanUser;
 
+  // Retrieve client backup if available (resilient to server restarts)
+  const backupData = getUserBackup(cleanUser);
+
   const emitAuth = () => {
-    console.log('[CLIENT] Emitting auth:login with:', { cleanUser, currentHwid, tabId });
-    socket.emit('auth:login', { username: cleanUser, hwid: currentHwid, tabId });
+    console.log('[CLIENT] Emitting auth:login with:', { cleanUser, currentHwid, tabId, backupData });
+    socket.emit('auth:login', { username: cleanUser, hwid: currentHwid, tabId, backupData });
   };
 
   if (socket.connected) {
@@ -435,6 +497,7 @@ socket.on('auth:success', (data) => {
 
   renderInventory();
   renderMarket();
+  saveUserBackup(currentUser);
 });
 
 // Cases list push from server
@@ -515,6 +578,7 @@ socket.on('case:result', (data) => {
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
   currentUser.inventory.push(data.item);
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+  saveUserBackup(currentUser);
 
   // Animate horizontal spinner
   animateSpinner(data.strip, data.winningIndex, data.item);
@@ -540,6 +604,7 @@ socket.on('market:updated', (updatedMarket) => {
 socket.on('market:listed_success', (data) => {
   if (data.inventory) currentUser.inventory = data.inventory;
   renderInventory();
+  saveUserBackup(currentUser);
   showInAppToast('Eşyanız pazarda başarıyla listelendi.', true);
 });
 
@@ -553,6 +618,7 @@ socket.on('market:bot_bought', (data) => {
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
   if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+  saveUserBackup(currentUser);
   alert(`SİSTEM ALIMI:\n"${data.itemName}" eşyanız 30 dakika satılmadığı için bot tarafından taban değeri (₺${data.officialBasePrice} TL) üzerinden %86 fiyatına (₺${data.botPrice} TL) satın alındı ve TL bakiyenize eklendi.`);
 });
 
@@ -561,6 +627,7 @@ socket.on('market:item_sold_to_player', (data) => {
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
   if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+  saveUserBackup(currentUser);
   alert(`EŞYANIZ SATILDI\n"${data.itemName}" eşyanızı ${data.buyerName} oyuncusu ₺${data.price} TL fiyata satın aldı.`);
 });
 
@@ -570,6 +637,7 @@ socket.on('market:buy_success', (data) => {
   currentUser.inventory = data.inventory;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   renderInventory();
+  saveUserBackup(currentUser);
   showInAppToast(`Eşya satın alındı: ${data.item.name}`, true);
 });
 
@@ -584,6 +652,7 @@ socket.on('inventory:sold', (data) => {
   currentUser.inventory = data.inventory;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   renderInventory();
+  saveUserBackup(currentUser);
   showInAppToast(`Eşya satıldı: +₺${data.sellPrice} TL`, true);
 });
 
@@ -592,6 +661,7 @@ socket.on('wallet:converted', (data) => {
   currentUser.balance = data.newBalance;
   currentUser.tlBalance = data.newTL;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+  saveUserBackup(currentUser);
   showInAppToast(`₺${data.costTL} TL karşılığında ${data.convertedCases} Kasa Bakiyesi alındı.`, true);
   try { window.soundEngine.playWin(); } catch(e) {}
 });
@@ -639,6 +709,7 @@ socket.on('trade:incoming_offer', (data) => {
 socket.on('trade:completed', (data) => {
   currentUser.inventory = data.inventory;
   renderInventory();
+  saveUserBackup(currentUser);
   alert(data.message);
 });
 

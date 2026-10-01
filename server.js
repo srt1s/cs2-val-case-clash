@@ -272,7 +272,7 @@ io.on('connection', (socket) => {
   socket.emit('cases:list', CASES);
 
   // Handle User Login & HWID Auth
-  socket.on('auth:login', ({ username, hwid, tabId }) => {
+  socket.on('auth:login', ({ username, hwid, tabId, backupData }) => {
     try {
       const cleanUser = String(username || '').trim();
       const cleanHwid = String(hwid || '').trim();
@@ -303,8 +303,8 @@ io.on('connection', (socket) => {
         }
       }
 
-      // Login or register via HWID & 5 balance initial grant
-      const result = db.loginOrRegister(cleanUser, finalHwid);
+      // Login or register via HWID & 5 balance initial grant (with backup restore support)
+      const result = db.loginOrRegister(cleanUser, finalHwid, backupData);
       const user = result.user;
 
       // Track active connection
