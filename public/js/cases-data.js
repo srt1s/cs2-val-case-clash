@@ -406,9 +406,9 @@ window.INITIAL_CASES = [
   {
     "id": "val_champions_vault",
     "name": "Champions Kasası (Özel)",
-    "subtitle": "2021-2024 Tüm Champions Skinleri Sarı!",
+    "subtitle": "2021-2024 Tüm Champions Skinleri Sarı! (10 Bakiye)",
     "game": "val",
-    "cost": 1,
+    "cost": 10,
     "icon": "🏆",
     "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png",
     "items": [

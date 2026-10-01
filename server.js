@@ -338,9 +338,9 @@ io.on('connection', (socket) => {
     const caseObj = CASES.find(c => c.id === caseId);
     if (!caseObj) return socket.emit('case:error', { message: 'Geçersiz kasa.' });
 
-    // Validate balance (1 balance per case)
+    // Validate balance
     if (user.balance < caseObj.cost) {
-      return socket.emit('case:error', { message: 'Yetersiz bakiye! Bu kasa için 1 bakiye gerekiyor.' });
+      return socket.emit('case:error', { message: `Yetersiz bakiye! Bu kasa için ${caseObj.cost} bakiye gerekiyor.` });
     }
 
     // Deduct cost

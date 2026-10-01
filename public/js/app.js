@@ -134,8 +134,9 @@ function setupEventListeners() {
   // Open Case Button
   document.getElementById('btnOpenCurrentCase').addEventListener('click', () => {
     if (!selectedCase || isSpinning) return;
-    if (!currentUser || currentUser.balance < 1) {
-      alert('Yetersiz bakiye! 1 bakiye gerekiyor.');
+    const cost = selectedCase.cost || 1;
+    if (!currentUser || currentUser.balance < cost) {
+      alert(`Yetersiz bakiye! Bu kasa için ${cost} bakiye gerekiyor.`);
       return;
     }
     isSpinning = true;
@@ -514,6 +515,11 @@ socket.on('case:result', (data) => {
 socket.on('case:error', (data) => {
   isSpinning = false;
   document.getElementById('btnOpenCurrentCase').disabled = false;
+  const cost = selectedCase ? (selectedCase.cost || 1) : 1;
+  const btnText = document.getElementById('openCurrentCaseBtnText');
+  if (btnText) {
+    btnText.textContent = `KASAYI AÇ (${cost} BAKİYE)`;
+  }
   alert(data.message || 'Kasa açılamadı.');
 });
 
@@ -714,7 +720,7 @@ function renderCases() {
       <h3 class="case-title">${c.name}</h3>
       <p class="case-subtitle">${c.subtitle}</p>
       <button class="btn-open-case" data-id="${c.id}">
-        <i class="fa-solid fa-key"></i> KASAYI AÇ (1 BAKİYE)
+        <i class="fa-solid fa-key"></i> KASAYI AÇ (${c.cost || 1} BAKİYE)
       </button>
     `;
 
@@ -729,8 +735,13 @@ function renderCases() {
 // Setup Opener View
 function openOpenerView(caseObj) {
   selectedCase = caseObj;
+  const cost = caseObj.cost || 1;
   document.getElementById('openerCaseTitle').textContent = caseObj.name;
-  document.getElementById('openerCasePrice').innerHTML = `Maliyet: <strong>1 Bakiye</strong> | İçerik: ${caseObj.items.length} Eşya`;
+  document.getElementById('openerCasePrice').innerHTML = `Maliyet: <strong>${cost} Bakiye</strong> | İçerik: ${caseObj.items.length} Eşya`;
+  const btnText = document.getElementById('openCurrentCaseBtnText');
+  if (btnText) {
+    btnText.textContent = `KASAYI AÇ (${cost} BAKİYE)`;
+  }
   
   // Render contents preview
   const contentsGrid = document.getElementById('caseContentsGrid');
@@ -839,6 +850,11 @@ function animateSpinner(strip, winningIndex, winningItem) {
   setTimeout(() => {
     isSpinning = false;
     document.getElementById('btnOpenCurrentCase').disabled = false;
+    const cost = selectedCase ? (selectedCase.cost || 1) : 1;
+    const btnText = document.getElementById('openCurrentCaseBtnText');
+    if (btnText) {
+      btnText.textContent = `KASAYI AÇ (${cost} BAKİYE)`;
+    }
 
     // Play victory sound
     const isRare = winningItem.rarity === 'knife' || winningItem.rarity === 'covert' || winningItem.rarity === 'exclusive';
