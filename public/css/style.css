@@ -930,3 +930,190 @@ body {
   font-size: 3.5rem;
   margin-bottom: 1rem;
 }
+
+/* ==========================================
+   MOBILE RESPONSIVE — Portrait (max-width: 768px)
+   ========================================== */
+@media (max-width: 768px) {
+  /* Header: compact vertical stack */
+  .app-header {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .header-container {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    font-size: 1.1rem;
+    gap: 0.5rem;
+  }
+
+  /* Nav tabs: horizontal scrollable */
+  .nav-tabs {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 3px;
+    gap: 3px;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+
+  .nav-tab-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.65rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Header actions: scrollable row */
+  .header-actions {
+    order: 2;
+    gap: 0.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    flex: 1;
+  }
+  .header-actions::-webkit-scrollbar { display: none; }
+
+  .balance-pill {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+    gap: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .user-tag {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .action-btn-icon {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  /* Cases grid: 2 columns on mobile */
+  .cases-grid {
+    gap: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .case-card {
+    width: calc(50vw - 1.25rem);
+    flex: 0 0 calc(50vw - 1.25rem);
+    padding: 0.9rem 0.75rem;
+  }
+
+  /* Spinner reel: smaller cards */
+  .spinner-box {
+    height: 180px;
+  }
+
+  .spinner-card {
+    flex: 0 0 130px;
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+  }
+
+  .spinner-card-img {
+    width: 90px;
+    height: 68px;
+  }
+
+  .spinner-card-name {
+    font-size: 0.7rem;
+  }
+
+  /* Inventory & Market: 2 columns */
+  .skin-item-card {
+    width: calc(50vw - 1.25rem);
+    flex: 0 0 calc(50vw - 1.25rem);
+    padding: 0.85rem 0.65rem;
+  }
+
+  /* Modals: full-width */
+  .reveal-card {
+    max-width: 95vw;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 1.25rem;
+  }
+
+  /* Chat drawer: full-width bottom */
+  .chat-drawer {
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    height: 60vh;
+  }
+
+  /* Misc */
+  .content-section {
+    padding: 1rem 0.75rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE — Small phones (max-width: 480px)
+   ========================================== */
+@media (max-width: 480px) {
+  .brand {
+    font-size: 1rem;
+  }
+
+  .case-card {
+    width: calc(50vw - 1rem);
+    flex: 0 0 calc(50vw - 1rem);
+    font-size: 0.85rem;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .skin-item-card {
+    width: calc(50vw - 1rem);
+    flex: 0 0 calc(50vw - 1rem);
+  }
+
+  .spinner-box {
+    height: 160px;
+  }
+
+  .spinner-card {
+    flex: 0 0 110px;
+    width: 110px;
+    min-width: 110px;
+    max-width: 110px;
+  }
+
+  .spinner-card-img {
+    width: 76px;
+    height: 58px;
+  }
+
+  .balance-pill {
+    font-size: 0.72rem;
+    padding: 0.25rem 0.4rem;
+    gap: 3px;
+  }
+
+  /* Timer pills: hide label text on very small screens */
+  #creditTimerPill span:not(#creditCountdownText),
+  #raffleTimerPill span:not(#raffleCountdownText) {
+    display: none;
+  }
+}

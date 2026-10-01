@@ -212,7 +212,7 @@ module.exports = {
     return user.tlBalance;
   },
 
-  // Convert TL to Key/Case Balance (40 TL = 1 Anahtar)
+  // Convert TL to Key/Case Balance (20 TL = 1 Anahtar)
   convertTLToCaseBalance(userId, count) {
     const user = dbData.users[userId];
     if (!user) return { success: false, message: 'Kullanıcı bulunamadı.' };
@@ -220,7 +220,7 @@ module.exports = {
     if (isNaN(caseCount) || caseCount <= 0) {
       return { success: false, message: 'Geçersiz anahtar miktarı.' };
     }
-    const requiredTL = caseCount * 40;
+    const requiredTL = caseCount * 20;
     if (user.tlBalance === undefined) user.tlBalance = 0;
     if (user.tlBalance < requiredTL) {
       return { 

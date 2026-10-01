@@ -121,16 +121,16 @@ function startNewLuckEvent() {
 initLuckCycle();
 
 // ==========================================
-// 2.5. 2-MINUTE AUTOMATIC CREDIT (+1 BAKİYE) REWARD CYCLE
+// 2.5. 1-MINUTE AUTOMATIC KEY (+1 ANAHTAR) REWARD CYCLE
 // ==========================================
-// Every 120 seconds (2 minutes), awards +1 Kasa Bakiyesi to all online users
-let creditRewardCountdown = 120;
+// Every 60 seconds (1 minute), awards +1 Anahtar to all online users
+let creditRewardCountdown = 60;
 
 setInterval(() => {
   if (creditRewardCountdown > 0) {
     creditRewardCountdown--;
   } else {
-    creditRewardCountdown = 120; // Reset to 2 minutes
+    creditRewardCountdown = 60; // Reset to 1 minute
 
     const rewardedUserIds = new Set();
     for (const session of activeSockets.values()) {
@@ -151,6 +151,65 @@ setInterval(() => {
 
   // Broadcast timer tick to sync UI every second
   io.emit('credit_timer:tick', { remainingSeconds: creditRewardCountdown });
+}, 1000);
+
+// ==========================================
+// 2.6. 10-MINUTE 50-KEY RAFFLE (ÇEKİLİŞ) CYCLE
+// ==========================================
+// Every 10 minutes (600s), holds a 50-Key raffle if more than 2 online players (min 3 players required)
+let raffleCountdown = 600;
+
+setInterval(() => {
+  if (raffleCountdown > 0) {
+    raffleCountdown--;
+  } else {
+    raffleCountdown = 600; // Reset to 10 minutes
+
+    const onlineUsers = getOnlineUsers();
+    // Rule: "2 oyuncu veya daha azsa çekiliş olmasın" -> requires onlineUsers.length > 2
+    if (onlineUsers.length <= 2) {
+      console.log(`[RAFFLE] Çekiliş yapılmadı: Çevrimiçi ${onlineUsers.length} oyuncu var (En az 3 oyuncu gerekli).`);
+      io.emit('raffle:skipped', {
+        message: `Çekiliş ertelendi: Yeterli oyuncu yok (${onlineUsers.length}/3 oyuncu çevrimiçi). Bir sonraki çekiliş 10 dakika sonra!`,
+        playerCount: onlineUsers.length
+      });
+    } else {
+      const winner = onlineUsers[Math.floor(Math.random() * onlineUsers.length)];
+      const newBalance = db.updateBalance(winner.id, 50);
+
+      console.log(`[RAFFLE] Kazanan: "${winner.username}" (${onlineUsers.length} oyuncu arasından 50 Anahtar kazandı!)`);
+
+      // Broadcast winner to all players
+      io.emit('raffle:winner', {
+        winnerId: winner.id,
+        winnerUsername: winner.username,
+        prize: 50,
+        playerCount: onlineUsers.length
+      });
+
+      // Announce in chat
+      const raffleChatMsg = {
+        id: 'sys_raffle_' + Date.now(),
+        userId: 'system',
+        username: 'BÜYÜK ÇEKİLİŞ',
+        text: `🎉 TEBRİKLER! [${winner.username}], ${onlineUsers.length} çevrimiçi oyuncu arasından 50 ANAHTAR KAZANDI!`,
+        timestamp: Date.now(),
+        isHighlight: true
+      };
+      db.addChatMessage(raffleChatMsg);
+      io.emit('chat:message', raffleChatMsg);
+
+      // Real-time balance update for winner
+      for (const [sId, info] of activeSockets.entries()) {
+        if (info.userId === winner.id) {
+          io.to(sId).emit('balance:update', { balance: newBalance });
+        }
+      }
+    }
+  }
+
+  // Broadcast raffle tick to sync UI every second
+  io.emit('raffle_timer:tick', { remainingSeconds: raffleCountdown });
 }, 1000);
 
 // ==========================================
@@ -382,6 +441,7 @@ io.on('connection', (socket) => {
         bonusGiven: result.bonusGiven,
         luckEvent,
         creditRemainingSeconds: creditRewardCountdown,
+        raffleRemainingSeconds: raffleCountdown,
         market: db.db.market,
         chat: db.db.chat.slice(-50)
       });
@@ -911,8 +971,30 @@ io.on('connection', (socket) => {
     io.emit('chat:message', msg);
   });
 
+  // Inactivity Ping — Client sends 'activity:ping' to reset idle timer
+  let inactivityTimer = null;
+  const INACTIVITY_LIMIT_MS = 10 * 60 * 1000; // 10 minutes
+
+  function resetInactivityTimer() {
+    if (inactivityTimer) clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+      const session = activeSockets.get(socket.id);
+      if (session) {
+        console.log(`[INACTIVITY] Auto-logout: "${session.username}" (10 dk hareketsiz)`);
+        socket.emit('auth:forced_logout', { message: '10 dakika hareketsiz kaldığınız için oturumunuz kapatıldı.' });
+        socket.disconnect(true);
+      }
+    }, INACTIVITY_LIMIT_MS);
+  }
+
+  socket.on('activity:ping', () => {
+    const session = activeSockets.get(socket.id);
+    if (session) resetInactivityTimer();
+  });
+
   // Disconnect Handling
   socket.on('disconnect', () => {
+    if (inactivityTimer) clearTimeout(inactivityTimer);
     const session = activeSockets.get(socket.id);
     if (session) {
       const active = activeHwids.get(session.hwid);

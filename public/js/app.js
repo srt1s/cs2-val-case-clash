@@ -470,7 +470,7 @@ function setupEventListeners() {
   if (convertInput && convertRequiredTL) {
     convertInput.addEventListener('input', () => {
       const count = parseInt(convertInput.value, 10) || 0;
-      convertRequiredTL.textContent = count * 40;
+      convertRequiredTL.textContent = count * 20;
     });
   }
 
@@ -608,14 +608,14 @@ function setupEventListeners() {
   if (btnConvertAll) {
     btnConvertAll.addEventListener('click', () => {
       const userTL = currentUser && currentUser.tlBalance !== undefined ? currentUser.tlBalance : 0;
-      const maxPossibleCases = Math.floor(userTL / 40);
+      const maxPossibleCases = Math.floor(userTL / 20);
       if (maxPossibleCases < 1) {
-        showInAppToast(`Yetersiz TL! 1 Anahtar için ₺40 TL gerekir. (Mevcut: ₺${userTL} TL)`, false);
+        showInAppToast(`Yetersiz TL! 1 Anahtar için ₺20 TL gerekir. (Mevcut: ₺${userTL} TL)`, false);
         return;
       }
       if (convertInput && convertRequiredTL) {
         convertInput.value = maxPossibleCases;
-        convertRequiredTL.textContent = maxPossibleCases * 40;
+        convertRequiredTL.textContent = maxPossibleCases * 20;
       }
       socket.emit('wallet:convert_tl', { caseCount: maxPossibleCases });
     });
@@ -852,12 +852,22 @@ socket.on('auth:success', (data) => {
     }
   }
 
+  if (data.raffleRemainingSeconds !== undefined) {
+    const rMins = Math.floor(data.raffleRemainingSeconds / 60);
+    const rSecs = data.raffleRemainingSeconds % 60;
+    const rTimerElem = document.getElementById('raffleCountdownText');
+    if (rTimerElem) {
+      rTimerElem.textContent = `${String(rMins).padStart(2, '0')}:${String(rSecs).padStart(2, '0')}`;
+    }
+  }
+
   renderInventory();
   renderMarket();
   saveUserBackup(currentUser);
+  startActivityTracking(); // Begin 10-min inactivity timer
 });
 
-// 2.5. Automatic 2-Minute Credit Reward Handlers
+// 2.5. Automatic 1-Minute Key (+1 Anahtar) Reward Handlers
 socket.on('credit_timer:tick', (data) => {
   const rem = data.remainingSeconds !== undefined ? data.remainingSeconds : 0;
   const mins = Math.floor(rem / 60);
@@ -873,9 +883,76 @@ socket.on('credit:reward', (data) => {
     currentUser.balance = data.newBalance;
     updateBalanceUI(currentUser.balance, currentUser.tlBalance);
     saveUserBackup(currentUser);
-    showInAppToast('+1 Anahtar eklendi. (2 dk çevrimiçi ödülü)', true);
+    showInAppToast('+1 Anahtar eklendi! (1 dk çevrimiçi ödülü)', true);
     try { window.soundEngine.playWin(); } catch(e) {}
   }
+});
+
+// 2.6. Automatic 10-Minute 50-Key Raffle Handlers
+socket.on('raffle_timer:tick', (data) => {
+  const rem = data.remainingSeconds !== undefined ? data.remainingSeconds : 0;
+  const mins = Math.floor(rem / 60);
+  const secs = rem % 60;
+  const timerElem = document.getElementById('raffleCountdownText');
+  if (timerElem) {
+    timerElem.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+});
+
+socket.on('raffle:winner', (data) => {
+  if (currentUser && currentUser.id === data.winnerId) {
+    showInAppToast(`🎉 TEBRİKLER! 50 Anahtar Çekilişini Kazandınız! (${data.playerCount} oyuncu arasından)`, true);
+    try { window.soundEngine.playRareWin(); } catch(e) {}
+    try { launchConfetti(); } catch(e) {}
+  } else {
+    showInAppToast(`🎁 [${data.winnerUsername}] 50 Anahtar çekilişini kazandı!`, false);
+  }
+});
+
+socket.on('raffle:skipped', (data) => {
+  console.log('[RAFFLE]', data.message);
+});
+
+// ==========================================
+// INACTIVITY AUTO-LOGOUT SYSTEM
+// ==========================================
+// Sends activity:ping to server every 60s on user interaction
+// Server kicks after 10 min of no pings
+let _activityPingInterval = null;
+
+function startActivityTracking() {
+  if (_activityPingInterval) return;
+  // Send ping immediately on start, then every 60 seconds
+  socket.emit('activity:ping');
+  _activityPingInterval = setInterval(() => {
+    if (socket.connected) socket.emit('activity:ping');
+  }, 60000);
+}
+
+function resetActivityPing() {
+  // Reset the server-side inactivity timer on any user interaction
+  if (socket.connected) socket.emit('activity:ping');
+}
+
+// Track mouse/touch/keyboard/scroll as activity
+['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach(evt => {
+  document.addEventListener(evt, resetActivityPing, { passive: true });
+});
+
+// Forced logout by server (10min inactivity)
+socket.on('auth:forced_logout', (data) => {
+  clearInterval(_activityPingInterval);
+  _activityPingInterval = null;
+  currentUser = null;
+  showInAppToast(`⏳ ${data.message || '10 dakika hareketsiz kaldınız, oturum kapatıldı.'}`, false);
+  setTimeout(() => {
+    const loginModal = document.getElementById('loginModal');
+    if (loginModal) loginModal.style.display = 'flex';
+    const userTagBox = document.getElementById('userTagBox');
+    if (userTagBox) {
+      document.getElementById('userNameText').textContent = 'Giriş Yap';
+    }
+  }, 2000);
 });
 
 // Cases list push from server

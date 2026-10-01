@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>CASE CLASH | CS2 & VALORANT Skin Kasa Açma Oyunu</title>
   
   <!-- Google Fonts & Font Awesome -->
@@ -54,10 +54,16 @@
           <span style="margin-left:6px; background:rgba(234, 179, 8, 0.2); color:#facc15; border:1px solid rgba(234, 179, 8, 0.4); border-radius:4px; padding:2px 6px; font-size:0.7rem; font-weight:800;">+ ANAHTAR AL</span>
         </div>
 
-        <div class="balance-pill" id="creditTimerPill" style="background: rgba(234, 179, 8, 0.12); border: 1px solid rgba(234, 179, 8, 0.35); color: #facc15; font-weight: 700;" title="Çevrimiçi kaldığınız her 2 dakikada bir +1 Anahtar kazanırsınız">
+        <div class="balance-pill" id="creditTimerPill" style="background: rgba(234, 179, 8, 0.12); border: 1px solid rgba(234, 179, 8, 0.35); color: #facc15; font-weight: 700;" title="Çevrimiçi kaldığınız her dakika başı +1 Anahtar kazanırsınız">
           <i class="fa-solid fa-clock-rotate-left" style="color: #facc15;"></i>
           <span style="font-size: 0.8rem; margin: 0 4px; color: #cbd5e1;">+1 Anahtar:</span>
-          <span id="creditCountdownText" style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: #facc15;">02:00</span>
+          <span id="creditCountdownText" style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: #facc15;">01:00</span>
+        </div>
+
+        <div class="balance-pill" id="raffleTimerPill" style="background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.4); color: #c084fc; font-weight: 700;" title="Her 10 dakikada bir 50 Anahtar çekilişi (en az 3 çevrimiçi oyuncu)">
+          <i class="fa-solid fa-gift" style="color: #c084fc;"></i>
+          <span style="font-size: 0.8rem; margin: 0 4px; color: #cbd5e1;">50 Anahtar Çekilişi:</span>
+          <span id="raffleCountdownText" style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: #c084fc;">10:00</span>
         </div>
 
         <div class="user-tag" id="userTagBox" style="cursor:pointer;" title="Kullanıcı Girişi">
@@ -419,19 +425,19 @@
 
       <!-- Exchange Rate Explanation -->
       <div style="background:rgba(255, 255, 255, 0.04); border-radius:10px; padding:10px 14px; width:100%; margin-bottom:1.2rem; font-size:0.85rem; line-height:1.5; color:#cbd5e1; text-align:left;">
-        • <strong>1 Anahtar = 40 TL</strong><br>
+        • <strong>1 Anahtar = 20 TL</strong><br>
         • Skinlerinizi satarak TL kazanabilir ve kasa açmak için Anahtara dönüştürebilirsiniz.
       </div>
 
       <!-- Convert Section (Simplified) -->
       <div style="width:100%; text-align:left; margin-bottom:1rem;">
         <label style="font-size:0.85rem; font-weight:700; color:#e2e8f0; display:block; margin-bottom:8px;">
-          Alınacak Anahtar Miktarı (1 Anahtar = 40 TL):
+          Alınacak Anahtar Miktarı (1 Anahtar = 20 TL):
         </label>
         <div style="display:flex; gap:8px; margin-bottom:12px;">
           <input type="number" id="convertCaseInput" min="1" max="10000" value="1" style="flex:1; background:#0a0d14; border:1px solid var(--border-subtle); padding:10px 14px; border-radius:8px; color:#fff; font-size:1.1rem; font-weight:700;">
           <button class="btn-primary" id="btnConvertTLToCase" style="background:#10b981; white-space:nowrap; padding:10px 20px; font-weight:700;">
-            <i class="fa-solid fa-key"></i> Anahtar Al (<span id="convertRequiredTL">40</span> TL)
+            <i class="fa-solid fa-key"></i> Anahtar Al (<span id="convertRequiredTL">20</span> TL)
           </button>
         </div>
         <button type="button" class="btn-primary" id="btnConvertAllTL" style="width:100%; background:linear-gradient(135deg, #f59e0b, #d97706); padding:12px; font-size:0.95rem; font-weight:800; border-radius:8px; display:flex; align-items:center; justify-content:center; gap:8px; border:none; cursor:pointer;" title="Mevcut tüm TL bakiyenizi Anahtara dönüştürün">
