@@ -278,6 +278,15 @@ const VAL_SKINS = {
     basePrice: 2900,
     image: 'https://media.valorant-api.com/weaponskins/1cd09fbd-43cb-a5f6-90fa-08994342d747/displayicon.png'
   },
+  araxys_bio_harvester: {
+    id: 'val_araxys_bio_harvester',
+    name: 'Araxys Bio Harvester',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3200,
+    image: 'https://media.valorant-api.com/weaponskins/a486efac-4415-1bfa-68d1-19bca9968101/displayicon.png'
+  },
 
   // CHAMPIONS ALL YEARS (Eskiden Yeniye Değer Skalası: 2021 Karambit 17.000 TL, 2024 Bıçak 4.000 TL)
   champions_2021_karambit: {
@@ -702,7 +711,7 @@ const CASES = [
     image: 'https://media.valorant-api.com/weaponskins/4c926aa9-4f26-bc80-c486-9b888333373f/displayicon.png',
     items: [
       // 1 SARI (Gold / Knife)
-      { skin: VAL_SKINS.champions_2021_karambit, weight: 0.35 },
+      { skin: VAL_SKINS.araxys_bio_harvester, weight: 0.35 },
       // 2 KIRMIZI (Exclusive / Red)
       { skin: VAL_SKINS.araxys_vandal, weight: 3.5 },
       { skin: VAL_SKINS.glitchpop_vandal, weight: 3.5 },

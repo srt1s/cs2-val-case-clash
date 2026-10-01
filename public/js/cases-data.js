@@ -783,13 +783,13 @@ window.INITIAL_CASES = [
     "items": [
       {
         "skin": {
-          "id": "val_champions_2021_karambit",
-          "name": "Champions 2021 Karambit",
+          "id": "val_araxys_bio_harvester",
+          "name": "Araxys Bio Harvester",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 17000,
-          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
+          "basePrice": 3200,
+          "image": "https://media.valorant-api.com/weaponskins/a486efac-4415-1bfa-68d1-19bca9968101/displayicon.png"
         },
         "weight": 0.35
       },
