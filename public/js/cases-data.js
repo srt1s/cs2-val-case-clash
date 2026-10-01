@@ -463,7 +463,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champions_mystery",
-          "name": "Gizemli Limited Skin",
+          "name": "Gizemli Champions Skin",
           "weapon": "Champions Limited",
           "game": "val",
           "rarity": "knife",

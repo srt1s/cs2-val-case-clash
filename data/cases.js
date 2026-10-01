@@ -244,7 +244,7 @@ const VAL_SKINS = {
   // SARI (Gold / Knives)
   champions_mystery: {
     id: 'val_champions_mystery',
-    name: 'Gizemli Limited Skin',
+    name: 'Gizemli Champions Skin',
     weapon: 'Champions Limited',
     game: 'val',
     rarity: 'knife',
@@ -644,7 +644,7 @@ const CASES = [
     icon: 'fa-trophy',
     image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png',
     items: [
-      // 1 SARI (Gizemli Limited Skin - Rastgele Champions) +%12
+      // 1 SARI (Gizemli Champions Skin - Rastgele Champions) +%12
       { skin: VAL_SKINS.champions_mystery, weight: 0.6 },
       // 2 KIRMIZI (+%12: 480 -> 538, 440 -> 493)
       { skin: { ...VAL_SKINS.kuronami_vandal, basePrice: 538 }, weight: 3.5 },

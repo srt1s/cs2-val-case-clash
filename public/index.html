@@ -323,40 +323,57 @@
 
   <!-- TRADE PROPOSAL MODAL -->
   <div class="reveal-modal" id="tradeModal" style="display: none;">
-    <div class="reveal-card" style="max-width: 650px; border-color: #8847ff;">
-      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Takas Teklifi Gönder</h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;" id="tradeTargetInfo">Hedef Oyuncu: ...</p>
+    <div class="reveal-card" style="max-width: 760px; border-color: #8847ff;">
+      <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.3rem;"><i class="fa-solid fa-right-left" style="color:#8847ff; margin-right:8px;"></i>Takas Teklifi Gönder</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem;" id="tradeTargetInfo">Hedef Oyuncu: ...</p>
 
-      <div style="display: flex; gap: 1rem; width: 100%; text-align: left;">
-        <!-- My Offer -->
-        <div style="flex: 1; background: rgba(0,0,0,0.3); border-radius: 10px; padding: 0.75rem;">
-          <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #60a5fa;">Vereceğin Eşyalar:</h4>
-          <div id="tradeMyOfferList" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; text-align: left; margin-bottom: 1.2rem;">
+        <!-- Left: My Offer -->
+        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 10px; padding: 0.85rem;">
+          <h4 style="font-size: 0.9rem; margin-bottom: 0.6rem; color: #60a5fa; display: flex; align-items: center; justify-content: space-between;">
+            <span><i class="fa-solid fa-arrow-up"></i> Senin Vereceğin Eşyalar:</span>
+            <span id="myOfferSelectedCount" style="font-size: 0.75rem; color: #94a3b8;">0 seçildi</span>
+          </h4>
+          <div id="tradeMyOfferList" style="max-height: 230px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px;">
             <!-- Selectable items from my inventory -->
+          </div>
+        </div>
+
+        <!-- Right: Target's Items Requested -->
+        <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(250, 204, 21, 0.3); border-radius: 10px; padding: 0.85rem;">
+          <h4 style="font-size: 0.9rem; margin-bottom: 0.6rem; color: #facc15; display: flex; align-items: center; justify-content: space-between;">
+            <span><i class="fa-solid fa-arrow-down"></i> Karşıdan İstediğin Eşyalar:</span>
+            <span id="targetOfferSelectedCount" style="font-size: 0.75rem; color: #94a3b8;">0 seçildi</span>
+          </h4>
+          <div id="tradeTargetOfferList" style="max-height: 230px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-right: 4px;">
+            <!-- Selectable items from target inventory -->
+            <div style="color:var(--text-muted); font-size:0.85rem; padding: 20px 0; text-align: center;">Oyuncunun envanteri yükleniyor...</div>
           </div>
         </div>
       </div>
 
-      <div class="reveal-actions">
-        <button class="btn-secondary" id="btnCancelTrade">Vazgeç</button>
-        <button class="btn-primary" id="btnSendTradeOffer" style="background:#8847ff;">Teklifi Gönder</button>
+      <div class="reveal-actions" style="display:flex; justify-content:flex-end; gap:10px;">
+        <button class="btn-secondary" id="btnCancelTrade" type="button">Vazgeç</button>
+        <button class="btn-primary" id="btnSendTradeOffer" type="button" style="background: linear-gradient(135deg, #8847ff, #6366f1); font-weight: 700;">
+          <i class="fa-solid fa-paper-plane"></i> Teklifi Gönder
+        </button>
       </div>
     </div>
   </div>
 
   <!-- INCOMING TRADE OFFER POPUP -->
   <div class="reveal-modal" id="incomingTradeModal" style="display: none;">
-    <div class="reveal-card" style="max-width: 480px; border-color: #ffd700;">
+    <div class="reveal-card" style="max-width: 620px; border-color: #ffd700;">
       <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffd700;"><i class="fa-solid fa-handshake" style="margin-right:8px;"></i>Gelen Takas Teklifi</h3>
       <p id="incomingTradeSender" style="margin: 0.5rem 0 1rem 0; font-size: 0.95rem;"></p>
       
-      <div id="incomingTradeItems" style="width: 100%; background: rgba(0,0,0,0.3); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; max-height: 180px; overflow-y: auto;">
-        <!-- Items in offer -->
+      <div id="incomingTradeItems" style="width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 1.5rem; max-height: 260px; overflow-y: auto; text-align: left;">
+        <!-- Dynamically rendered offer details -->
       </div>
 
-      <div class="reveal-actions">
-        <button class="btn-secondary" id="btnDeclineTrade" style="background:#ef4444; color:white;">Reddet</button>
-        <button class="btn-primary" id="btnAcceptTrade" style="background:#10b981;">Kabul Et</button>
+      <div class="reveal-actions" style="display:flex; justify-content:center; gap:12px;">
+        <button class="btn-secondary" id="btnDeclineTrade" type="button" style="background:#ef4444; color:white; min-width: 120px;">Reddet</button>
+        <button class="btn-primary" id="btnAcceptTrade" type="button" style="background:#10b981; min-width: 120px;">Takası Onayla</button>
       </div>
     </div>
   </div>

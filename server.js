@@ -463,7 +463,7 @@ io.on('connection', (socket) => {
         });
 
         // Also post celebratory message in chat
-        const dropLabel = isChampionsGold ? '★ GİZEMLİ LİMİTED SKİN' : (isGold ? '★ EFSANEVİ BIÇAK' : 'GİZLİ (KIRMIZI)');
+        const dropLabel = isChampionsGold ? '★ GİZEMLİ CHAMPIONS SKIN' : (isGold ? '★ EFSANEVİ BIÇAK' : 'GİZLİ (KIRMIZI)');
         const alertMsg = {
           id: 'sys_' + Date.now(),
           userId: 'system',
@@ -750,6 +750,19 @@ io.on('connection', (socket) => {
     });
   });
 
+  // Trading: Fetch live inventory of target player
+  socket.on('trade:get_inventory', ({ targetUserId }) => {
+    const target = db.getUserById(targetUserId);
+    if (!target) {
+      return socket.emit('trade:error', { message: 'Hedef oyuncu bulunamadı.' });
+    }
+    socket.emit('trade:target_inventory', {
+      targetUserId: target.id,
+      targetUsername: target.username,
+      inventory: target.inventory || []
+    });
+  });
+
   // Trading: Propose trade offer
   socket.on('trade:create_offer', ({ targetUserId, offeredInstanceIds, requestedInstanceIds }) => {
     const session = activeSockets.get(socket.id);
@@ -762,12 +775,15 @@ io.on('connection', (socket) => {
       return socket.emit('trade:error', { message: 'Geçersiz takas hedefi.' });
     }
 
+    const cleanOfferedIds = Array.isArray(offeredInstanceIds) ? offeredInstanceIds : [];
+    const cleanRequestedIds = Array.isArray(requestedInstanceIds) ? requestedInstanceIds : [];
+
     // Validate offered items
-    const offeredItems = sender.inventory.filter(i => offeredInstanceIds.includes(i.instanceId));
-    const requestedItems = receiver.inventory.filter(i => requestedInstanceIds.includes(i.instanceId));
+    const offeredItems = sender.inventory.filter(i => cleanOfferedIds.includes(i.instanceId));
+    const requestedItems = receiver.inventory.filter(i => cleanRequestedIds.includes(i.instanceId));
 
     if (offeredItems.length === 0 && requestedItems.length === 0) {
-      return socket.emit('trade:error', { message: 'Lütfen en az bir eşya seçin.' });
+      return socket.emit('trade:error', { message: 'Lütfen takasa eklemek veya istemek için en az bir eşya seçin.' });
     }
 
     const tradeOffer = {
@@ -783,7 +799,10 @@ io.on('connection', (socket) => {
 
     db.db.tradeOffers.push(tradeOffer);
 
-    socket.emit('trade:offer_sent', { tradeOffer });
+    socket.emit('trade:offer_sent', { 
+      tradeOffer,
+      message: `"${receiver.username}" kullanıcısına takas teklifiniz başarıyla iletildi!` 
+    });
 
     // Send real-time notification to target
     for (const [sId, info] of activeSockets.entries()) {

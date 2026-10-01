@@ -951,7 +951,7 @@ socket.on('rare_drop:broadcast', (data) => {
   rareDropBanner.className = `rare-drop-banner ${isGold ? 'gold-drop' : ''}`;
   document.getElementById('rareDropIcon').innerHTML = isGold ? '<i class="fa-solid fa-crown" style="color:#ffd700;"></i>' : '<i class="fa-solid fa-fire" style="color:#ff4655;"></i>';
   const isChampionsGold = data.isChampionsGold || (data.caseId === 'val_champions_vault' && isGold);
-  document.getElementById('rareDropHeader').textContent = isChampionsGold ? '★ GİZEMLİ LİMİTED SKİN! ★' : (isGold ? '★ EFSANEVİ BIÇAK DÜŞÜŞÜ! ★' : 'GİZLİ (KIRMIZI) DÜŞÜŞÜ!');
+  document.getElementById('rareDropHeader').textContent = isChampionsGold ? '★ GİZEMLİ CHAMPIONS SKIN! ★' : (isGold ? '★ EFSANEVİ BIÇAK DÜŞÜŞÜ! ★' : 'GİZLİ (KIRMIZI) DÜŞÜŞÜ!');
   document.getElementById('rareDropText').innerHTML = `
     <strong>${escapeHtml(data.username)}</strong>, "${escapeHtml(data.caseName)}" kasasından 
     <span style="color:${isGold ? '#ffd700' : '#ff4655'};">${escapeHtml(data.item.name)}</span> çıkardı! (₺${data.item.basePrice})
@@ -1125,20 +1125,92 @@ socket.on('players:online', (players) => {
   renderOnlinePlayers();
 });
 
+// Trading: Received target player's live inventory for trade modal
+socket.on('trade:target_inventory', (data) => {
+  const targetOfferList = document.getElementById('tradeTargetOfferList');
+  const targetCounter = document.getElementById('targetOfferSelectedCount');
+  if (!targetOfferList) return;
+
+  targetOfferList.innerHTML = '';
+  
+  if (!data.inventory || data.inventory.length === 0) {
+    targetOfferList.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem; padding: 20px 0; text-align: center;">Bu oyuncunun envanterinde takas edilecek eşya bulunmuyor.</div>';
+    if (targetCounter) targetCounter.textContent = '0 seçildi';
+    return;
+  }
+
+  data.inventory.forEach(item => {
+    const row = document.createElement('label');
+    row.style.display = 'flex';
+    row.style.alignItems = 'center';
+    row.style.gap = '8px';
+    row.style.cursor = 'pointer';
+    row.style.background = 'rgba(255,255,255,0.03)';
+    row.style.padding = '6px 8px';
+    row.style.borderRadius = '6px';
+    row.style.border = '1px solid rgba(255,255,255,0.06)';
+    row.innerHTML = `
+      <input type="checkbox" class="target-trade-checkbox" value="${item.instanceId}">
+      <img src="${item.image}" style="width:28px; height:20px; object-fit:contain;">
+      <div style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.85rem;">
+        <span style="font-weight:600;">${escapeHtml(item.name)}</span>
+        <span style="color:#facc15; font-size:0.75rem; margin-left:4px;">(₺${item.basePrice})</span>
+      </div>
+    `;
+    targetOfferList.appendChild(row);
+  });
+
+  targetOfferList.querySelectorAll('.target-trade-checkbox').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const count = targetOfferList.querySelectorAll('.target-trade-checkbox:checked').length;
+      if (targetCounter) targetCounter.textContent = `${count} seçildi`;
+    });
+  });
+});
+
+socket.on('trade:offer_sent', (data) => {
+  showInAppToast(data.message || 'Takas teklifiniz oyuncuya iletildi!', true);
+  try { window.soundEngine.playWin(); } catch(e) {}
+});
+
 socket.on('trade:incoming_offer', (data) => {
   window.soundEngine.playNotification();
   const offer = data.tradeOffer;
-  document.getElementById('incomingTradeSender').innerHTML = `<strong>${escapeHtml(offer.fromUsername)}</strong> size takas teklifinde bulundu!`;
+  document.getElementById('incomingTradeSender').innerHTML = `
+    <strong>${escapeHtml(offer.fromUsername)}</strong> size bir takas teklifi gönderdi!
+  `;
 
   const container = document.getElementById('incomingTradeItems');
+  const offeredCount = offer.offeredItems ? offer.offeredItems.length : 0;
+  const requestedCount = offer.requestedItems ? offer.requestedItems.length : 0;
+
   container.innerHTML = `
-    <div style="font-weight:700; margin-bottom:0.5rem; color:#60a5fa;">Teklif Edilen Eşyalar:</div>
-    <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      ${offer.offeredItems.map(i => `
-        <div style="background:#1e2638; border:1px solid #334155; padding:6px 10px; border-radius:8px; font-size:0.8rem;">
-          ${escapeHtml(i.name)} (₺${i.basePrice})
-        </div>
-      `).join('')}
+    <div style="background:rgba(96, 165, 250, 0.08); border:1px solid rgba(96, 165, 250, 0.25); border-radius:8px; padding:10px;">
+      <div style="font-weight:700; font-size:0.85rem; color:#60a5fa; margin-bottom:6px; display:flex; justify-content:space-between;">
+        <span><i class="fa-solid fa-gift"></i> Karşı Tarafın Size Teklif Ettiği (${offeredCount} Eşya):</span>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; max-height:100px; overflow-y:auto;">
+        ${offeredCount === 0 ? '<span style="color:#94a3b8; font-size:0.8rem;">(Herhangi bir eşya teklif edilmedi)</span>' : offer.offeredItems.map(i => `
+          <div style="background:#1e2638; border:1px solid #334155; padding:5px 8px; border-radius:6px; font-size:0.8rem; display:flex; align-items:center; gap:6px;">
+            <img src="${i.image}" style="width:24px; height:18px; object-fit:contain;">
+            <span>${escapeHtml(i.name)} <strong style="color:#38bdf8;">(₺${i.basePrice})</strong></span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div style="background:rgba(250, 204, 21, 0.08); border:1px solid rgba(250, 204, 21, 0.25); border-radius:8px; padding:10px;">
+      <div style="font-weight:700; font-size:0.85rem; color:#facc15; margin-bottom:6px; display:flex; justify-content:space-between;">
+        <span><i class="fa-solid fa-hand-holding-hand"></i> Karşı Tarafın Sizden İstediği (${requestedCount} Eşya):</span>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; max-height:100px; overflow-y:auto;">
+        ${requestedCount === 0 ? '<span style="color:#94a3b8; font-size:0.8rem;">(Sizden herhangi bir eşya istenmedi / Hediye Teklifi)</span>' : offer.requestedItems.map(i => `
+          <div style="background:#1e2638; border:1px solid #334155; padding:5px 8px; border-radius:6px; font-size:0.8rem; display:flex; align-items:center; gap:6px;">
+            <img src="${i.image}" style="width:24px; height:18px; object-fit:contain;">
+            <span>${escapeHtml(i.name)} <strong style="color:#facc15;">(₺${i.basePrice})</strong></span>
+          </div>
+        `).join('')}
+      </div>
     </div>
   `;
 
@@ -1159,15 +1231,16 @@ socket.on('trade:completed', (data) => {
   currentUser.inventory = data.inventory;
   renderInventory();
   saveUserBackup(currentUser);
-  alert(data.message);
+  showInAppToast(data.message, true);
+  try { window.soundEngine.playRareFanfare(true); } catch(e) {}
 });
 
 socket.on('trade:declined', (data) => {
-  alert(data.message);
+  showInAppToast(data.message, false);
 });
 
 socket.on('trade:error', (data) => {
-  alert(data.message || 'Takas hatası.');
+  showInAppToast(data.message || 'Takas hatası.', false);
 });
 
 // 9. Chat Messages
@@ -1402,7 +1475,7 @@ function showRevealModal(item) {
   card.style.boxShadow = `0 0 50px ${getRarityColor(item.rarity)}66`;
 
   const isChampionsGold = (selectedCase && selectedCase.id === 'val_champions_vault' && item.rarity === 'knife') || item.id === 'val_champions_mystery';
-  document.getElementById('winningRarityBadge').textContent = isChampionsGold ? 'GİZEMLİ LİMİTED' : item.rarity.toUpperCase();
+  document.getElementById('winningRarityBadge').textContent = isChampionsGold ? 'GİZEMLİ CHAMPIONS' : item.rarity.toUpperCase();
   document.getElementById('winningRarityBadge').style.color = getRarityColor(item.rarity);
   document.getElementById('winningSkinName').textContent = item.name;
   document.getElementById('winningWeaponName').textContent = item.weapon;
@@ -1708,13 +1781,19 @@ function renderOnlinePlayers() {
 // Open Trade Modal
 function openTradeModal(targetPlayer) {
   const modal = tradeModal;
-  document.getElementById('tradeTargetInfo').textContent = `Hedef Oyuncu: ${targetPlayer.username}`;
+  document.getElementById('tradeTargetInfo').innerHTML = `Hedef Oyuncu: <strong style="color:#60a5fa;">${escapeHtml(targetPlayer.username)}</strong>`;
 
   const myOfferList = document.getElementById('tradeMyOfferList');
-  myOfferList.innerHTML = '';
+  const targetOfferList = document.getElementById('tradeTargetOfferList');
+  const myCounter = document.getElementById('myOfferSelectedCount');
+  const targetCounter = document.getElementById('targetOfferSelectedCount');
 
+  if (myCounter) myCounter.textContent = '0 seçildi';
+  if (targetCounter) targetCounter.textContent = '0 seçildi';
+
+  myOfferList.innerHTML = '';
   if (!currentUser || !currentUser.inventory || currentUser.inventory.length === 0) {
-    myOfferList.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem;">Envanterinizde teklif edilecek eşya yok.</div>';
+    myOfferList.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem; padding: 20px 0; text-align: center;">Envanterinizde teklif edilecek eşya yok.</div>';
   } else {
     currentUser.inventory.forEach(item => {
       const row = document.createElement('label');
@@ -1722,12 +1801,33 @@ function openTradeModal(targetPlayer) {
       row.style.alignItems = 'center';
       row.style.gap = '8px';
       row.style.cursor = 'pointer';
+      row.style.background = 'rgba(255,255,255,0.03)';
+      row.style.padding = '6px 8px';
+      row.style.borderRadius = '6px';
+      row.style.border = '1px solid rgba(255,255,255,0.06)';
       row.innerHTML = `
-        <input type="checkbox" value="${item.instanceId}">
-        <span>${escapeHtml(item.name)} (₺${item.basePrice})</span>
+        <input type="checkbox" class="my-trade-checkbox" value="${item.instanceId}">
+        <img src="${item.image}" style="width:28px; height:20px; object-fit:contain;">
+        <div style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.85rem;">
+          <span style="font-weight:600;">${escapeHtml(item.name)}</span>
+          <span style="color:#38bdf8; font-size:0.75rem; margin-left:4px;">(₺${item.basePrice})</span>
+        </div>
       `;
       myOfferList.appendChild(row);
     });
+
+    myOfferList.querySelectorAll('.my-trade-checkbox').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const count = myOfferList.querySelectorAll('.my-trade-checkbox:checked').length;
+        if (myCounter) myCounter.textContent = `${count} seçildi`;
+      });
+    });
+  }
+
+  // Request target player's inventory live
+  if (targetOfferList) {
+    targetOfferList.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem; padding: 20px 0; text-align: center;"><i class="fa-solid fa-spinner fa-spin"></i> Oyuncunun envanteri alınıyor...</div>';
+    socket.emit('trade:get_inventory', { targetUserId: targetPlayer.id });
   }
 
   document.getElementById('btnCancelTrade').onclick = () => {
@@ -1735,20 +1835,21 @@ function openTradeModal(targetPlayer) {
   };
 
   document.getElementById('btnSendTradeOffer').onclick = () => {
-    const selectedOffered = Array.from(myOfferList.querySelectorAll('input:checked')).map(i => i.value);
-    if (selectedOffered.length === 0) {
-      alert('Lütfen en az bir eşya seçin.');
+    const selectedOffered = Array.from(myOfferList.querySelectorAll('.my-trade-checkbox:checked')).map(i => i.value);
+    const selectedRequested = targetOfferList ? Array.from(targetOfferList.querySelectorAll('.target-trade-checkbox:checked')).map(i => i.value) : [];
+
+    if (selectedOffered.length === 0 && selectedRequested.length === 0) {
+      showInAppToast('Lütfen takasa eklemek veya istemek için en az bir eşya seçin.', false);
       return;
     }
 
     socket.emit('trade:create_offer', {
       targetUserId: targetPlayer.id,
       offeredInstanceIds: selectedOffered,
-      requestedInstanceIds: []
+      requestedInstanceIds: selectedRequested
     });
 
     modal.style.display = 'none';
-    alert('Takas teklifiniz oyuncuya iletildi!');
   };
 
   modal.style.display = 'flex';
