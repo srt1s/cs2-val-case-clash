@@ -121,6 +121,39 @@ function startNewLuckEvent() {
 initLuckCycle();
 
 // ==========================================
+// 2.5. 2-MINUTE AUTOMATIC CREDIT (+1 BAKİYE) REWARD CYCLE
+// ==========================================
+// Every 120 seconds (2 minutes), awards +1 Kasa Bakiyesi to all online users
+let creditRewardCountdown = 120;
+
+setInterval(() => {
+  if (creditRewardCountdown > 0) {
+    creditRewardCountdown--;
+  } else {
+    creditRewardCountdown = 120; // Reset to 2 minutes
+
+    const rewardedUserIds = new Set();
+    for (const session of activeSockets.values()) {
+      if (session.userId && !rewardedUserIds.has(session.userId)) {
+        rewardedUserIds.add(session.userId);
+        const newBalance = db.updateBalance(session.userId, 1);
+        const targetSocket = io.sockets.sockets.get(session.socketId);
+        if (targetSocket) {
+          targetSocket.emit('credit:reward', {
+            added: 1,
+            newBalance,
+            message: 'Çevrimiçi ödülü: +1 Kasa Bakiyesi hesabınıza tanımlandı.'
+          });
+        }
+      }
+    }
+  }
+
+  // Broadcast timer tick to sync UI every second
+  io.emit('credit_timer:tick', { remainingSeconds: creditRewardCountdown });
+}, 1000);
+
+// ==========================================
 // 3. MARKETPLACE 30-MINUTE BOT BUYOUT ENGINE
 // ==========================================
 // Map canonical skin base prices directly from CASES definitions
@@ -335,6 +368,7 @@ io.on('connection', (socket) => {
         isNewHwid: result.isNewHwid,
         bonusGiven: result.bonusGiven,
         luckEvent,
+        creditRemainingSeconds: creditRewardCountdown,
         market: db.db.market,
         chat: db.db.chat.slice(-50)
       });

@@ -495,9 +495,39 @@ socket.on('auth:success', (data) => {
     }
   }
 
+  if (data.creditRemainingSeconds !== undefined) {
+    const mins = Math.floor(data.creditRemainingSeconds / 60);
+    const secs = data.creditRemainingSeconds % 60;
+    const timerElem = document.getElementById('creditCountdownText');
+    if (timerElem) {
+      timerElem.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+  }
+
   renderInventory();
   renderMarket();
   saveUserBackup(currentUser);
+});
+
+// 2.5. Automatic 2-Minute Credit Reward Handlers
+socket.on('credit_timer:tick', (data) => {
+  const rem = data.remainingSeconds !== undefined ? data.remainingSeconds : 0;
+  const mins = Math.floor(rem / 60);
+  const secs = rem % 60;
+  const timerElem = document.getElementById('creditCountdownText');
+  if (timerElem) {
+    timerElem.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+});
+
+socket.on('credit:reward', (data) => {
+  if (currentUser) {
+    currentUser.balance = data.newBalance;
+    updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+    saveUserBackup(currentUser);
+    showInAppToast('+1 Kasa Bakiyesi eklendi. (2 dk çevrimiçi ödülü)', true);
+    try { window.soundEngine.playWin(); } catch(e) {}
+  }
 });
 
 // Cases list push from server
