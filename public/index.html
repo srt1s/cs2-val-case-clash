@@ -45,19 +45,19 @@
 
       <!-- Player Status & Header Actions -->
       <div class="header-actions">
-        <div class="balance-pill" id="btnOpenWalletModal" style="cursor:pointer;" title="Bakiye Al & TL Çevir">
+        <div class="balance-pill" id="btnOpenWalletModal" style="cursor:pointer;" title="Anahtar Al & TL Çevir">
           <i class="fa-solid fa-turkish-lira-sign" style="color:#38bdf8;"></i>
           <span id="userTlText">0</span> <small style="font-size:0.75rem; color:#38bdf8; margin-right:6px;">TL</small>
           <span style="opacity:0.3; margin: 0 4px;">|</span>
-          <i class="fa-solid fa-box-open" style="color:var(--accent-green);"></i>
-          <span id="userBalanceText">0</span> <small style="font-size:0.75rem; color:#a7f3d0;">KASA</small>
-          <span style="margin-left:6px; background:rgba(56, 189, 248, 0.2); color:#38bdf8; border:1px solid rgba(56, 189, 248, 0.4); border-radius:4px; padding:2px 6px; font-size:0.7rem; font-weight:800;">+ BAKİYE AL</span>
+          <i class="fa-solid fa-key" style="color:#facc15;"></i>
+          <span id="userBalanceText">0</span> <small style="font-size:0.75rem; color:#fef08a;">ANAHTAR</small>
+          <span style="margin-left:6px; background:rgba(234, 179, 8, 0.2); color:#facc15; border:1px solid rgba(234, 179, 8, 0.4); border-radius:4px; padding:2px 6px; font-size:0.7rem; font-weight:800;">+ ANAHTAR AL</span>
         </div>
 
-        <div class="balance-pill" id="creditTimerPill" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); color: #34d399; font-weight: 700;" title="Çevrimiçi kaldığınız her 2 dakikada bir +1 Kasa Bakiyesi kazanırsınız">
-          <i class="fa-solid fa-clock-rotate-left" style="color: #34d399;"></i>
-          <span style="font-size: 0.8rem; margin: 0 4px; color: #cbd5e1;">+1 Kredi:</span>
-          <span id="creditCountdownText" style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: #34d399;">02:00</span>
+        <div class="balance-pill" id="creditTimerPill" style="background: rgba(234, 179, 8, 0.12); border: 1px solid rgba(234, 179, 8, 0.35); color: #facc15; font-weight: 700;" title="Çevrimiçi kaldığınız her 2 dakikada bir +1 Anahtar kazanırsınız">
+          <i class="fa-solid fa-clock-rotate-left" style="color: #facc15;"></i>
+          <span style="font-size: 0.8rem; margin: 0 4px; color: #cbd5e1;">+1 Anahtar:</span>
+          <span id="creditCountdownText" style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: #facc15;">02:00</span>
         </div>
 
         <div class="user-tag" id="userTagBox" style="cursor:pointer;" title="Kullanıcı Girişi">
@@ -144,7 +144,7 @@
           </button>
           <div style="text-align: right;">
             <h2 id="openerCaseTitle" style="font-size: 1.6rem; font-weight: 800;">Kasa Adı</h2>
-            <div id="openerCasePrice" style="color: var(--accent-green); font-weight: 700;">1 Bakiye / Kasa</div>
+            <div id="openerCasePrice" style="color: #facc15; font-weight: 700;">1 Anahtar / Kasa</div>
           </div>
         </div>
 
@@ -376,12 +376,12 @@
     </div>
   </div>
 
-  <!-- WALLET / BAKIYE ALMA & TL ÇEVİRME MODAL -->
+  <!-- WALLET / ANAHTAR ALMA & TL ÇEVİRME MODAL -->
   <div class="reveal-modal" id="walletModal" style="display: none;">
     <div class="reveal-card" style="max-width: 500px; border-color: rgba(56, 189, 248, 0.4);">
       <div style="display:flex; justify-content:space-between; align-items:center; width:100%; margin-bottom:1.2rem;">
         <h2 style="font-size: 1.4rem; font-weight: 800; display:flex; align-items:center; gap:8px;">
-          <i class="fa-solid fa-wallet" style="color:#38bdf8;"></i> Bakiye & TL İşlemleri
+          <i class="fa-solid fa-key" style="color:#facc15;"></i> Anahtar & TL İşlemleri
         </h2>
         <button id="btnCloseWalletModal" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.3rem;">
           <i class="fa-solid fa-xmark"></i>
@@ -394,31 +394,31 @@
           <span style="font-size:0.8rem; color:#94a3b8; display:block;">TL BAKİYENİZ</span>
           <span style="font-size:1.5rem; font-weight:800; color:#38bdf8;" id="modalTlBalance">₺0</span>
         </div>
-        <div style="background:rgba(16, 185, 129, 0.1); border:1px solid rgba(16, 185, 129, 0.3); border-radius:12px; padding:12px; text-align:center;">
-          <span style="font-size:0.8rem; color:#94a3b8; display:block;">KASA BAKİYENİZ</span>
-          <span style="font-size:1.5rem; font-weight:800; color:#34d399;" id="modalCaseBalance">0</span>
+        <div style="background:rgba(234, 179, 8, 0.1); border:1px solid rgba(234, 179, 8, 0.3); border-radius:12px; padding:12px; text-align:center;">
+          <span style="font-size:0.8rem; color:#94a3b8; display:block;">ANAHTAR SAYINIZ</span>
+          <span style="font-size:1.5rem; font-weight:800; color:#facc15;" id="modalCaseBalance">0</span>
         </div>
       </div>
 
       <!-- Exchange Rate Explanation -->
       <div style="background:rgba(255, 255, 255, 0.04); border-radius:10px; padding:10px 14px; width:100%; margin-bottom:1.2rem; font-size:0.85rem; line-height:1.5; color:#cbd5e1; text-align:left;">
-        • <strong>1 Kasa Bakiyesi = 40 TL</strong><br>
-        • Skinlerinizi satarak TL kazanabilir ve kasa bakiyesine dönüştürebilirsiniz.
+        • <strong>1 Anahtar = 40 TL</strong><br>
+        • Skinlerinizi satarak TL kazanabilir ve kasa açmak için Anahtara dönüştürebilirsiniz.
       </div>
 
       <!-- Convert Section (Simplified) -->
       <div style="width:100%; text-align:left; margin-bottom:1rem;">
         <label style="font-size:0.85rem; font-weight:700; color:#e2e8f0; display:block; margin-bottom:8px;">
-          Alınacak Kasa Bakiyesi:
+          Alınacak Anahtar Miktarı (1 Anahtar = 40 TL):
         </label>
         <div style="display:flex; gap:8px; margin-bottom:12px;">
           <input type="number" id="convertCaseInput" min="1" max="10000" value="1" style="flex:1; background:#0a0d14; border:1px solid var(--border-subtle); padding:10px 14px; border-radius:8px; color:#fff; font-size:1.1rem; font-weight:700;">
           <button class="btn-primary" id="btnConvertTLToCase" style="background:#10b981; white-space:nowrap; padding:10px 20px; font-weight:700;">
-            <i class="fa-solid fa-arrows-rotate"></i> Çevir (<span id="convertRequiredTL">40</span> TL)
+            <i class="fa-solid fa-key"></i> Anahtar Al (<span id="convertRequiredTL">40</span> TL)
           </button>
         </div>
-        <button type="button" class="btn-primary" id="btnConvertAllTL" style="width:100%; background:linear-gradient(135deg, #f59e0b, #d97706); padding:12px; font-size:0.95rem; font-weight:800; border-radius:8px; display:flex; align-items:center; justify-content:center; gap:8px; border:none; cursor:pointer;" title="Mevcut tüm TL bakiyenizi Kasa Açma Bakiyesine dönüştürün">
-          <i class="fa-solid fa-bolt"></i> TÜM TL'Yİ KASAYA ÇEVİR
+        <button type="button" class="btn-primary" id="btnConvertAllTL" style="width:100%; background:linear-gradient(135deg, #f59e0b, #d97706); padding:12px; font-size:0.95rem; font-weight:800; border-radius:8px; display:flex; align-items:center; justify-content:center; gap:8px; border:none; cursor:pointer;" title="Mevcut tüm TL bakiyenizi Anahtara dönüştürün">
+          <i class="fa-solid fa-key"></i> TÜM TL'Yİ ANAHTARA ÇEVİR
         </button>
       </div>
     </div>
@@ -468,15 +468,15 @@
             <input type="number" id="adminAddTLInput" min="0" value="10000" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.65rem 0.9rem; border-radius: 8px; color: #38bdf8; font-size: 1.1rem; font-weight: 800;">
           </div>
           <div>
-            <label style="font-size: 0.85rem; color: #34d399; display: block; margin-bottom: 0.4rem; font-weight: 700;">Kasa Kredisi Ekle:</label>
-            <input type="number" id="adminAddCaseInput" min="0" value="100" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.65rem 0.9rem; border-radius: 8px; color: #34d399; font-size: 1.1rem; font-weight: 800;">
+            <label style="font-size: 0.85rem; color: #facc15; display: block; margin-bottom: 0.4rem; font-weight: 700;">Anahtar Ekle:</label>
+            <input type="number" id="adminAddCaseInput" min="0" value="100" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.65rem 0.9rem; border-radius: 8px; color: #facc15; font-size: 1.1rem; font-weight: 800;">
           </div>
         </div>
 
         <div style="display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap;">
-          <button type="button" class="btn-secondary admin-quick-btn" data-tl="5000" data-case="50" style="padding: 5px 10px; font-size: 0.8rem; cursor: pointer;">+₺5K / +50 Kasa</button>
-          <button type="button" class="btn-secondary admin-quick-btn" data-tl="25000" data-case="250" style="padding: 5px 10px; font-size: 0.8rem; cursor: pointer;">+₺25K / +250 Kasa</button>
-          <button type="button" class="btn-secondary admin-quick-btn" data-tl="100000" data-case="1000" style="padding: 5px 10px; font-size: 0.8rem; cursor: pointer;">+₺100K / +1000 Kasa</button>
+          <button type="button" class="btn-secondary admin-quick-btn" data-tl="5000" data-case="50" style="padding: 5px 10px; font-size: 0.8rem; cursor: pointer;">+₺5K / +50 Anahtar</button>
+          <button type="button" class="btn-secondary admin-quick-btn" data-tl="25000" data-case="250" style="padding: 5px 10px; font-size: 0.8rem; cursor: pointer;">+₺25K / +250 Anahtar</button>
+          <button type="button" class="btn-secondary admin-quick-btn" data-tl="100000" data-case="1000" style="padding: 5px 10px; font-size: 0.8rem; cursor: pointer;">+₺100K / +1000 Anahtar</button>
         </div>
 
         <button class="btn-primary" id="btnAdminGrantBalance" style="width: 100%; background: linear-gradient(135deg, #ef4444, #dc2626); padding: 0.85rem; font-weight: 800; font-size: 1rem; border: none; cursor: pointer; border-radius: 8px;">
@@ -491,7 +491,7 @@
     <div class="reveal-card" style="max-width: 440px; border-color: rgba(222, 155, 53, 0.4);">
       <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem;">CASE CLASH ARENA</h2>
       <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-        İlk girişe özel <strong style="color:var(--accent-green);">5 Kasa Bakiyesi</strong> hediye edilir.
+        İlk girişe özel <strong style="color:#facc15;">5 Anahtar</strong> hediye edilir.
       </p>
 
       <div style="width: 100%; text-align: left; margin-bottom: 1.5rem;">

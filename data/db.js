@@ -188,20 +188,20 @@ module.exports = {
     return user.tlBalance;
   },
 
-  // Convert TL to Kasa Balance (40 TL = 1 Bakiye)
+  // Convert TL to Key/Case Balance (40 TL = 1 Anahtar)
   convertTLToCaseBalance(userId, count) {
     const user = dbData.users[userId];
     if (!user) return { success: false, message: 'Kullanıcı bulunamadı.' };
     const caseCount = parseInt(count, 10);
     if (isNaN(caseCount) || caseCount <= 0) {
-      return { success: false, message: 'Geçersiz bakiye miktarı.' };
+      return { success: false, message: 'Geçersiz anahtar miktarı.' };
     }
     const requiredTL = caseCount * 40;
     if (user.tlBalance === undefined) user.tlBalance = 0;
     if (user.tlBalance < requiredTL) {
       return { 
         success: false, 
-        message: `Yetersiz TL bakiyesi! ${caseCount} bakiye almak için ₺${requiredTL} gerekiyor. Mevcut TL: ₺${user.tlBalance}` 
+        message: `Yetersiz TL bakiyesi! ${caseCount} anahtar almak için ₺${requiredTL} gerekiyor. Mevcut TL: ₺${user.tlBalance}` 
       };
     }
 

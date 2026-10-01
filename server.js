@@ -142,7 +142,7 @@ setInterval(() => {
           targetSocket.emit('credit:reward', {
             added: 1,
             newBalance,
-            message: 'Çevrimiçi ödülü: +1 Kasa Bakiyesi hesabınıza tanımlandı.'
+            message: 'Çevrimiçi ödülü: +1 Anahtar hesabınıza tanımlandı.'
           });
         }
       }
@@ -398,7 +398,7 @@ io.on('connection', (socket) => {
 
     // Validate balance
     if (user.balance < caseObj.cost) {
-      return socket.emit('case:error', { message: `Yetersiz bakiye! Bu kasa için ${caseObj.cost} bakiye gerekiyor.` });
+      return socket.emit('case:error', { message: `Yetersiz anahtar! Bu kasa için ${caseObj.cost} anahtar gerekiyor.` });
     }
 
     // Deduct cost
@@ -734,7 +734,7 @@ io.on('connection', (socket) => {
     }
 
     socket.emit('admin:success', {
-      message: `"${targetUser.username}" kullanıcısına +₺${addTL.toLocaleString()} TL ve +${addCase} Kasa Bakiyesi tanımlandı!`,
+      message: `"${targetUser.username}" kullanıcısına +₺${addTL.toLocaleString()} TL ve +${addCase} Anahtar tanımlandı!`,
       targetUsername: targetUser.username,
       newBalance: targetUser.balance,
       newTLBalance: targetUser.tlBalance

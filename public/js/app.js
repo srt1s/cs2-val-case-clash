@@ -165,7 +165,7 @@ function setupEventListeners() {
     if (!selectedCase || isSpinning) return;
     const cost = selectedCase.cost || 1;
     if (!currentUser || currentUser.balance < cost) {
-      alert(`Yetersiz bakiye! Bu kasa için ${cost} bakiye gerekiyor.`);
+      alert(`Yetersiz anahtar! Bu kasa için ${cost} anahtar gerekiyor.`);
       return;
     }
     isSpinning = true;
@@ -532,7 +532,7 @@ function setupEventListeners() {
 
       setTimeout(() => {
         btnAdminGrantBalance.disabled = false;
-        btnAdminGrantBalance.innerHTML = '<i class="fa-solid fa-gift"></i> BAKİYEYİ YÜKLE';
+        btnAdminGrantBalance.innerHTML = '<i class="fa-solid fa-gift"></i> ANAHTARLARI YÜKLE';
       }, 600);
     });
   }
@@ -541,7 +541,7 @@ function setupEventListeners() {
     btnConvert.addEventListener('click', () => {
       const count = parseInt(convertInput.value, 10);
       if (!count || count <= 0) {
-        showInAppToast('Lütfen geçerli bir bakiye miktarı girin.', false);
+        showInAppToast('Lütfen geçerli bir anahtar miktarı girin.', false);
         return;
       }
       socket.emit('wallet:convert_tl', { caseCount: count });
@@ -555,7 +555,7 @@ function setupEventListeners() {
       const userTL = currentUser && currentUser.tlBalance !== undefined ? currentUser.tlBalance : 0;
       const maxPossibleCases = Math.floor(userTL / 40);
       if (maxPossibleCases < 1) {
-        showInAppToast(`Yetersiz TL! En az ₺40 TL gerekir. (Mevcut: ₺${userTL} TL)`, false);
+        showInAppToast(`Yetersiz TL! 1 Anahtar için ₺40 TL gerekir. (Mevcut: ₺${userTL} TL)`, false);
         return;
       }
       if (convertInput && convertRequiredTL) {
@@ -748,7 +748,7 @@ socket.on('auth:success', (data) => {
   renderCases();
 
   if (data.isNewHwid && data.bonusGiven) {
-    showInAppToast('5 Kasa Bakiyesi hesabınıza tanımlandı.', true);
+    showInAppToast('5 Anahtar hesabınıza tanımlandı.', true);
     try { window.soundEngine.playRareFanfare(true); } catch(e) {}
   }
 
@@ -795,7 +795,7 @@ socket.on('credit:reward', (data) => {
     currentUser.balance = data.newBalance;
     updateBalanceUI(currentUser.balance, currentUser.tlBalance);
     saveUserBackup(currentUser);
-    showInAppToast('+1 Kasa Bakiyesi eklendi. (2 dk çevrimiçi ödülü)', true);
+    showInAppToast('+1 Anahtar eklendi. (2 dk çevrimiçi ödülü)', true);
     try { window.soundEngine.playWin(); } catch(e) {}
   }
 });
@@ -891,7 +891,7 @@ socket.on('case:error', (data) => {
   const cost = selectedCase ? (selectedCase.cost || 1) : 1;
   const btnText = document.getElementById('openCurrentCaseBtnText');
   if (btnText) {
-    btnText.textContent = `KASAYI AÇ (${cost} BAKİYE)`;
+    btnText.textContent = `KASAYI AÇ (${cost} ANAHTAR)`;
   }
   alert(data.message || 'Kasa açılamadı.');
 });
@@ -999,7 +999,7 @@ socket.on('wallet:converted', (data) => {
   currentUser.tlBalance = data.newTL;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   saveUserBackup(currentUser);
-  showInAppToast(`₺${data.costTL} TL karşılığında ${data.convertedCases} Kasa Bakiyesi alındı.`, true);
+  showInAppToast(`₺${data.costTL} TL karşılığında ${data.convertedCases} Anahtar alındı.`, true);
   try { window.soundEngine.playWin(); } catch(e) {}
 });
 
@@ -1141,6 +1141,7 @@ function renderCases() {
     const isBoosted = activeLuckEvent && activeLuckEvent.active && activeLuckEvent.caseId === c.id;
     const card = document.createElement('div');
     card.className = `case-card ${isBoosted ? 'boosted-case' : ''}`;
+    card.style.cursor = 'pointer';
     card.innerHTML = `
       ${isBoosted ? '<div class="boost-tag"><i class="fa-solid fa-arrow-trend-up"></i> +%3 ŞANS</div>' : ''}
       <div class="case-image-wrapper">
@@ -1148,12 +1149,12 @@ function renderCases() {
       </div>
       <h3 class="case-title">${c.name}</h3>
       <p class="case-subtitle">${c.subtitle}</p>
-      <button class="btn-open-case" data-id="${c.id}">
-        <i class="fa-solid fa-key"></i> KASAYI AÇ (${c.cost || 1} BAKİYE)
+      <button class="btn-open-case" data-id="${c.id}" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <i class="fa-solid fa-magnifying-glass"></i> KASAYI İNCELE (${c.cost || 1} ANAHTAR)
       </button>
     `;
 
-    card.querySelector('.btn-open-case').addEventListener('click', () => {
+    card.addEventListener('click', () => {
       openOpenerView(c);
     });
 
@@ -1166,10 +1167,10 @@ function openOpenerView(caseObj) {
   selectedCase = caseObj;
   const cost = caseObj.cost || 1;
   document.getElementById('openerCaseTitle').textContent = caseObj.name;
-  document.getElementById('openerCasePrice').innerHTML = `Maliyet: <strong>${cost} Bakiye</strong> | İçerik: ${caseObj.items.length} Eşya`;
+  document.getElementById('openerCasePrice').innerHTML = `Maliyet: <strong>${cost} Anahtar</strong> | İçerik: ${caseObj.items.length} Eşya`;
   const btnText = document.getElementById('openCurrentCaseBtnText');
   if (btnText) {
-    btnText.textContent = `KASAYI AÇ (${cost} BAKİYE)`;
+    btnText.textContent = `KASAYI AÇ (${cost} ANAHTAR)`;
   }
   
   // Render contents preview
@@ -1284,7 +1285,7 @@ function animateSpinner(strip, winningIndex, winningItem) {
     const cost = selectedCase ? (selectedCase.cost || 1) : 1;
     const btnText = document.getElementById('openCurrentCaseBtnText');
     if (btnText) {
-      btnText.textContent = `KASAYI AÇ (${cost} BAKİYE)`;
+      btnText.textContent = `KASAYI AÇ (${cost} ANAHTAR)`;
     }
 
     // Play victory sound
@@ -1545,8 +1546,8 @@ function renderMarket() {
 
     if (!isMine) {
       card.querySelector('.btn-list-market').addEventListener('click', () => {
-        if (!currentUser || currentUser.balance < listing.price) {
-          alert('Yetersiz bakiye!');
+        if (!currentUser || (currentUser.tlBalance || 0) < listing.price) {
+          alert('Yetersiz TL bakiyesi!');
           return;
         }
         if (confirm(`"${item.name}" eşyasını ₺${listing.price} karşılığında satın almak istiyor musunuz?`)) {
