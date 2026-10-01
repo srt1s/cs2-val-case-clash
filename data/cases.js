@@ -625,25 +625,154 @@ const CASES = [
   // ==========================================
   // === VALORANT CASES
   // ==========================================
-  // 1. ÖZEL CHAMPIONS KASASI (Her senenin Champions skini Sarı!)
+  // 1. ÖZEL CHAMPIONS KASASI — Sadece Champions skinleri, yıl bazlı nadirlik
   {
     id: 'val_champions_vault',
     name: 'Champions Kasası',
-    subtitle: '2021-2026 Champions Koleksiyonu',
+    subtitle: '2021-2026 Yıllarına Özel Champions Koleksiyonu',
     game: 'val',
-    cost: 10,
+    cost: 100,
     icon: 'fa-trophy',
     image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png',
     items: [
-      // 2 KIRMIZI (+%21: 538 -> 651, 493 -> 597)
-      { skin: { ...VAL_SKINS.kuronami_vandal, basePrice: 651 }, weight: 3.5 },
-      { skin: { ...VAL_SKINS.araxys_vandal, basePrice: 597 }, weight: 3.5 },
-      // DÜŞÜK KADEME (+%21: 1.34 -> 1.62, 2.02 -> 2.44, 1.79 -> 2.17, 1.68 -> 2.03, 2.8 -> 3.39)
-      { skin: { ...VAL_SKINS.smite_classic, basePrice: 1.62 }, weight: 25.0 },
-      { skin: { ...VAL_SKINS.luxe_ghost, basePrice: 2.44 }, weight: 22.0 },
-      { skin: { ...VAL_SKINS.convex_judge, basePrice: 2.17 }, weight: 18.0 },
-      { skin: { ...VAL_SKINS.schema_stinger, basePrice: 2.03 }, weight: 15.0 },
-      { skin: { ...VAL_SKINS.infantry_operator, basePrice: 3.39 }, weight: 12.4 }
+      // 2021 — SARI (Gold/Knife rarity) — En eski = En pahalı
+      {
+        skin: {
+          id: 'val_champs2021_vandal',
+          name: 'Champions 2021 Vandal',
+          weapon: 'Vandal',
+          game: 'val',
+          rarity: 'knife',
+          basePrice: 22000,
+          image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
+        },
+        weight: 0.5
+      },
+      {
+        skin: {
+          id: 'val_champs2021_knife',
+          name: 'Champions 2021 Karambit',
+          weapon: 'Melee',
+          game: 'val',
+          rarity: 'knife',
+          basePrice: 28000,
+          image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
+        },
+        weight: 0.3
+      },
+      // 2022 — KIRMIZI (Exclusive)
+      {
+        skin: {
+          id: 'val_champs2022_vandal',
+          name: 'Champions 2022 Vandal',
+          weapon: 'Vandal',
+          game: 'val',
+          rarity: 'exclusive',
+          basePrice: 14000,
+          image: 'https://media.valorant-api.com/weaponskins/bd0c9bfb-4a03-29ee-8a7f-84af90eb4b00/displayicon.png'
+        },
+        weight: 1.5
+      },
+      {
+        skin: {
+          id: 'val_champs2022_classic',
+          name: 'Champions 2022 Classic',
+          weapon: 'Classic',
+          game: 'val',
+          rarity: 'exclusive',
+          basePrice: 11000,
+          image: 'https://media.valorant-api.com/weaponskins/bd0c9bfb-4a03-29ee-8a7f-84af90eb4b00/displayicon.png'
+        },
+        weight: 2.0
+      },
+      // 2023 — PEMBE (Premium/Pink)
+      {
+        skin: {
+          id: 'val_champs2023_vandal',
+          name: 'Champions 2023 Vandal',
+          weapon: 'Vandal',
+          game: 'val',
+          rarity: 'premium',
+          basePrice: 8500,
+          image: 'https://media.valorant-api.com/weaponskins/e34a89f8-491b-8372-1d37-c39b2d5f83e3/displayicon.png'
+        },
+        weight: 4.5
+      },
+      {
+        skin: {
+          id: 'val_champs2023_sheriff',
+          name: 'Champions 2023 Sheriff',
+          weapon: 'Sheriff',
+          game: 'val',
+          rarity: 'premium',
+          basePrice: 6800,
+          image: 'https://media.valorant-api.com/weaponskins/e34a89f8-491b-8372-1d37-c39b2d5f83e3/displayicon.png'
+        },
+        weight: 5.5
+      },
+      // 2024 — KOYU MAVİ (Deluxe)
+      {
+        skin: {
+          id: 'val_champs2024_vandal',
+          name: 'Champions 2024 Vandal',
+          weapon: 'Vandal',
+          game: 'val',
+          rarity: 'deluxe',
+          basePrice: 4200,
+          image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
+        },
+        weight: 10.0
+      },
+      {
+        skin: {
+          id: 'val_champs2024_operator',
+          name: 'Champions 2024 Operator',
+          weapon: 'Operator',
+          game: 'val',
+          rarity: 'deluxe',
+          basePrice: 3500,
+          image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
+        },
+        weight: 11.5
+      },
+      // 2025 — MAVİ (Select/Blue)
+      {
+        skin: {
+          id: 'val_champs2025_vandal',
+          name: 'Champions 2025 Vandal',
+          weapon: 'Vandal',
+          game: 'val',
+          rarity: 'select',
+          basePrice: 1800,
+          image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
+        },
+        weight: 20.0
+      },
+      {
+        skin: {
+          id: 'val_champs2025_phantom',
+          name: 'Champions 2025 Phantom',
+          weapon: 'Phantom',
+          game: 'val',
+          rarity: 'select',
+          basePrice: 1500,
+          image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
+        },
+        weight: 22.0
+      },
+      // 2026 — GRİ (Standard/Gray)
+      {
+        skin: {
+          id: 'val_champs2026_vandal',
+          name: 'Champions 2026 Vandal',
+          weapon: 'Vandal',
+          game: 'val',
+          rarity: 'standard',
+          basePrice: 600,
+          image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
+        },
+        weight: 35.0 // Toplam ağırlık = 0.5+0.3+1.5+2.0+4.5+5.5+10.0+11.5+20.0+22.0+35.0 = 112.3 → normalize edilecek
+      }
     ]
   },
   {

@@ -454,95 +454,143 @@ window.INITIAL_CASES = [
   {
     "id": "val_champions_vault",
     "name": "Champions Kasası",
-    "subtitle": "2021-2026 Champions Koleksiyonu",
+    "subtitle": "2021-2026 Yıllarına Özel Champions Koleksiyonu",
     "game": "val",
-    "cost": 10,
+    "cost": 100,
     "icon": "fa-trophy",
     "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_kuronami_vandal",
-          "name": "Kuronami Vandal",
+          "id": "val_champs2021_vandal",
+          "name": "Champions 2021 Vandal",
           "weapon": "Vandal",
           "game": "val",
-          "rarity": "exclusive",
-          "basePrice": 651,
-          "image": "https://media.valorant-api.com/weaponskins/d8d5d7a1-4d81-8560-54bc-0692ab40f69b/displayicon.png"
+          "rarity": "knife",
+          "basePrice": 22000,
+          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
         },
-        "weight": 3.5
+        "weight": 0.5
       },
       {
         "skin": {
-          "id": "val_araxys_vandal",
-          "name": "Araxys Vandal",
-          "weapon": "Vandal",
+          "id": "val_champs2021_knife",
+          "name": "Champions 2021 Karambit",
+          "weapon": "Melee",
           "game": "val",
-          "rarity": "exclusive",
-          "basePrice": 597,
-          "image": "https://media.valorant-api.com/weaponskins/4c926aa9-4f26-bc80-c486-9b888333373f/displayicon.png"
+          "rarity": "knife",
+          "basePrice": 28000,
+          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
         },
-        "weight": 3.5
+        "weight": 0.3
       },
       {
         "skin": {
-          "id": "val_smite_classic",
-          "name": "Smite Classic",
+          "id": "val_champs2022_vandal",
+          "name": "Champions 2022 Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 14000,
+          "image": "https://media.valorant-api.com/weaponskins/bd0c9bfb-4a03-29ee-8a7f-84af90eb4b00/displayicon.png"
+        },
+        "weight": 1.5
+      },
+      {
+        "skin": {
+          "id": "val_champs2022_classic",
+          "name": "Champions 2022 Classic",
           "weapon": "Classic",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 1.62,
-          "image": "https://media.valorant-api.com/weaponskins/22fdc42d-4ad6-2bec-8033-8a8bdf178826/displayicon.png"
+          "rarity": "exclusive",
+          "basePrice": 11000,
+          "image": "https://media.valorant-api.com/weaponskins/bd0c9bfb-4a03-29ee-8a7f-84af90eb4b00/displayicon.png"
         },
-        "weight": 25
+        "weight": 2.0
       },
       {
         "skin": {
-          "id": "val_luxe_ghost",
-          "name": "Luxe Ghost",
-          "weapon": "Ghost",
+          "id": "val_champs2023_vandal",
+          "name": "Champions 2023 Vandal",
+          "weapon": "Vandal",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 2.44,
-          "image": "https://media.valorant-api.com/weaponskins/cb98b0d6-4e26-973c-c10d-a38637d04b65/displayicon.png"
+          "rarity": "premium",
+          "basePrice": 8500,
+          "image": "https://media.valorant-api.com/weaponskins/e34a89f8-491b-8372-1d37-c39b2d5f83e3/displayicon.png"
         },
-        "weight": 22
+        "weight": 4.5
       },
       {
         "skin": {
-          "id": "val_convex_judge",
-          "name": "Convex Judge",
-          "weapon": "Judge",
+          "id": "val_champs2023_sheriff",
+          "name": "Champions 2023 Sheriff",
+          "weapon": "Sheriff",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 2.17,
-          "image": "https://media.valorant-api.com/weaponskins/03751fa0-46db-0df3-b8cb-99adf373ecda/displayicon.png"
+          "rarity": "premium",
+          "basePrice": 6800,
+          "image": "https://media.valorant-api.com/weaponskins/e34a89f8-491b-8372-1d37-c39b2d5f83e3/displayicon.png"
         },
-        "weight": 18
+        "weight": 5.5
       },
       {
         "skin": {
-          "id": "val_schema_stinger",
-          "name": "Schema Stinger",
-          "weapon": "Stinger",
+          "id": "val_champs2024_vandal",
+          "name": "Champions 2024 Vandal",
+          "weapon": "Vandal",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 2.03,
-          "image": "https://media.valorant-api.com/weaponskins/46c8b165-4ba5-d42c-79e9-4fba8951ca48/displayicon.png"
+          "rarity": "deluxe",
+          "basePrice": 4200,
+          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
         },
-        "weight": 15
+        "weight": 10.0
       },
       {
         "skin": {
-          "id": "val_infantry_operator",
-          "name": "Infantry Operator",
+          "id": "val_champs2024_operator",
+          "name": "Champions 2024 Operator",
           "weapon": "Operator",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 3.39,
-          "image": "https://media.valorant-api.com/weaponskins/341ef273-43fb-7911-71e8-50adada4cee1/displayicon.png"
+          "rarity": "deluxe",
+          "basePrice": 3500,
+          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
         },
-        "weight": 12.4
+        "weight": 11.5
+      },
+      {
+        "skin": {
+          "id": "val_champs2025_vandal",
+          "name": "Champions 2025 Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 1800,
+          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
+        },
+        "weight": 20.0
+      },
+      {
+        "skin": {
+          "id": "val_champs2025_phantom",
+          "name": "Champions 2025 Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 1500,
+          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
+        },
+        "weight": 22.0
+      },
+      {
+        "skin": {
+          "id": "val_champs2026_vandal",
+          "name": "Champions 2026 Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "standard",
+          "basePrice": 600,
+          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
+        },
+        "weight": 35.0
       }
     ]
   },

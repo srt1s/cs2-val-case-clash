@@ -568,15 +568,16 @@ body {
 }
 
 /* Rarity Bar Colors */
-.rarity-knife { background: var(--rarity-knife); box-shadow: 0 0 10px var(--rarity-knife); }
-.rarity-covert { background: var(--rarity-covert); box-shadow: 0 0 10px var(--rarity-covert); }
-.rarity-exclusive { background: var(--rarity-covert); box-shadow: 0 0 10px var(--rarity-covert); }
-.rarity-classified { background: var(--rarity-classified); box-shadow: 0 0 8px var(--rarity-classified); }
-.rarity-premium { background: var(--rarity-classified); box-shadow: 0 0 8px var(--rarity-classified); }
-.rarity-restricted { background: var(--rarity-restricted); box-shadow: 0 0 8px var(--rarity-restricted); }
-.rarity-deluxe { background: var(--rarity-restricted); box-shadow: 0 0 8px var(--rarity-restricted); }
-.rarity-milspec { background: var(--rarity-milspec); box-shadow: 0 0 6px var(--rarity-milspec); }
-.rarity-select { background: var(--rarity-milspec); box-shadow: 0 0 6px var(--rarity-milspec); }
+.rarity-knife    { background: var(--rarity-knife);       box-shadow: 0 0 10px var(--rarity-knife); }
+.rarity-covert   { background: var(--rarity-covert);      box-shadow: 0 0 10px var(--rarity-covert); }
+.rarity-exclusive{ background: var(--rarity-covert);      box-shadow: 0 0 10px var(--rarity-covert); }
+.rarity-classified{ background: var(--rarity-classified); box-shadow: 0 0 8px var(--rarity-classified); }
+.rarity-premium  { background: var(--rarity-classified);  box-shadow: 0 0 8px var(--rarity-classified); }
+.rarity-restricted{ background: var(--rarity-restricted); box-shadow: 0 0 8px var(--rarity-restricted); }
+.rarity-deluxe   { background: #1e40af;                   box-shadow: 0 0 8px #1e40af; } /* Koyu mavi */
+.rarity-milspec  { background: var(--rarity-milspec);     box-shadow: 0 0 6px var(--rarity-milspec); }
+.rarity-select   { background: #3b82f6;                   box-shadow: 0 0 6px #3b82f6; } /* Mavi */
+.rarity-standard { background: #64748b;                   box-shadow: 0 0 4px #64748b; } /* Gri */
 
 /* Winning Item Reveal Modal */
 .reveal-modal {
