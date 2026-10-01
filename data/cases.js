@@ -253,7 +253,7 @@ const VAL_SKINS = {
   },
   reaver_karambit: {
     id: 'val_reaver_karambit',
-    name: 'Reaver Karambit (Yağmacı)',
+    name: 'Reaver Karambit',
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
@@ -262,7 +262,7 @@ const VAL_SKINS = {
   },
   ignite_fan: {
     id: 'val_ignite_fan',
-    name: 'Ignite Fan (Flâneur Yelpaze)',
+    name: 'Ignite Fan',
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
@@ -327,7 +327,7 @@ const VAL_SKINS = {
   },
   champions_2024_blade: {
     id: 'val_champions_2024_blade',
-    name: 'Champions 2024 Blade (Katana)',
+    name: 'Champions 2024 Blade',
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
@@ -356,7 +356,7 @@ const VAL_SKINS = {
   },
   elderflame_vandal: {
     id: 'val_elderflame_vandal',
-    name: 'Elderflame Vandal (Ejder)',
+    name: 'Elderflame Vandal',
     weapon: 'Vandal',
     game: 'val',
     rarity: 'exclusive',
@@ -365,7 +365,7 @@ const VAL_SKINS = {
   },
   reaver_vandal: {
     id: 'val_reaver_vandal',
-    name: 'Reaver Vandal (Yağmacı)',
+    name: 'Reaver Vandal',
     weapon: 'Vandal',
     game: 'val',
     rarity: 'exclusive',
@@ -374,7 +374,7 @@ const VAL_SKINS = {
   },
   prime_vandal: {
     id: 'val_prime_vandal',
-    name: 'Prime Vandal (Asil)',
+    name: 'Prime Vandal',
     weapon: 'Vandal',
     game: 'val',
     rarity: 'exclusive',
@@ -400,10 +400,10 @@ const VAL_SKINS = {
     image: 'https://media.valorant-api.com/weaponskins/74789f33-4632-8052-96d7-258538721a32/displayicon.png'
   },
 
-  // ÇÖP SKİNLER (Select / Deluxe - Low Tier Trash)
+  // DÜŞÜK KADEME SKİNLER (Select / Deluxe)
   smite_classic: {
     id: 'val_smite_classic',
-    name: 'Smite Classic (Çöp)',
+    name: 'Smite Classic',
     weapon: 'Classic',
     game: 'val',
     rarity: 'select',
@@ -412,7 +412,7 @@ const VAL_SKINS = {
   },
   luxe_ghost: {
     id: 'val_luxe_ghost',
-    name: 'Luxe Ghost (Çöp)',
+    name: 'Luxe Ghost',
     weapon: 'Ghost',
     game: 'val',
     rarity: 'select',
@@ -421,7 +421,7 @@ const VAL_SKINS = {
   },
   infantry_operator: {
     id: 'val_infantry_operator',
-    name: 'Infantry Operator (Çöp)',
+    name: 'Infantry Operator',
     weapon: 'Operator',
     game: 'val',
     rarity: 'select',
@@ -430,7 +430,7 @@ const VAL_SKINS = {
   },
   convex_judge: {
     id: 'val_convex_judge',
-    name: 'Convex Judge (Çöp)',
+    name: 'Convex Judge',
     weapon: 'Judge',
     game: 'val',
     rarity: 'select',
@@ -439,7 +439,7 @@ const VAL_SKINS = {
   },
   schema_stinger: {
     id: 'val_schema_stinger',
-    name: 'Schema Stinger (Çöp)',
+    name: 'Schema Stinger',
     weapon: 'Stinger',
     game: 'val',
     rarity: 'select',
@@ -448,7 +448,7 @@ const VAL_SKINS = {
   },
   sensation_vandal: {
     id: 'val_sensation_vandal',
-    name: 'Sensation Vandal (Çöp)',
+    name: 'Sensation Vandal',
     weapon: 'Vandal',
     game: 'val',
     rarity: 'select',
@@ -457,7 +457,7 @@ const VAL_SKINS = {
   },
   endeavour_bulldog: {
     id: 'val_endeavour_bulldog',
-    name: 'Endeavour Bulldog (Çöp)',
+    name: 'Endeavour Bulldog',
     weapon: 'Bulldog',
     game: 'val',
     rarity: 'select',
@@ -466,7 +466,7 @@ const VAL_SKINS = {
   },
   altitude_odin: {
     id: 'val_altitude_odin',
-    name: 'Altitude Odin (Çöp)',
+    name: 'Altitude Odin',
     weapon: 'Odin',
     game: 'val',
     rarity: 'select',
@@ -483,10 +483,10 @@ const CASES = [
   {
     id: 'cs2_kilowatt',
     name: 'Kilowatt Kasası',
-    subtitle: 'İlk Resmi CS2 Kasası & Kelebek Bıçak Şansı',
+    subtitle: 'İlk Resmi CS2 Kasası',
     game: 'cs2',
     cost: 1,
-    icon: '⚡',
+    icon: 'fa-bolt',
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnEVvqf_a6VoIfGSXz7Hlbwg57QwSS_mxhl15jiGyN37c3_GZw91W8BwRflK7EfKsa2sfw',
     items: [
       // 1 SARI (Gold / Knife)
@@ -507,10 +507,10 @@ const CASES = [
   {
     id: 'cs2_dreams_nightmares',
     name: 'Rüyalar ve Kâbuslar Kasası',
-    subtitle: '★ Doppler Kelebek & Karambit Heyecanı',
+    subtitle: 'Doppler Bıçak Koleksiyonu',
     game: 'cs2',
     cost: 1,
-    icon: '🌙',
+    icon: 'fa-moon',
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnIV7Kb5OaU-JqfHDzXFle0u4LY8Gy_kkRgisGzcm4v4J3vDOAQmDMdyRvlK7EcmeCU3yw',
     items: [
       // 1 SARI (Gold / Knife)
@@ -531,10 +531,10 @@ const CASES = [
   {
     id: 'cs2_revolution',
     name: 'Devrim Kasası',
-    subtitle: 'M4A4 Howl, Printstream & Karambit',
+    subtitle: 'M4A4 Howl & Printstream',
     game: 'cs2',
     cost: 1,
-    icon: '🔥',
+    icon: 'fa-fire',
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnAVvfb6aqduc_TFVjTCxbx05OU4S3jilE9w4DzRnImtIy2Sa1JzDJEhRPlK7EcO4U8gfA',
     items: [
       // 1 SARI (Gold / Knife)
@@ -557,7 +557,7 @@ const CASES = [
     subtitle: 'M9 Bayonet Lore & Kill Confirmed',
     game: 'cs2',
     cost: 1,
-    icon: '🎯',
+    icon: 'fa-crosshairs',
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnMVu6b-avA-JqSSCjSWwuhz47U9TCzlxh9yt2WGnNqgIi-fbgUkWMNxFPlK7EdIJF6a2Q',
     items: [
       // 1 SARI (Gold / Knife)
@@ -581,11 +581,11 @@ const CASES = [
   // 1. ÖZEL CHAMPIONS KASASI (Her senenin Champions skini Sarı!)
   {
     id: 'val_champions_vault',
-    name: 'Champions Kasası (Özel)',
-    subtitle: '2021-2024 Tüm Champions Skinleri Sarı! (10 Bakiye)',
+    name: 'Champions Kasası',
+    subtitle: '2021-2024 Champions Koleksiyonu',
     game: 'val',
     cost: 10,
-    icon: '🏆',
+    icon: 'fa-trophy',
     image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png',
     items: [
       // 1 SARI (Gold / Knife - Rastgele Champions Skini)
@@ -593,7 +593,7 @@ const CASES = [
       // 2 KIRMIZI
       { skin: VAL_SKINS.kuronami_vandal, weight: 3.5 },
       { skin: VAL_SKINS.araxys_vandal, weight: 3.5 },
-      // ÇÖP SKİNLER
+      // DÜŞÜK KADEME
       { skin: VAL_SKINS.smite_classic, weight: 25.0 },
       { skin: VAL_SKINS.luxe_ghost, weight: 22.0 },
       { skin: VAL_SKINS.convex_judge, weight: 18.0 },
@@ -604,10 +604,10 @@ const CASES = [
   {
     id: 'val_kuronami_edition',
     name: 'Kuronami Koleksiyon Kasası',
-    subtitle: '1 Sarı (Yaiba) + 2 Kırmızı + Çöpler',
+    subtitle: '1 Sarı, 2 Kırmızı',
     game: 'val',
     cost: 1,
-    icon: '🌊',
+    icon: 'fa-water',
     image: 'https://media.valorant-api.com/weaponskins/e37229ed-4ddf-5e7e-e744-8fba60fa2c37/displayicon.png',
     items: [
       // 1 SARI (Gold / Knife)
@@ -615,7 +615,7 @@ const CASES = [
       // 2 KIRMIZI (Exclusive / Red)
       { skin: VAL_SKINS.kuronami_vandal, weight: 3.5 },
       { skin: VAL_SKINS.elderflame_vandal, weight: 3.5 },
-      // KALANLAR ÇÖP (Select / Deluxe Trash)
+      // KALANLAR (Select / Deluxe)
       { skin: VAL_SKINS.smite_classic, weight: 25.0 },
       { skin: VAL_SKINS.luxe_ghost, weight: 22.0 },
       { skin: VAL_SKINS.infantry_operator, weight: 18.0 },
@@ -626,10 +626,10 @@ const CASES = [
   {
     id: 'val_reaver_prime_edition',
     name: 'Yağmacı & Asil Kasası',
-    subtitle: '1 Sarı (Karambit) + 2 Kırmızı + Çöpler',
+    subtitle: '1 Sarı, 2 Kırmızı',
     game: 'val',
     cost: 1,
-    icon: '🔮',
+    icon: 'fa-gem',
     image: 'https://media.valorant-api.com/weaponskins/b73d7b16-4652-bc5b-5c4c-068aabb19d0a/displayicon.png',
     items: [
       // 1 SARI (Gold / Knife)
@@ -637,7 +637,7 @@ const CASES = [
       // 2 KIRMIZI (Exclusive / Red)
       { skin: VAL_SKINS.reaver_vandal, weight: 3.5 },
       { skin: VAL_SKINS.prime_vandal, weight: 3.5 },
-      // KALANLAR ÇÖP (Select / Deluxe Trash)
+      // KALANLAR (Select / Deluxe)
       { skin: VAL_SKINS.endeavour_bulldog, weight: 25.0 },
       { skin: VAL_SKINS.luxe_ghost, weight: 22.0 },
       { skin: VAL_SKINS.convex_judge, weight: 18.0 },
@@ -648,10 +648,10 @@ const CASES = [
   {
     id: 'val_araxys_glitchpop',
     name: 'Araxys & Kaos Kasası',
-    subtitle: '1 Sarı (2021 Karambit) + 2 Kırmızı + Çöpler',
+    subtitle: '1 Sarı, 2 Kırmızı',
     game: 'val',
     cost: 1,
-    icon: '👑',
+    icon: 'fa-crown',
     image: 'https://media.valorant-api.com/weaponskins/4c926aa9-4f26-bc80-c486-9b888333373f/displayicon.png',
     items: [
       // 1 SARI (Gold / Knife)
@@ -659,7 +659,7 @@ const CASES = [
       // 2 KIRMIZI (Exclusive / Red)
       { skin: VAL_SKINS.araxys_vandal, weight: 3.5 },
       { skin: VAL_SKINS.glitchpop_vandal, weight: 3.5 },
-      // KALANLAR ÇÖP (Select / Deluxe Trash)
+      // KALANLAR (Select / Deluxe)
       { skin: VAL_SKINS.smite_classic, weight: 25.0 },
       { skin: VAL_SKINS.altitude_odin, weight: 22.0 },
       { skin: VAL_SKINS.sensation_vandal, weight: 18.0 },
@@ -670,10 +670,10 @@ const CASES = [
   {
     id: 'val_flaneur_edition',
     name: 'Flâneur & Yelpaze Kasası',
-    subtitle: '1 Sarı (Ignite Fan) + 2 Kırmızı + Çöpler',
+    subtitle: '1 Sarı, 2 Kırmızı',
     game: 'val',
     cost: 1,
-    icon: '🪭',
+    icon: 'fa-fan',
     image: 'https://media.valorant-api.com/weaponskins/1cd09fbd-43cb-a5f6-90fa-08994342d747/displayicon.png',
     items: [
       // 1 SARI (Gold / Knife)
@@ -681,7 +681,7 @@ const CASES = [
       // 2 KIRMIZI (Exclusive / Red)
       { skin: VAL_SKINS.kuronami_vandal, weight: 3.5 },
       { skin: VAL_SKINS.prime_vandal, weight: 3.5 },
-      // KALANLAR ÇÖP (Select / Deluxe Trash)
+      // KALANLAR (Select / Deluxe)
       { skin: VAL_SKINS.luxe_ghost, weight: 24.0 },
       { skin: VAL_SKINS.smite_classic, weight: 22.0 },
       { skin: VAL_SKINS.convex_judge, weight: 18.0 },

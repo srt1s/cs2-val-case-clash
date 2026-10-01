@@ -73,14 +73,14 @@
 
   <!-- 4-Minute Timed Luck Event Banner -->
   <div class="luck-event-banner" id="luckEventBanner">
-    <span>🔥 <strong id="luckEventTitle">ŞANS ETKİNLİĞİ:</strong></span>
+    <span><strong id="luckEventTitle">ŞANS ETKİNLİĞİ:</strong></span>
     <span id="luckEventDesc">Yükleniyor...</span>
     <span class="event-countdown" id="luckEventCountdown">00:00</span>
   </div>
 
   <!-- Global Rare Drop Announcement Banner (Red / Gold only) -->
   <div class="rare-drop-banner" id="rareDropBanner" style="display: none;">
-    <div style="font-size: 2rem;" id="rareDropIcon">🎉</div>
+    <div style="font-size: 2rem;" id="rareDropIcon"><i class="fa-solid fa-trophy" style="color:var(--accent-gold);"></i></div>
     <div>
       <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;" id="rareDropHeader">EFSANEVİ DÜŞÜŞ!</div>
       <div style="font-size: 1.05rem; font-weight: 700;" id="rareDropText"></div>
@@ -100,7 +100,7 @@
           </div>
           <div>
             <h3 style="font-size: 1.2rem; font-weight: 800;">COUNTER-STRIKE 2</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Bıçaklar, Dragon Lore, Howl & Covert</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">CS2 Kasaları</p>
           </div>
         </div>
 
@@ -110,7 +110,7 @@
           </div>
           <div>
             <h3 style="font-size: 1.2rem; font-weight: 800;">VALORANT</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Kuronami Yaiba, Şampiyonlar & Yağmacı</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Valorant Kasaları</p>
           </div>
         </div>
       </div>
@@ -164,7 +164,7 @@
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
         <div>
           <h2 style="font-size: 1.6rem; font-weight: 800;">Envanterim</h2>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">Kasadan çıkardığınız skinleri anında satabilir veya pazara koyabilirsiniz.</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Envanterinizdeki eşyalar.</p>
         </div>
         <div style="font-weight: 700; color: var(--accent-green);" id="invTotalValue">
           Toplam Değer: ₺0
@@ -181,7 +181,7 @@
         <div>
           <h2 style="font-size: 1.6rem; font-weight: 800;">Oyuncu Pazarı</h2>
           <p style="color: var(--text-muted); font-size: 0.9rem;">
-            Skinlerinizi satın. <strong style="color:#ffca28;">30 dakika içinde satılmazsa sistem botu skini %86 fiyatına otomatik satın alır!</strong> (Son 5 dk kala uyarı verilir)
+            30 dakika satılmayan eşyaları bot %86 taban fiyatına alır.
           </p>
         </div>
       </div>
@@ -194,7 +194,7 @@
     <section id="viewTrading" class="app-view" style="display: none;">
       <div style="margin-bottom: 1.5rem;">
         <h2 style="font-size: 1.6rem; font-weight: 800;">Çevrimiçi Oyuncular & Takas</h2>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">Aktif oyunculara doğrudan takas teklifi gönderin, karşılıklı skin değişimi yapın.</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Aktif oyuncularla takas yapın.</p>
       </div>
       <div class="cases-grid" id="onlinePlayersGrid">
         <!-- Online users cards -->
@@ -230,8 +230,8 @@
     <div class="reveal-card" style="max-width: 400px; border-color: #3b82f6;">
       <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Pazara Eşya Koy</h3>
       <div style="background:rgba(255, 255, 255, 0.05); border-radius:10px; padding:10px; margin-bottom:1rem; font-size:0.85rem; color:#cbd5e1; text-align:left; line-height:1.5;">
-        <div>🏷️ <strong>Skin Gerçek Taban Değeri:</strong> <span id="modalBasePrice" style="color:var(--accent-green); font-weight:700;">₺0</span></div>
-        <div style="margin-top:4px; font-size:0.8rem; color:#94a3b8;">🤖 <strong>Bot Garantisi:</strong> 30 dk satılmazsa bot, koyduğunuz fiyata değil; skinin <u>gerçek taban değerinin %86'sına</u> (<span id="modalBotPrice" style="color:#fbbf24; font-weight:700;">₺0</span>) otomatik alır.</div>
+        <div><strong>Taban Değer:</strong> <span id="modalBasePrice" style="color:var(--accent-green); font-weight:700;">₺0</span></div>
+        <div style="margin-top:4px; font-size:0.8rem; color:#94a3b8;">30 dakika satılmazsa bot %86 fiyatına (<span id="modalBotPrice" style="color:#fbbf24; font-weight:700;">₺0</span>) alır.</div>
       </div>
       <img id="marketModalImg" src="" alt="" style="width: 140px; height: 100px; object-fit: contain; margin-bottom: 1rem;">
       <div id="marketModalName" style="font-weight: 700; margin-bottom: 1rem;"></div>
@@ -274,7 +274,7 @@
   <!-- INCOMING TRADE OFFER POPUP -->
   <div class="reveal-modal" id="incomingTradeModal" style="display: none;">
     <div class="reveal-card" style="max-width: 480px; border-color: #ffd700;">
-      <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffd700;">🤝 Gelen Takas Teklifi!</h3>
+      <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffd700;"><i class="fa-solid fa-handshake" style="margin-right:8px;"></i>Gelen Takas Teklifi</h3>
       <p id="incomingTradeSender" style="margin: 0.5rem 0 1rem 0; font-size: 0.95rem;"></p>
       
       <div id="incomingTradeItems" style="width: 100%; background: rgba(0,0,0,0.3); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; max-height: 180px; overflow-y: auto;">
@@ -291,11 +291,11 @@
   <!-- MULTI-TAB HWID LOCKOUT SCREEN (Blocks duplicate tabs on same HWID) -->
   <div class="multi-tab-lockout" id="multiTabLockoutModal" style="display: none;">
     <div class="lockout-card">
-      <div class="lockout-icon">🚫</div>
+      <div class="lockout-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
       <h2 style="font-size: 1.8rem; font-weight: 800; color: #ef4444; margin-bottom: 1rem;">AYNI HWID İLE AÇIK OTURUM!</h2>
       <p style="font-size: 1.05rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 1.5rem;" id="multiTabLockoutMessage">
-        Bu cihazdan (HWID) zaten başka bir aktif tarayıcı sekmesinde giriş yapılmış durumda!<br><br>
-        Adil oyun politikası gereği aynı anda birden fazla sekme açılamaz. Lütfen diğer sekmeyi kapatın veya mevcut sekmeyi yenileyin.
+        Bu cihazdan zaten başka bir sekmede giriş yapılmış durumda.<br><br>
+        Lütfen diğer sekmeyi kapatın veya sayfayı yenileyin.
       </p>
       <button class="btn-primary" onclick="window.location.reload();" style="max-width: 200px;">
         <i class="fa-solid fa-rotate-right"></i> Yeniden Dene
@@ -328,13 +328,9 @@
       </div>
 
       <!-- Exchange Rate Explanation -->
-      <div style="background:rgba(255, 255, 255, 0.04); border-radius:10px; padding:12px; width:100%; margin-bottom:1.2rem; font-size:0.85rem; line-height:1.5; color:#cbd5e1; text-align:left;">
-        <div style="font-weight:700; color:#fbbf24; margin-bottom:4px;">
-          <i class="fa-solid fa-circle-info"></i> Kur & Sistem Bilgisi:
-        </div>
-        • <strong>1 Kasa Açma Bakiyesi = 40 TL</strong>'dir.<br>
-        • Çıkardığınız skinleri anında satarak veya pazarda diğer oyunculara satarak TL bakiyesi kazanırsınız.<br>
-        • TL bakiyenizi bu ekrandan Kasa Açma Bakiyesine dönüştürebilirsiniz.
+      <div style="background:rgba(255, 255, 255, 0.04); border-radius:10px; padding:10px 14px; width:100%; margin-bottom:1.2rem; font-size:0.85rem; line-height:1.5; color:#cbd5e1; text-align:left;">
+        • <strong>1 Kasa Bakiyesi = 40 TL</strong><br>
+        • Skinlerinizi satarak TL kazanabilir ve kasa bakiyesine dönüştürebilirsiniz.
       </div>
 
       <!-- Convert Section -->
@@ -367,7 +363,7 @@
     <div class="reveal-card" style="max-width: 440px; border-color: rgba(222, 155, 53, 0.4);">
       <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem;">CASE CLASH ARENA</h2>
       <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-        İlk defa giriş yapıyorsanız HWID adresinize özel <strong style="color:var(--accent-green);">5 ÜCRETSİZ BAKİYE (5 KASA)</strong> hediye edilir!
+        İlk girişe özel <strong style="color:var(--accent-green);">5 Kasa Bakiyesi</strong> hediye edilir.
       </p>
 
       <div style="width: 100%; text-align: left; margin-bottom: 1.5rem;">

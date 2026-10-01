@@ -270,7 +270,7 @@ function setupEventListeners() {
       const userTL = currentUser && currentUser.tlBalance !== undefined ? currentUser.tlBalance : 0;
       const maxPossibleCases = Math.floor(userTL / 40);
       if (maxPossibleCases < 1) {
-        showInAppToast(`⚠️ Yetersiz TL! Kasa bakiyesine çevirmek için en az ₺40 TL gerekir. Mevcut: ₺${userTL} TL`, false);
+        showInAppToast(`Yetersiz TL! En az ₺40 TL gerekir. (Mevcut: ₺${userTL} TL)`, false);
         return;
       }
       if (convertInput && convertRequiredTL) {
@@ -416,7 +416,7 @@ socket.on('auth:success', (data) => {
   renderCases();
 
   if (data.isNewHwid && data.bonusGiven) {
-    showInAppToast('🎉 HOŞ GELDİNİZ! Cihazınıza özel 5 ÜCRETSİZ BAKİYE (5 KASA) hesabınıza eklendi!', true);
+    showInAppToast('5 Kasa Bakiyesi hesabınıza tanımlandı.', true);
     try { window.soundEngine.playRareFanfare(true); } catch(e) {}
   }
 
@@ -467,11 +467,11 @@ function updateLuckEventUI(event) {
   luckEventCountdown.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 
   if (event.active) {
-    luckEventTitle.textContent = `🔥 ŞANS ETKİNLİĞİ AKTİF:`;
+    luckEventTitle.innerHTML = '<i class="fa-solid fa-bolt" style="color:var(--accent-gold); margin-right:6px;"></i> ŞANS ETKİNLİĞİ AKTİF:';
     luckEventDesc.innerHTML = `<strong style="color:#ffca28;">[${event.caseName}]</strong> Kasasında Kırmızı & Sarı çıkarma şansı <strong>+%3 ARTTI!</strong>`;
     luckEventBanner.style.background = 'linear-gradient(90deg, rgba(222, 155, 53, 0.25), rgba(255, 70, 85, 0.3), rgba(222, 155, 53, 0.25))';
   } else {
-    luckEventTitle.textContent = `⏳ MOLA:`;
+    luckEventTitle.innerHTML = '<i class="fa-regular fa-clock" style="margin-right:6px;"></i> MOLA:';
     luckEventDesc.textContent = `Bir sonraki rastgele kasa şans etkinliği başlıyor...`;
     luckEventBanner.style.background = 'rgba(20, 27, 40, 0.8)';
   }
@@ -495,7 +495,7 @@ socket.on('rare_drop:broadcast', (data) => {
   } catch (e) {}
 
   rareDropBanner.className = `rare-drop-banner ${isGold ? 'gold-drop' : ''}`;
-  document.getElementById('rareDropIcon').textContent = isGold ? '👑' : '🔥';
+  document.getElementById('rareDropIcon').innerHTML = isGold ? '<i class="fa-solid fa-crown" style="color:#ffd700;"></i>' : '<i class="fa-solid fa-fire" style="color:#ff4655;"></i>';
   document.getElementById('rareDropHeader').textContent = isGold ? '★ EFSANEVİ BIÇAK DÜŞÜŞÜ! ★' : 'GİZLİ (KIRMIZI) DÜŞÜŞÜ!';
   document.getElementById('rareDropText').innerHTML = `
     <strong>${escapeHtml(data.username)}</strong>, "${escapeHtml(data.caseName)}" kasasından 
@@ -540,12 +540,12 @@ socket.on('market:updated', (updatedMarket) => {
 socket.on('market:listed_success', (data) => {
   if (data.inventory) currentUser.inventory = data.inventory;
   renderInventory();
-  showInAppToast('✅ Eşyanız pazarda başarıyla listelendi!', true);
+  showInAppToast('Eşyanız pazarda başarıyla listelendi.', true);
 });
 
 socket.on('market:warning_5min', (data) => {
   window.soundEngine.playNotification();
-  alert(`⚠️ PAZAR UYARISI:\n"${data.itemName}" eşyanızın satılması için son 5 dakika!\nSüre bitince sistem botu eşyanızı koyduğunuz fiyata değil, GERÇEK TABAN DEĞERİ (₺${data.officialBasePrice} TL) üzerinden %86 fiyatına (₺${data.botPrice} TL) otomatik olarak satın alacaktır.`);
+  alert(`PAZAR UYARISI:\n"${data.itemName}" eşyanızın satılması için son 5 dakika.\nSüre bitince sistem botu eşyanızı taban değeri (₺${data.officialBasePrice} TL) üzerinden %86 fiyatına (₺${data.botPrice} TL) otomatik olarak satın alacaktır.`);
 });
 
 socket.on('market:bot_bought', (data) => {
@@ -553,7 +553,7 @@ socket.on('market:bot_bought', (data) => {
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
   if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
-  alert(`🤖 BOT SATIN ALDI:\n"${data.itemName}" eşyanız 30 dakika boyunca diğer oyunculara satılmadığı için bot tarafından skinin GERÇEK TABAN DEĞERİ (₺${data.officialBasePrice} TL) baz alınarak %86'sına (₺${data.botPrice} TL) satın alındı ve TL bakiyenize eklendi!`);
+  alert(`SİSTEM ALIMI:\n"${data.itemName}" eşyanız 30 dakika satılmadığı için bot tarafından taban değeri (₺${data.officialBasePrice} TL) üzerinden %86 fiyatına (₺${data.botPrice} TL) satın alındı ve TL bakiyenize eklendi.`);
 });
 
 socket.on('market:item_sold_to_player', (data) => {
@@ -561,7 +561,7 @@ socket.on('market:item_sold_to_player', (data) => {
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
   if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
-  alert(`💰 EŞYANIZ SATILDI!\n"${data.itemName}" eşyanızı ${data.buyerName} oyuncusu ₺${data.price} TL fiyata satın aldı!`);
+  alert(`EŞYANIZ SATILDI\n"${data.itemName}" eşyanızı ${data.buyerName} oyuncusu ₺${data.price} TL fiyata satın aldı.`);
 });
 
 socket.on('market:buy_success', (data) => {
@@ -570,7 +570,7 @@ socket.on('market:buy_success', (data) => {
   currentUser.inventory = data.inventory;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   renderInventory();
-  showInAppToast(`✅ Eşya başarıyla satın alındı ve envanterinize eklendi: ${data.item.name}`, true);
+  showInAppToast(`Eşya satın alındı: ${data.item.name}`, true);
 });
 
 socket.on('market:error', (data) => {
@@ -584,7 +584,7 @@ socket.on('inventory:sold', (data) => {
   currentUser.inventory = data.inventory;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   renderInventory();
-  showInAppToast(`💰 Eşya satıldı: +₺${data.sellPrice} TL bakiyenize eklendi!`, true);
+  showInAppToast(`Eşya satıldı: +₺${data.sellPrice} TL`, true);
 });
 
 // 8. Wallet Events (TL -> Kasa Bakiye Çevirme)
@@ -592,7 +592,7 @@ socket.on('wallet:converted', (data) => {
   currentUser.balance = data.newBalance;
   currentUser.tlBalance = data.newTL;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
-  showInAppToast(`🎉 ₺${data.costTL} TL karşılığında ${data.convertedCases} Kasa Bakiyesi alındı!`, true);
+  showInAppToast(`₺${data.costTL} TL karşılığında ${data.convertedCases} Kasa Bakiyesi alındı.`, true);
   try { window.soundEngine.playWin(); } catch(e) {}
 });
 
@@ -639,7 +639,7 @@ socket.on('trade:incoming_offer', (data) => {
 socket.on('trade:completed', (data) => {
   currentUser.inventory = data.inventory;
   renderInventory();
-  alert(`🤝 ${data.message}`);
+  alert(data.message);
 });
 
 socket.on('trade:declined', (data) => {
@@ -713,7 +713,7 @@ function renderCases() {
     const card = document.createElement('div');
     card.className = `case-card ${isBoosted ? 'boosted-case' : ''}`;
     card.innerHTML = `
-      ${isBoosted ? '<div class="boost-tag">🔥 +%3 ŞANS</div>' : ''}
+      ${isBoosted ? '<div class="boost-tag"><i class="fa-solid fa-arrow-trend-up"></i> +%3 ŞANS</div>' : ''}
       <div class="case-image-wrapper">
         <img src="${c.image}" alt="${c.name}" class="case-image">
       </div>
@@ -1009,7 +1009,7 @@ function renderMarket() {
     card.className = 'skin-item-card';
     card.innerHTML = `
       <div class="market-timer-badge ${is5Min ? 'warning-5min' : ''}" data-expires="${listing.expiresAt}">
-        ${is5Min ? '⚠️ ' : ''}${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}
+        ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}
       </div>
       <img src="${item.image}" alt="${item.name}" class="skin-item-img">
       <div class="skin-item-name" title="${item.name}">${item.name}</div>
@@ -1052,7 +1052,7 @@ function renderMarketTimers() {
     const is5Min = timeLeft <= 5 * 60 * 1000;
 
     b.className = `market-timer-badge ${is5Min ? 'warning-5min' : ''}`;
-    b.textContent = `${is5Min ? '⚠️ ' : ''}${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    b.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   });
 }
 

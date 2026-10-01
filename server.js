@@ -114,7 +114,7 @@ function startNewLuckEvent() {
   };
   io.emit('luck_event:update', luckEvent);
   io.emit('chat:system_alert', {
-    text: `🔥 ŞANS ETKİNLİĞİ BAŞLADI: [${randomCase.name}] kasasında 3 dakika boyunca Kırmızı & Sarı çıkarma şansı +%3 arttırıldı!`
+    text: `ŞANS ETKİNLİĞİ: [${randomCase.name}] kasasında 3 dakika boyunca Kırmızı & Sarı çıkarma şansı +%3 arttırıldı.`
   });
 }
 
@@ -297,7 +297,7 @@ io.on('connection', (socket) => {
           } else {
             console.log(`[AUTH] Multi-tab blocked for HWID: ${finalHwid}`);
             return socket.emit('auth:blocked_multi_tab', {
-              message: '⚠️ BU CİHAZDAN ZATEN AKTİF BİR SEKMEDE GİRİŞ YAPILMIŞ!\nAynı anda birden fazla sekme açamazsınız. Lütfen diğer sekmeyi kapatın.'
+              message: 'BU CİHAZDAN ZATEN AKTİF BİR SEKMEDE GİRİŞ YAPILMIŞ!\nLütfen diğer sekmeyi kapatın.'
             });
           }
         }
@@ -416,8 +416,8 @@ io.on('connection', (socket) => {
         const alertMsg = {
           id: 'sys_' + Date.now(),
           userId: 'system',
-          username: '🏆 SERVER DROP',
-          text: `🔥 [${user.username}] az önce "${caseObj.name}" kasasından ${isGold ? '★ EFSANEVİ BIÇAK' : 'GİZLİ (KIRMIZI)'} ${wonSkin.name} çıkardı! (Değer: ₺${wonSkin.basePrice})`,
+          username: 'SERVER DROP',
+          text: `[${user.username}], "${caseObj.name}" kasasından ${isGold ? '★ EFSANEVİ BIÇAK' : 'GİZLİ (KIRMIZI)'} ${wonSkin.name} çıkardı! (₺${wonSkin.basePrice})`,
           timestamp: Date.now(),
           isHighlight: true
         };
