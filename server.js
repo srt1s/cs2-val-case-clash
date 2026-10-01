@@ -234,14 +234,34 @@ function pickWinningItem(caseObj, isBoosted) {
   const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
   let randomVal = Math.random() * totalWeight;
 
+  let wonSkin = items[items.length - 1].skin;
   for (const entry of items) {
     if (randomVal < entry.weight) {
-      return entry.skin;
+      wonSkin = entry.skin;
+      break;
     }
     randomVal -= entry.weight;
   }
 
-  return items[items.length - 1].skin;
+  // If Champions Vault case drops Gold (knife), award one of the 8 Champions skins at random
+  if (caseObj.id === 'val_champions_vault' && wonSkin.rarity === 'knife') {
+    const { VAL_SKINS } = require('./data/cases');
+    const champSkins = [
+      VAL_SKINS.champions_2021_karambit,
+      VAL_SKINS.champions_2021_vandal,
+      VAL_SKINS.champions_2022_butterfly,
+      VAL_SKINS.champions_2022_phantom,
+      VAL_SKINS.champions_2023_kunai,
+      VAL_SKINS.champions_2023_vandal,
+      VAL_SKINS.champions_2024_blade,
+      VAL_SKINS.champions_2024_phantom
+    ].filter(Boolean);
+    if (champSkins.length > 0) {
+      wonSkin = champSkins[Math.floor(Math.random() * champSkins.length)];
+    }
+  }
+
+  return wonSkin;
 }
 
 // ==========================================

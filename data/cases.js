@@ -489,17 +489,19 @@ const CASES = [
     icon: '⚡',
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnEVvqf_a6VoIfGSXz7Hlbwg57QwSS_mxhl15jiGyN37c3_GZw91W8BwRflK7EfKsa2sfw',
     items: [
-      { skin: CS2_SKINS.bfk_fade, weight: 0.25 },
-      { skin: CS2_SKINS.dlore, weight: 0.3 },
-      { skin: CS2_SKINS.fire_serpent, weight: 1.5 },
-      { skin: CS2_SKINS.printstream_m4, weight: 3.5 },
+      // 1 SARI (Gold / Knife)
+      { skin: CS2_SKINS.bfk_fade, weight: 0.35 },
+      // 2 KIRMIZI (Covert / Red)
+      { skin: CS2_SKINS.dlore, weight: 1.5 },
+      { skin: CS2_SKINS.fire_serpent, weight: 3.5 },
+      // PEMBE & MOR
       { skin: CS2_SKINS.case_hardened, weight: 9.0 },
       { skin: CS2_SKINS.redline_ak, weight: 20.0 },
       { skin: CS2_SKINS.slate, weight: 30.0 },
-      // 3 Mavi (Mil-Spec)
+      // 3 MAVİ (Mil-Spec)
       { skin: CS2_SKINS.high_beam, weight: 12.0 },
       { skin: CS2_SKINS.ak47_uncharted, weight: 12.0 },
-      { skin: CS2_SKINS.m4a4_magnesium, weight: 11.45 }
+      { skin: CS2_SKINS.m4a4_magnesium, weight: 11.65 }
     ]
   },
   {
@@ -511,17 +513,19 @@ const CASES = [
     icon: '🌙',
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnIV7Kb5OaU-JqfHDzXFle0u4LY8Gy_kkRgisGzcm4v4J3vDOAQmDMdyRvlK7EcmeCU3yw',
     items: [
-      { skin: CS2_SKINS.bfk_doppler, weight: 0.25 },
-      { skin: CS2_SKINS.karambit_fade, weight: 0.35 },
+      // 1 SARI (Gold / Knife)
+      { skin: CS2_SKINS.bfk_doppler, weight: 0.4 },
+      // 2 KIRMIZI (Covert / Red)
       { skin: CS2_SKINS.asiimov, weight: 4.5 },
       { skin: CS2_SKINS.kill_confirmed, weight: 5.5 },
+      // PEMBE & MOR
       { skin: CS2_SKINS.water_elemental, weight: 15.0 },
       { skin: CS2_SKINS.slate, weight: 20.0 },
       { skin: CS2_SKINS.atheris, weight: 18.0 },
-      // 3 Mavi (Mil-Spec)
+      // 3 MAVİ (Mil-Spec)
       { skin: CS2_SKINS.cortex, weight: 12.2 },
-      { skin: CS2_SKINS.awp_capillary, weight: 12.1 },
-      { skin: CS2_SKINS.mac10_ensnared, weight: 12.1 }
+      { skin: CS2_SKINS.awp_capillary, weight: 12.2 },
+      { skin: CS2_SKINS.mac10_ensnared, weight: 12.2 }
     ]
   },
   {
@@ -533,16 +537,18 @@ const CASES = [
     icon: '🔥',
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnAVvfb6aqduc_TFVjTCxbx05OU4S3jilE9w4DzRnImtIy2Sa1JzDJEhRPlK7EcO4U8gfA',
     items: [
-      { skin: CS2_SKINS.karambit_fade, weight: 0.3 },
-      { skin: CS2_SKINS.howl, weight: 0.4 },
-      { skin: CS2_SKINS.printstream_deagle, weight: 3.0 },
-      { skin: CS2_SKINS.printstream_m4, weight: 3.5 },
+      // 1 SARI (Gold / Knife)
+      { skin: CS2_SKINS.karambit_fade, weight: 0.35 },
+      // 2 KIRMIZI (Covert / Red)
+      { skin: CS2_SKINS.howl, weight: 1.5 },
+      { skin: CS2_SKINS.printstream_deagle, weight: 3.5 },
+      // PEMBE & MOR
       { skin: CS2_SKINS.case_hardened, weight: 9.0 },
       { skin: CS2_SKINS.redline_ak, weight: 22.0 },
-      // 3 Mavi (Mil-Spec)
-      { skin: CS2_SKINS.cortex, weight: 20.6 },
-      { skin: CS2_SKINS.high_beam, weight: 20.6 },
-      { skin: CS2_SKINS.ak47_elite_build, weight: 20.6 }
+      // 3 MAVİ (Mil-Spec)
+      { skin: CS2_SKINS.cortex, weight: 21.2 },
+      { skin: CS2_SKINS.high_beam, weight: 21.2 },
+      { skin: CS2_SKINS.ak47_elite_build, weight: 21.25 }
     ]
   },
   {
@@ -554,16 +560,18 @@ const CASES = [
     icon: '🎯',
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frnMVu6b-avA-JqSSCjSWwuhz47U9TCzlxh9yt2WGnNqgIi-fbgUkWMNxFPlK7EdIJF6a2Q',
     items: [
-      { skin: CS2_SKINS.m9_lore, weight: 0.35 },
-      { skin: CS2_SKINS.skeleton_slaughter, weight: 0.45 },
+      // 1 SARI (Gold / Knife)
+      { skin: CS2_SKINS.m9_lore, weight: 0.45 },
+      // 2 KIRMIZI (Covert / Red)
       { skin: CS2_SKINS.kill_confirmed, weight: 4.5 },
       { skin: CS2_SKINS.printstream_m4, weight: 5.0 },
+      // PEMBE & MOR
       { skin: CS2_SKINS.water_elemental, weight: 16.0 },
       { skin: CS2_SKINS.slate, weight: 35.0 },
-      // 3 Mavi (Mil-Spec)
+      // 3 MAVİ (Mil-Spec)
       { skin: CS2_SKINS.cortex, weight: 13.0 },
       { skin: CS2_SKINS.glock_polymer, weight: 13.0 },
-      { skin: CS2_SKINS.m4a4_magnesium, weight: 12.7 }
+      { skin: CS2_SKINS.m4a4_magnesium, weight: 13.05 }
     ]
   },
 
@@ -580,15 +588,8 @@ const CASES = [
     icon: '🏆',
     image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png',
     items: [
-      // TÜM SENELERİN CHAMPIONS SKİNLERİ (SARI / GOLD)
-      { skin: VAL_SKINS.champions_2021_karambit, weight: 0.08 },
-      { skin: VAL_SKINS.champions_2021_vandal, weight: 0.08 },
-      { skin: VAL_SKINS.champions_2022_butterfly, weight: 0.08 },
-      { skin: VAL_SKINS.champions_2022_phantom, weight: 0.08 },
-      { skin: VAL_SKINS.champions_2023_kunai, weight: 0.08 },
-      { skin: VAL_SKINS.champions_2023_vandal, weight: 0.08 },
-      { skin: VAL_SKINS.champions_2024_blade, weight: 0.08 },
-      { skin: VAL_SKINS.champions_2024_phantom, weight: 0.08 },
+      // 1 SARI (Gold / Knife - Rastgele Champions Skini)
+      { skin: VAL_SKINS.champions_2024_blade, weight: 0.6 },
       // 2 KIRMIZI
       { skin: VAL_SKINS.kuronami_vandal, weight: 3.5 },
       { skin: VAL_SKINS.araxys_vandal, weight: 3.5 },
@@ -597,7 +598,7 @@ const CASES = [
       { skin: VAL_SKINS.luxe_ghost, weight: 22.0 },
       { skin: VAL_SKINS.convex_judge, weight: 18.0 },
       { skin: VAL_SKINS.schema_stinger, weight: 15.0 },
-      { skin: VAL_SKINS.infantry_operator, weight: 12.86 }
+      { skin: VAL_SKINS.infantry_operator, weight: 12.4 }
     ]
   },
   {

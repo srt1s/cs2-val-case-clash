@@ -18,7 +18,7 @@ window.INITIAL_CASES = [
           "basePrice": 3200,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Z-ua6bbZrLOmsD2avx-9ytd5lRi67gVNwsDvSwtqqc3iXZg4kCZYjReYLtRbum9XgYuvm5wbWjtgUzCn3iSsf8G81tFEeH9rw"
         },
-        "weight": 0.25
+        "weight": 0.35
       },
       {
         "skin": {
@@ -30,7 +30,7 @@ window.INITIAL_CASES = [
           "basePrice": 4500,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk4veqYaF7IfysCnWRxuF4j-B-Xxa_nBovp3Pdwtj9cC_GaAd0DZdwQu9fuhS4kNy0NePntVTbjYpCyyT_3CgY5i9j_a9cBkcCWUKV"
         },
-        "weight": 0.3
+        "weight": 1.5
       },
       {
         "skin": {
@@ -41,18 +41,6 @@ window.INITIAL_CASES = [
           "rarity": "covert",
           "basePrice": 950,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0PSneqF-JeKDC2mE_u995LZWTTuygxIYvzSCkpu3cnvFPQB2DpUkROFY4Rntw93lP7i241DbiI1BxSuviHlKunk_6-sHU71lpPMTRLyP4Q"
-        },
-        "weight": 1.5
-      },
-      {
-        "skin": {
-          "id": "cs2_printstream_m4",
-          "name": "M4A1-S | Printstream",
-          "weapon": "M4A1-S",
-          "game": "cs2",
-          "rarity": "covert",
-          "basePrice": 220,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_OGMWrEwL9lj_F7Rienhgk1tjyIpYPwJiPTcAAoCpsiEO5ZsUbpm9C2Zuni4VHW3o5EzSX62HxP7Sg96-hWVqYi_6TJz1aW0nxrkGs"
         },
         "weight": 3.5
       },
@@ -126,7 +114,7 @@ window.INITIAL_CASES = [
           "basePrice": 2,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiVI0P_6afBSI_icHneV09FxuO56Wxa_nBovp3OAzo2vdHPFPFUmCJRxRbNZ4xewx9W1Nb7j4gzXg99Ayy73iC1Aun1q_a9cBiEfMG3G"
         },
-        "weight": 11.45
+        "weight": 11.65
       }
     ]
   },
@@ -149,19 +137,7 @@ window.INITIAL_CASES = [
           "basePrice": 2850,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Z-ua6bbZrLOmsD2qvw-J3s-p5SiihmSIqsi-HlorwOy7DAVRPVssnHaMUuhe9xIHlMuvqtgPf2IoTyC383Sod7CY-sr4DVfZ2qKPU3g-TNuE-545DeqjFvb87vg"
         },
-        "weight": 0.25
-      },
-      {
-        "skin": {
-          "id": "cs2_karambit_fade",
-          "name": "★ Karambit | Fade",
-          "weapon": "Karambit",
-          "game": "cs2",
-          "rarity": "knife",
-          "basePrice": 2400,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SD1iWwOpzj-1gSCGn20tztm_UyIn_JHKUbgYlWMcmQ-ZcskSwldS0MOnntAfd3YlMzH35jntXrnE8SOGRGG8"
-        },
-        "weight": 0.35
+        "weight": 0.4
       },
       {
         "skin": {
@@ -245,7 +221,7 @@ window.INITIAL_CASES = [
           "basePrice": 3,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk7uW-V7JoKf6sAm6Xyfo44bE5HSrmlx5z4GTUzt__I3yebQAgA8R3FuFfsBTqx9W2Y7vq5lbfjZUFk3ugIlCuqg"
         },
-        "weight": 12.1
+        "weight": 12.2
       },
       {
         "skin": {
@@ -257,7 +233,7 @@ window.INITIAL_CASES = [
           "basePrice": 1.6,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5WxrR1Y-s2jaac8cM-DB3-ZxNF6ueZhW2fikB935ziGztj7JHyQbgIkWZsmFrJY4xTpwdOzP-Oz7laNj4lFyy2tkGoXudbL5uIf"
         },
-        "weight": 12.1
+        "weight": 12.2
       }
     ]
   },
@@ -280,7 +256,7 @@ window.INITIAL_CASES = [
           "basePrice": 2400,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SD1iWwOpzj-1gSCGn20tztm_UyIn_JHKUbgYlWMcmQ-ZcskSwldS0MOnntAfd3YlMzH35jntXrnE8SOGRGG8"
         },
-        "weight": 0.3
+        "weight": 0.35
       },
       {
         "skin": {
@@ -292,7 +268,7 @@ window.INITIAL_CASES = [
           "basePrice": 3800,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiFO0P_6afVSKP-EAm6extF6ueZhW2exwkl2tmTXwt39eCiUPQR2DMN4TOVetUK8xoLgM-K341eM2otDnC6okGoXufBz_TAB"
         },
-        "weight": 0.4
+        "weight": 1.5
       },
       {
         "skin": {
@@ -303,18 +279,6 @@ window.INITIAL_CASES = [
           "rarity": "covert",
           "basePrice": 110,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk7OeRbKFsJ8-DHG6e1f1iouRoQha_nBovp3OGmdeqInyVP1V0XsYlRbEI50a5wNyzZr605AyI3t5MmCSohylAuC89_a9cBoMY9UkV"
-        },
-        "weight": 3
-      },
-      {
-        "skin": {
-          "id": "cs2_printstream_m4",
-          "name": "M4A1-S | Printstream",
-          "weapon": "M4A1-S",
-          "game": "cs2",
-          "rarity": "covert",
-          "basePrice": 220,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_OGMWrEwL9lj_F7Rienhgk1tjyIpYPwJiPTcAAoCpsiEO5ZsUbpm9C2Zuni4VHW3o5EzSX62HxP7Sg96-hWVqYi_6TJz1aW0nxrkGs"
         },
         "weight": 3.5
       },
@@ -352,7 +316,7 @@ window.INITIAL_CASES = [
           "basePrice": 3.5,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_u1jpN5lRi67gVNz4G7Qm938cS_Da1AhXpB1EeVb4xm4mtDjN7vj4A3b2NpGyCr52i4Y8G81tMzdoYZ7"
         },
-        "weight": 20.6
+        "weight": 21.2
       },
       {
         "skin": {
@@ -364,7 +328,7 @@ window.INITIAL_CASES = [
           "basePrice": 1.5,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1a7s24bbZ5KfecMWWc1OtJvOhuRz39zU5yt2vQntn9dC3Dbw8iDJQhF-IJ5xDqkdSxMr6251aMiI5BynqtiTQJsHhqpMNExQ"
         },
-        "weight": 20.6
+        "weight": 21.2
       },
       {
         "skin": {
@@ -376,7 +340,7 @@ window.INITIAL_CASES = [
           "basePrice": 3.2,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0POlPPNSLfGAGmKC2NF6ueZhW2e2wh9y5GjTztirdSqfP1dyCpclR7FZ5xe9wNbhZei25FGPjokXxC2vkGoXuQLr5jvs"
         },
-        "weight": 20.6
+        "weight": 21.25
       }
     ]
   },
@@ -398,18 +362,6 @@ window.INITIAL_CASES = [
           "rarity": "knife",
           "basePrice": 1650,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Wts2sab1iLvWHMWSF_uMvj-NoVha_mg8ijDGMnYftbyrBOw52D5R0FOYPtkG6ltOxNrjl4FPdiN0WzC723SxP6ypp6u8LVKY7uvqAFpeI3XY"
-        },
-        "weight": 0.35
-      },
-      {
-        "skin": {
-          "id": "cs2_skeleton_slaughter",
-          "name": "★ Skeleton Knife | Slaughter",
-          "weapon": "Skeleton Knife",
-          "game": "cs2",
-          "rarity": "knife",
-          "basePrice": 1100,
-          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1I5PeibbBiLs-SA1iKxOxksd5lRi67gVMh62_RzdygJHORZlAlDpZwQOYM4Ri5k4HhNezg4wOLg49Nyy772y9J8G81tBUopZdW"
         },
         "weight": 0.45
       },
@@ -495,7 +447,7 @@ window.INITIAL_CASES = [
           "basePrice": 2,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiVI0P_6afBSI_icHneV09FxuO56Wxa_nBovp3OAzo2vdHPFPFUmCJRxRbNZ4xewx9W1Nb7j4gzXg99Ayy73iC1Aun1q_a9cBiEfMG3G"
         },
-        "weight": 12.7
+        "weight": 13.05
       }
     ]
   },
@@ -510,78 +462,6 @@ window.INITIAL_CASES = [
     "items": [
       {
         "skin": {
-          "id": "val_champions_2021_karambit",
-          "name": "Champions 2021 Karambit",
-          "weapon": "Melee",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 3900,
-          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
-        },
-        "weight": 0.08
-      },
-      {
-        "skin": {
-          "id": "val_champions_2021_vandal",
-          "name": "Champions 2021 Vandal",
-          "weapon": "Vandal",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 3200,
-          "image": "https://media.valorant-api.com/weaponskins/9bf19b77-4b33-7203-9f2c-16932970622f/displayicon.png"
-        },
-        "weight": 0.08
-      },
-      {
-        "skin": {
-          "id": "val_champions_2022_butterfly",
-          "name": "Champions 2022 Butterfly Knife",
-          "weapon": "Melee",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 3600,
-          "image": "https://media.valorant-api.com/weaponskins/6946cd0e-4e4a-ec4f-9238-dfb71715722b/displayicon.png"
-        },
-        "weight": 0.08
-      },
-      {
-        "skin": {
-          "id": "val_champions_2022_phantom",
-          "name": "Champions 2022 Phantom",
-          "weapon": "Phantom",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 2800,
-          "image": "https://media.valorant-api.com/weaponskins/8c72ae0b-4357-1a75-ad62-fbaec7b64f92/displayicon.png"
-        },
-        "weight": 0.08
-      },
-      {
-        "skin": {
-          "id": "val_champions_2023_kunai",
-          "name": "Champions 2023 Kunai",
-          "weapon": "Melee",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 3400,
-          "image": "https://media.valorant-api.com/weaponskins/27f27500-491c-32d4-1db6-1f85e479c103/displayicon.png"
-        },
-        "weight": 0.08
-      },
-      {
-        "skin": {
-          "id": "val_champions_2023_vandal",
-          "name": "Champions 2023 Vandal",
-          "weapon": "Vandal",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 3100,
-          "image": "https://media.valorant-api.com/weaponskins/b0f65660-4c51-13b7-9d01-e29a1e2879b0/displayicon.png"
-        },
-        "weight": 0.08
-      },
-      {
-        "skin": {
           "id": "val_champions_2024_blade",
           "name": "Champions 2024 Blade (Katana)",
           "weapon": "Melee",
@@ -590,19 +470,7 @@ window.INITIAL_CASES = [
           "basePrice": 3500,
           "image": "https://media.valorant-api.com/weaponskins/30300aea-4d8a-320d-5cb0-0e8badc8d3df/displayicon.png"
         },
-        "weight": 0.08
-      },
-      {
-        "skin": {
-          "id": "val_champions_2024_phantom",
-          "name": "Champions 2024 Phantom",
-          "weapon": "Phantom",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 2900,
-          "image": "https://media.valorant-api.com/weaponskins/cc1da8cd-452f-a007-0bf8-b68a471c3a6e/displayicon.png"
-        },
-        "weight": 0.08
+        "weight": 0.6
       },
       {
         "skin": {
@@ -686,7 +554,7 @@ window.INITIAL_CASES = [
           "basePrice": 2.5,
           "image": "https://media.valorant-api.com/weaponskins/341ef273-43fb-7911-71e8-50adada4cee1/displayicon.png"
         },
-        "weight": 12.86
+        "weight": 12.4
       }
     ]
   },
