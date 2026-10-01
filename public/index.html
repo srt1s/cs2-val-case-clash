@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CASE CLASH | CS2 & VALORANT Skin Kasa Açma Oyunu</title>
+  
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Canvas Confetti for Celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <i class="fa-solid fa-crosshairs text-amber-500"></i>
+        <span><span class="brand-cs2">CASE</span><span class="brand-val">CLASH</span></span>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs">
+        <button class="nav-tab-btn active" data-view="cases">
+          <i class="fa-solid fa-box-open"></i> Kasalar
+        </button>
+        <button class="nav-tab-btn" data-view="inventory">
+          <i class="fa-solid fa-suitcase"></i> Envanterim <span id="invCountBadge" style="display:none; background:#ff4655; padding:1px 6px; border-radius:10px; font-size:0.75rem;">0</span>
+        </button>
+        <button class="nav-tab-btn" data-view="market">
+          <i class="fa-solid fa-store"></i> Pazar (Market)
+        </button>
+        <button class="nav-tab-btn" data-view="trading">
+          <i class="fa-solid fa-right-left"></i> Takas & Oyuncular
+        </button>
+      </nav>
+
+      <!-- Player Status & Header Actions -->
+      <div class="header-actions">
+        <div class="balance-pill" title="Mevcut Bakiyeniz (1 Bakiye = 1 Kasa)">
+          <i class="fa-solid fa-coins"></i>
+          <span id="userBalanceText">0</span> <small style="font-size:0.75rem; color:#a7f3d0;">BAKİYE</small>
+        </div>
+
+        <div class="user-tag" id="userTagBox">
+          <i class="fa-solid fa-user-astronaut"></i>
+          <span id="userNameText">Giriş Yapılıyor...</span>
+          <span class="hwid-pill" id="hwidPill"></span>
+        </div>
+
+        <button class="action-btn-icon" id="btnSoundToggle" title="Sesi Aç / Kapat">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+
+        <button class="action-btn-icon" id="btnChatToggle" title="Canlı Sohbet">
+          <i class="fa-solid fa-comments"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 4-Minute Timed Luck Event Banner -->
+  <div class="luck-event-banner" id="luckEventBanner">
+    <span>🔥 <strong id="luckEventTitle">ŞANS ETKİNLİĞİ:</strong></span>
+    <span id="luckEventDesc">Yükleniyor...</span>
+    <span class="event-countdown" id="luckEventCountdown">00:00</span>
+  </div>
+
+  <!-- Global Rare Drop Announcement Banner (Red / Gold only) -->
+  <div class="rare-drop-banner" id="rareDropBanner" style="display: none;">
+    <div style="font-size: 2rem;" id="rareDropIcon">🎉</div>
+    <div>
+      <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;" id="rareDropHeader">EFSANEVİ DÜŞÜŞ!</div>
+      <div style="font-size: 1.05rem; font-weight: 700;" id="rareDropText"></div>
+    </div>
+  </div>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-wrapper">
+
+    <!-- 1. KASALAR GÖRÜNÜMÜ -->
+    <section id="viewCases" class="app-view">
+      <!-- Game Category Selector -->
+      <div class="category-toggle">
+        <div class="game-toggle-card active-cs2" id="tabCS2">
+          <div class="game-icon-circle" style="color: var(--accent-cs2);">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h3 style="font-size: 1.2rem; font-weight: 800;">COUNTER-STRIKE 2</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Bıçaklar, Dragon Lore, Howl & Covert</p>
+          </div>
+        </div>
+
+        <div class="game-toggle-card" id="tabVAL">
+          <div class="game-icon-circle" style="color: var(--accent-val);">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <h3 style="font-size: 1.2rem; font-weight: 800;">VALORANT</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Kuronami Yaiba, Şampiyonlar & Yağmacı</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cases Grid -->
+      <div class="cases-grid" id="casesGrid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- 2. KASA AÇMA CANLI ÇARK GÖRÜNÜMÜ -->
+    <section id="viewOpener" class="app-view" style="display: none;">
+      <div class="spinner-view-container">
+        <div class="spinner-header">
+          <button class="back-btn" id="btnBackToCases">
+            <i class="fa-solid fa-arrow-left"></i> Kasalara Dön
+          </button>
+          <div style="text-align: right;">
+            <h2 id="openerCaseTitle" style="font-size: 1.6rem; font-weight: 800;">Kasa Adı</h2>
+            <div id="openerCasePrice" style="color: var(--accent-green); font-weight: 700;">1 Bakiye / Kasa</div>
+          </div>
+        </div>
+
+        <!-- The Horizontal CS:GO Reel Spinner Box -->
+        <div class="spinner-box">
+          <div class="spinner-needle"></div>
+          <div class="spinner-track" id="spinnerTrack">
+            <!-- 65+ item cards generated dynamically -->
+          </div>
+        </div>
+
+        <!-- Open Button & Actions -->
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button class="btn-open-case" id="btnOpenCurrentCase" style="min-width: 240px; font-size: 1.15rem; padding: 1rem 2rem;">
+            <i class="fa-solid fa-key"></i> KASAYI AÇ (1 BAKİYE)
+          </button>
+        </div>
+
+        <!-- Case Contents Preview -->
+        <div style="width: 100%; max-width: 960px; margin-top: 2rem;">
+          <h3 style="margin-bottom: 1rem; color: var(--text-muted); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Kasa İçeriği ve Olasılıklar</h3>
+          <div class="inventory-grid" id="caseContentsGrid">
+            <!-- Case items preview -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ENVANTERİM GÖRÜNÜMÜ -->
+    <section id="viewInventory" class="app-view" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+          <h2 style="font-size: 1.6rem; font-weight: 800;">Envanterim</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Kasadan çıkardığınız skinleri anında satabilir veya pazara koyabilirsiniz.</p>
+        </div>
+        <div style="font-weight: 700; color: var(--accent-green);" id="invTotalValue">
+          Toplam Değer: ₺0
+        </div>
+      </div>
+      <div class="inventory-grid" id="myInventoryGrid">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- 4. PAZAR (MARKETPLACE) GÖRÜNÜMÜ -->
+    <section id="viewMarket" class="app-view" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h2 style="font-size: 1.6rem; font-weight: 800;">Oyuncu Pazarı</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Skinlerinizi satın. <strong style="color:#ffca28;">30 dakika içinde satılmazsa sistem botu skini %86 fiyatına otomatik satın alır!</strong> (Son 5 dk kala uyarı verilir)
+          </p>
+        </div>
+      </div>
+      <div class="inventory-grid" id="marketGrid">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- 5. TAKAS & AKTİF OYUNCULAR GÖRÜNÜMÜ -->
+    <section id="viewTrading" class="app-view" style="display: none;">
+      <div style="margin-bottom: 1.5rem;">
+        <h2 style="font-size: 1.6rem; font-weight: 800;">Çevrimiçi Oyuncular & Takas</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Aktif oyunculara doğrudan takas teklifi gönderin, karşılıklı skin değişimi yapın.</p>
+      </div>
+      <div class="cases-grid" id="onlinePlayersGrid">
+        <!-- Online users cards -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- WINNING ITEM REVEAL MODAL -->
+  <div class="reveal-modal" id="winningRevealModal" style="display: none;">
+    <div class="reveal-card" id="winningCard">
+      <span style="font-size: 0.85rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;" id="winningRarityBadge">GİZLİ</span>
+      <h2 style="font-size: 1.6rem; font-weight: 800; margin-top: 0.5rem;" id="winningSkinName">AWP | Dragon Lore</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem;" id="winningWeaponName">AWP</p>
+      
+      <img id="winningSkinImg" src="" alt="Skin" class="reveal-img">
+      
+      <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-green); margin-bottom: 0.5rem;" id="winningSkinPrice">₺4,500</div>
+      
+      <div class="reveal-actions">
+        <button class="btn-secondary" id="btnRevealInstantSell">
+          <i class="fa-solid fa-money-bill-wave"></i> Hemen Sat (<span id="revealSellPrice">₺0</span>)
+        </button>
+        <button class="btn-primary" id="btnRevealKeep">
+          <i class="fa-solid fa-box-archive"></i> Envantere Al
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARKET LISTING MODAL -->
+  <div class="reveal-modal" id="marketListModal" style="display: none;">
+    <div class="reveal-card" style="max-width: 400px; border-color: #3b82f6;">
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Pazara Eşya Koy</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+        30 dakika boyunca satılmazsa sistem botu skini <strong>%86</strong> fiyatına (<span id="modalBotPrice">₺0</span>) alacaktır.
+      </p>
+      <img id="marketModalImg" src="" alt="" style="width: 140px; height: 100px; object-fit: contain; margin-bottom: 1rem;">
+      <div id="marketModalName" style="font-weight: 700; margin-bottom: 1rem;"></div>
+      
+      <div style="width: 100%; margin-bottom: 1.5rem; text-align: left;">
+        <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">İstediğiniz Satış Fiyatı (₺):</label>
+        <input type="number" id="marketPriceInput" min="1" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.6rem 0.8rem; border-radius: 8px; color: #fff; font-size: 1.1rem; font-weight: 700;">
+      </div>
+
+      <div class="reveal-actions">
+        <button class="btn-secondary" id="btnCancelMarketList">İptal</button>
+        <button class="btn-primary" id="btnConfirmMarketList" style="background:#10b981;">Pazarda Yayınla</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRADE PROPOSAL MODAL -->
+  <div class="reveal-modal" id="tradeModal" style="display: none;">
+    <div class="reveal-card" style="max-width: 650px; border-color: #8847ff;">
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Takas Teklifi Gönder</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;" id="tradeTargetInfo">Hedef Oyuncu: ...</p>
+
+      <div style="display: flex; gap: 1rem; width: 100%; text-align: left;">
+        <!-- My Offer -->
+        <div style="flex: 1; background: rgba(0,0,0,0.3); border-radius: 10px; padding: 0.75rem;">
+          <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #60a5fa;">Vereceğin Eşyalar:</h4>
+          <div id="tradeMyOfferList" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;">
+            <!-- Selectable items from my inventory -->
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal-actions">
+        <button class="btn-secondary" id="btnCancelTrade">Vazgeç</button>
+        <button class="btn-primary" id="btnSendTradeOffer" style="background:#8847ff;">Teklifi Gönder</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INCOMING TRADE OFFER POPUP -->
+  <div class="reveal-modal" id="incomingTradeModal" style="display: none;">
+    <div class="reveal-card" style="max-width: 480px; border-color: #ffd700;">
+      <h3 style="font-size: 1.4rem; font-weight: 800; color: #ffd700;">🤝 Gelen Takas Teklifi!</h3>
+      <p id="incomingTradeSender" style="margin: 0.5rem 0 1rem 0; font-size: 0.95rem;"></p>
+      
+      <div id="incomingTradeItems" style="width: 100%; background: rgba(0,0,0,0.3); border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; max-height: 180px; overflow-y: auto;">
+        <!-- Items in offer -->
+      </div>
+
+      <div class="reveal-actions">
+        <button class="btn-secondary" id="btnDeclineTrade" style="background:#ef4444; color:white;">Reddet</button>
+        <button class="btn-primary" id="btnAcceptTrade" style="background:#10b981;">Kabul Et</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MULTI-TAB HWID LOCKOUT SCREEN (Blocks duplicate tabs on same HWID) -->
+  <div class="multi-tab-lockout" id="multiTabLockoutModal" style="display: none;">
+    <div class="lockout-card">
+      <div class="lockout-icon">🚫</div>
+      <h2 style="font-size: 1.8rem; font-weight: 800; color: #ef4444; margin-bottom: 1rem;">AYNI HWID İLE AÇIK OTURUM!</h2>
+      <p style="font-size: 1.05rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 1.5rem;" id="multiTabLockoutMessage">
+        Bu cihazdan (HWID) zaten başka bir aktif tarayıcı sekmesinde giriş yapılmış durumda!<br><br>
+        Adil oyun politikası gereği aynı anda birden fazla sekme açılamaz. Lütfen diğer sekmeyi kapatın veya mevcut sekmeyi yenileyin.
+      </p>
+      <button class="btn-primary" onclick="window.location.reload();" style="max-width: 200px;">
+        <i class="fa-solid fa-rotate-right"></i> Yeniden Dene
+      </button>
+    </div>
+  </div>
+
+  <!-- USER LOGIN / HWID POPUP -->
+  <div class="reveal-modal" id="loginModal" style="display: flex;">
+    <div class="reveal-card" style="max-width: 440px; border-color: rgba(222, 155, 53, 0.4);">
+      <div style="font-size: 2.5rem; margin-bottom: 0.5rem; color: #f59e0b;">
+        <i class="fa-solid fa-gamepad"></i>
+      </div>
+      <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem;">CASE CLASH ARENA</h2>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+        İlk defa giriş yapıyorsanız HWID adresinize özel <strong style="color:var(--accent-green);">5 ÜCRETSİZ BAKİYE (5 KASA)</strong> hediye edilir!
+      </p>
+
+      <div style="width: 100%; text-align: left; margin-bottom: 1.5rem;">
+        <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Oyuncu Adınız:</label>
+        <input type="text" id="loginUsernameInput" placeholder="Örn: PhantomStriker" maxlength="20" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.75rem 1rem; border-radius: 10px; color: #fff; font-size: 1.1rem; font-weight: 700;">
+      </div>
+
+      <button class="btn-open-case" id="btnLoginSubmit" style="width: 100%;">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i> ARENAYA GİRİŞ YAP
+      </button>
+    </div>
+  </div>
+
+  <!-- LIVE GLOBAL CHAT DRAWER -->
+  <div class="chat-drawer minimized" id="chatDrawer">
+    <div class="chat-header">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-comments text-rose-500"></i>
+        <strong style="font-size: 0.95rem;">Canlı Sohbet</strong>
+      </div>
+      <button id="btnCloseChat" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size: 1.1rem;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="chat-messages" id="chatMessagesBox">
+      <!-- Chat messages -->
+    </div>
+
+    <form class="chat-input-row" id="chatForm">
+      <input type="text" id="chatInput" class="chat-input" placeholder="Mesajınızı yazın..." maxlength="250" autocomplete="off">
+      <button type="submit" class="chat-send-btn">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- Socket.IO & Client JS -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/fingerprint.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

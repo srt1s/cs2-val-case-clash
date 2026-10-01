@@ -1,0 +1,28 @@
+{
+  "name": "cs2-valorant-case-clash",
+  "version": "1.0.0",
+  "description": "CS2 & Valorant Skin Kasa Açma, Canlı Sohbet, Takas ve Market Arenası - Railway Hosting Ready",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "cs2",
+    "valorant",
+    "case-opening",
+    "trading",
+    "marketplace",
+    "railway"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}
