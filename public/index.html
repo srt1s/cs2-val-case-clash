@@ -229,9 +229,10 @@
   <div class="reveal-modal" id="marketListModal" style="display: none;">
     <div class="reveal-card" style="max-width: 400px; border-color: #3b82f6;">
       <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Pazara Eşya Koy</h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
-        30 dakika boyunca satılmazsa sistem botu skini <strong>%86</strong> fiyatına (<span id="modalBotPrice">₺0</span>) alacaktır.
-      </p>
+      <div style="background:rgba(255, 255, 255, 0.05); border-radius:10px; padding:10px; margin-bottom:1rem; font-size:0.85rem; color:#cbd5e1; text-align:left; line-height:1.5;">
+        <div>🏷️ <strong>Skin Gerçek Taban Değeri:</strong> <span id="modalBasePrice" style="color:var(--accent-green); font-weight:700;">₺0</span></div>
+        <div style="margin-top:4px; font-size:0.8rem; color:#94a3b8;">🤖 <strong>Bot Garantisi:</strong> 30 dk satılmazsa bot, koyduğunuz fiyata değil; skinin <u>gerçek taban değerinin %86'sına</u> (<span id="modalBotPrice" style="color:#fbbf24; font-weight:700;">₺0</span>) otomatik alır.</div>
+      </div>
       <img id="marketModalImg" src="" alt="" style="width: 140px; height: 100px; object-fit: contain; margin-bottom: 1rem;">
       <div id="marketModalName" style="font-weight: 700; margin-bottom: 1rem;"></div>
       

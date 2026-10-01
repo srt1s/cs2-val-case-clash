@@ -531,7 +531,7 @@ socket.on('market:listed_success', (data) => {
 
 socket.on('market:warning_5min', (data) => {
   window.soundEngine.playNotification();
-  alert(`⚠️ PAZAR UYARISI:\n"${data.itemName}" eşyanızın satılması için son 5 dakika!\nSüre bitince sistem botu eşyanızı %86 fiyatına otomatik alacak.`);
+  alert(`⚠️ PAZAR UYARISI:\n"${data.itemName}" eşyanızın satılması için son 5 dakika!\nSüre bitince sistem botu eşyanızı koyduğunuz fiyata değil, GERÇEK TABAN DEĞERİ (₺${data.officialBasePrice} TL) üzerinden %86 fiyatına (₺${data.botPrice} TL) otomatik olarak satın alacaktır.`);
 });
 
 socket.on('market:bot_bought', (data) => {
@@ -539,7 +539,7 @@ socket.on('market:bot_bought', (data) => {
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
   if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
-  alert(`🤖 BOT SATIN ALDI:\n"${data.itemName}" eşyanız 30 dakika satılmadığı için bot tarafından %86 fiyatına (₺${data.botPrice} TL) satın alındı ve TL bakiyenize eklendi!`);
+  alert(`🤖 BOT SATIN ALDI:\n"${data.itemName}" eşyanız 30 dakika boyunca diğer oyunculara satılmadığı için bot tarafından skinin GERÇEK TABAN DEĞERİ (₺${data.officialBasePrice} TL) baz alınarak %86'sına (₺${data.botPrice} TL) satın alındı ve TL bakiyenize eklendi!`);
 });
 
 socket.on('market:item_sold_to_player', (data) => {
@@ -943,9 +943,14 @@ function renderInventory() {
 // Open Market List Modal
 function openMarketListModal(item) {
   const modal = marketListModal;
+  const realBasePrice = item.basePrice;
+  const botBuyPrice = Math.max(1, Math.round(realBasePrice * 0.86));
   document.getElementById('marketModalImg').src = item.image;
   document.getElementById('marketModalName').textContent = item.name;
-  document.getElementById('modalBotPrice').textContent = `₺${Math.round(item.basePrice * 0.86)}`;
+  if (document.getElementById('modalBasePrice')) {
+    document.getElementById('modalBasePrice').textContent = `₺${realBasePrice} TL`;
+  }
+  document.getElementById('modalBotPrice').textContent = `₺${botBuyPrice} TL`;
   document.getElementById('marketPriceInput').value = item.basePrice;
 
   document.getElementById('btnConfirmMarketList').onclick = () => {

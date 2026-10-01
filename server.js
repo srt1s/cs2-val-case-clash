@@ -123,7 +123,29 @@ initLuckCycle();
 // ==========================================
 // 3. MARKETPLACE 30-MINUTE BOT BUYOUT ENGINE
 // ==========================================
-// Bot buys items not sold after 30 minutes at 86% of base price
+// Map canonical skin base prices directly from CASES definitions
+const SKIN_BASE_PRICES = new Map();
+for (const c of CASES) {
+  for (const it of c.items) {
+    if (it.skin) {
+      if (it.skin.id) SKIN_BASE_PRICES.set(it.skin.id, it.skin.basePrice);
+      if (it.skin.name) SKIN_BASE_PRICES.set(it.skin.name.toLowerCase().trim(), it.skin.basePrice);
+    }
+  }
+}
+
+function getOfficialBasePrice(item) {
+  if (!item) return 10;
+  if (item.id && SKIN_BASE_PRICES.has(item.id)) {
+    return SKIN_BASE_PRICES.get(item.id);
+  }
+  if (item.name && SKIN_BASE_PRICES.has(item.name.toLowerCase().trim())) {
+    return SKIN_BASE_PRICES.get(item.name.toLowerCase().trim());
+  }
+  return Number(item.basePrice) || 10;
+}
+
+// Bot buys items not sold after 30 minutes at 86% of skin's REAL base price (ignoring user's asking price)
 // Warning sent at 5 minutes remaining
 const notified5MinListings = new Set();
 
@@ -138,22 +160,28 @@ setInterval(() => {
     if (timeLeft <= 5 * 60 * 1000 && timeLeft > 0 && !notified5MinListings.has(listing.id)) {
       notified5MinListings.add(listing.id);
       
+      const realBasePrice = getOfficialBasePrice(listing.item);
+      const estBotPrice = Math.max(1, Math.round(realBasePrice * 0.86));
+
       // Notify seller if online
       for (const [sId, info] of activeSockets.entries()) {
         if (info.userId === listing.sellerId) {
           io.to(sId).emit('market:warning_5min', {
             listingId: listing.id,
             itemName: listing.item.name,
+            officialBasePrice: realBasePrice,
+            botPrice: estBotPrice,
             timeLeft: Math.round(timeLeft / 1000)
           });
         }
       }
     }
 
-    // 30-minute expiry -> BOT BUYOUT AT 86%
+    // 30-minute expiry -> BOT BUYOUT AT 86% OF REAL BASE PRICE
     if (timeLeft <= 0) {
-      // Calculate 86% of item's base price (in TL)
-      const botPrice = Math.max(1, Math.round(listing.item.basePrice * 0.86));
+      // Calculate 86% of skin's REAL base price (NOT user's asking price listing.price!)
+      const realBasePrice = getOfficialBasePrice(listing.item);
+      const botPrice = Math.max(1, Math.round(realBasePrice * 0.86));
       
       // Remove from market
       db.removeMarketListing(listing.id);
@@ -168,6 +196,7 @@ setInterval(() => {
         if (info.userId === listing.sellerId) {
           io.to(sId).emit('market:bot_bought', {
             itemName: listing.item.name,
+            officialBasePrice: realBasePrice,
             botPrice,
             newTLBalance: newTLBal,
             newBalance: seller ? seller.balance : 0
