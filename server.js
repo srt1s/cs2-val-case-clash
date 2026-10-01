@@ -276,8 +276,8 @@ function pickWinningItem(caseObj, isBoosted) {
     randomVal -= entry.weight;
   }
 
-  // If Champions Vault case drops Gold (knife), award one of the 8 Champions skins at random
-  if (caseObj.id === 'val_champions_vault' && wonSkin.rarity === 'knife') {
+  // If Champions Vault case drops Gold (knife / mystery), award one of the 8 Champions skins at random
+  if (caseObj.id === 'val_champions_vault' && (wonSkin.rarity === 'knife' || wonSkin.id === 'val_champions_mystery')) {
     const { VAL_SKINS } = require('./data/cases');
     const champSkins = [
       VAL_SKINS.champions_2021_karambit,
@@ -437,21 +437,25 @@ io.on('connection', (socket) => {
 
     if (isRed || isGold) {
       setTimeout(() => {
+        const isChampionsGold = caseObj.id === 'val_champions_vault' && isGold;
         io.emit('rare_drop:broadcast', {
           username: user.username,
           caseName: caseObj.name,
+          caseId: caseObj.id,
           item: savedItem,
           rarity: r,
           isGold,
+          isChampionsGold,
           timestamp: Date.now()
         });
 
         // Also post celebratory message in chat
+        const dropLabel = isChampionsGold ? '★ GİZEMLİ LİMİTED SKİN' : (isGold ? '★ EFSANEVİ BIÇAK' : 'GİZLİ (KIRMIZI)');
         const alertMsg = {
           id: 'sys_' + Date.now(),
           userId: 'system',
           username: 'SERVER DROP',
-          text: `[${user.username}], "${caseObj.name}" kasasından ${isGold ? '★ EFSANEVİ BIÇAK' : 'GİZLİ (KIRMIZI)'} ${wonSkin.name} çıkardı! (₺${wonSkin.basePrice})`,
+          text: `[${user.username}], "${caseObj.name}" kasasından ${dropLabel} ${wonSkin.name} çıkardı! (₺${wonSkin.basePrice})`,
           timestamp: Date.now(),
           isHighlight: true
         };

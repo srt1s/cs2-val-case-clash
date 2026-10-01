@@ -618,7 +618,8 @@ socket.on('rare_drop:broadcast', (data) => {
 
   rareDropBanner.className = `rare-drop-banner ${isGold ? 'gold-drop' : ''}`;
   document.getElementById('rareDropIcon').innerHTML = isGold ? '<i class="fa-solid fa-crown" style="color:#ffd700;"></i>' : '<i class="fa-solid fa-fire" style="color:#ff4655;"></i>';
-  document.getElementById('rareDropHeader').textContent = isGold ? '★ EFSANEVİ BIÇAK DÜŞÜŞÜ! ★' : 'GİZLİ (KIRMIZI) DÜŞÜŞÜ!';
+  const isChampionsGold = data.isChampionsGold || (data.caseId === 'val_champions_vault' && isGold);
+  document.getElementById('rareDropHeader').textContent = isChampionsGold ? '★ GİZEMLİ LİMİTED SKİN! ★' : (isGold ? '★ EFSANEVİ BIÇAK DÜŞÜŞÜ! ★' : 'GİZLİ (KIRMIZI) DÜŞÜŞÜ!');
   document.getElementById('rareDropText').innerHTML = `
     <strong>${escapeHtml(data.username)}</strong>, "${escapeHtml(data.caseName)}" kasasından 
     <span style="color:${isGold ? '#ffd700' : '#ff4655'};">${escapeHtml(data.item.name)}</span> çıkardı! (₺${data.item.basePrice})
@@ -880,10 +881,12 @@ function openOpenerView(caseObj) {
     const skin = entry.skin;
     const itemCard = document.createElement('div');
     itemCard.className = 'skin-item-card';
+    const isMystery = skin.id === 'val_champions_mystery' || (caseObj.id === 'val_champions_vault' && skin.rarity === 'knife');
+    const priceDisplay = isMystery ? 'Havuzdan Rastgele' : `₺${skin.basePrice}`;
     itemCard.innerHTML = `
       <img src="${skin.image}" alt="${skin.name}" class="skin-item-img">
       <div class="skin-item-name" title="${skin.name}">${skin.name}</div>
-      <div class="skin-item-price">₺${skin.basePrice}</div>
+      <div class="skin-item-price">${priceDisplay}</div>
       <span class="spinner-card-bar rarity-${skin.rarity}"></span>
     `;
     contentsGrid.appendChild(itemCard);
@@ -1007,7 +1010,8 @@ function showRevealModal(item) {
   card.style.borderColor = getRarityColor(item.rarity);
   card.style.boxShadow = `0 0 50px ${getRarityColor(item.rarity)}66`;
 
-  document.getElementById('winningRarityBadge').textContent = item.rarity.toUpperCase();
+  const isChampionsGold = (selectedCase && selectedCase.id === 'val_champions_vault' && item.rarity === 'knife') || item.id === 'val_champions_mystery';
+  document.getElementById('winningRarityBadge').textContent = isChampionsGold ? 'GİZEMLİ LİMİTED' : item.rarity.toUpperCase();
   document.getElementById('winningRarityBadge').style.color = getRarityColor(item.rarity);
   document.getElementById('winningSkinName').textContent = item.name;
   document.getElementById('winningWeaponName').textContent = item.weapon;
