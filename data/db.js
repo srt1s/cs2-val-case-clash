@@ -58,11 +58,19 @@ module.exports = {
     return dbData.users[userId] || null;
   },
 
-  // HWID-based login & 5 balance initial bonus with backup restore support
-  loginOrRegister(username, hwid, backupData) {
+  // HWID-based login with password protection & 5 balance initial bonus
+  loginOrRegister(username, password, hwid, backupData) {
     const cleanUsername = String(username || 'Oyuncu').trim() || 'Oyuncu_' + Math.floor(Math.random() * 1000);
+    const cleanPassword = String(password || '').trim();
     const cleanHwid = String(hwid || ('HWID_' + Date.now().toString(36))).trim();
     const lowerUser = cleanUsername.toLowerCase();
+
+    if (!cleanPassword) {
+      return {
+        success: false,
+        message: 'Lütfen hesap şifrenizi girin.'
+      };
+    }
 
     // Check if HWID is brand new
     const isNewHwid = !dbData.hwids[cleanHwid];
@@ -73,6 +81,20 @@ module.exports = {
 
     if (existingUserId) {
       user = dbData.users[existingUserId];
+
+      // Password verification
+      if (user.password && user.password !== cleanPassword) {
+        return {
+          success: false,
+          message: 'Bu kullanıcı adı zaten kayıtlı! Girdiğiniz şifre hatalı.'
+        };
+      }
+
+      // If existing user had no password set yet, set it now
+      if (!user.password) {
+        user.password = cleanPassword;
+      }
+
       // Update HWID association
       user.hwid = cleanHwid;
       
@@ -100,6 +122,7 @@ module.exports = {
       user = {
         id: newUserId,
         username: cleanUsername,
+        password: cleanPassword,
         hwid: cleanHwid,
         balance: initialBalance,
         tlBalance: initialTL,
@@ -133,6 +156,7 @@ module.exports = {
 
     saveDb();
     return {
+      success: true,
       user,
       isNewHwid,
       bonusGiven: isNewHwid && (!backupData || !backupData.inventory || backupData.inventory.length === 0)

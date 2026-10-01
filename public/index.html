@@ -490,13 +490,30 @@
   <div class="reveal-modal" id="loginModal" style="display: flex;">
     <div class="reveal-card" style="max-width: 440px; border-color: rgba(222, 155, 53, 0.4);">
       <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem;">CASE CLASH ARENA</h2>
-      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.2rem;">
         İlk girişe özel <strong style="color:#facc15;">5 Anahtar</strong> hediye edilir.
       </p>
 
-      <div style="width: 100%; text-align: left; margin-bottom: 1.5rem;">
+      <div style="width: 100%; text-align: left; margin-bottom: 1rem;">
         <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Oyuncu Adınız:</label>
-        <input type="text" id="loginUsernameInput" placeholder="Örn: PhantomStriker" maxlength="20" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.75rem 1rem; border-radius: 10px; color: #fff; font-size: 1.1rem; font-weight: 700;">
+        <input type="text" id="loginUsernameInput" placeholder="Örn: PhantomStriker" maxlength="20" autocomplete="username" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.75rem 1rem; border-radius: 10px; color: #fff; font-size: 1.05rem; font-weight: 700;">
+      </div>
+
+      <div style="width: 100%; text-align: left; margin-bottom: 1.2rem;">
+        <label style="font-size: 0.85rem; color: var(--text-muted); display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+          <span>Hesap Şifresi:</span>
+          <span style="font-size: 0.75rem; color: #10b981;"><i class="fa-solid fa-shield-halved"></i> Hesap Güvenliği</span>
+        </label>
+        <div style="position: relative;">
+          <input type="password" id="loginPasswordInput" placeholder="Şifrenizi girin..." maxlength="30" autocomplete="current-password" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.75rem 1rem; padding-right: 2.5rem; border-radius: 10px; color: #fff; font-size: 1.05rem; font-weight: 700;">
+          <button type="button" id="btnToggleLoginPass" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #64748b; cursor: pointer; font-size: 1rem;" title="Şifreyi Göster/Gizle">
+            <i class="fa-solid fa-eye" id="togglePassIcon"></i>
+          </button>
+        </div>
+        <p style="font-size: 0.75rem; color: #64748b; margin-top: 6px; margin-bottom: 0;">
+          * Yeni hesap ise şifrenizi belirleyin, kayıtlı hesap ise şifrenizi girin.
+        </p>
+        <div id="loginErrorMessage" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 8px; padding: 8px 12px; color: #fca5a5; font-size: 0.85rem; font-weight: 700; margin-top: 10px; text-align: center;"></div>
       </div>
 
       <button class="btn-open-case" id="btnLoginSubmit" type="button" onclick="handleLoginSubmit()">

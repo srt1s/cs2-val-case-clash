@@ -308,10 +308,11 @@ io.on('connection', (socket) => {
   // Send cases list immediately on connection
   socket.emit('cases:list', CASES);
 
-  // Handle User Login & HWID Auth
-  socket.on('auth:login', ({ username, hwid, tabId, backupData }) => {
+  // Handle User Login & HWID Auth with Password
+  socket.on('auth:login', ({ username, password, hwid, tabId, backupData }) => {
     try {
       const cleanUser = String(username || '').trim();
+      const cleanPass = String(password || '').trim();
       const cleanHwid = String(hwid || '').trim();
       const cleanTab = String(tabId || socket.id).trim();
 
@@ -319,8 +320,20 @@ io.on('connection', (socket) => {
         return socket.emit('auth:error', { message: 'Lütfen bir kullanıcı adı girin.' });
       }
 
+      if (!cleanPass) {
+        return socket.emit('auth:error', { message: 'Lütfen hesap şifrenizi girin.' });
+      }
+
       const finalHwid = cleanHwid || ('HWID_FALLBACK_' + socket.id);
       console.log(`[AUTH] Login attempt from user: "${cleanUser}", HWID: "${finalHwid}", Tab: "${cleanTab}"`);
+
+      // Verify credentials & login or register via db
+      const result = db.loginOrRegister(cleanUser, cleanPass, finalHwid, backupData);
+      if (!result.success) {
+        return socket.emit('auth:error', { message: result.message || 'Giriş başarısız!' });
+      }
+
+      const user = result.user;
 
       // Check Multi-Tab constraint:
       if (activeHwids.has(finalHwid)) {
@@ -339,10 +352,6 @@ io.on('connection', (socket) => {
           }
         }
       }
-
-      // Login or register via HWID & 5 balance initial grant (with backup restore support)
-      const result = db.loginOrRegister(cleanUser, finalHwid, backupData);
-      const user = result.user;
 
       // Track active connection
       activeHwids.set(finalHwid, {

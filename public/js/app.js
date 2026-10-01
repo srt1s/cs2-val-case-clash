@@ -42,16 +42,34 @@ const tradeModal = document.getElementById('tradeModal');
 const incomingTradeModal = document.getElementById('incomingTradeModal');
 const rareDropBanner = document.getElementById('rareDropBanner');
 
+// Helper to display error inside login modal
+function showLoginError(msg) {
+  const errBox = document.getElementById('loginErrorMessage');
+  if (errBox) {
+    errBox.textContent = msg;
+    errBox.style.display = 'block';
+  }
+  showInAppToast(msg, false);
+}
+
 // Global login handler function directly callable from HTML or JS
 window.handleLoginSubmit = function() {
-  const input = document.getElementById('loginUsernameInput');
-  const username = input ? input.value.trim() : '';
+  const userInput = document.getElementById('loginUsernameInput');
+  const passInput = document.getElementById('loginPasswordInput');
+  const username = userInput ? userInput.value.trim() : '';
+  const password = passInput ? passInput.value.trim() : '';
+
   if (!username) {
-    alert('Lütfen bir kullanıcı adı girin.');
-    if (input) input.focus();
+    showLoginError('Lütfen bir kullanıcı adı girin.');
+    if (userInput) userInput.focus();
     return;
   }
-  attemptLogin(username);
+  if (!password) {
+    showLoginError('Lütfen hesap şifrenizi girin.');
+    if (passInput) passInput.focus();
+    return;
+  }
+  attemptLogin(username, password);
 };
 
 // Initialize App
@@ -79,17 +97,31 @@ function initApp() {
     console.error('Failed to load cases:', err);
   });
 
-  // 4. Auto-Login if saved username exists in localStorage
+  // 4. Auto-Login if saved username & password exist in localStorage
   try {
     const savedUsername = localStorage.getItem('case_clash_username');
+    const savedPassword = localStorage.getItem('case_clash_password');
     const modal = document.getElementById('loginModal');
+    const input = document.getElementById('loginUsernameInput');
+    const passInput = document.getElementById('loginPasswordInput');
+
     if (savedUsername && savedUsername.trim()) {
-      const input = document.getElementById('loginUsernameInput');
       if (input) input.value = savedUsername.trim();
+    }
+    if (savedPassword && savedPassword.trim()) {
+      if (passInput) passInput.value = savedPassword.trim();
+    }
+
+    if (savedUsername && savedUsername.trim() && savedPassword && savedPassword.trim()) {
       if (modal) modal.style.display = 'none';
-      attemptLogin(savedUsername.trim());
+      attemptLogin(savedUsername.trim(), savedPassword.trim());
     } else {
       if (modal) modal.style.display = 'flex';
+      if (input && !savedUsername) {
+        setTimeout(() => input.focus(), 150);
+      } else if (passInput) {
+        setTimeout(() => passInput.focus(), 150);
+      }
     }
   } catch(e) {
     const modal = document.getElementById('loginModal');
@@ -295,22 +327,42 @@ function setupEventListeners() {
 
   // Login Input & Submit
   const loginInput = document.getElementById('loginUsernameInput');
+  const passInput = document.getElementById('loginPasswordInput');
+
   if (loginInput) {
     loginInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-        const val = loginInput.value.trim();
-        if (val) attemptLogin(val);
+        if (passInput && !passInput.value.trim()) {
+          passInput.focus();
+        } else {
+          window.handleLoginSubmit();
+        }
+      }
+    });
+  }
+
+  if (passInput) {
+    passInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        window.handleLoginSubmit();
+      }
+    });
+  }
+
+  const btnTogglePass = document.getElementById('btnToggleLoginPass');
+  if (btnTogglePass && passInput) {
+    btnTogglePass.addEventListener('click', () => {
+      const isPass = passInput.type === 'password';
+      passInput.type = isPass ? 'text' : 'password';
+      const icon = document.getElementById('togglePassIcon');
+      if (icon) {
+        icon.className = isPass ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
       }
     });
   }
 
   document.getElementById('btnLoginSubmit').addEventListener('click', () => {
-    const usernameInput = document.getElementById('loginUsernameInput').value.trim();
-    if (!usernameInput) {
-      alert('Lütfen bir kullanıcı adı girin.');
-      return;
-    }
-    attemptLogin(usernameInput);
+    window.handleLoginSubmit();
   });
 
   // Sound Toggle
@@ -342,6 +394,7 @@ function setupEventListeners() {
       if (confirm('Mevcut hesaptan çıkış yapmak istiyor musunuz?')) {
         try {
           localStorage.removeItem('case_clash_username');
+          localStorage.removeItem('case_clash_password');
         } catch(e) {}
         currentUser = null;
         userNameText.textContent = 'Giriş Yapılmadı';
@@ -351,10 +404,12 @@ function setupEventListeners() {
         if (modal) {
           modal.style.display = 'flex';
           const input = document.getElementById('loginUsernameInput');
-          if (input) {
-            input.value = '';
-            input.focus();
-          }
+          const pass = document.getElementById('loginPasswordInput');
+          if (input) input.value = '';
+          if (pass) pass.value = '';
+          const errBox = document.getElementById('loginErrorMessage');
+          if (errBox) errBox.style.display = 'none';
+          if (input) input.focus();
         }
       }
     });
@@ -635,13 +690,28 @@ function getUserBackup(username) {
   }
 }
 
-// Attempt login via HWID
-async function attemptLogin(username) {
+// Attempt login via HWID & Password
+async function attemptLogin(username, password) {
   const cleanUser = String(username || '').trim();
+  const cleanPass = String(password || '').trim();
+
   if (!cleanUser) {
-    showInAppToast('Lütfen bir kullanıcı adı girin.', false);
+    showLoginError('Lütfen bir kullanıcı adı girin.');
     return;
   }
+
+  if (!cleanPass) {
+    showLoginError('Lütfen hesap şifrenizi girin.');
+    const modal = document.getElementById('loginModal');
+    if (modal) modal.style.display = 'flex';
+    const passInput = document.getElementById('loginPasswordInput');
+    if (passInput) passInput.focus();
+    return;
+  }
+
+  // Clear previous error
+  const errBox = document.getElementById('loginErrorMessage');
+  if (errBox) errBox.style.display = 'none';
 
   const submitBtn = document.getElementById('btnLoginSubmit');
   if (submitBtn) {
@@ -672,7 +742,6 @@ async function attemptLogin(username) {
       tabId = 'tab_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
       sessionStorage.setItem('case_clash_tab_id', tabId);
     }
-    localStorage.setItem('case_clash_username', cleanUser);
   } catch(e) {
     tabId = 'tab_' + Math.random().toString(36).substring(2);
   }
@@ -685,13 +754,13 @@ async function attemptLogin(username) {
   const backupData = getUserBackup(cleanUser);
 
   console.log('[CLIENT] Emitting auth:login with:', { cleanUser, currentHwid, tabId, backupData });
-  socket.emit('auth:login', { username: cleanUser, hwid: currentHwid, tabId, backupData });
+  socket.emit('auth:login', { username: cleanUser, password: cleanPass, hwid: currentHwid, tabId, backupData });
 
   // If socket is still connecting, also queue for the connect event
   if (!socket.connected) {
     socket.once('connect', () => {
       console.log('[CLIENT] Socket connected, re-emitting auth:login');
-      socket.emit('auth:login', { username: cleanUser, hwid: currentHwid, tabId, backupData });
+      socket.emit('auth:login', { username: cleanUser, password: cleanPass, hwid: currentHwid, tabId, backupData });
     });
   }
 
@@ -741,6 +810,15 @@ socket.on('auth:success', (data) => {
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   userNameText.textContent = currentUser.username;
   marketListings = data.market || [];
+
+  // Persist credentials on successful login
+  try {
+    localStorage.setItem('case_clash_username', currentUser.username);
+    const passInput = document.getElementById('loginPasswordInput');
+    if (passInput && passInput.value.trim()) {
+      localStorage.setItem('case_clash_password', passInput.value.trim());
+    }
+  } catch(e) {}
 
   if (data.cases && Array.isArray(data.cases) && data.cases.length > 0) {
     allCases = data.cases;
@@ -815,7 +893,20 @@ socket.on('auth:error', (data) => {
     submitBtn.disabled = false;
     submitBtn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> GİRİŞ YAP';
   }
-  showInAppToast(data.message || 'Giriş hatası!', false);
+  const modal = document.getElementById('loginModal');
+  if (modal) {
+    modal.style.display = 'flex';
+  }
+  showLoginError(data.message || 'Giriş hatası!');
+
+  const passInput = document.getElementById('loginPasswordInput');
+  if (passInput) {
+    passInput.focus();
+    passInput.style.borderColor = '#ef4444';
+    setTimeout(() => {
+      passInput.style.borderColor = 'var(--border-subtle)';
+    }, 3000);
+  }
 });
 
 // 3. Timed Luck Event Update
