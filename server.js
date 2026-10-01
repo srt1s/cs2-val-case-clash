@@ -38,9 +38,9 @@ app.get('/api/cases', (req, res) => {
 // ==========================================
 // 1. ACTIVE CONNECTIONS & MULTI-TAB HWID LOCK
 // ==========================================
-// hwid -> { socketId, userId, username }
+// hwid -> { socketId, userId, username, tabId }
 const activeHwids = new Map();
-// socketId -> { hwid, userId, username }
+// socketId -> { hwid, userId, username, tabId }
 const activeSockets = new Map();
 
 // Helper to get online users list (deduplicated)
@@ -218,22 +218,31 @@ function pickWinningItem(caseObj, isBoosted) {
 // ==========================================
 io.on('connection', (socket) => {
   // Handle User Login & HWID Auth
-  socket.on('auth:login', ({ username, hwid }) => {
+  socket.on('auth:login', ({ username, hwid, tabId }) => {
     if (!username || !hwid) {
       return socket.emit('auth:error', { message: 'Kullanıcı adı ve HWID gereklidir.' });
     }
 
     const cleanHwid = String(hwid).trim();
     const cleanUser = String(username).trim();
+    const cleanTab = String(tabId || socket.id).trim();
 
     // Check Multi-Tab constraint:
-    // If this HWID is currently active on another socket, BLOCK IT!
+    // If this HWID is currently active on another socket, check tab
     if (activeHwids.has(cleanHwid)) {
-      const existingSocketId = activeHwids.get(cleanHwid);
-      if (existingSocketId !== socket.id && io.sockets.sockets.has(existingSocketId)) {
-        return socket.emit('auth:blocked_multi_tab', {
-          message: '⚠️ BU CİHAZDAN ZATEN AKTİF BİR SEKMEDE GİRİŞ YAPILMIŞ!\nAynı anda birden fazla sekme açamazsınız. Lütfen diğer sekmeyi kapatın.'
-        });
+      const activeSession = activeHwids.get(cleanHwid);
+      const existingSocket = io.sockets.sockets.get(activeSession.socketId);
+      if (existingSocket && existingSocket.id !== socket.id) {
+        // If it's the SAME tab reloaded/reconnected, disconnect the stale socket
+        if (activeSession.tabId === cleanTab) {
+          existingSocket.disconnect(true);
+          activeSockets.delete(activeSession.socketId);
+        } else {
+          // If it's a DIFFERENT tab on the same HWID, BLOCK IT!
+          return socket.emit('auth:blocked_multi_tab', {
+            message: '⚠️ BU CİHAZDAN ZATEN AKTİF BİR SEKMEDE GİRİŞ YAPILMIŞ!\nAynı anda birden fazla sekme açamazsınız. Lütfen diğer sekmeyi kapatın.'
+          });
+        }
       }
     }
 
@@ -242,11 +251,17 @@ io.on('connection', (socket) => {
     const user = result.user;
 
     // Track active connection
-    activeHwids.set(cleanHwid, socket.id);
+    activeHwids.set(cleanHwid, {
+      socketId: socket.id,
+      userId: user.id,
+      username: user.username,
+      tabId: cleanTab
+    });
     activeSockets.set(socket.id, {
       hwid: cleanHwid,
       userId: user.id,
-      username: user.username
+      username: user.username,
+      tabId: cleanTab
     });
 
     socket.emit('auth:success', {
@@ -592,7 +607,8 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     const session = activeSockets.get(socket.id);
     if (session) {
-      if (activeHwids.get(session.hwid) === socket.id) {
+      const active = activeHwids.get(session.hwid);
+      if (active && active.socketId === socket.id) {
         activeHwids.delete(session.hwid);
       }
       activeSockets.delete(socket.id);

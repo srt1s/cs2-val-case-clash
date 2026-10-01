@@ -127,7 +127,17 @@ function setupEventListeners() {
     }
   });
 
-  // Login Submit
+  // Login Input & Submit
+  const loginInput = document.getElementById('loginUsernameInput');
+  if (loginInput) {
+    loginInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const val = loginInput.value.trim();
+        if (val) attemptLogin(val);
+      }
+    });
+  }
+
   document.getElementById('btnLoginSubmit').addEventListener('click', () => {
     const usernameInput = document.getElementById('loginUsernameInput').value.trim();
     if (!usernameInput) {
@@ -189,10 +199,64 @@ function switchView(viewName) {
 }
 
 // Attempt login via HWID
-function attemptLogin(username) {
-  localStorage.setItem('case_clash_username', username);
-  userNameText.textContent = username;
-  socket.emit('auth:login', { username, hwid: currentHwid });
+async function attemptLogin(username) {
+  const cleanUser = String(username || '').trim();
+  if (!cleanUser) {
+    alert('Lütfen bir kullanıcı adı girin.');
+    return;
+  }
+
+  const submitBtn = document.getElementById('btnLoginSubmit');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> GİRİŞ YAPILIYOR...';
+  }
+
+  if (!currentHwid) {
+    try {
+      currentHwid = await window.getHardwareFingerprint();
+    } catch(e) {
+      currentHwid = 'HWID-' + Math.random().toString(16).substring(2, 10).toUpperCase();
+    }
+  }
+
+  if (hwidPill) {
+    hwidPill.textContent = currentHwid.substring(0, 10) + '...';
+  }
+
+  // Session-unique tabId
+  let tabId = null;
+  try {
+    tabId = sessionStorage.getItem('case_clash_tab_id');
+    if (!tabId) {
+      tabId = 'tab_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+      sessionStorage.setItem('case_clash_tab_id', tabId);
+    }
+    localStorage.setItem('case_clash_username', cleanUser);
+  } catch(e) {
+    tabId = 'tab_' + Math.random().toString(36).substring(2);
+  }
+
+  userNameText.textContent = cleanUser;
+
+  const emitAuth = () => {
+    socket.emit('auth:login', { username: cleanUser, hwid: currentHwid, tabId });
+  };
+
+  if (socket.connected) {
+    emitAuth();
+  } else {
+    socket.once('connect', emitAuth);
+    // Timeout fallback if socket takes too long
+    setTimeout(() => {
+      if (loginModal && loginModal.style.display !== 'none' && multiTabLockoutModal.style.display !== 'flex') {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> GİRİŞ YAP';
+        }
+      }
+    }, 5000);
+  }
 }
 
 // ==========================================
@@ -234,6 +298,11 @@ socket.on('auth:success', (data) => {
 });
 
 socket.on('auth:error', (data) => {
+  const submitBtn = document.getElementById('btnLoginSubmit');
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> GİRİŞ YAP';
+  }
   alert(data.message || 'Giriş hatası!');
 });
 
