@@ -601,7 +601,7 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`===============================================`);
   console.log(`🚀 CASE-CLASH Server running on port ${PORT}`);
   console.log(`🎮 CS2 & VALORANT Case Opening Arena Online!`);

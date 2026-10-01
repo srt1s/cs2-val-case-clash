@@ -2,18 +2,14 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy dependency files
+# Copy package definitions
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install production dependencies
+RUN npm install --omit=dev
 
 # Copy application files
 COPY . .
 
-# Expose dynamic PORT for Railway
-ENV PORT=3000
-EXPOSE 3000
-
-# Start server
+# Run application using Railway provided $PORT
 CMD ["node", "server.js"]
