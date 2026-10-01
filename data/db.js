@@ -193,11 +193,12 @@ module.exports = {
     return removed;
   },
 
-  // Modify Kasa Opening Balance (1 Kasa = 1 Bakiye)
+  // Modify Kasa Opening Balance (1 Kasa = 1 Bakiye) — Max 1000 Anahtar
   updateBalance(userId, delta) {
     const user = dbData.users[userId];
     if (!user) return null;
-    user.balance = Math.max(0, Math.round((user.balance + delta) * 100) / 100);
+    const MAX_KEYS = 1000;
+    user.balance = Math.min(MAX_KEYS, Math.max(0, Math.round((user.balance + delta) * 100) / 100));
     saveDb();
     return user.balance;
   },
