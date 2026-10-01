@@ -454,7 +454,7 @@ window.INITIAL_CASES = [
   {
     "id": "val_champions_vault",
     "name": "Champions Kasası",
-    "subtitle": "Gizemli Limited Skin & Vandal",
+    "subtitle": "2021-2026 Champions Koleksiyonu",
     "game": "val",
     "cost": 10,
     "icon": "fa-trophy",
@@ -788,7 +788,7 @@ window.INITIAL_CASES = [
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 4368,
+          "basePrice": 17000,
           "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
         },
         "weight": 0.35

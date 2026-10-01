@@ -419,15 +419,123 @@ function setupEventListeners() {
     });
   }
 
-  document.querySelectorAll('.quick-preset-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cases = btn.getAttribute('data-cases');
-      if (convertInput && convertRequiredTL) {
-        convertInput.value = cases;
-        convertRequiredTL.textContent = parseInt(cases, 10) * 40;
+  // Admin Panel Setup (Password: topraK)
+  let isAdminAuthenticated = false;
+  let adminPasswordCached = '';
+
+  const adminModal = document.getElementById('adminModal');
+  const btnAdminToggle = document.getElementById('btnAdminToggle');
+  const btnCloseAdmin = document.getElementById('btnCloseAdminModal');
+  const adminLoginForm = document.getElementById('adminLoginForm');
+  const adminControlsArea = document.getElementById('adminControlsArea');
+  const adminPasswordInput = document.getElementById('adminPasswordInput');
+  const btnAdminLoginSubmit = document.getElementById('btnAdminLoginSubmit');
+  const btnAdminLogout = document.getElementById('btnAdminLogout');
+  const adminTargetUserInput = document.getElementById('adminTargetUserInput');
+  const adminAddTLInput = document.getElementById('adminAddTLInput');
+  const adminAddCaseInput = document.getElementById('adminAddCaseInput');
+  const btnAdminGrantBalance = document.getElementById('btnAdminGrantBalance');
+
+  function updateAdminView() {
+    if (isAdminAuthenticated) {
+      if (adminLoginForm) adminLoginForm.style.display = 'none';
+      if (adminControlsArea) adminControlsArea.style.display = 'block';
+    } else {
+      if (adminLoginForm) adminLoginForm.style.display = 'block';
+      if (adminControlsArea) adminControlsArea.style.display = 'none';
+      if (adminPasswordInput) adminPasswordInput.value = '';
+    }
+  }
+
+  if (btnAdminToggle && adminModal) {
+    btnAdminToggle.addEventListener('click', () => {
+      updateAdminView();
+      adminModal.style.display = 'flex';
+      if (!isAdminAuthenticated && adminPasswordInput) {
+        setTimeout(() => adminPasswordInput.focus(), 100);
       }
     });
+  }
+
+  if (btnCloseAdmin && adminModal) {
+    btnCloseAdmin.addEventListener('click', () => {
+      adminModal.style.display = 'none';
+    });
+  }
+
+  if (btnAdminLoginSubmit && adminPasswordInput) {
+    btnAdminLoginSubmit.addEventListener('click', () => {
+      const pass = adminPasswordInput.value.trim();
+      if (pass === 'topraK') {
+        isAdminAuthenticated = true;
+        adminPasswordCached = 'topraK';
+        updateAdminView();
+        showInAppToast('Admin girişi başarılı!', true);
+      } else {
+        showInAppToast('Hatalı admin şifresi!', false);
+        adminPasswordInput.value = '';
+      }
+    });
+
+    adminPasswordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        btnAdminLoginSubmit.click();
+      }
+    });
+  }
+
+  if (btnAdminLogout) {
+    btnAdminLogout.addEventListener('click', () => {
+      isAdminAuthenticated = false;
+      adminPasswordCached = '';
+      updateAdminView();
+      showInAppToast('Admin oturumu kapatıldı.', true);
+    });
+  }
+
+  // Admin Quick Buttons
+  document.querySelectorAll('.admin-quick-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tl = btn.getAttribute('data-tl');
+      const cs = btn.getAttribute('data-case');
+      if (adminAddTLInput && tl) adminAddTLInput.value = tl;
+      if (adminAddCaseInput && cs) adminAddCaseInput.value = cs;
+    });
   });
+
+  // Admin Grant Balance
+  if (btnAdminGrantBalance) {
+    btnAdminGrantBalance.addEventListener('click', () => {
+      if (!isAdminAuthenticated || adminPasswordCached !== 'topraK') {
+        showInAppToast('Lütfen önce yetkili girişi yapın!', false);
+        return;
+      }
+
+      const target = adminTargetUserInput ? adminTargetUserInput.value.trim() : '';
+      const tl = adminAddTLInput ? Number(adminAddTLInput.value) : 0;
+      const cases = adminAddCaseInput ? Number(adminAddCaseInput.value) : 0;
+
+      if (tl <= 0 && cases <= 0) {
+        showInAppToast('Lütfen eklenecek bir miktar girin.', false);
+        return;
+      }
+
+      btnAdminGrantBalance.disabled = true;
+      btnAdminGrantBalance.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Yükleniyor...';
+
+      socket.emit('admin:give_balance', {
+        password: adminPasswordCached,
+        targetUsername: target,
+        tlAmount: tl,
+        caseAmount: cases
+      });
+
+      setTimeout(() => {
+        btnAdminGrantBalance.disabled = false;
+        btnAdminGrantBalance.innerHTML = '<i class="fa-solid fa-gift"></i> BAKİYEYİ YÜKLE';
+      }, 600);
+    });
+  }
 
   if (btnConvert && convertInput) {
     btnConvert.addEventListener('click', () => {
@@ -897,6 +1005,27 @@ socket.on('wallet:converted', (data) => {
 
 socket.on('wallet:error', (data) => {
   showInAppToast(data.message || 'Cüzdan işlem hatası!', false);
+});
+
+// Admin Events
+socket.on('admin:success', (data) => {
+  showInAppToast(data.message, true);
+  try { window.soundEngine.playWin(); } catch(e) {}
+});
+
+socket.on('admin:error', (data) => {
+  showInAppToast(data.message || 'Admin işlem hatası!', false);
+});
+
+socket.on('balance:update', (data) => {
+  if (currentUser) {
+    if (data.balance !== undefined) currentUser.balance = data.balance;
+    if (data.tlBalance !== undefined) currentUser.tlBalance = data.tlBalance;
+    updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+    saveUserBackup(currentUser);
+    showInAppToast('Bakiyeniz güncellendi!', true);
+    try { window.soundEngine.playWin(); } catch(e) {}
+  }
 });
 
 // 8. Online Players & Trading

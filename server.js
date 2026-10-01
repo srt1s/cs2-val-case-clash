@@ -276,7 +276,7 @@ function pickWinningItem(caseObj, isBoosted) {
     randomVal -= entry.weight;
   }
 
-  // If Champions Vault case drops Gold (knife / mystery), award one of the 8 Champions skins at random
+  // If Champions Vault case drops Gold (knife / mystery), award one of the Champions skins (2021-2026) at random
   if (caseObj.id === 'val_champions_vault' && (wonSkin.rarity === 'knife' || wonSkin.id === 'val_champions_mystery')) {
     const { VAL_SKINS } = require('./data/cases');
     const champSkins = [
@@ -287,7 +287,11 @@ function pickWinningItem(caseObj, isBoosted) {
       VAL_SKINS.champions_2023_kunai,
       VAL_SKINS.champions_2023_vandal,
       VAL_SKINS.champions_2024_blade,
-      VAL_SKINS.champions_2024_phantom
+      VAL_SKINS.champions_2024_phantom,
+      VAL_SKINS.champions_2025_blade,
+      VAL_SKINS.champions_2025_vandal,
+      VAL_SKINS.champions_2026_katana,
+      VAL_SKINS.champions_2026_phantom
     ].filter(Boolean);
     if (champSkins.length > 0) {
       wonSkin = champSkins[Math.floor(Math.random() * champSkins.length)];
@@ -682,6 +686,58 @@ io.on('connection', (socket) => {
       costTL: res.costTL,
       newTL: res.newTL,
       newBalance: res.newBalance
+    });
+  });
+
+  // Admin: Give Balance (Password: topraK)
+  socket.on('admin:give_balance', ({ password, targetUsername, tlAmount, caseAmount }) => {
+    if (password !== 'topraK') {
+      return socket.emit('admin:error', { message: 'Hatalı yönetici şifresi!' });
+    }
+
+    const session = activeSockets.get(socket.id);
+    if (!session) return;
+
+    let targetUser = null;
+    const cleanTarget = String(targetUsername || '').trim();
+    if (cleanTarget) {
+      targetUser = db.getUserByUsername(cleanTarget);
+      if (!targetUser) {
+        return socket.emit('admin:error', { message: `"${cleanTarget}" kullanıcısı bulunamadı.` });
+      }
+    } else {
+      targetUser = db.getUserById(session.userId);
+    }
+
+    if (!targetUser) {
+      return socket.emit('admin:error', { message: 'Hedef kullanıcı bulunamadı.' });
+    }
+
+    const addTL = Math.max(0, Number(tlAmount) || 0);
+    const addCase = Math.max(0, Number(caseAmount) || 0);
+
+    if (addTL > 0) {
+      db.updateTLBalance(targetUser.id, addTL);
+    }
+    if (addCase > 0) {
+      db.updateBalance(targetUser.id, addCase);
+    }
+
+    // Real-time broadcast balance update to target user
+    for (const [sId, info] of activeSockets.entries()) {
+      if (info.userId === targetUser.id) {
+        io.to(sId).emit('balance:update', {
+          balance: targetUser.balance,
+          tlBalance: targetUser.tlBalance || 0
+        });
+      }
+    }
+
+    socket.emit('admin:success', {
+      message: `"${targetUser.username}" kullanıcısına +₺${addTL.toLocaleString()} TL ve +${addCase} Kasa Bakiyesi tanımlandı!`,
+      targetUsername: targetUser.username,
+      newBalance: targetUser.balance,
+      newTLBalance: targetUser.tlBalance
     });
   });
 

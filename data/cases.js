@@ -279,14 +279,14 @@ const VAL_SKINS = {
     image: 'https://media.valorant-api.com/weaponskins/1cd09fbd-43cb-a5f6-90fa-08994342d747/displayicon.png'
   },
 
-  // CHAMPIONS ALL YEARS (+%12 BASE PRICE)
+  // CHAMPIONS ALL YEARS (Eskiden Yeniye Değer Skalası: 2021 Karambit 17.000 TL, 2024 Bıçak 4.000 TL)
   champions_2021_karambit: {
     id: 'val_champions_2021_karambit',
     name: 'Champions 2021 Karambit',
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 4368,
+    basePrice: 17000,
     image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
   },
   champions_2021_vandal: {
@@ -295,7 +295,7 @@ const VAL_SKINS = {
     weapon: 'Vandal',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3584,
+    basePrice: 13500,
     image: 'https://media.valorant-api.com/weaponskins/9bf19b77-4b33-7203-9f2c-16932970622f/displayicon.png'
   },
   champions_2022_butterfly: {
@@ -304,7 +304,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 4032,
+    basePrice: 11500,
     image: 'https://media.valorant-api.com/weaponskins/6946cd0e-4e4a-ec4f-9238-dfb71715722b/displayicon.png'
   },
   champions_2022_phantom: {
@@ -313,7 +313,7 @@ const VAL_SKINS = {
     weapon: 'Phantom',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3136,
+    basePrice: 8500,
     image: 'https://media.valorant-api.com/weaponskins/8c72ae0b-4357-1a75-ad62-fbaec7b64f92/displayicon.png'
   },
   champions_2023_kunai: {
@@ -322,7 +322,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3808,
+    basePrice: 7000,
     image: 'https://media.valorant-api.com/weaponskins/27f27500-491c-32d4-1db6-1f85e479c103/displayicon.png'
   },
   champions_2023_vandal: {
@@ -331,7 +331,7 @@ const VAL_SKINS = {
     weapon: 'Vandal',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3472,
+    basePrice: 5500,
     image: 'https://media.valorant-api.com/weaponskins/b0f65660-4c51-13b7-9d01-e29a1e2879b0/displayicon.png'
   },
   champions_2024_blade: {
@@ -340,7 +340,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3920,
+    basePrice: 4000,
     image: 'https://media.valorant-api.com/weaponskins/30300aea-4d8a-320d-5cb0-0e8badc8d3df/displayicon.png'
   },
   champions_2024_phantom: {
@@ -349,8 +349,46 @@ const VAL_SKINS = {
     weapon: 'Phantom',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3248,
+    basePrice: 3200,
     image: 'https://media.valorant-api.com/weaponskins/cc1da8cd-452f-a007-0bf8-b68a471c3a6e/displayicon.png'
+  },
+  // 2025 CHAMPIONS BUNDLE
+  champions_2025_blade: {
+    id: 'val_champions_2025_blade',
+    name: 'Champions 2025 Dagger',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 2500,
+    image: 'https://media.valorant-api.com/weaponskins/e37229ed-4ddf-5e7e-e744-8fba60fa2c37/displayicon.png'
+  },
+  champions_2025_vandal: {
+    id: 'val_champions_2025_vandal',
+    name: 'Champions 2025 Vandal',
+    weapon: 'Vandal',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 2000,
+    image: 'https://media.valorant-api.com/weaponskins/b9ee2457-481c-6776-3f5b-0ca8e8f90c89/displayicon.png'
+  },
+  // 2026 CHAMPIONS BUNDLE
+  champions_2026_katana: {
+    id: 'val_champions_2026_katana',
+    name: 'Champions 2026 Katana',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 1600,
+    image: 'https://media.valorant-api.com/weaponskins/b73d7b16-4652-bc5b-5c4c-068aabb19d0a/displayicon.png'
+  },
+  champions_2026_phantom: {
+    id: 'val_champions_2026_phantom',
+    name: 'Champions 2026 Phantom',
+    weapon: 'Phantom',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 1300,
+    image: 'https://media.valorant-api.com/weaponskins/74789f33-4632-8052-96d7-258538721a32/displayicon.png'
   },
 
   // KIRMIZI (Exclusive / Red)
@@ -591,7 +629,7 @@ const CASES = [
   {
     id: 'val_champions_vault',
     name: 'Champions Kasası',
-    subtitle: 'Gizemli Limited Skin & Vandal',
+    subtitle: '2021-2026 Champions Koleksiyonu',
     game: 'val',
     cost: 10,
     icon: 'fa-trophy',

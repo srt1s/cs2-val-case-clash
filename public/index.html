@@ -74,6 +74,10 @@
           <i class="fa-solid fa-comments"></i>
         </button>
 
+        <button class="action-btn-icon" id="btnAdminToggle" title="Admin Paneli" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.4);">
+          <i class="fa-solid fa-user-shield"></i>
+        </button>
+
         <button class="action-btn-icon" id="btnLogout" title="Hesap Değiştir / Çıkış Yap">
           <i class="fa-solid fa-arrow-right-from-bracket"></i>
         </button>
@@ -402,27 +406,82 @@
         • Skinlerinizi satarak TL kazanabilir ve kasa bakiyesine dönüştürebilirsiniz.
       </div>
 
-      <!-- Convert Section -->
-      <div style="width:100%; text-align:left; margin-bottom:1.5rem;">
-        <label style="font-size:0.85rem; font-weight:700; color:#e2e8f0; display:block; margin-bottom:6px;">
-          Alınacak Kasa Bakiyesi (1 Bakiye = 40 TL):
+      <!-- Convert Section (Simplified) -->
+      <div style="width:100%; text-align:left; margin-bottom:1rem;">
+        <label style="font-size:0.85rem; font-weight:700; color:#e2e8f0; display:block; margin-bottom:8px;">
+          Alınacak Kasa Bakiyesi:
         </label>
-        <div style="display:flex; gap:8px; margin-bottom:10px;">
-          <input type="number" id="convertCaseInput" min="1" max="1000" value="1" style="flex:1; background:#0a0d14; border:1px solid var(--border-subtle); padding:10px 14px; border-radius:8px; color:#fff; font-size:1.1rem; font-weight:700;">
-          <button class="btn-primary" id="btnConvertTLToCase" style="background:#10b981; white-space:nowrap; padding:10px 18px;">
+        <div style="display:flex; gap:8px; margin-bottom:12px;">
+          <input type="number" id="convertCaseInput" min="1" max="10000" value="1" style="flex:1; background:#0a0d14; border:1px solid var(--border-subtle); padding:10px 14px; border-radius:8px; color:#fff; font-size:1.1rem; font-weight:700;">
+          <button class="btn-primary" id="btnConvertTLToCase" style="background:#10b981; white-space:nowrap; padding:10px 20px; font-weight:700;">
             <i class="fa-solid fa-arrows-rotate"></i> Çevir (<span id="convertRequiredTL">40</span> TL)
           </button>
         </div>
-        <!-- Quick convert presets & Single-Click Convert All -->
-        <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
-          <button type="button" class="btn-secondary quick-preset-btn" data-cases="1" style="padding:5px 10px; font-size:0.8rem;">+1 (40 TL)</button>
-          <button type="button" class="btn-secondary quick-preset-btn" data-cases="3" style="padding:5px 10px; font-size:0.8rem;">+3 (120 TL)</button>
-          <button type="button" class="btn-secondary quick-preset-btn" data-cases="5" style="padding:5px 10px; font-size:0.8rem;">+5 (200 TL)</button>
-          <button type="button" class="btn-secondary quick-preset-btn" data-cases="10" style="padding:5px 10px; font-size:0.8rem;">+10 (400 TL)</button>
-          <button type="button" class="btn-primary" id="btnConvertAllTL" style="background:linear-gradient(135deg, #f59e0b, #d97706); padding:6px 14px; font-size:0.82rem; font-weight:800; border-radius:6px; margin-left:auto; display:flex; align-items:center; gap:5px; border:none; cursor:pointer;" title="Mevcut tüm TL bakiyenizi Kasa Açma Bakiyesine dönüştürün">
-            <i class="fa-solid fa-bolt"></i> TÜMÜNÜ ÇEVİR
-          </button>
+        <button type="button" class="btn-primary" id="btnConvertAllTL" style="width:100%; background:linear-gradient(135deg, #f59e0b, #d97706); padding:12px; font-size:0.95rem; font-weight:800; border-radius:8px; display:flex; align-items:center; justify-content:center; gap:8px; border:none; cursor:pointer;" title="Mevcut tüm TL bakiyenizi Kasa Açma Bakiyesine dönüştürün">
+          <i class="fa-solid fa-bolt"></i> TÜM TL'Yİ KASAYA ÇEVİR
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL MODAL (Password: topraK) -->
+  <div class="reveal-modal" id="adminModal" style="display: none;">
+    <div class="reveal-card" style="max-width: 480px; border-color: #ef4444; text-align: left;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; width: 100%;">
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: #ef4444; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-shield-halved"></i> Admin Yönetim Paneli
+        </h2>
+        <button id="btnCloseAdminModal" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.3rem;">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- State 1: Password Login -->
+      <div id="adminLoginForm" style="width: 100%;">
+        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1rem;">
+          Yönetici yetkilerini kullanmak için lütfen şifrenizi girin.
+        </p>
+        <div style="margin-bottom: 1.2rem;">
+          <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Admin Şifresi:</label>
+          <input type="password" id="adminPasswordInput" placeholder="Şifre..." style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.75rem 1rem; border-radius: 8px; color: #fff; font-size: 1.1rem; font-weight: 700;">
         </div>
+        <button class="btn-primary" id="btnAdminLoginSubmit" style="width: 100%; background: #ef4444; padding: 0.8rem; font-weight: 800; cursor: pointer;">
+          <i class="fa-solid fa-lock-open"></i> GİRİŞ YAP
+        </button>
+      </div>
+
+      <!-- State 2: Admin Controls (Give Money / Balance) -->
+      <div id="adminControlsArea" style="display: none; width: 100%;">
+        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 8px 12px; margin-bottom: 1.2rem; font-size: 0.85rem; color: #fca5a5; display: flex; align-items: center; justify-content: space-between;">
+          <span><i class="fa-solid fa-circle-check"></i> Yetkili Oturumu Aktif</span>
+          <button id="btnAdminLogout" style="background: none; border: none; color: #f87171; cursor: pointer; text-decoration: underline; font-size: 0.8rem;">Çıkış</button>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Hedef Kullanıcı (Kendiniz için boş bırakın):</label>
+          <input type="text" id="adminTargetUserInput" placeholder="Örn: kullanici_adi veya boş" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.65rem 0.9rem; border-radius: 8px; color: #fff; font-size: 0.95rem;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.2rem;">
+          <div>
+            <label style="font-size: 0.85rem; color: #38bdf8; display: block; margin-bottom: 0.4rem; font-weight: 700;">TL Ekle (₺):</label>
+            <input type="number" id="adminAddTLInput" min="0" value="10000" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.65rem 0.9rem; border-radius: 8px; color: #38bdf8; font-size: 1.1rem; font-weight: 800;">
+          </div>
+          <div>
+            <label style="font-size: 0.85rem; color: #34d399; display: block; margin-bottom: 0.4rem; font-weight: 700;">Kasa Kredisi Ekle:</label>
+            <input type="number" id="adminAddCaseInput" min="0" value="100" style="width: 100%; background: #0a0d14; border: 1px solid var(--border-subtle); padding: 0.65rem 0.9rem; border-radius: 8px; color: #34d399; font-size: 1.1rem; font-weight: 800;">
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <button type="button" class="btn-secondary admin-quick-btn" data-tl="5000" data-case="50" style="padding: 5px 10px; font-size: 0.8rem; cursor: pointer;">+₺5K / +50 Kasa</button>
+          <button type="button" class="btn-secondary admin-quick-btn" data-tl="25000" data-case="250" style="padding: 5px 10px; font-size: 0.8rem; cursor: pointer;">+₺25K / +250 Kasa</button>
+          <button type="button" class="btn-secondary admin-quick-btn" data-tl="100000" data-case="1000" style="padding: 5px 10px; font-size: 0.8rem; cursor: pointer;">+₺100K / +1000 Kasa</button>
+        </div>
+
+        <button class="btn-primary" id="btnAdminGrantBalance" style="width: 100%; background: linear-gradient(135deg, #ef4444, #dc2626); padding: 0.85rem; font-weight: 800; font-size: 1rem; border: none; cursor: pointer; border-radius: 8px;">
+          <i class="fa-solid fa-gift"></i> BAKİYEYİ YÜKLE
+        </button>
       </div>
     </div>
   </div>
