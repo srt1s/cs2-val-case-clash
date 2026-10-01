@@ -263,15 +263,23 @@ function setupEventListeners() {
     });
   }
 
-  // Demo TL Buttons
-  ['100', '500', '2000'].forEach(amount => {
-    const btn = document.getElementById(`btnDemoTL${amount}`);
-    if (btn) {
-      btn.addEventListener('click', () => {
-        socket.emit('wallet:deposit_demo', { amount: Number(amount) });
-      });
-    }
-  });
+  // Single-Click Convert All TL to Case Balance
+  const btnConvertAll = document.getElementById('btnConvertAllTL');
+  if (btnConvertAll) {
+    btnConvertAll.addEventListener('click', () => {
+      const userTL = currentUser && currentUser.tlBalance !== undefined ? currentUser.tlBalance : 0;
+      const maxPossibleCases = Math.floor(userTL / 40);
+      if (maxPossibleCases < 1) {
+        showInAppToast(`⚠️ Yetersiz TL! Kasa bakiyesine çevirmek için en az ₺40 TL gerekir. Mevcut: ₺${userTL} TL`, false);
+        return;
+      }
+      if (convertInput && convertRequiredTL) {
+        convertInput.value = maxPossibleCases;
+        convertRequiredTL.textContent = maxPossibleCases * 40;
+      }
+      socket.emit('wallet:convert_tl', { caseCount: maxPossibleCases });
+    });
+  }
 }
 
 function switchView(viewName) {
@@ -586,14 +594,6 @@ socket.on('wallet:converted', (data) => {
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   showInAppToast(`🎉 ₺${data.costTL} TL karşılığında ${data.convertedCases} Kasa Bakiyesi alındı!`, true);
   try { window.soundEngine.playWin(); } catch(e) {}
-});
-
-socket.on('wallet:demo_deposited', (data) => {
-  currentUser.tlBalance = data.newTLBalance;
-  if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
-  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
-  showInAppToast(`💳 +₺${data.addedAmount} Demo TL hesabınıza yüklendi!`, true);
-  try { window.soundEngine.playNotification(); } catch(e) {}
 });
 
 socket.on('wallet:error', (data) => {

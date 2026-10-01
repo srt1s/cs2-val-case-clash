@@ -552,26 +552,6 @@ io.on('connection', (socket) => {
     });
   });
 
-  // Wallet: Deposit Demo TL
-  socket.on('wallet:deposit_demo', ({ amount }) => {
-    const session = activeSockets.get(socket.id);
-    if (!session) return;
-
-    const val = Number(amount);
-    if (isNaN(val) || val <= 0 || val > 100000) {
-      return socket.emit('wallet:error', { message: 'Geçersiz TL miktarı.' });
-    }
-
-    const newTL = db.depositDemoTL(session.userId, val);
-    const user = db.getUserById(session.userId);
-
-    socket.emit('wallet:demo_deposited', {
-      addedAmount: val,
-      newTLBalance: newTL,
-      newBalance: user ? user.balance : 0
-    });
-  });
-
   // Trading: Propose trade offer
   socket.on('trade:create_offer', ({ targetUserId, offeredInstanceIds, requestedInstanceIds }) => {
     const session = activeSockets.get(socket.id);

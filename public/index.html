@@ -343,27 +343,20 @@
           Alınacak Kasa Bakiyesi (1 Bakiye = 40 TL):
         </label>
         <div style="display:flex; gap:8px; margin-bottom:10px;">
-          <input type="number" id="convertCaseInput" min="1" max="100" value="1" style="flex:1; background:#0a0d14; border:1px solid var(--border-subtle); padding:10px 14px; border-radius:8px; color:#fff; font-size:1.1rem; font-weight:700;">
+          <input type="number" id="convertCaseInput" min="1" max="1000" value="1" style="flex:1; background:#0a0d14; border:1px solid var(--border-subtle); padding:10px 14px; border-radius:8px; color:#fff; font-size:1.1rem; font-weight:700;">
           <button class="btn-primary" id="btnConvertTLToCase" style="background:#10b981; white-space:nowrap; padding:10px 18px;">
             <i class="fa-solid fa-arrows-rotate"></i> Çevir (<span id="convertRequiredTL">40</span> TL)
           </button>
         </div>
-        <!-- Quick convert presets -->
-        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button type="button" class="btn-secondary quick-preset-btn" data-cases="1" style="padding:5px 10px; font-size:0.8rem;">+1 Bakiye (40 TL)</button>
-          <button type="button" class="btn-secondary quick-preset-btn" data-cases="3" style="padding:5px 10px; font-size:0.8rem;">+3 Bakiye (120 TL)</button>
-          <button type="button" class="btn-secondary quick-preset-btn" data-cases="5" style="padding:5px 10px; font-size:0.8rem;">+5 Bakiye (200 TL)</button>
-          <button type="button" class="btn-secondary quick-preset-btn" data-cases="10" style="padding:5px 10px; font-size:0.8rem;">+10 Bakiye (400 TL)</button>
-        </div>
-      </div>
-
-      <!-- Demo TL Top-up for testing -->
-      <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:1rem; width:100%; text-align:left;">
-        <span style="font-size:0.8rem; color:#94a3b8; display:block; margin-bottom:6px;">Demo TL Yükleme (Test için):</span>
-        <div style="display:flex; gap:8px;">
-          <button type="button" class="btn-secondary" id="btnDemoTL100" style="flex:1; font-size:0.85rem; padding:8px;">+ ₺100 TL</button>
-          <button type="button" class="btn-secondary" id="btnDemoTL500" style="flex:1; font-size:0.85rem; padding:8px;">+ ₺500 TL</button>
-          <button type="button" class="btn-secondary" id="btnDemoTL2000" style="flex:1; font-size:0.85rem; padding:8px;">+ ₺2.000 TL</button>
+        <!-- Quick convert presets & Single-Click Convert All -->
+        <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+          <button type="button" class="btn-secondary quick-preset-btn" data-cases="1" style="padding:5px 10px; font-size:0.8rem;">+1 (40 TL)</button>
+          <button type="button" class="btn-secondary quick-preset-btn" data-cases="3" style="padding:5px 10px; font-size:0.8rem;">+3 (120 TL)</button>
+          <button type="button" class="btn-secondary quick-preset-btn" data-cases="5" style="padding:5px 10px; font-size:0.8rem;">+5 (200 TL)</button>
+          <button type="button" class="btn-secondary quick-preset-btn" data-cases="10" style="padding:5px 10px; font-size:0.8rem;">+10 (400 TL)</button>
+          <button type="button" class="btn-primary" id="btnConvertAllTL" style="background:linear-gradient(135deg, #f59e0b, #d97706); padding:6px 14px; font-size:0.82rem; font-weight:800; border-radius:6px; margin-left:auto; display:flex; align-items:center; gap:5px; border:none; cursor:pointer;" title="Mevcut tüm TL bakiyenizi Kasa Açma Bakiyesine dönüştürün">
+            <i class="fa-solid fa-bolt"></i> TÜMÜNÜ ÇEVİR
+          </button>
         </div>
       </div>
     </div>
