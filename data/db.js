@@ -115,6 +115,13 @@ module.exports = {
     if (user.balance === undefined) user.balance = 0;
     if (!Array.isArray(user.inventory)) user.inventory = [];
 
+    // Ensure every inventory item has a valid, unique instanceId
+    user.inventory.forEach(item => {
+      if (!item.instanceId) {
+        item.instanceId = 'inv_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 7);
+      }
+    });
+
     // Mark HWID as registered
     if (isNewHwid) {
       dbData.hwids[cleanHwid] = {
@@ -148,11 +155,14 @@ module.exports = {
     return inventoryItem;
   },
 
-  // Remove item from inventory
+  // Remove item from inventory (with fallback match by id)
   removeItemFromUser(userId, instanceId) {
     const user = dbData.users[userId];
-    if (!user) return null;
-    const index = user.inventory.findIndex(i => i.instanceId === instanceId);
+    if (!user || !user.inventory) return null;
+    let index = user.inventory.findIndex(i => i.instanceId === instanceId);
+    if (index === -1 && typeof instanceId === 'string') {
+      index = user.inventory.findIndex(i => i.id === instanceId || i._id === instanceId);
+    }
     if (index === -1) return null;
     const [removed] = user.inventory.splice(index, 1);
     saveDb();

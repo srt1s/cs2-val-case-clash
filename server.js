@@ -491,6 +491,51 @@ io.on('connection', (socket) => {
     });
   });
 
+  // Bulk Instant Sell Items (Selected or All, Awards TL: 75%)
+  socket.on('inventory:sell_bulk_instant', ({ instanceIds } = {}) => {
+    const session = activeSockets.get(socket.id);
+    if (!session) return;
+
+    const user = db.getUserById(session.userId);
+    if (!user || !user.inventory || user.inventory.length === 0) {
+      return socket.emit('inventory:error', { message: 'Envanterinizde satılacak eşya bulunmuyor.' });
+    }
+
+    const idsToSell = Array.isArray(instanceIds) && instanceIds.length > 0 
+      ? new Set(instanceIds) 
+      : null;
+
+    let totalSellPrice = 0;
+    const remainingInventory = [];
+    let soldCount = 0;
+
+    for (const item of user.inventory) {
+      if (!idsToSell || idsToSell.has(item.instanceId)) {
+        const itemPrice = Math.max(1, Math.round(item.basePrice * 0.75));
+        totalSellPrice += itemPrice;
+        soldCount++;
+      } else {
+        remainingInventory.push(item);
+      }
+    }
+
+    if (soldCount === 0) {
+      return socket.emit('inventory:error', { message: 'Seçili eşyalar bulunamadı.' });
+    }
+
+    user.inventory = remainingInventory;
+    const newTL = db.updateTLBalance(user.id, totalSellPrice);
+    if (db.save) db.save();
+
+    socket.emit('inventory:bulk_sold', {
+      soldCount,
+      totalSellPrice,
+      newTLBalance: newTL,
+      newBalance: user.balance,
+      inventory: user.inventory
+    });
+  });
+
   // Market: Put skin up for sale
   socket.on('market:list_item', ({ instanceId, price }) => {
     const session = activeSockets.get(socket.id);
@@ -513,6 +558,56 @@ io.on('connection', (socket) => {
 
     socket.emit('market:listed_success', {
       listing,
+      inventory: user.inventory
+    });
+
+    io.emit('market:updated', db.db.market);
+  });
+
+  // Market: Bulk List Items
+  socket.on('market:list_bulk', ({ items } = {}) => {
+    const session = activeSockets.get(socket.id);
+    if (!session) return;
+
+    const user = db.getUserById(session.userId);
+    if (!user || !user.inventory || user.inventory.length === 0) {
+      return socket.emit('market:error', { message: 'Envanterinizde pazara koyulacak eşya bulunmuyor.' });
+    }
+
+    if (!Array.isArray(items) || items.length === 0) {
+      return socket.emit('market:error', { message: 'Pazara eklenecek eşya seçilmedi.' });
+    }
+
+    const itemMap = new Map();
+    items.forEach(req => {
+      if (req && req.instanceId) {
+        itemMap.set(req.instanceId, Number(req.price));
+      }
+    });
+
+    const remainingInventory = [];
+    const createdListings = [];
+
+    for (const item of user.inventory) {
+      if (itemMap.has(item.instanceId)) {
+        const askPrice = itemMap.get(item.instanceId);
+        const finalPrice = (!isNaN(askPrice) && askPrice > 0) ? askPrice : item.basePrice;
+        const listing = db.addMarketListing(user.id, user.username, item, finalPrice);
+        createdListings.push(listing);
+      } else {
+        remainingInventory.push(item);
+      }
+    }
+
+    if (createdListings.length === 0) {
+      return socket.emit('market:error', { message: 'Pazara koyulacak geçerli eşya bulunamadı.' });
+    }
+
+    user.inventory = remainingInventory;
+    if (db.save) db.save();
+
+    socket.emit('market:bulk_listed_success', {
+      count: createdListings.length,
       inventory: user.inventory
     });
 

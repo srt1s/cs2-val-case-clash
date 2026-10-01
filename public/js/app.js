@@ -11,6 +11,8 @@ let activeLuckEvent = null;
 let marketListings = [];
 let onlinePlayers = [];
 let lastOpenedItem = null;
+let currentModalItem = null;
+let selectedInventoryIds = new Set();
 let isSpinning = false;
 
 // DOM Elements
@@ -35,6 +37,7 @@ const loginModal = document.getElementById('loginModal');
 const multiTabLockoutModal = document.getElementById('multiTabLockoutModal');
 const winningRevealModal = document.getElementById('winningRevealModal');
 const marketListModal = document.getElementById('marketListModal');
+const bulkListModal = document.getElementById('bulkListModal');
 const tradeModal = document.getElementById('tradeModal');
 const incomingTradeModal = document.getElementById('incomingTradeModal');
 const rareDropBanner = document.getElementById('rareDropBanner');
@@ -173,14 +176,122 @@ function setupEventListeners() {
   // Winning Modal Actions
   document.getElementById('btnRevealKeep').addEventListener('click', () => {
     winningRevealModal.style.display = 'none';
+    currentModalItem = null;
   });
 
-  document.getElementById('btnRevealInstantSell').addEventListener('click', () => {
-    if (lastOpenedItem) {
-      socket.emit('inventory:sell_instant', { instanceId: lastOpenedItem.instanceId });
+  document.getElementById('btnRevealInstantSell').addEventListener('click', (e) => {
+    const itemToSell = currentModalItem || lastOpenedItem;
+    if (itemToSell && itemToSell.instanceId) {
+      const btn = e.currentTarget;
+      btn.disabled = true;
+      socket.emit('inventory:sell_instant', { instanceId: itemToSell.instanceId });
       winningRevealModal.style.display = 'none';
+      currentModalItem = null;
+      setTimeout(() => { btn.disabled = false; }, 600);
     }
   });
+
+  // Bulk Toolbar Actions
+  const chkSelectAll = document.getElementById('chkSelectAllItems');
+  if (chkSelectAll) {
+    chkSelectAll.addEventListener('change', () => {
+      if (!currentUser || !currentUser.inventory) return;
+      if (chkSelectAll.checked) {
+        currentUser.inventory.forEach(i => selectedInventoryIds.add(i.instanceId));
+      } else {
+        selectedInventoryIds.clear();
+      }
+      renderInventory();
+    });
+  }
+
+  // Bulk Instant Sell
+  const btnBulkSell = document.getElementById('btnBulkSellInstant');
+  if (btnBulkSell) {
+    btnBulkSell.addEventListener('click', () => {
+      if (!currentUser || !currentUser.inventory || currentUser.inventory.length === 0) return;
+      
+      const isSelectedOnly = selectedInventoryIds.size > 0;
+      const targetItems = isSelectedOnly
+        ? currentUser.inventory.filter(i => selectedInventoryIds.has(i.instanceId))
+        : currentUser.inventory;
+
+      if (targetItems.length === 0) return;
+
+      const totalTL = targetItems.reduce((acc, cur) => acc + Math.max(1, Math.round(cur.basePrice * 0.75)), 0);
+      const confirmMsg = isSelectedOnly
+        ? `Seçili ${targetItems.length} adet eşyayı toplam ₺${totalTL.toLocaleString()} TL karşılığında hemen satmak istiyor musunuz?`
+        : `Envanterinizdeki TÜM (${targetItems.length} adet) eşyayı toplam ₺${totalTL.toLocaleString()} TL karşılığında hemen satmak istiyor musunuz?`;
+
+      if (confirm(confirmMsg)) {
+        btnBulkSell.disabled = true;
+        btnBulkSell.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Satılıyor...';
+        socket.emit('inventory:sell_bulk_instant', {
+          instanceIds: targetItems.map(i => i.instanceId)
+        });
+      }
+    });
+  }
+
+  // Bulk List on Market Modal triggers
+  const btnBulkMarket = document.getElementById('btnBulkListMarket');
+  const btnCancelBulkList = document.getElementById('btnCancelBulkList');
+  const btnConfirmBulkList = document.getElementById('btnConfirmBulkList');
+
+  if (btnBulkMarket && bulkListModal) {
+    btnBulkMarket.addEventListener('click', () => {
+      if (!currentUser || !currentUser.inventory || currentUser.inventory.length === 0) return;
+
+      const isSelectedOnly = selectedInventoryIds.size > 0;
+      const targetItems = isSelectedOnly
+        ? currentUser.inventory.filter(i => selectedInventoryIds.has(i.instanceId))
+        : currentUser.inventory;
+
+      if (targetItems.length === 0) return;
+
+      const totalBase = targetItems.reduce((acc, cur) => acc + cur.basePrice, 0);
+      document.getElementById('bulkModalCount').textContent = `${targetItems.length} Adet`;
+      document.getElementById('bulkModalTotalBase').textContent = `₺${totalBase.toLocaleString()}`;
+      document.getElementById('bulkModalDesc').textContent = isSelectedOnly
+        ? `Seçili ${targetItems.length} eşyayı oyuncu pazarına koymak üzeresiniz.`
+        : `Tüm envanterinizdeki ${targetItems.length} eşyayı oyuncu pazarına koymak üzeresiniz.`;
+
+      bulkListModal.style.display = 'flex';
+    });
+  }
+
+  if (btnCancelBulkList && bulkListModal) {
+    btnCancelBulkList.addEventListener('click', () => {
+      bulkListModal.style.display = 'none';
+    });
+  }
+
+  if (btnConfirmBulkList && bulkListModal) {
+    btnConfirmBulkList.addEventListener('click', () => {
+      if (!currentUser || !currentUser.inventory || currentUser.inventory.length === 0) return;
+
+      const isSelectedOnly = selectedInventoryIds.size > 0;
+      const targetItems = isSelectedOnly
+        ? currentUser.inventory.filter(i => selectedInventoryIds.has(i.instanceId))
+        : currentUser.inventory;
+
+      if (targetItems.length === 0) return;
+
+      const multiplier = parseFloat(document.getElementById('bulkPriceOption').value) || 1.0;
+      const payload = targetItems.map(i => ({
+        instanceId: i.instanceId,
+        price: Math.max(1, Math.round(i.basePrice * multiplier))
+      }));
+
+      btnConfirmBulkList.disabled = true;
+      btnConfirmBulkList.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Yayınlanıyor...';
+
+      socket.emit('market:list_bulk', { items: payload });
+      bulkListModal.style.display = 'none';
+      btnConfirmBulkList.disabled = false;
+      btnConfirmBulkList.innerHTML = '<i class="fa-solid fa-store"></i> Pazara Çıkar';
+    });
+  }
 
   // Login Input & Submit
   const loginInput = document.getElementById('loginUsernameInput');
@@ -724,11 +835,19 @@ socket.on('market:buy_success', (data) => {
 });
 
 socket.on('market:error', (data) => {
-  alert(data.message || 'Market hatası.');
+  showInAppToast(data.message || 'Market hatası.', false);
+});
+
+socket.on('inventory:error', (data) => {
+  const btnBulkSell = document.getElementById('btnBulkSellInstant');
+  if (btnBulkSell) btnBulkSell.disabled = false;
+  showInAppToast(data.message || 'Envanter işlem hatası!', false);
+  renderInventory();
 });
 
 // 7. Instant Sell
 socket.on('inventory:sold', (data) => {
+  if (data.instanceId) selectedInventoryIds.delete(data.instanceId);
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
   if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
   currentUser.inventory = data.inventory;
@@ -736,6 +855,34 @@ socket.on('inventory:sold', (data) => {
   renderInventory();
   saveUserBackup(currentUser);
   showInAppToast(`Eşya satıldı: +₺${data.sellPrice} TL`, true);
+  try { window.soundEngine.playWin(); } catch(e) {}
+});
+
+socket.on('inventory:bulk_sold', (data) => {
+  const btnBulkSell = document.getElementById('btnBulkSellInstant');
+  if (btnBulkSell) {
+    btnBulkSell.disabled = false;
+    btnBulkSell.innerHTML = '<i class="fa-solid fa-money-bill-wave"></i> <span id="btnBulkSellText">Tümünü Hemen Sat</span>';
+  }
+  selectedInventoryIds.clear();
+  if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
+  if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
+  currentUser.inventory = data.inventory;
+  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+  renderInventory();
+  saveUserBackup(currentUser);
+  showInAppToast(`${data.soldCount} adet eşya satıldı: +₺${data.totalSellPrice.toLocaleString()} TL`, true);
+  try { window.soundEngine.playWin(); } catch(e) {}
+});
+
+socket.on('market:bulk_listed_success', (data) => {
+  selectedInventoryIds.clear();
+  currentUser.inventory = data.inventory;
+  updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+  renderInventory();
+  saveUserBackup(currentUser);
+  showInAppToast(`${data.count} adet eşya pazara başarıyla çıkarıldı!`, true);
+  try { window.soundEngine.playWin(); } catch(e) {}
 });
 
 // 8. Wallet Events (TL -> Kasa Bakiye Çevirme)
@@ -1026,6 +1173,7 @@ function animateSpinner(strip, winningIndex, winningItem) {
 
 // Show Reveal Modal
 function showRevealModal(item) {
+  currentModalItem = item;
   const modal = winningRevealModal;
   const card = document.getElementById('winningCard');
   
@@ -1063,9 +1211,12 @@ function getRarityColor(rarity) {
 // Render Inventory
 function renderInventory() {
   const grid = document.getElementById('myInventoryGrid');
+  const bulkToolbar = document.getElementById('invBulkToolbar');
   grid.innerHTML = '';
 
   if (!currentUser || !currentUser.inventory || currentUser.inventory.length === 0) {
+    if (bulkToolbar) bulkToolbar.style.display = 'none';
+    selectedInventoryIds.clear();
     grid.innerHTML = `
       <div style="color:var(--text-muted); font-size:1.1rem; grid-column: 1/-1; text-align:center; padding:3rem 0; display:flex; flex-direction:column; align-items:center; gap:1.2rem;">
         <div>Envanterinizde henüz eşya yok. Kasa açarak hemen skin kazanabilirsiniz!</div>
@@ -1082,15 +1233,70 @@ function renderInventory() {
     return;
   }
 
+  if (bulkToolbar) bulkToolbar.style.display = 'flex';
+
+  // Clean up selected ids that are no longer in inventory
+  const currentInvIds = new Set(currentUser.inventory.map(i => i.instanceId));
+  for (const id of selectedInventoryIds) {
+    if (!currentInvIds.has(id)) selectedInventoryIds.delete(id);
+  }
+
   let totalValue = 0;
+  let totalInstantAll = 0;
+  let selectedBaseSum = 0;
+  let selectedInstantSum = 0;
 
   currentUser.inventory.forEach(item => {
     totalValue += item.basePrice;
+    const instantPrice = Math.max(1, Math.round(item.basePrice * 0.75));
+    totalInstantAll += instantPrice;
+
+    if (selectedInventoryIds.has(item.instanceId)) {
+      selectedBaseSum += item.basePrice;
+      selectedInstantSum += instantPrice;
+    }
+  });
+
+  // Update Toolbar Elements
+  const chkSelectAll = document.getElementById('chkSelectAllItems');
+  const countText = document.getElementById('selectedCountText');
+  const btnBulkSellText = document.getElementById('btnBulkSellText');
+  const btnBulkMarketText = document.getElementById('btnBulkMarketText');
+
+  const selectedCount = selectedInventoryIds.size;
+  const totalCount = currentUser.inventory.length;
+
+  if (chkSelectAll) {
+    chkSelectAll.checked = selectedCount > 0 && selectedCount === totalCount;
+  }
+
+  if (countText) {
+    countText.textContent = selectedCount > 0 
+      ? `(${selectedCount} seçildi - ₺${selectedBaseSum.toLocaleString()})`
+      : `(0 seçildi)`;
+  }
+
+  if (btnBulkSellText) {
+    btnBulkSellText.textContent = selectedCount > 0
+      ? `Seçilenleri Hemen Sat (₺${selectedInstantSum.toLocaleString()} TL)`
+      : `Tümünü Hemen Sat (₺${totalInstantAll.toLocaleString()} TL)`;
+  }
+
+  if (btnBulkMarketText) {
+    btnBulkMarketText.textContent = selectedCount > 0
+      ? `Seçilenleri Pazara Koy (${selectedCount} Eşya)`
+      : `Tümünü Pazara Koy (${totalCount} Eşya)`;
+  }
+
+  // Render skin cards
+  currentUser.inventory.forEach(item => {
     const instantSellPrice = Math.max(1, Math.round(item.basePrice * 0.75));
+    const isSelected = selectedInventoryIds.has(item.instanceId);
 
     const card = document.createElement('div');
-    card.className = 'skin-item-card';
+    card.className = `skin-item-card ${isSelected ? 'selected-for-bulk' : ''}`;
     card.innerHTML = `
+      <input type="checkbox" class="skin-select-box" data-id="${item.instanceId}" ${isSelected ? 'checked' : ''} title="Seç">
       <img src="${item.image}" alt="${item.name}" class="skin-item-img">
       <div class="skin-item-name" title="${item.name}">${item.name}</div>
       <div class="skin-item-price">₺${item.basePrice}</div>
@@ -1105,15 +1311,32 @@ function renderInventory() {
       <span class="spinner-card-bar rarity-${item.rarity}"></span>
     `;
 
-    // Instant Sell
-    card.querySelector('.btn-sell-fast').addEventListener('click', () => {
-      if (confirm(`Bu eşyayı ₺${instantSellPrice} karşılığında hemen satmak istiyor musunuz?`)) {
-        socket.emit('inventory:sell_instant', { instanceId: item.instanceId });
+    // Checkbox toggle
+    const chk = card.querySelector('.skin-select-box');
+    chk.addEventListener('change', (e) => {
+      e.stopPropagation();
+      if (chk.checked) {
+        selectedInventoryIds.add(item.instanceId);
+      } else {
+        selectedInventoryIds.delete(item.instanceId);
       }
+      renderInventory();
+    });
+
+    // Instant Sell (direct & responsive with visual feedback)
+    const sellBtn = card.querySelector('.btn-sell-fast');
+    sellBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (sellBtn.disabled) return;
+      sellBtn.disabled = true;
+      sellBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+      socket.emit('inventory:sell_instant', { instanceId: item.instanceId });
     });
 
     // List on Market
-    card.querySelector('.btn-list-market').addEventListener('click', () => {
+    const marketBtn = card.querySelector('.btn-list-market');
+    marketBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       openMarketListModal(item);
     });
 
