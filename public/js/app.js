@@ -39,34 +39,59 @@ const tradeModal = document.getElementById('tradeModal');
 const incomingTradeModal = document.getElementById('incomingTradeModal');
 const rareDropBanner = document.getElementById('rareDropBanner');
 
-// Initialize on Load
-window.addEventListener('DOMContentLoaded', async () => {
-  // 1. Calculate HWID
-  currentHwid = await window.getHardwareFingerprint();
-  hwidPill.textContent = currentHwid.substring(0, 10) + '...';
-
-  // 2. Fetch Cases
-  try {
-    const res = await fetch('/api/cases');
-    allCases = await res.json();
-    renderCases();
-  } catch (err) {
-    console.error('Failed to load cases:', err);
+// Global login handler function directly callable from HTML or JS
+window.handleLoginSubmit = function() {
+  const input = document.getElementById('loginUsernameInput');
+  const username = input ? input.value.trim() : '';
+  if (!username) {
+    alert('Lütfen bir kullanıcı adı girin.');
+    if (input) input.focus();
+    return;
   }
+  attemptLogin(username);
+};
 
-  // 3. Check for saved username in localStorage
-  const savedUsername = localStorage.getItem('case_clash_username');
-  if (savedUsername) {
-    document.getElementById('loginUsernameInput').value = savedUsername;
-    attemptLogin(savedUsername);
-  }
-
-  // 4. Setup Event Listeners
+// Initialize App
+function initApp() {
+  // 1. Attach Event Listeners IMMEDIATELY
   setupEventListeners();
 
-  // 5. Start local interval for live market countdowns
+  // 2. Calculate HWID in background
+  window.getHardwareFingerprint().then(hwid => {
+    currentHwid = hwid;
+    if (hwidPill) hwidPill.textContent = hwid.substring(0, 10) + '...';
+  }).catch(() => {
+    currentHwid = 'HWID_' + Math.random().toString(16).substring(2, 10).toUpperCase();
+    if (hwidPill) hwidPill.textContent = currentHwid.substring(0, 10) + '...';
+  });
+
+  // 3. Fetch Cases in background
+  fetch('/api/cases').then(res => res.json()).then(data => {
+    allCases = data;
+    renderCases();
+  }).catch(err => {
+    console.error('Failed to load cases:', err);
+  });
+
+  // 4. Check for saved username in localStorage
+  try {
+    const savedUsername = localStorage.getItem('case_clash_username');
+    if (savedUsername) {
+      const input = document.getElementById('loginUsernameInput');
+      if (input) input.value = savedUsername;
+    }
+  } catch(e) {}
+
+  // 5. Start live market countdowns
   setInterval(renderMarketTimers, 1000);
-});
+}
+
+// Ensure initApp runs whether DOM is already loaded or loading
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 
 // Setup UI interactions
 function setupEventListeners() {
@@ -198,11 +223,37 @@ function switchView(viewName) {
   if (viewName === 'trading') renderOnlinePlayers();
 }
 
+function showInAppToast(text, isSuccess = true) {
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: ${isSuccess ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #b91c1c)'};
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 999999;
+    text-align: center;
+  `;
+  toast.innerHTML = text;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.4s ease';
+    setTimeout(() => toast.remove(), 400);
+  }, 4500);
+}
+
 // Attempt login via HWID
 async function attemptLogin(username) {
   const cleanUser = String(username || '').trim();
   if (!cleanUser) {
-    alert('Lütfen bir kullanıcı adı girin.');
+    showInAppToast('Lütfen bir kullanıcı adı girin.', false);
     return;
   }
 
@@ -216,7 +267,7 @@ async function attemptLogin(username) {
     try {
       currentHwid = await window.getHardwareFingerprint();
     } catch(e) {
-      currentHwid = 'HWID-' + Math.random().toString(16).substring(2, 10).toUpperCase();
+      currentHwid = 'HWID_' + Math.random().toString(16).substring(2, 10).toUpperCase();
     }
   }
 
@@ -240,16 +291,19 @@ async function attemptLogin(username) {
   userNameText.textContent = cleanUser;
 
   const emitAuth = () => {
+    console.log('[CLIENT] Emitting auth:login with:', { cleanUser, currentHwid, tabId });
     socket.emit('auth:login', { username: cleanUser, hwid: currentHwid, tabId });
   };
 
   if (socket.connected) {
     emitAuth();
   } else {
+    socket.connect();
     socket.once('connect', emitAuth);
     // Timeout fallback if socket takes too long
     setTimeout(() => {
-      if (loginModal && loginModal.style.display !== 'none' && multiTabLockoutModal.style.display !== 'flex') {
+      const modal = document.getElementById('loginModal');
+      if (modal && modal.style.display !== 'none' && multiTabLockoutModal.style.display !== 'flex') {
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> GİRİŞ YAP';
@@ -265,21 +319,28 @@ async function attemptLogin(username) {
 
 // 1. Multi-Tab Lockout: Block if duplicate tab on same HWID!
 socket.on('auth:blocked_multi_tab', (data) => {
-  loginModal.style.display = 'none';
+  const modal = document.getElementById('loginModal');
+  if (modal) modal.style.setProperty('display', 'none', 'important');
   multiTabLockoutModal.style.display = 'flex';
   document.getElementById('multiTabLockoutMessage').innerHTML = data.message.replace(/\n/g, '<br>');
 });
 
 // 2. Auth Success & 5 Balance initial grant
 socket.on('auth:success', (data) => {
-  loginModal.style.display = 'none';
+  console.log('[CLIENT] Auth success received:', data);
+  const modal = document.getElementById('loginModal');
+  if (modal) {
+    modal.style.setProperty('display', 'none', 'important');
+  }
+  
   currentUser = data.user;
   updateBalanceUI(currentUser.balance);
   userNameText.textContent = currentUser.username;
   marketListings = data.market || [];
 
   if (data.isNewHwid && data.bonusGiven) {
-    alert(`🎉 HOŞ GELDİNİZ!\nCihazınız (HWID) için ilk kayıt bonusu olarak 5 BAKİYE (5 KASA) hesabınıza tanımlandı!`);
+    showInAppToast('🎉 HOŞ GELDİNİZ! Cihazınıza özel 5 ÜCRETSİZ BAKİYE (5 KASA) hesabınıza eklendi!', true);
+    try { window.soundEngine.playRareFanfare(true); } catch(e) {}
   }
 
   if (data.luckEvent) {
@@ -288,9 +349,11 @@ socket.on('auth:success', (data) => {
 
   // Load chat history
   const chatBox = document.getElementById('chatMessagesBox');
-  chatBox.innerHTML = '';
-  if (data.chat) {
-    data.chat.forEach(addChatMessage);
+  if (chatBox) {
+    chatBox.innerHTML = '';
+    if (data.chat) {
+      data.chat.forEach(addChatMessage);
+    }
   }
 
   renderInventory();
@@ -298,12 +361,13 @@ socket.on('auth:success', (data) => {
 });
 
 socket.on('auth:error', (data) => {
+  console.error('[CLIENT] Auth error received:', data);
   const submitBtn = document.getElementById('btnLoginSubmit');
   if (submitBtn) {
     submitBtn.disabled = false;
     submitBtn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> GİRİŞ YAP';
   }
-  alert(data.message || 'Giriş hatası!');
+  showInAppToast(data.message || 'Giriş hatası!', false);
 });
 
 // 3. Timed Luck Event Update

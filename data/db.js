@@ -60,8 +60,8 @@ module.exports = {
 
   // HWID-based login & 5 balance initial bonus
   loginOrRegister(username, hwid) {
-    const cleanUsername = username.trim();
-    const cleanHwid = hwid.trim();
+    const cleanUsername = String(username || 'Oyuncu').trim() || 'Oyuncu_' + Math.floor(Math.random() * 1000);
+    const cleanHwid = String(hwid || ('HWID_' + Date.now().toString(36))).trim();
     const lowerUser = cleanUsername.toLowerCase();
 
     // Check if HWID is brand new

@@ -219,67 +219,76 @@ function pickWinningItem(caseObj, isBoosted) {
 io.on('connection', (socket) => {
   // Handle User Login & HWID Auth
   socket.on('auth:login', ({ username, hwid, tabId }) => {
-    if (!username || !hwid) {
-      return socket.emit('auth:error', { message: 'Kullanıcı adı ve HWID gereklidir.' });
-    }
+    try {
+      const cleanUser = String(username || '').trim();
+      const cleanHwid = String(hwid || '').trim();
+      const cleanTab = String(tabId || socket.id).trim();
 
-    const cleanHwid = String(hwid).trim();
-    const cleanUser = String(username).trim();
-    const cleanTab = String(tabId || socket.id).trim();
+      if (!cleanUser) {
+        return socket.emit('auth:error', { message: 'Lütfen bir kullanıcı adı girin.' });
+      }
 
-    // Check Multi-Tab constraint:
-    // If this HWID is currently active on another socket, check tab
-    if (activeHwids.has(cleanHwid)) {
-      const activeSession = activeHwids.get(cleanHwid);
-      const existingSocket = io.sockets.sockets.get(activeSession.socketId);
-      if (existingSocket && existingSocket.id !== socket.id) {
-        // If it's the SAME tab reloaded/reconnected, disconnect the stale socket
-        if (activeSession.tabId === cleanTab) {
-          existingSocket.disconnect(true);
-          activeSockets.delete(activeSession.socketId);
-        } else {
-          // If it's a DIFFERENT tab on the same HWID, BLOCK IT!
-          return socket.emit('auth:blocked_multi_tab', {
-            message: '⚠️ BU CİHAZDAN ZATEN AKTİF BİR SEKMEDE GİRİŞ YAPILMIŞ!\nAynı anda birden fazla sekme açamazsınız. Lütfen diğer sekmeyi kapatın.'
-          });
+      const finalHwid = cleanHwid || ('HWID_FALLBACK_' + socket.id);
+      console.log(`[AUTH] Login attempt from user: "${cleanUser}", HWID: "${finalHwid}", Tab: "${cleanTab}"`);
+
+      // Check Multi-Tab constraint:
+      if (activeHwids.has(finalHwid)) {
+        const activeSession = activeHwids.get(finalHwid);
+        const existingSocket = io.sockets.sockets.get(activeSession.socketId);
+        if (existingSocket && existingSocket.id !== socket.id) {
+          // If it's the SAME tab reloaded/reconnected, disconnect the stale socket
+          if (activeSession.tabId === cleanTab) {
+            existingSocket.disconnect(true);
+            activeSockets.delete(activeSession.socketId);
+          } else {
+            console.log(`[AUTH] Multi-tab blocked for HWID: ${finalHwid}`);
+            return socket.emit('auth:blocked_multi_tab', {
+              message: '⚠️ BU CİHAZDAN ZATEN AKTİF BİR SEKMEDE GİRİŞ YAPILMIŞ!\nAynı anda birden fazla sekme açamazsınız. Lütfen diğer sekmeyi kapatın.'
+            });
+          }
         }
       }
-    }
 
-    // Login or register via HWID & 5 balance initial grant
-    const result = db.loginOrRegister(cleanUser, cleanHwid);
-    const user = result.user;
+      // Login or register via HWID & 5 balance initial grant
+      const result = db.loginOrRegister(cleanUser, finalHwid);
+      const user = result.user;
 
-    // Track active connection
-    activeHwids.set(cleanHwid, {
-      socketId: socket.id,
-      userId: user.id,
-      username: user.username,
-      tabId: cleanTab
-    });
-    activeSockets.set(socket.id, {
-      hwid: cleanHwid,
-      userId: user.id,
-      username: user.username,
-      tabId: cleanTab
-    });
-
-    socket.emit('auth:success', {
-      user: {
-        id: user.id,
+      // Track active connection
+      activeHwids.set(finalHwid, {
+        socketId: socket.id,
+        userId: user.id,
         username: user.username,
-        balance: user.balance,
-        inventory: user.inventory
-      },
-      isNewHwid: result.isNewHwid,
-      bonusGiven: result.bonusGiven,
-      luckEvent,
-      market: db.db.market,
-      chat: db.db.chat.slice(-50)
-    });
+        tabId: cleanTab
+      });
+      activeSockets.set(socket.id, {
+        hwid: finalHwid,
+        userId: user.id,
+        username: user.username,
+        tabId: cleanTab
+      });
 
-    // Broadcast updated online players
-    io.emit('players:online', getOnlineUsers());
+      console.log(`[AUTH] Login success for user: "${user.username}" (Balance: ${user.balance}, Bonus: ${result.bonusGiven})`);
+
+      socket.emit('auth:success', {
+        user: {
+          id: user.id,
+          username: user.username,
+          balance: user.balance,
+          inventory: user.inventory
+        },
+        isNewHwid: result.isNewHwid,
+        bonusGiven: result.bonusGiven,
+        luckEvent,
+        market: db.db.market,
+        chat: db.db.chat.slice(-50)
+      });
+
+      // Broadcast updated online players
+      io.emit('players:online', getOnlineUsers());
+    } catch (err) {
+      console.error('[AUTH ERROR]:', err);
+      socket.emit('auth:error', { message: 'Sunucu giriş hatası: ' + err.message });
+    }
   });
 
   // Open Case
