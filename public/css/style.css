@@ -272,14 +272,21 @@ body {
   background: rgba(0, 0, 0, 0.3);
 }
 
-/* Case Grid */
+/* Case Grid (Centered) */
 .cases-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0.5rem 0;
 }
 
 .case-card {
+  width: 290px;
+  flex: 0 0 290px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
@@ -663,14 +670,19 @@ body {
   to { transform: translate(-50%, 0); opacity: 1; }
 }
 
-/* Inventory & Market Grid */
+/* Inventory & Market Grid (Centered) */
 .inventory-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.25rem;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
 .skin-item-card {
+  width: 210px;
+  flex: 0 0 210px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
