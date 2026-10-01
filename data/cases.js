@@ -183,6 +183,60 @@ const CS2_SKINS = {
     rarity: 'milspec',
     basePrice: 3.5,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_u1jpN5lRi67gVNz4G7Qm938cS_Da1AhXpB1EeVb4xm4mtDjN7vj4A3b2NpGyCr52i4Y8G81tMzdoYZ7'
+  },
+  ak47_uncharted: {
+    id: 'cs2_ak47_uncharted',
+    name: 'AK-47 | Uncharted',
+    weapon: 'AK-47',
+    game: 'cs2',
+    rarity: 'milspec',
+    basePrice: 2.2,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0POlPPNSIeqHC2SvzedxuPUnFnCwwBl_5D_Syon8dnyUaQUlD5oiQ7ECuxW7l920ZL-w4AfX2IlByTK-0H0PRM7cOA'
+  },
+  m4a4_magnesium: {
+    id: 'cs2_m4a4_magnesium',
+    name: 'M4A4 | Magnesium',
+    weapon: 'M4A4',
+    game: 'cs2',
+    rarity: 'milspec',
+    basePrice: 2.0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiVI0P_6afBSI_icHneV09FxuO56Wxa_nBovp3OAzo2vdHPFPFUmCJRxRbNZ4xewx9W1Nb7j4gzXg99Ayy73iC1Aun1q_a9cBiEfMG3G'
+  },
+  awp_capillary: {
+    id: 'cs2_awp_capillary',
+    name: 'AWP | Capillary',
+    weapon: 'AWP',
+    game: 'cs2',
+    rarity: 'milspec',
+    basePrice: 3.0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk7uW-V7JoKf6sAm6Xyfo44bE5HSrmlx5z4GTUzt__I3yebQAgA8R3FuFfsBTqx9W2Y7vq5lbfjZUFk3ugIlCuqg'
+  },
+  glock_polymer: {
+    id: 'cs2_glock_polymer',
+    name: 'Glock-18 | Clear Polymer',
+    weapon: 'Glock-18',
+    game: 'cs2',
+    rarity: 'milspec',
+    basePrice: 1.8,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1c_M2pZKtuK8-DAWuJzOtkj-1gSCGn200h4TnQwtqoci_CPQYlDsAiRuZc5hK7kd2zZbm37lGK2o5HnH2v2ixXrnE85Jt4rDY'
+  },
+  mac10_ensnared: {
+    id: 'cs2_mac10_ensnared',
+    name: 'MAC-10 | Ensnared',
+    weapon: 'MAC-10',
+    game: 'cs2',
+    rarity: 'milspec',
+    basePrice: 1.6,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5WxrR1Y-s2jaac8cM-DB3-ZxNF6ueZhW2fikB935ziGztj7JHyQbgIkWZsmFrJY4xTpwdOzP-Oz7laNj4lFyy2tkGoXudbL5uIf'
+  },
+  ak47_elite_build: {
+    id: 'cs2_ak47_elite_build',
+    name: 'AK-47 | Elite Build',
+    weapon: 'AK-47',
+    game: 'cs2',
+    rarity: 'milspec',
+    basePrice: 3.2,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0POlPPNSLfGAGmKC2NF6ueZhW2e2wh9y5GjTztirdSqfP1dyCpclR7FZ5xe9wNbhZei25FGPjokXxC2vkGoXuQLr5jvs'
   }
 };
 
@@ -397,7 +451,7 @@ const VAL_SKINS = {
     name: 'Sensation Vandal (Çöp)',
     weapon: 'Vandal',
     game: 'val',
-    rarity: 'deluxe',
+    rarity: 'select',
     basePrice: 3.0,
     image: 'https://media.valorant-api.com/weaponskins/72c1e90b-40ca-4304-02eb-28bb2aea4ed2/displayicon.png'
   },
@@ -415,7 +469,7 @@ const VAL_SKINS = {
     name: 'Altitude Odin (Çöp)',
     weapon: 'Odin',
     game: 'val',
-    rarity: 'deluxe',
+    rarity: 'select',
     basePrice: 2.2,
     image: 'https://media.valorant-api.com/weaponskins/89be9866-4807-6235-2a95-499cd23828df/displayicon.png'
   }
@@ -442,7 +496,10 @@ const CASES = [
       { skin: CS2_SKINS.case_hardened, weight: 9.0 },
       { skin: CS2_SKINS.redline_ak, weight: 20.0 },
       { skin: CS2_SKINS.slate, weight: 30.0 },
-      { skin: CS2_SKINS.high_beam, weight: 35.0 }
+      // 3 Mavi (Mil-Spec)
+      { skin: CS2_SKINS.high_beam, weight: 12.0 },
+      { skin: CS2_SKINS.ak47_uncharted, weight: 12.0 },
+      { skin: CS2_SKINS.m4a4_magnesium, weight: 11.45 }
     ]
   },
   {
@@ -458,9 +515,13 @@ const CASES = [
       { skin: CS2_SKINS.karambit_fade, weight: 0.35 },
       { skin: CS2_SKINS.asiimov, weight: 4.5 },
       { skin: CS2_SKINS.kill_confirmed, weight: 5.5 },
-      { skin: CS2_SKINS.water_elemental, weight: 18.0 },
-      { skin: CS2_SKINS.slate, weight: 35.0 },
-      { skin: CS2_SKINS.atheris, weight: 36.4 }
+      { skin: CS2_SKINS.water_elemental, weight: 15.0 },
+      { skin: CS2_SKINS.slate, weight: 20.0 },
+      { skin: CS2_SKINS.atheris, weight: 18.0 },
+      // 3 Mavi (Mil-Spec)
+      { skin: CS2_SKINS.cortex, weight: 12.2 },
+      { skin: CS2_SKINS.awp_capillary, weight: 12.1 },
+      { skin: CS2_SKINS.mac10_ensnared, weight: 12.1 }
     ]
   },
   {
@@ -478,8 +539,10 @@ const CASES = [
       { skin: CS2_SKINS.printstream_m4, weight: 3.5 },
       { skin: CS2_SKINS.case_hardened, weight: 9.0 },
       { skin: CS2_SKINS.redline_ak, weight: 22.0 },
-      { skin: CS2_SKINS.cortex, weight: 30.0 },
-      { skin: CS2_SKINS.high_beam, weight: 31.8 }
+      // 3 Mavi (Mil-Spec)
+      { skin: CS2_SKINS.cortex, weight: 20.6 },
+      { skin: CS2_SKINS.high_beam, weight: 20.6 },
+      { skin: CS2_SKINS.ak47_elite_build, weight: 20.6 }
     ]
   },
   {
@@ -497,7 +560,10 @@ const CASES = [
       { skin: CS2_SKINS.printstream_m4, weight: 5.0 },
       { skin: CS2_SKINS.water_elemental, weight: 16.0 },
       { skin: CS2_SKINS.slate, weight: 35.0 },
-      { skin: CS2_SKINS.cortex, weight: 38.7 }
+      // 3 Mavi (Mil-Spec)
+      { skin: CS2_SKINS.cortex, weight: 13.0 },
+      { skin: CS2_SKINS.glock_polymer, weight: 13.0 },
+      { skin: CS2_SKINS.m4a4_magnesium, weight: 12.7 }
     ]
   },
 
