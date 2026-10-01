@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffd700" stop-opacity="0.4"/>
+      <stop offset="60%" stop-color="#ffae19" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff8db"/>
+      <stop offset="30%" stop-color="#ffd700"/>
+      <stop offset="70%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <filter id="neon" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="goldShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#ffd700" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background Halo Glow -->
+  <circle cx="200" cy="140" r="130" fill="url(#glow)"/>
+
+  <!-- Futuristic Octagon Frame -->
+  <polygon points="150,40 250,40 310,100 310,180 250,240 150,240 90,180 90,100" 
+           fill="rgba(15, 23, 42, 0.75)" 
+           stroke="url(#goldGrad)" 
+           stroke-width="3" 
+           filter="url(#neon)"/>
+
+  <polygon points="155,48 245,48 300,103 300,177 245,232 155,232 100,177 100,103" 
+           fill="none" 
+           stroke="rgba(255, 215, 0, 0.3)" 
+           stroke-width="1.5" 
+           stroke-dasharray="8 4"/>
+
+  <!-- Decorative Corner Accents -->
+  <circle cx="200" cy="40" r="3.5" fill="#ffd700"/>
+  <circle cx="200" cy="240" r="3.5" fill="#ffd700"/>
+  <circle cx="90" cy="140" r="3.5" fill="#ffd700"/>
+  <circle cx="310" cy="140" r="3.5" fill="#ffd700"/>
+
+  <!-- Question Mark Graphic -->
+  <g filter="url(#goldShadow)">
+    <path d="M 172,112 C 172,94 184,82 200,82 C 216,82 228,94 228,108 C 228,121 218,130 209,139 C 199,148 193,156 193,172 L 207,172 C 207,160 212,154 220,146 C 232,135 242,124 242,108 C 242,86 224,70 200,70 C 176,70 158,86 158,110 L 172,112 Z" 
+          fill="url(#goldGrad)"/>
+    <circle cx="200" cy="198" r="7.5" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- Sparkles -->
+  <polygon points="135,95 138,103 146,106 138,109 135,117 132,109 124,106 132,103" fill="#ffffff" opacity="0.8"/>
+  <polygon points="265,165 267,171 273,173 267,175 265,181 263,175 257,173 263,171" fill="#ffd700" opacity="0.9"/>
+  <polygon points="255,85 256.5,89.5 261,91 256.5,92.5 255,97 253.5,92.5 249,91 253.5,89.5" fill="#fff8db" opacity="0.7"/>
+
+  <!-- Bottom Tag Text -->
+  <text x="200" y="272" 
+        text-anchor="middle" 
+        fill="#ffd700" 
+        font-family="'Rajdhani', sans-serif" 
+        font-size="13" 
+        font-weight="800" 
+        letter-spacing="3" 
+        opacity="0.95">★ GİZEMLİ LİMİTED ★</text>
+</svg>

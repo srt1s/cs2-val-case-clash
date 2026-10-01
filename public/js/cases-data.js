@@ -467,8 +467,8 @@ window.INITIAL_CASES = [
           "weapon": "Champions Limited",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3500,
-          "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
+          "basePrice": 3920,
+          "image": "img/mystery_gold.svg"
         },
         "weight": 0.6
       },
@@ -479,7 +479,7 @@ window.INITIAL_CASES = [
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 480,
+          "basePrice": 538,
           "image": "https://media.valorant-api.com/weaponskins/d8d5d7a1-4d81-8560-54bc-0692ab40f69b/displayicon.png"
         },
         "weight": 3.5
@@ -491,7 +491,7 @@ window.INITIAL_CASES = [
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 440,
+          "basePrice": 493,
           "image": "https://media.valorant-api.com/weaponskins/4c926aa9-4f26-bc80-c486-9b888333373f/displayicon.png"
         },
         "weight": 3.5
@@ -503,7 +503,7 @@ window.INITIAL_CASES = [
           "weapon": "Classic",
           "game": "val",
           "rarity": "select",
-          "basePrice": 1.2,
+          "basePrice": 1.34,
           "image": "https://media.valorant-api.com/weaponskins/22fdc42d-4ad6-2bec-8033-8a8bdf178826/displayicon.png"
         },
         "weight": 25
@@ -515,7 +515,7 @@ window.INITIAL_CASES = [
           "weapon": "Ghost",
           "game": "val",
           "rarity": "select",
-          "basePrice": 1.8,
+          "basePrice": 2.02,
           "image": "https://media.valorant-api.com/weaponskins/cb98b0d6-4e26-973c-c10d-a38637d04b65/displayicon.png"
         },
         "weight": 22
@@ -527,7 +527,7 @@ window.INITIAL_CASES = [
           "weapon": "Judge",
           "game": "val",
           "rarity": "select",
-          "basePrice": 1.6,
+          "basePrice": 1.79,
           "image": "https://media.valorant-api.com/weaponskins/03751fa0-46db-0df3-b8cb-99adf373ecda/displayicon.png"
         },
         "weight": 18
@@ -539,7 +539,7 @@ window.INITIAL_CASES = [
           "weapon": "Stinger",
           "game": "val",
           "rarity": "select",
-          "basePrice": 1.5,
+          "basePrice": 1.68,
           "image": "https://media.valorant-api.com/weaponskins/46c8b165-4ba5-d42c-79e9-4fba8951ca48/displayicon.png"
         },
         "weight": 15
@@ -551,7 +551,7 @@ window.INITIAL_CASES = [
           "weapon": "Operator",
           "game": "val",
           "rarity": "select",
-          "basePrice": 2.5,
+          "basePrice": 2.8,
           "image": "https://media.valorant-api.com/weaponskins/341ef273-43fb-7911-71e8-50adada4cee1/displayicon.png"
         },
         "weight": 12.4
@@ -788,7 +788,7 @@ window.INITIAL_CASES = [
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3900,
+          "basePrice": 4368,
           "image": "https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png"
         },
         "weight": 0.35

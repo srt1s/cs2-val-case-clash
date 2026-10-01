@@ -248,8 +248,8 @@ const VAL_SKINS = {
     weapon: 'Champions Limited',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3500,
-    image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
+    basePrice: 3920,
+    image: 'img/mystery_gold.svg'
   },
   kuronami_yaiba: {
     id: 'val_kuronami_yaiba',
@@ -279,14 +279,14 @@ const VAL_SKINS = {
     image: 'https://media.valorant-api.com/weaponskins/1cd09fbd-43cb-a5f6-90fa-08994342d747/displayicon.png'
   },
 
-  // CHAMPIONS ALL YEARS (All SARI / Gold!)
+  // CHAMPIONS ALL YEARS (+%12 BASE PRICE)
   champions_2021_karambit: {
     id: 'val_champions_2021_karambit',
     name: 'Champions 2021 Karambit',
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3900,
+    basePrice: 4368,
     image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
   },
   champions_2021_vandal: {
@@ -295,7 +295,7 @@ const VAL_SKINS = {
     weapon: 'Vandal',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3200,
+    basePrice: 3584,
     image: 'https://media.valorant-api.com/weaponskins/9bf19b77-4b33-7203-9f2c-16932970622f/displayicon.png'
   },
   champions_2022_butterfly: {
@@ -304,7 +304,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3600,
+    basePrice: 4032,
     image: 'https://media.valorant-api.com/weaponskins/6946cd0e-4e4a-ec4f-9238-dfb71715722b/displayicon.png'
   },
   champions_2022_phantom: {
@@ -313,7 +313,7 @@ const VAL_SKINS = {
     weapon: 'Phantom',
     game: 'val',
     rarity: 'knife',
-    basePrice: 2800,
+    basePrice: 3136,
     image: 'https://media.valorant-api.com/weaponskins/8c72ae0b-4357-1a75-ad62-fbaec7b64f92/displayicon.png'
   },
   champions_2023_kunai: {
@@ -322,7 +322,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3400,
+    basePrice: 3808,
     image: 'https://media.valorant-api.com/weaponskins/27f27500-491c-32d4-1db6-1f85e479c103/displayicon.png'
   },
   champions_2023_vandal: {
@@ -331,7 +331,7 @@ const VAL_SKINS = {
     weapon: 'Vandal',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3100,
+    basePrice: 3472,
     image: 'https://media.valorant-api.com/weaponskins/b0f65660-4c51-13b7-9d01-e29a1e2879b0/displayicon.png'
   },
   champions_2024_blade: {
@@ -340,7 +340,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3500,
+    basePrice: 3920,
     image: 'https://media.valorant-api.com/weaponskins/30300aea-4d8a-320d-5cb0-0e8badc8d3df/displayicon.png'
   },
   champions_2024_phantom: {
@@ -349,7 +349,7 @@ const VAL_SKINS = {
     weapon: 'Phantom',
     game: 'val',
     rarity: 'knife',
-    basePrice: 2900,
+    basePrice: 3248,
     image: 'https://media.valorant-api.com/weaponskins/cc1da8cd-452f-a007-0bf8-b68a471c3a6e/displayicon.png'
   },
 
@@ -597,17 +597,17 @@ const CASES = [
     icon: 'fa-trophy',
     image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png',
     items: [
-      // 1 SARI (Gizemli Limited Skin - Rastgele Champions)
+      // 1 SARI (Gizemli Limited Skin - Rastgele Champions) +%12
       { skin: VAL_SKINS.champions_mystery, weight: 0.6 },
-      // 2 KIRMIZI
-      { skin: VAL_SKINS.kuronami_vandal, weight: 3.5 },
-      { skin: VAL_SKINS.araxys_vandal, weight: 3.5 },
-      // DÜŞÜK KADEME
-      { skin: VAL_SKINS.smite_classic, weight: 25.0 },
-      { skin: VAL_SKINS.luxe_ghost, weight: 22.0 },
-      { skin: VAL_SKINS.convex_judge, weight: 18.0 },
-      { skin: VAL_SKINS.schema_stinger, weight: 15.0 },
-      { skin: VAL_SKINS.infantry_operator, weight: 12.4 }
+      // 2 KIRMIZI (+%12: 480 -> 538, 440 -> 493)
+      { skin: { ...VAL_SKINS.kuronami_vandal, basePrice: 538 }, weight: 3.5 },
+      { skin: { ...VAL_SKINS.araxys_vandal, basePrice: 493 }, weight: 3.5 },
+      // DÜŞÜK KADEME (+%12: 1.2 -> 1.34, 1.8 -> 2.02, 1.6 -> 1.79, 1.5 -> 1.68, 2.5 -> 2.8)
+      { skin: { ...VAL_SKINS.smite_classic, basePrice: 1.34 }, weight: 25.0 },
+      { skin: { ...VAL_SKINS.luxe_ghost, basePrice: 2.02 }, weight: 22.0 },
+      { skin: { ...VAL_SKINS.convex_judge, basePrice: 1.79 }, weight: 18.0 },
+      { skin: { ...VAL_SKINS.schema_stinger, basePrice: 1.68 }, weight: 15.0 },
+      { skin: { ...VAL_SKINS.infantry_operator, basePrice: 2.8 }, weight: 12.4 }
     ]
   },
   {
