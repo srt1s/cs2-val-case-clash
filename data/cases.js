@@ -248,7 +248,7 @@ const VAL_SKINS = {
     weapon: 'Champions Limited',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3920,
+    basePrice: 4743,
     image: 'img/mystery_gold.svg'
   },
   kuronami_yaiba: {
@@ -288,14 +288,14 @@ const VAL_SKINS = {
     image: 'https://media.valorant-api.com/weaponskins/a486efac-4415-1bfa-68d1-19bca9968101/displayicon.png'
   },
 
-  // CHAMPIONS ALL YEARS (Eskiden Yeniye Değer Skalası: 2021 Karambit 17.000 TL, 2024 Bıçak 4.000 TL)
+  // CHAMPIONS ALL YEARS (Eskiden Yeniye Değer Skalası: 2021 Karambit 20.570 TL, 2024 Bıçak 4.840 TL) +%21
   champions_2021_karambit: {
     id: 'val_champions_2021_karambit',
     name: 'Champions 2021 Karambit',
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 17000,
+    basePrice: 20570,
     image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png'
   },
   champions_2021_vandal: {
@@ -304,7 +304,7 @@ const VAL_SKINS = {
     weapon: 'Vandal',
     game: 'val',
     rarity: 'knife',
-    basePrice: 13500,
+    basePrice: 16335,
     image: 'https://media.valorant-api.com/weaponskins/9bf19b77-4b33-7203-9f2c-16932970622f/displayicon.png'
   },
   champions_2022_butterfly: {
@@ -313,7 +313,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 11500,
+    basePrice: 13915,
     image: 'https://media.valorant-api.com/weaponskins/6946cd0e-4e4a-ec4f-9238-dfb71715722b/displayicon.png'
   },
   champions_2022_phantom: {
@@ -322,7 +322,7 @@ const VAL_SKINS = {
     weapon: 'Phantom',
     game: 'val',
     rarity: 'knife',
-    basePrice: 8500,
+    basePrice: 10285,
     image: 'https://media.valorant-api.com/weaponskins/8c72ae0b-4357-1a75-ad62-fbaec7b64f92/displayicon.png'
   },
   champions_2023_kunai: {
@@ -331,7 +331,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 7000,
+    basePrice: 8470,
     image: 'https://media.valorant-api.com/weaponskins/27f27500-491c-32d4-1db6-1f85e479c103/displayicon.png'
   },
   champions_2023_vandal: {
@@ -340,7 +340,7 @@ const VAL_SKINS = {
     weapon: 'Vandal',
     game: 'val',
     rarity: 'knife',
-    basePrice: 5500,
+    basePrice: 6655,
     image: 'https://media.valorant-api.com/weaponskins/b0f65660-4c51-13b7-9d01-e29a1e2879b0/displayicon.png'
   },
   champions_2024_blade: {
@@ -349,7 +349,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 4000,
+    basePrice: 4840,
     image: 'https://media.valorant-api.com/weaponskins/30300aea-4d8a-320d-5cb0-0e8badc8d3df/displayicon.png'
   },
   champions_2024_phantom: {
@@ -358,7 +358,7 @@ const VAL_SKINS = {
     weapon: 'Phantom',
     game: 'val',
     rarity: 'knife',
-    basePrice: 3200,
+    basePrice: 3872,
     image: 'https://media.valorant-api.com/weaponskins/cc1da8cd-452f-a007-0bf8-b68a471c3a6e/displayicon.png'
   },
   // 2025 CHAMPIONS BUNDLE
@@ -368,7 +368,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 2500,
+    basePrice: 3025,
     image: 'https://media.valorant-api.com/weaponskins/e37229ed-4ddf-5e7e-e744-8fba60fa2c37/displayicon.png'
   },
   champions_2025_vandal: {
@@ -377,7 +377,7 @@ const VAL_SKINS = {
     weapon: 'Vandal',
     game: 'val',
     rarity: 'knife',
-    basePrice: 2000,
+    basePrice: 2420,
     image: 'https://media.valorant-api.com/weaponskins/b9ee2457-481c-6776-3f5b-0ca8e8f90c89/displayicon.png'
   },
   // 2026 CHAMPIONS BUNDLE
@@ -387,7 +387,7 @@ const VAL_SKINS = {
     weapon: 'Melee',
     game: 'val',
     rarity: 'knife',
-    basePrice: 1600,
+    basePrice: 1936,
     image: 'https://media.valorant-api.com/weaponskins/b73d7b16-4652-bc5b-5c4c-068aabb19d0a/displayicon.png'
   },
   champions_2026_phantom: {
@@ -396,7 +396,7 @@ const VAL_SKINS = {
     weapon: 'Phantom',
     game: 'val',
     rarity: 'knife',
-    basePrice: 1300,
+    basePrice: 1573,
     image: 'https://media.valorant-api.com/weaponskins/74789f33-4632-8052-96d7-258538721a32/displayicon.png'
   },
 
@@ -644,17 +644,17 @@ const CASES = [
     icon: 'fa-trophy',
     image: 'https://media.valorant-api.com/weaponskins/1ea64c8d-43c4-fce8-7354-01bdd6c0ee17/displayicon.png',
     items: [
-      // 1 SARI (Gizemli Champions Skin - Rastgele Champions) +%12
+      // 1 SARI (Gizemli Champions Skin - Rastgele Champions) +%21 (4743 TL)
       { skin: VAL_SKINS.champions_mystery, weight: 0.6 },
-      // 2 KIRMIZI (+%12: 480 -> 538, 440 -> 493)
-      { skin: { ...VAL_SKINS.kuronami_vandal, basePrice: 538 }, weight: 3.5 },
-      { skin: { ...VAL_SKINS.araxys_vandal, basePrice: 493 }, weight: 3.5 },
-      // DÜŞÜK KADEME (+%12: 1.2 -> 1.34, 1.8 -> 2.02, 1.6 -> 1.79, 1.5 -> 1.68, 2.5 -> 2.8)
-      { skin: { ...VAL_SKINS.smite_classic, basePrice: 1.34 }, weight: 25.0 },
-      { skin: { ...VAL_SKINS.luxe_ghost, basePrice: 2.02 }, weight: 22.0 },
-      { skin: { ...VAL_SKINS.convex_judge, basePrice: 1.79 }, weight: 18.0 },
-      { skin: { ...VAL_SKINS.schema_stinger, basePrice: 1.68 }, weight: 15.0 },
-      { skin: { ...VAL_SKINS.infantry_operator, basePrice: 2.8 }, weight: 12.4 }
+      // 2 KIRMIZI (+%21: 538 -> 651, 493 -> 597)
+      { skin: { ...VAL_SKINS.kuronami_vandal, basePrice: 651 }, weight: 3.5 },
+      { skin: { ...VAL_SKINS.araxys_vandal, basePrice: 597 }, weight: 3.5 },
+      // DÜŞÜK KADEME (+%21: 1.34 -> 1.62, 2.02 -> 2.44, 1.79 -> 2.17, 1.68 -> 2.03, 2.8 -> 3.39)
+      { skin: { ...VAL_SKINS.smite_classic, basePrice: 1.62 }, weight: 25.0 },
+      { skin: { ...VAL_SKINS.luxe_ghost, basePrice: 2.44 }, weight: 22.0 },
+      { skin: { ...VAL_SKINS.convex_judge, basePrice: 2.17 }, weight: 18.0 },
+      { skin: { ...VAL_SKINS.schema_stinger, basePrice: 2.03 }, weight: 15.0 },
+      { skin: { ...VAL_SKINS.infantry_operator, basePrice: 3.39 }, weight: 12.4 }
     ]
   },
   {
