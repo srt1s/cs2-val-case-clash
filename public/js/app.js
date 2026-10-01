@@ -139,6 +139,24 @@ function setupEventListeners() {
     switchView('cases');
   });
 
+  // Back to home / cases from inventory
+  const btnInvBackToHome = document.getElementById('btnInvBackToHome');
+  if (btnInvBackToHome) {
+    btnInvBackToHome.addEventListener('click', () => {
+      switchView('cases');
+    });
+  }
+
+  // Click on Brand Logo returns to home / cases
+  const brandEl = document.querySelector('.brand');
+  if (brandEl) {
+    brandEl.style.cursor = 'pointer';
+    brandEl.addEventListener('click', () => {
+      if (isSpinning) return;
+      switchView('cases');
+    });
+  }
+
   // Open Case Button
   document.getElementById('btnOpenCurrentCase').addEventListener('click', () => {
     if (!selectedCase || isSpinning) return;
@@ -331,6 +349,10 @@ function setupEventListeners() {
 }
 
 function switchView(viewName) {
+  document.querySelectorAll('.nav-tab-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-view') === viewName);
+  });
+
   viewCases.style.display = viewName === 'cases' ? 'block' : 'none';
   viewOpener.style.display = viewName === 'opener' ? 'block' : 'none';
   viewInventory.style.display = viewName === 'inventory' ? 'block' : 'none';
@@ -1044,7 +1066,18 @@ function renderInventory() {
   grid.innerHTML = '';
 
   if (!currentUser || !currentUser.inventory || currentUser.inventory.length === 0) {
-    grid.innerHTML = '<div style="color:var(--text-muted); font-size:1.1rem; grid-column: 1/-1; text-align:center; padding:3rem 0;">Envanterinizde henüz eşya yok. Kasa açarak hemen skin kazanabilirsiniz!</div>';
+    grid.innerHTML = `
+      <div style="color:var(--text-muted); font-size:1.1rem; grid-column: 1/-1; text-align:center; padding:3rem 0; display:flex; flex-direction:column; align-items:center; gap:1.2rem;">
+        <div>Envanterinizde henüz eşya yok. Kasa açarak hemen skin kazanabilirsiniz!</div>
+        <button class="btn-primary" id="btnEmptyInvGoHome" style="padding:0.75rem 1.5rem; font-size:0.95rem; cursor:pointer;">
+          <i class="fa-solid fa-box-open"></i> Kasalara Git (Anasayfa)
+        </button>
+      </div>
+    `;
+    const btnEmpty = document.getElementById('btnEmptyInvGoHome');
+    if (btnEmpty) {
+      btnEmpty.addEventListener('click', () => switchView('cases'));
+    }
     document.getElementById('invTotalValue').textContent = 'Toplam Değer: ₺0';
     return;
   }

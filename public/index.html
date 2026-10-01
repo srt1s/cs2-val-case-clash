@@ -171,10 +171,15 @@
 
     <!-- 3. ENVANTERİM GÖRÜNÜMÜ -->
     <section id="viewInventory" class="app-view" style="display: none;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-        <div>
-          <h2 style="font-size: 1.6rem; font-weight: 800;">Envanterim</h2>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">Envanterinizdeki eşyalar.</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="back-btn" id="btnInvBackToHome" style="display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.6rem 1.1rem; font-size: 0.95rem;">
+            <i class="fa-solid fa-house"></i> Anasayfaya Git
+          </button>
+          <div>
+            <h2 style="font-size: 1.6rem; font-weight: 800;">Envanterim</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Envanterinizdeki eşyalar.</p>
+          </div>
         </div>
         <div style="font-weight: 700; color: var(--accent-green);" id="invTotalValue">
           Toplam Değer: ₺0
