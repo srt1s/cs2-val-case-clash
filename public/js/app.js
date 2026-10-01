@@ -231,6 +231,21 @@ function setupEventListeners() {
     });
   }
 
+  // Click on user tag in header to open login modal if not logged in
+  const userTagBox = document.getElementById('userTagBox');
+  if (userTagBox) {
+    userTagBox.addEventListener('click', () => {
+      if (!currentUser) {
+        const modal = document.getElementById('loginModal');
+        if (modal) {
+          modal.style.display = 'flex';
+          const input = document.getElementById('loginUsernameInput');
+          if (input) input.focus();
+        }
+      }
+    });
+  }
+
   // Chat Send
   document.getElementById('chatForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -395,7 +410,10 @@ async function attemptLogin(username) {
 
   if (!currentHwid) {
     try {
-      currentHwid = await window.getHardwareFingerprint();
+      currentHwid = await Promise.race([
+        window.getHardwareFingerprint(),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 800))
+      ]);
     } catch(e) {
       currentHwid = 'HWID_' + Math.random().toString(16).substring(2, 10).toUpperCase();
     }
@@ -418,32 +436,38 @@ async function attemptLogin(username) {
     tabId = 'tab_' + Math.random().toString(36).substring(2);
   }
 
-  userNameText.textContent = cleanUser;
+  if (userNameText) {
+    userNameText.textContent = cleanUser;
+  }
 
   // Retrieve client backup if available (resilient to server restarts)
   const backupData = getUserBackup(cleanUser);
 
-  const emitAuth = () => {
-    console.log('[CLIENT] Emitting auth:login with:', { cleanUser, currentHwid, tabId, backupData });
-    socket.emit('auth:login', { username: cleanUser, hwid: currentHwid, tabId, backupData });
-  };
+  console.log('[CLIENT] Emitting auth:login with:', { cleanUser, currentHwid, tabId, backupData });
+  socket.emit('auth:login', { username: cleanUser, hwid: currentHwid, tabId, backupData });
 
-  if (socket.connected) {
-    emitAuth();
-  } else {
-    socket.connect();
-    socket.once('connect', emitAuth);
-    // Timeout fallback if socket takes too long
-    setTimeout(() => {
-      const modal = document.getElementById('loginModal');
-      if (modal && modal.style.display !== 'none' && multiTabLockoutModal.style.display !== 'flex') {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> GİRİŞ YAP';
-        }
-      }
-    }, 5000);
+  // If socket is still connecting, also queue for the connect event
+  if (!socket.connected) {
+    socket.once('connect', () => {
+      console.log('[CLIENT] Socket connected, re-emitting auth:login');
+      socket.emit('auth:login', { username: cleanUser, hwid: currentHwid, tabId, backupData });
+    });
   }
+
+  // Safety fallback: if no server response in 5s, unlock button
+  setTimeout(() => {
+    if (!currentUser) {
+      const modal = document.getElementById('loginModal');
+      if (modal) modal.style.display = 'flex';
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> GİRİŞ YAP';
+      }
+      if (userNameText && !currentUser) {
+        userNameText.textContent = 'Giriş Yap';
+      }
+    }
+  }, 5000);
 }
 
 // ==========================================
@@ -464,6 +488,11 @@ socket.on('auth:success', (data) => {
   const modal = document.getElementById('loginModal');
   if (modal) {
     modal.style.setProperty('display', 'none', 'important');
+  }
+  const submitBtn = document.getElementById('btnLoginSubmit');
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> GİRİŞ YAP';
   }
   
   currentUser = data.user;
