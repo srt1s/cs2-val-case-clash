@@ -769,7 +769,7 @@ io.on('connection', (socket) => {
   // Open Case
   socket.on('case:open', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return socket.emit('case:error', { message: 'Oturum bulunamadı. Lütfen giriş yapın.' });
+    if (!session) { socket.emit('case:error', { message: 'Oturum yenileniyor, tekrar deneyin.' }); return socket.emit('session:lost'); }
 
     const user = db.getUserById(session.userId);
     if (!user) return socket.emit('case:error', { message: 'Kullanıcı bulunamadı.' });
@@ -861,7 +861,7 @@ io.on('connection', (socket) => {
   // - If sold from inventory ("envantere atıp satış yapılırsa") -> 100% full base price
   socket.on('inventory:sell_instant', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     const user = db.getUserById(session.userId);
     if (!user) return;
@@ -895,7 +895,7 @@ io.on('connection', (socket) => {
   // Bulk Sell Items (From inventory: 100% base price)
   socket.on('inventory:sell_bulk_instant', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     const user = db.getUserById(session.userId);
     if (!user || !user.inventory || user.inventory.length === 0) {
@@ -942,7 +942,7 @@ io.on('connection', (socket) => {
   // Market: Put skin up for sale
   socket.on('market:list_item', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     const user = db.getUserById(session.userId);
     if (!user) return;
@@ -971,7 +971,7 @@ io.on('connection', (socket) => {
   // Market: Bulk List Items
   socket.on('market:list_bulk', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     const user = db.getUserById(session.userId);
     if (!user || !user.inventory || user.inventory.length === 0) {
@@ -1022,7 +1022,7 @@ io.on('connection', (socket) => {
   // Market: Buy skin from player (Transacts in TL)
   socket.on('market:buy_item', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     const buyer = db.getUserById(session.userId);
     if (!buyer) return;
@@ -1083,7 +1083,7 @@ io.on('connection', (socket) => {
   // Wallet: Convert TL to Kasa Balance
   socket.on('wallet:convert_tl', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     const caseCount = payload && payload.caseCount;
     const res = db.convertTLToCaseBalance(session.userId, caseCount);
@@ -1156,7 +1156,7 @@ io.on('connection', (socket) => {
     adminFailLimiter.reset(clientIp);
 
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     let targetUser = null;
     const cleanTarget = String(targetUsername || '').trim();
@@ -1218,7 +1218,7 @@ io.on('connection', (socket) => {
   // Trading: Propose trade offer
   socket.on('trade:create_offer', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     const { targetUserId, offeredInstanceIds, requestedInstanceIds } = payload || {};
     const sender = db.getUserById(session.userId);
@@ -1274,7 +1274,7 @@ io.on('connection', (socket) => {
   // Trading: Accept trade
   socket.on('trade:accept_offer', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     const tradeId = payload && payload.tradeId;
     const offerIndex = db.db.tradeOffers.findIndex(t => t.id === tradeId);
@@ -1343,7 +1343,7 @@ io.on('connection', (socket) => {
   // Trading: Decline trade
   socket.on('trade:decline_offer', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     const tradeId = payload && payload.tradeId;
     const offerIndex = db.db.tradeOffers.findIndex(t => t.id === tradeId);
@@ -1362,7 +1362,7 @@ io.on('connection', (socket) => {
   // Global Chat
   socket.on('chat:send_message', (payload) => {
     const session = activeSockets.get(socket.id);
-    if (!session) return;
+    if (!session) return socket.emit('session:lost');
 
     if (!chatLimiter.take(session.userId)) {
       return; // flood protection

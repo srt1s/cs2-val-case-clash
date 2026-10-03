@@ -14,6 +14,7 @@ let lastOpenedItem = null;
 let currentModalItem = null;
 let selectedInventoryIds = new Set();
 let isSpinning = false;
+let caseOpeningSafetyTimer = null;
 
 // DOM Elements
 const userBalanceText = document.getElementById('userBalanceText');
@@ -269,7 +270,7 @@ function setupEventListeners() {
   }
 
   // Open Case Button with Safety Watchdog
-  let caseOpeningSafetyTimer = null;
+  // (caseOpeningSafetyTimer is declared globally at top of file)
   const btnOpenCase = document.getElementById('btnOpenCurrentCase');
   if (btnOpenCase) {
     btnOpenCase.addEventListener('click', () => {
@@ -1003,6 +1004,41 @@ socket.on('auth:blocked_multi_tab', (data) => {
   if (modal) modal.style.setProperty('display', 'none', 'important');
   multiTabLockoutModal.style.display = 'flex';
   document.getElementById('multiTabLockoutMessage').innerHTML = data.message.replace(/\n/g, '<br>');
+});
+
+
+// Auto re-authenticate whenever the socket (re)connects. Without this the server has no session
+// for the new socket and every action (open/sell/upgrade) is silently ignored.
+let hasConnectedOnce = false;
+socket.on('connect', () => {
+  if (hasConnectedOnce && currentUser) {
+    console.log('[CLIENT] Socket reconnected, restoring session...');
+    try {
+      const u = localStorage.getItem('case_clash_username');
+      const p = localStorage.getItem('case_clash_password');
+      if (u && p) attemptLogin(u, p);
+    } catch(e) {}
+  }
+  hasConnectedOnce = true;
+});
+
+// Server tells us when an action arrived without a valid session -> re-login transparently
+socket.on('session:lost', () => {
+  isSpinning = false;
+  clearTimeout(caseOpeningSafetyTimer);
+  const btn = document.getElementById('btnOpenCurrentCase');
+  if (btn) btn.disabled = false;
+  try {
+    const u = localStorage.getItem('case_clash_username');
+    const p = localStorage.getItem('case_clash_password');
+    if (u && p) {
+      showInAppToast('Oturum yenileniyor, lütfen işlemi tekrar deneyin...', false);
+      attemptLogin(u, p);
+      return;
+    }
+  } catch(e) {}
+  const modal = document.getElementById('loginModal');
+  if (modal) modal.style.display = 'flex';
 });
 
 // 2. Auth Success & 5 Balance initial grant
