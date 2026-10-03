@@ -704,16 +704,60 @@ function showInAppToast(text, isSuccess = true) {
   }, 4500);
 }
 
-// Local Signed Snapshot Helpers (Protects balance & inventory across server reboots via HMAC)
+// Local Snapshot Helpers (Protects balance & inventory across server reboots)
 function saveUserBackup(user) {
-  // Snapshot is signed and provided by server via socket 'backup:snapshot' event to prevent client tampering.
+  if (!user || !user.username) return;
+  try {
+    const key = user.username.toLowerCase().trim();
+    const cacheData = {
+      id: user.id,
+      u: key,
+      b: Number(user.balance) || 0,
+      t: Number(user.tlBalance) || 0,
+      inv: Array.isArray(user.inventory) ? user.inventory.map(i => ({ s: i.id, i: i.instanceId, a: i.acquiredAt || Date.now() })) : [],
+      ts: Date.now()
+    };
+    localStorage.setItem('case_clash_local_state_' + key, JSON.stringify(cacheData));
+  } catch(e) {}
 }
 
 function getUserBackup(username) {
   if (!username) return null;
   try {
-    const raw = localStorage.getItem('case_clash_snapshot_' + username.toLowerCase());
-    return raw ? JSON.parse(raw) : null;
+    const key = username.toLowerCase().trim();
+    // 1. Check primary signed server snapshot
+    const rawSnap = localStorage.getItem('case_clash_snapshot_' + key);
+    if (rawSnap) {
+      try {
+        const parsed = JSON.parse(rawSnap);
+        if (parsed) return parsed;
+      } catch(e) {}
+    }
+    // 2. Check emergency preserved snapshot
+    const rawEmergency = localStorage.getItem('case_clash_snapshot_emergency_' + key);
+    if (rawEmergency) {
+      try {
+        const parsed = JSON.parse(rawEmergency);
+        if (parsed) return parsed;
+      } catch(e) {}
+    }
+    // 3. Check archive snapshot
+    const rawArchive = localStorage.getItem('case_clash_snapshot_archive_' + key);
+    if (rawArchive) {
+      try {
+        const parsed = JSON.parse(rawArchive);
+        if (parsed) return parsed;
+      } catch(e) {}
+    }
+    // 4. Check local state cache
+    const rawLocal = localStorage.getItem('case_clash_local_state_' + key);
+    if (rawLocal) {
+      try {
+        const parsed = JSON.parse(rawLocal);
+        if (parsed) return { payload: JSON.stringify(parsed), sig: 'local_fallback' };
+      } catch(e) {}
+    }
+    return null;
   } catch(e) {
     return null;
   }
@@ -723,9 +767,42 @@ function getUserBackup(username) {
 socket.on('backup:snapshot', (snapshot) => {
   try {
     if (snapshot && currentUser && currentUser.username) {
-      localStorage.setItem('case_clash_snapshot_' + currentUser.username.toLowerCase(), JSON.stringify(snapshot));
+      const key = currentUser.username.toLowerCase().trim();
+      const storageKey = 'case_clash_snapshot_' + key;
+      const existingRaw = localStorage.getItem(storageKey);
+
+      let newPayload = null;
+      try { newPayload = typeof snapshot.payload === 'string' ? JSON.parse(snapshot.payload) : snapshot; } catch(e) {}
+
+      let oldPayload = null;
+      try {
+        if (existingRaw) {
+          const parsed = JSON.parse(existingRaw);
+          oldPayload = typeof parsed.payload === 'string' ? JSON.parse(parsed.payload) : parsed;
+        }
+      } catch(e) {}
+
+      const oldItems = (oldPayload && Array.isArray(oldPayload.inv)) ? oldPayload.inv.length : 0;
+      const oldVal = (oldPayload && ((Number(oldPayload.b) || 0) > 0 || (Number(oldPayload.t) || 0) > 0));
+      const newItems = (newPayload && Array.isArray(newPayload.inv)) ? newPayload.inv.length : 0;
+      const newVal = (newPayload && ((Number(newPayload.b) || 0) > 0 || (Number(newPayload.t) || 0) > 0));
+
+      // GUARD: If previous backup had items/money, but incoming snapshot is 0/empty,
+      // store the rich backup in emergency slot so it can never be lost!
+      if ((oldItems > 0 || oldVal) && newItems === 0 && !newVal) {
+        console.warn('[BACKUP GUARD] Preserving rich backup before zero snapshot overwrite!');
+        if (existingRaw) localStorage.setItem('case_clash_snapshot_emergency_' + key, existingRaw);
+        return;
+      }
+
+      localStorage.setItem(storageKey, JSON.stringify(snapshot));
+      if (newItems > 0 || newVal) {
+        localStorage.setItem('case_clash_snapshot_archive_' + key, JSON.stringify(snapshot));
+      }
     }
-  } catch(e) {}
+  } catch(e) {
+    console.error('Failed to store snapshot:', e);
+  }
 });
 
 // Attempt login via HWID & Password

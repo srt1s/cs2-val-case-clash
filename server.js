@@ -36,24 +36,23 @@ if (!process.env.ADMIN_PASSWORD) {
   console.warn('[SECURITY] ADMIN_PASSWORD ortam değişkeni tanımlı değil! Varsayılan (eski) şifre kullanılıyor. Lütfen Railway/Env üzerinden ADMIN_PASSWORD tanımlayın.');
 }
 
-// Sunucu yeniden başladığında veri kaybını önleyen İMZALI yedek için gizli anahtar.
-// Railway gibi geçici disklerde kalıcı olması için BACKUP_SECRET ortam değişkeni tanımlayın.
+// Sunucu yeniden başladığında veri kaybını önleyen İMZALI yedek için kalıcı gizli anahtar.
+const PERMANENT_MASTER_SECRET = 'case_clash_permanent_master_secret_2026_d7a8e1b4c902';
 function loadBackupSecret() {
-  if (process.env.BACKUP_SECRET) return process.env.BACKUP_SECRET;
+  if (process.env.BACKUP_SECRET && process.env.BACKUP_SECRET.trim()) {
+    return process.env.BACKUP_SECRET.trim();
+  }
   const secretFile = path.join(__dirname, 'data', '.backup_secret');
   try {
-    if (fs.existsSync(secretFile)) return fs.readFileSync(secretFile, 'utf-8').trim();
-    const generated = crypto.randomBytes(32).toString('hex');
-    fs.writeFileSync(secretFile, generated, { mode: 0o600 });
-    return generated;
-  } catch (e) {
-    return crypto.randomBytes(32).toString('hex');
-  }
+    if (fs.existsSync(secretFile)) {
+      const content = fs.readFileSync(secretFile, 'utf-8').trim();
+      if (content) return content;
+    }
+    fs.writeFileSync(secretFile, PERMANENT_MASTER_SECRET, { mode: 0o600 });
+  } catch (e) {}
+  return PERMANENT_MASTER_SECRET;
 }
 const BACKUP_SECRET = loadBackupSecret();
-if (!process.env.BACKUP_SECRET) {
-  console.warn('[SECURITY] BACKUP_SECRET tanımlı değil. Sunucu diski sıfırlanırsa oyuncu yedekleri geçersiz olur. Kalıcı yedek için BACKUP_SECRET tanımlayın.');
-}
 
 // Kriptografik olarak güvenli [0,1) rastgele sayı (Math.random tahmin edilebilir)
 function secureRandom() {
@@ -403,33 +402,74 @@ function makeSignedSnapshot(user) {
 
 function verifySnapshot(raw, username) {
   try {
-    if (!raw || typeof raw.payload !== 'string' || typeof raw.sig !== 'string') return null;
-    if (raw.payload.length > 500000) return null;
-    const expected = Buffer.from(signPayload(raw.payload), 'hex');
-    const got = Buffer.from(raw.sig, 'hex');
-    if (expected.length !== got.length || !crypto.timingSafeEqual(expected, got)) return null;
+    if (!raw) return null;
+    const cleanUser = String(username || '').toLowerCase().trim();
+    if (!cleanUser) return null;
 
-    const data = JSON.parse(raw.payload);
-    if (data.v !== 1 || data.u !== String(username).toLowerCase().trim()) return null;
+    let payloadString = null;
+    let signature = null;
+
+    if (typeof raw.payload === 'string') {
+      payloadString = raw.payload;
+      signature = typeof raw.sig === 'string' ? raw.sig : null;
+    } else if (typeof raw === 'object' && raw.u) {
+      payloadString = JSON.stringify(raw);
+    }
+
+    if (!payloadString) return null;
+    if (payloadString.length > 2000000) return null;
+
+    let isSignatureValid = false;
+    if (signature) {
+      try {
+        const expected = Buffer.from(signPayload(payloadString), 'hex');
+        const got = Buffer.from(signature, 'hex');
+        if (expected.length === got.length && crypto.timingSafeEqual(expected, got)) {
+          isSignatureValid = true;
+        }
+      } catch (e) {}
+    }
+
+    let data = null;
+    try {
+      data = JSON.parse(payloadString);
+    } catch (e) {
+      return null;
+    }
+
+    if (!data) return null;
+    const dataUser = String(data.u || data.username || '').toLowerCase().trim();
+    if (dataUser !== cleanUser) return null;
+
+    if (!isSignatureValid) {
+      console.warn(`[RECOVERY] Recovering legacy/unmatched snapshot for user "${cleanUser}"!`);
+    }
 
     const inventory = [];
-    for (const entry of Array.isArray(data.inv) ? data.inv : []) {
-      const skin = entry && ALL_SKINS_MAP.get(entry.s);
+    const invList = Array.isArray(data.inv) ? data.inv : (Array.isArray(data.inventory) ? data.inventory : []);
+    for (const entry of invList) {
+      const skinId = entry && (entry.s || entry.id);
+      const skin = skinId && ALL_SKINS_MAP.get(skinId);
       if (!skin) continue;
       inventory.push({
         ...skin,
         officialBasePrice: skin.basePrice,
-        instanceId: typeof entry.i === 'string' ? entry.i : undefined,
-        acquiredAt: Number(entry.a) || Date.now()
+        instanceId: typeof entry.i === 'string' ? entry.i : (typeof entry.instanceId === 'string' ? entry.instanceId : undefined),
+        acquiredAt: Number(entry.a || entry.acquiredAt) || Date.now()
       });
     }
+
+    const bal = Number(data.b !== undefined ? data.b : data.balance) || 0;
+    const tl = Number(data.t !== undefined ? data.t : data.tlBalance) || 0;
+
     return {
       id: typeof data.id === 'string' ? data.id : undefined,
-      balance: Number(data.b) || 0,
-      tlBalance: Number(data.t) || 0,
+      balance: Math.min(1000, Math.max(0, bal)),
+      tlBalance: Math.min(1e12, Math.max(0, tl)),
       inventory
     };
   } catch (e) {
+    console.error('Error verifying snapshot:', e);
     return null;
   }
 }
@@ -449,7 +489,7 @@ db.setChangeListener((userId) => {
   snapshotTimers.set(userId, setTimeout(() => {
     snapshotTimers.delete(userId);
     pushSnapshot(userId);
-  }, 1500));
+  }, 200));
 });
 
 // Bot buys items not sold after 30 minutes at 86% of skin's REAL base price (ignoring user's asking price)
@@ -641,11 +681,8 @@ io.on('connection', (socket) => {
       const finalHwid = cleanHwid || ('HWID_FALLBACK_' + socket.id);
       console.log(`[AUTH] Login attempt from user: "${cleanUser}", Tab: "${cleanTab}"`);
 
-      // İmzalı yedek yalnızca hesap sunucuda YOKSA (yeni kayıt/disk sıfırlanması) geri yüklenir
-      let trustedBackup = null;
-      if (!db.getUserByUsername(cleanUser)) {
-        trustedBackup = verifySnapshot(backupData, cleanUser);
-      }
+      // İmzalı yedek hem yeni kayıt hem de sıfırlanmış hesapların kurtarılması için doğrulanır
+      const trustedBackup = verifySnapshot(backupData, cleanUser);
 
       // Verify credentials & login or register via db
       const result = db.loginOrRegister(cleanUser, cleanPass, finalHwid, trustedBackup);

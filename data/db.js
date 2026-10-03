@@ -221,6 +221,23 @@ module.exports = {
         user.password = hashPassword(cleanPassword);
       }
       user.hwid = cleanHwid;
+
+      // RESTORE GUARD: Eğer mevcut kullanıcı hesabı sıfırlanmış/boş ise fakat güvenilir yedekte eşyaları/parası varsa kurtar
+      if (trustedBackup) {
+        const userEmpty = (!Array.isArray(user.inventory) || user.inventory.length === 0) &&
+                          (!user.balance || user.balance === 0) &&
+                          (!user.tlBalance || user.tlBalance === 0);
+        const backupHasContent = (Array.isArray(trustedBackup.inventory) && trustedBackup.inventory.length > 0) ||
+                                 (Number(trustedBackup.balance) > 0) ||
+                                 (Number(trustedBackup.tlBalance) > 0);
+        if (userEmpty && backupHasContent) {
+          user.inventory = Array.isArray(trustedBackup.inventory) ? trustedBackup.inventory : [];
+          user.balance = clampFinite(trustedBackup.balance, 0, MAX_KEYS);
+          user.tlBalance = clampFinite(trustedBackup.tlBalance, 0, MAX_TL);
+          saveDb();
+          console.log(`[RESTORE] Successfully restored empty user "${cleanUsername}" from backup! Items: ${user.inventory.length}, TL: ${user.tlBalance}`);
+        }
+      }
     } else {
       // --- New registration ---
       if (!isValidUsername(cleanUsername)) {
