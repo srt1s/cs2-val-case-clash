@@ -1064,41 +1064,46 @@ io.on('connection', (socket) => {
 
   // Upgrader: Upgrade skin or lose it
   socket.on('upgrade:roll', (payload) => {
-    const session = activeSockets.get(socket.id);
-    if (!session) return socket.emit('upgrade:error', { message: 'Lütfen önce giriş yapın.' });
+    try {
+      const session = activeSockets.get(socket.id);
+      if (!session) return socket.emit('upgrade:error', { message: 'Lütfen önce giriş yapın.' });
 
-    const { inputInstanceId, targetSkinId } = payload || {};
-    if (!inputInstanceId || !targetSkinId) {
-      return socket.emit('upgrade:error', { message: 'Yükseltilecek veya hedef eşya seçilmedi.' });
-    }
+      const { inputInstanceId, targetSkinId } = payload || {};
+      if (!inputInstanceId || !targetSkinId) {
+        return socket.emit('upgrade:error', { message: 'Yükseltilecek veya hedef eşya seçilmedi.' });
+      }
 
-    const targetSkin = ALL_SKINS_MAP.get(targetSkinId) || (typeof targetSkinId === 'string' ? ALL_SKINS_MAP.get(targetSkinId.trim()) : null);
-    if (!targetSkin) {
-      return socket.emit('upgrade:error', { message: 'Hedef skin bulunamadı.' });
-    }
+      const targetSkin = ALL_SKINS_MAP.get(targetSkinId) || (typeof targetSkinId === 'string' ? ALL_SKINS_MAP.get(targetSkinId.trim()) : null);
+      if (!targetSkin) {
+        return socket.emit('upgrade:error', { message: 'Hedef skin bulunamadı.' });
+      }
 
-    const result = db.upgradeItem(session.userId, inputInstanceId, targetSkin, getOfficialBasePrice, secureRandom);
-    if (!result.success) {
-      return socket.emit('upgrade:error', { message: result.message });
-    }
+      const result = db.upgradeItem(session.userId, inputInstanceId, targetSkin, getOfficialBasePrice, secureRandom);
+      if (!result.success) {
+        return socket.emit('upgrade:error', { message: result.message || 'Yükseltme başarısız oldu.' });
+      }
 
-    // Send result to the user
-    socket.emit('upgrade:result', result);
+      // Send result to the user
+      socket.emit('upgrade:result', result);
 
-    // Announce big wins in global chat (multiplier >= 4 or targetPrice >= 2000)
-    if (result.isWin && (result.multiplier >= 4 || targetSkin.basePrice >= 2000)) {
-      const inName = (result.inputItem && result.inputItem.name) || 'Skin';
-      const outName = (result.wonItem && result.wonItem.name) || targetSkin.name || 'Skin';
-      const upgradeChatMsg = {
-        id: 'sys_upg_' + Date.now(),
-        userId: 'system',
-        username: 'UPGRADER',
-        text: `⚡ TEBRİKLER! [${session.username}] ${inName} eşyasını %${result.winChance} şansla (${result.multiplier}x) ${outName} eşyasına başarıyla yükseltti!`,
-        timestamp: Date.now(),
-        isHighlight: true
-      };
-      db.addChatMessage(upgradeChatMsg);
-      io.emit('chat:message', upgradeChatMsg);
+      // Announce big wins in global chat (multiplier >= 4 or targetPrice >= 2000)
+      if (result.isWin && (result.multiplier >= 4 || targetSkin.basePrice >= 2000)) {
+        const inName = (result.inputItem && result.inputItem.name) || 'Skin';
+        const outName = (result.wonItem && result.wonItem.name) || targetSkin.name || 'Skin';
+        const upgradeChatMsg = {
+          id: 'sys_upg_' + Date.now(),
+          userId: 'system',
+          username: 'UPGRADER',
+          text: `⚡ TEBRİKLER! [${session.username}] ${inName} eşyasını %${result.winChance} şansla (${result.multiplier}x) ${outName} eşyasına başarıyla yükseltti!`,
+          timestamp: Date.now(),
+          isHighlight: true
+        };
+        db.addChatMessage(upgradeChatMsg);
+        io.emit('chat:message', upgradeChatMsg);
+      }
+    } catch (err) {
+      console.error('[UPGRADE ERROR]', err);
+      socket.emit('upgrade:error', { message: 'Yükseltme işlemi sırasında sunucu hatası oluştu. Lütfen tekrar deneyin.' });
     }
   });
 

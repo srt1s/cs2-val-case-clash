@@ -2218,6 +2218,7 @@ function updateUpgraderWheel() {
 }
 
 let upgEventsBound = false;
+let upgRollTimeout = null;
 function initUpgraderEvents() {
   if (upgEventsBound) return;
   upgEventsBound = true;
@@ -2231,6 +2232,21 @@ function initUpgraderEvents() {
         return;
       }
 
+      if (!socket || !socket.connected) {
+        showInAppToast('Sunucu bağlantısı koptu. Lütfen birkaç saniye sonra tekrar deneyin.', false);
+        return;
+      }
+
+      const itemInstId = upgSelectedInputItem.instanceId || upgSelectedInputItem.id;
+      const exists = currentUser && Array.isArray(currentUser.inventory) && currentUser.inventory.some(i => i && (i.instanceId === itemInstId || i.id === itemInstId));
+      if (!exists) {
+        showInAppToast('Seçilen eşya envanterinizde bulunamadı. Lütfen sayfayı yenileyip tekrar deneyin.', false);
+        upgSelectedInputItem = null;
+        renderUpgraderInventory();
+        updateUpgraderWheel();
+        return;
+      }
+
       isUpgradingRolling = true;
       btnExecute.disabled = true;
       btnExecute.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> DÖNÜYOR...';
@@ -2241,7 +2257,24 @@ function initUpgraderEvents() {
         statusMsg.textContent = 'İbre dönüyor... Şans seninle olsun!';
       }
 
-      const itemInstId = upgSelectedInputItem.instanceId || upgSelectedInputItem.id || ('tmp_item_' + Date.now());
+      // Safety watchdog: If server doesn't respond in 8 seconds, unblock UI so player is never stuck
+      if (upgRollTimeout) clearTimeout(upgRollTimeout);
+      upgRollTimeout = setTimeout(() => {
+        if (isUpgradingRolling) {
+          isUpgradingRolling = false;
+          if (btnExecute) {
+            btnExecute.disabled = false;
+            btnExecute.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> YÜKSELT';
+          }
+          showInAppToast('Sunucudan yanıt alınamadı. İşlem sıfırlandı.', false);
+          const sMsg = document.getElementById('upgStatusMsg');
+          if (sMsg) {
+            sMsg.className = 'upg-status-text';
+            sMsg.textContent = 'Bağlantı zaman aşımına uğradı. Lütfen tekrar deneyin.';
+          }
+        }
+      }, 8000);
+
       socket.emit('upgrade:roll', {
         inputInstanceId: itemInstId,
         targetSkinId: upgSelectedTargetSkin.id,
@@ -2269,6 +2302,10 @@ function initUpgraderEvents() {
 
 // Socket Listeners for Upgrader
 socket.on('upgrade:result', (data) => {
+  if (upgRollTimeout) {
+    clearTimeout(upgRollTimeout);
+    upgRollTimeout = null;
+  }
   const needle = document.getElementById('wheelNeedle');
   const btnExecute = document.getElementById('btnExecuteUpgrade');
   const statusMsg = document.getElementById('upgStatusMsg');
@@ -2515,6 +2552,10 @@ function showUpgraderResultModal(data) {
 }
 
 socket.on('upgrade:error', (data) => {
+  if (upgRollTimeout) {
+    clearTimeout(upgRollTimeout);
+    upgRollTimeout = null;
+  }
   isUpgradingRolling = false;
   const btnExecute = document.getElementById('btnExecuteUpgrade');
   if (btnExecute) {
