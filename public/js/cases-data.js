@@ -621,7 +621,7 @@ window.INITIAL_CASES = [
           "name": "AWP | Hyper Beast",
           "weapon": "AWP",
           "game": "cs2",
-          "rarity": "covert",
+          "rarity": "classified",
           "basePrice": 280,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk7uW-V6x0MPWBMWWVwP1ij-1gSCGn20pxtm_WzNuoeHKeaFAnCZUiTe5bt0HqxofmZOrm5Q2IjoMQzS_5iShXrnE8NzWs__c"
         },
@@ -728,7 +728,7 @@ window.INITIAL_CASES = [
           "name": "AWP | Wildfire",
           "weapon": "AWP",
           "game": "cs2",
-          "rarity": "covert",
+          "rarity": "classified",
           "basePrice": 420,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk7uW-V7NkLPSVB3WV_uJ_t-l9AX7rxhl-tmzSwomtdC6TPwQnW5UkR-YD5kK-ltCzP-Ox4FfXiNoQyyrgznQeu9L0PzQ"
         },
@@ -740,7 +740,7 @@ window.INITIAL_CASES = [
           "name": "Desert Eagle | Code Red",
           "weapon": "Desert Eagle",
           "game": "cs2",
-          "rarity": "covert",
+          "rarity": "classified",
           "basePrice": 190,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk6OGRbKFsJ_yWMWaXxvxzo_JmXRa_nBovp3PRmNj4c3mTb1RxC5cjF-EItRnrlNzkYrnk5gaI3Y0UmyX52H9K7ixs_a9cBsGEcOCn"
         },
@@ -1430,7 +1430,7 @@ window.INITIAL_CASES = [
           "name": "İyon Vandal",
           "weapon": "Vandal",
           "game": "val",
-          "rarity": "exclusive",
+          "rarity": "premium",
           "basePrice": 420,
           "image": "https://media.valorant-api.com/weaponskins/596ce51d-40e3-dc21-b02d-b08d070a7883/displayicon.png"
         },
@@ -1573,7 +1573,7 @@ window.INITIAL_CASES = [
           "name": "RGX 11z Pro Vandal",
           "weapon": "Vandal",
           "game": "val",
-          "rarity": "exclusive",
+          "rarity": "premium",
           "basePrice": 460,
           "image": "https://media.valorant-api.com/weaponskins/e5490f71-455b-74ad-f762-f5a876d4dff9/displayicon.png"
         },
@@ -1585,7 +1585,7 @@ window.INITIAL_CASES = [
           "name": "Singularity Phantom",
           "weapon": "Phantom",
           "game": "val",
-          "rarity": "exclusive",
+          "rarity": "premium",
           "basePrice": 450,
           "image": "https://media.valorant-api.com/weaponskins/5eec4ce6-443d-e9b5-4c5b-2b967d426bd3/displayicon.png"
         },
