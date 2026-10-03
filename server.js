@@ -1,6 +1,8 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
+const fs = require('fs');
+const crypto = require('crypto');
 const cors = require('cors');
 const { Server } = require('socket.io');
 
@@ -13,13 +15,64 @@ const io = new Server(server, {
   cors: {
     origin: '*',
     methods: ['GET', 'POST']
-  }
+  },
+  maxHttpBufferSize: 1e5 // 100KB: büyük/şişirilmiş paketlerle bellek saldırısını engelle
 });
 
 const PORT = process.env.PORT || 3000;
 
+// ==========================================
+// 0. SECURITY CONFIG & HELPERS
+// ==========================================
+// 1 Anahtar'ın TL karşılığı. Tüm kasaların beklenen değeri (EV) bu fiyatın altında kalacak şekilde
+// ayarlanmıştır; aksi halde "TL -> Anahtar -> Kasa -> Skin sat -> TL" döngüsü sınırsız para basar.
+const KEY_PRICE_TL = Math.max(1, parseInt(process.env.KEY_PRICE_TL, 10) || 175);
+db.KEY_PRICE_TL = KEY_PRICE_TL;
+
+// Admin şifresi artık ortam değişkeninden okunur (ADMIN_PASSWORD). Tanımlı değilse eski şifre
+// geçici olarak çalışır ancak sunucu başlangıcında uyarı verilir.
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'topraK';
+if (!process.env.ADMIN_PASSWORD) {
+  console.warn('[SECURITY] ADMIN_PASSWORD ortam değişkeni tanımlı değil! Varsayılan (eski) şifre kullanılıyor. Lütfen Railway/Env üzerinden ADMIN_PASSWORD tanımlayın.');
+}
+
+// Sunucu yeniden başladığında veri kaybını önleyen İMZALI yedek için gizli anahtar.
+// Railway gibi geçici disklerde kalıcı olması için BACKUP_SECRET ortam değişkeni tanımlayın.
+function loadBackupSecret() {
+  if (process.env.BACKUP_SECRET) return process.env.BACKUP_SECRET;
+  const secretFile = path.join(__dirname, 'data', '.backup_secret');
+  try {
+    if (fs.existsSync(secretFile)) return fs.readFileSync(secretFile, 'utf-8').trim();
+    const generated = crypto.randomBytes(32).toString('hex');
+    fs.writeFileSync(secretFile, generated, { mode: 0o600 });
+    return generated;
+  } catch (e) {
+    return crypto.randomBytes(32).toString('hex');
+  }
+}
+const BACKUP_SECRET = loadBackupSecret();
+if (!process.env.BACKUP_SECRET) {
+  console.warn('[SECURITY] BACKUP_SECRET tanımlı değil. Sunucu diski sıfırlanırsa oyuncu yedekleri geçersiz olur. Kalıcı yedek için BACKUP_SECRET tanımlayın.');
+}
+
+// Kriptografik olarak güvenli [0,1) rastgele sayı (Math.random tahmin edilebilir)
+function secureRandom() {
+  return crypto.randomInt(0, 281474976710655) / 281474976710655;
+}
+
+// Süreci çökertebilecek beklenmeyen hataları logla (tek bir kötü paket sunucuyu düşürmesin)
+process.on('uncaughtException', (err) => console.error('[UNCAUGHT EXCEPTION]', err));
+process.on('unhandledRejection', (err) => console.error('[UNHANDLED REJECTION]', err));
+
+app.disable('x-powered-by');
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  next();
+});
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API route for healthcheck & info
@@ -34,6 +87,59 @@ app.get('/api/health', (req, res) => {
 app.get('/api/cases', (req, res) => {
   res.json(CASES);
 });
+
+// Basit sabit pencere hız sınırlayıcı (brute-force / flood koruması)
+function makeLimiter(max, windowMs) {
+  const hits = new Map();
+  return {
+    // true -> izin verildi, false -> limit aşıldı
+    take(key) {
+      const now = Date.now();
+      let entry = hits.get(key);
+      if (!entry || now - entry.start > windowMs) {
+        entry = { start: now, count: 0 };
+        hits.set(key, entry);
+      }
+      entry.count++;
+      return entry.count <= max;
+    },
+    isBlocked(key) {
+      const entry = hits.get(key);
+      return !!entry && Date.now() - entry.start <= windowMs && entry.count > max;
+    },
+    reset(key) { hits.delete(key); },
+    sweep() {
+      const now = Date.now();
+      for (const [k, v] of hits) if (now - v.start > windowMs) hits.delete(k);
+    }
+  };
+}
+
+const loginFailLimiter = makeLimiter(6, 5 * 60 * 1000);   // 5 dk içinde en fazla 6 başarısız giriş (IP+kullanıcı)
+const loginIpLimiter = makeLimiter(30, 5 * 60 * 1000);    // 5 dk içinde IP başına en fazla 30 giriş denemesi
+const adminFailLimiter = makeLimiter(5, 10 * 60 * 1000);  // 10 dk içinde en fazla 5 yanlış admin şifresi
+const chatLimiter = makeLimiter(6, 10 * 1000);            // 10 sn içinde en fazla 6 mesaj
+setInterval(() => {
+  loginFailLimiter.sweep();
+  loginIpLimiter.sweep();
+  adminFailLimiter.sweep();
+  chatLimiter.sweep();
+}, 60 * 1000).unref();
+
+function getClientIp(socket) {
+  const fwd = socket.handshake.headers['x-forwarded-for'];
+  if (fwd) {
+    const parts = String(fwd).split(',').map(s => s.trim()).filter(Boolean);
+    if (parts.length) return parts[parts.length - 1];
+  }
+  return socket.handshake.address || 'unknown';
+}
+
+function safeEqual(a, b) {
+  const ba = Buffer.from(String(a));
+  const bb = Buffer.from(String(b));
+  return ba.length === bb.length && crypto.timingSafeEqual(ba, bb);
+}
 
 // ==========================================
 // 1. ACTIVE CONNECTIONS & MULTI-TAB HWID LOCK
@@ -221,13 +327,15 @@ const ALL_SKINS_MAP = new Map();
 for (const c of CASES) {
   for (const it of c.items) {
     if (it.skin) {
-      if (it.skin.id) {
+      // "İlk kayıt kazanır" kuralı iki haritada da aynı: fiyat/skin tutarsızlığı oluşmaz
+      if (it.skin.id && !ALL_SKINS_MAP.has(it.skin.id)) {
+        ALL_SKINS_MAP.set(it.skin.id, it.skin);
         SKIN_BASE_PRICES.set(it.skin.id, it.skin.basePrice);
-        if (!ALL_SKINS_MAP.has(it.skin.id)) {
-          ALL_SKINS_MAP.set(it.skin.id, it.skin);
-        }
       }
-      if (it.skin.name) SKIN_BASE_PRICES.set(it.skin.name.toLowerCase().trim(), it.skin.basePrice);
+      if (it.skin.name) {
+        const nameKey = it.skin.name.toLowerCase().trim();
+        if (!SKIN_BASE_PRICES.has(nameKey)) SKIN_BASE_PRICES.set(nameKey, it.skin.basePrice);
+      }
     }
   }
 }
@@ -237,11 +345,112 @@ function getOfficialBasePrice(item) {
   if (item.id && SKIN_BASE_PRICES.has(item.id)) {
     return SKIN_BASE_PRICES.get(item.id);
   }
-  if (item.name && SKIN_BASE_PRICES.has(item.name.toLowerCase().trim())) {
-    return SKIN_BASE_PRICES.get(item.name.toLowerCase().trim());
+  if (item.name && SKIN_BASE_PRICES.has(String(item.name).toLowerCase().trim())) {
+    return SKIN_BASE_PRICES.get(String(item.name).toLowerCase().trim());
   }
-  return Number(item.basePrice) || 10;
+  return Math.max(1, Number(item.basePrice) || 10);
 }
+
+// Envanterdeki eşyaların fiyat/isim/görsel bilgisini resmi katalogla senkronla
+// (eski kaydedilmiş fiyatlar veya sahte alanlar ekonomi hesaplarını bozmasın)
+function normalizeUserInventory(user) {
+  if (!user || !Array.isArray(user.inventory)) return;
+  let changed = false;
+  for (const it of user.inventory) {
+    const skin = it && it.id ? ALL_SKINS_MAP.get(it.id) : null;
+    if (!skin) continue;
+    if (it.basePrice !== skin.basePrice || it.officialBasePrice !== skin.basePrice) {
+      it.basePrice = skin.basePrice;
+      it.officialBasePrice = skin.basePrice;
+      changed = true;
+    }
+    if (skin.image && it.image !== skin.image) { it.image = skin.image; changed = true; }
+    if (skin.name && it.name !== skin.name) { it.name = skin.name; changed = true; }
+    if (skin.rarity && it.rarity !== skin.rarity) { it.rarity = skin.rarity; changed = true; }
+  }
+  if (changed) db.save();
+}
+
+// Pazar fiyatı doğrulama: sonlu, tam sayı, 1 - 10.000.000 TL
+const MAX_LISTING_PRICE = 10000000;
+function sanitizeListingPrice(value) {
+  const n = Math.round(Number(value));
+  if (!Number.isFinite(n) || n < 1 || n > MAX_LISTING_PRICE) return null;
+  return n;
+}
+
+// ------------------------------------------------------------------
+// İMZALI YEDEK (Snapshot): sunucu diski sıfırlansa bile oyuncu verisini güvenle geri yükler.
+// İstemci kendi bakiyesini/envanterini ASLA belirleyemez; yalnızca sunucunun imzaladığı
+// veri, yalnızca hesap sunucuda YOKSA (yeni kayıt) ve kullanıcı adı eşleşirse kabul edilir.
+// ------------------------------------------------------------------
+function signPayload(payload) {
+  return crypto.createHmac('sha256', BACKUP_SECRET).update(payload).digest('hex');
+}
+
+function makeSignedSnapshot(user) {
+  const payload = JSON.stringify({
+    v: 1,
+    id: user.id,
+    u: String(user.username).toLowerCase().trim(),
+    b: user.balance,
+    t: user.tlBalance,
+    inv: (user.inventory || []).map(i => ({ s: i.id, i: i.instanceId, a: i.acquiredAt })),
+    ts: Date.now()
+  });
+  return { payload, sig: signPayload(payload) };
+}
+
+function verifySnapshot(raw, username) {
+  try {
+    if (!raw || typeof raw.payload !== 'string' || typeof raw.sig !== 'string') return null;
+    if (raw.payload.length > 500000) return null;
+    const expected = Buffer.from(signPayload(raw.payload), 'hex');
+    const got = Buffer.from(raw.sig, 'hex');
+    if (expected.length !== got.length || !crypto.timingSafeEqual(expected, got)) return null;
+
+    const data = JSON.parse(raw.payload);
+    if (data.v !== 1 || data.u !== String(username).toLowerCase().trim()) return null;
+
+    const inventory = [];
+    for (const entry of Array.isArray(data.inv) ? data.inv : []) {
+      const skin = entry && ALL_SKINS_MAP.get(entry.s);
+      if (!skin) continue;
+      inventory.push({
+        ...skin,
+        officialBasePrice: skin.basePrice,
+        instanceId: typeof entry.i === 'string' ? entry.i : undefined,
+        acquiredAt: Number(entry.a) || Date.now()
+      });
+    }
+    return {
+      id: typeof data.id === 'string' ? data.id : undefined,
+      balance: Number(data.b) || 0,
+      tlBalance: Number(data.t) || 0,
+      inventory
+    };
+  } catch (e) {
+    return null;
+  }
+}
+
+const snapshotTimers = new Map();
+function pushSnapshot(userId) {
+  const user = db.getUserById(userId);
+  if (!user) return;
+  const snap = makeSignedSnapshot(user);
+  for (const [sId, info] of activeSockets.entries()) {
+    if (info.userId === userId) io.to(sId).emit('backup:snapshot', snap);
+  }
+}
+
+db.setChangeListener((userId) => {
+  if (snapshotTimers.has(userId)) return;
+  snapshotTimers.set(userId, setTimeout(() => {
+    snapshotTimers.delete(userId);
+    pushSnapshot(userId);
+  }, 1500));
+});
 
 // Bot buys items not sold after 30 minutes at 86% of skin's REAL base price (ignoring user's asking price)
 // Warning sent at 5 minutes remaining
@@ -312,25 +521,28 @@ setInterval(() => {
 // 4. CASE OPENING WEIGHT LOGIC
 // ==========================================
 function pickWinningItem(caseObj, isBoosted) {
-  // If boosted, we increase weight of 'covert', 'exclusive', and 'knife' by +3% total probability
-  let items = caseObj.items.map(entry => ({ ...entry }));
-  
+  // If boosted, the TOTAL probability of 'covert', 'exclusive' and 'knife' drops rises by +3 percentage points
+  // (previously +3 weight was added to EVERY rare item, which inflated the rare chance by 3% x item count)
+  let items = caseObj.items
+    .filter(entry => entry && entry.skin && Number(entry.weight) > 0)
+    .map(entry => ({ ...entry, weight: Number(entry.weight) }));
+
   if (isBoosted) {
-    // Boost rare items
-    items = items.map(entry => {
-      const r = entry.skin.rarity;
-      if (r === 'knife' || r === 'covert' || r === 'exclusive') {
-        return {
-          ...entry,
-          weight: entry.weight + 3.0 // increases probability by +3%
-        };
-      }
-      return entry;
-    });
+    const isRare = (entry) => ['knife', 'covert', 'exclusive'].includes(entry.skin.rarity);
+    const total = items.reduce((s, e) => s + e.weight, 0);
+    const rareWeight = items.filter(isRare).reduce((s, e) => s + e.weight, 0);
+    const commonWeight = total - rareWeight;
+    if (rareWeight > 0 && commonWeight > 0) {
+      const currentShare = rareWeight / total;
+      const newShare = Math.min(0.95, currentShare + 0.03);
+      // Scale rare weights so that rareShare == newShare while common weights stay unchanged
+      const factor = (newShare / (1 - newShare)) * (commonWeight / rareWeight);
+      items = items.map(entry => isRare(entry) ? { ...entry, weight: entry.weight * factor } : entry);
+    }
   }
 
   const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
-  let randomVal = Math.random() * totalWeight;
+  let randomVal = secureRandom() * totalWeight;
 
   let wonSkin = items[items.length - 1].skin;
   for (const entry of items) {
@@ -359,7 +571,7 @@ function pickWinningItem(caseObj, isBoosted) {
       VAL_SKINS.champions_2026_phantom
     ].filter(Boolean);
     if (champSkins.length > 0) {
-      wonSkin = champSkins[Math.floor(Math.random() * champSkins.length)];
+      wonSkin = champSkins[Math.floor(secureRandom() * champSkins.length)];
     }
   }
 
@@ -370,16 +582,47 @@ function pickWinningItem(caseObj, isBoosted) {
 // 5. WEBSOCKET CONNECTION LIFECYCLE
 // ==========================================
 io.on('connection', (socket) => {
+  // --- Crash-proofing: a malformed payload (e.g. null/undefined destructuring) must NEVER take the server down ---
+  const originalOn = socket.on.bind(socket);
+  socket.on = (event, handler) => originalOn(event, (...args) => {
+    try {
+      return handler(...args);
+    } catch (err) {
+      console.error(`[SOCKET ERROR] event="${event}":`, err && err.message);
+    }
+  });
+
+  // --- Per-socket flood protection: max 40 events / second, hard disconnect at 150 ---
+  let floodWindowStart = Date.now();
+  let floodCount = 0;
+  socket.use((packet, next) => {
+    const now = Date.now();
+    if (now - floodWindowStart > 1000) {
+      floodWindowStart = now;
+      floodCount = 0;
+    }
+    floodCount++;
+    if (floodCount > 150) {
+      socket.disconnect(true);
+      return;
+    }
+    if (floodCount > 40) return; // drop silently
+    next();
+  });
+
+  const clientIp = getClientIp(socket);
+
   // Send cases list immediately on connection
   socket.emit('cases:list', CASES);
 
   // Handle User Login & HWID Auth with Password
-  socket.on('auth:login', ({ username, password, hwid, tabId, backupData }) => {
+  socket.on('auth:login', (payload) => {
     try {
-      const cleanUser = String(username || '').trim();
-      const cleanPass = String(password || '').trim();
-      const cleanHwid = String(hwid || '').trim();
-      const cleanTab = String(tabId || socket.id).trim();
+      const { username, password, hwid, tabId, backupData } = payload || {};
+      const cleanUser = String(username || '').trim().replace(/\s+/g, ' ').slice(0, 40);
+      const cleanPass = String(password || '').trim().slice(0, 100);
+      const cleanHwid = String(hwid || '').trim().slice(0, 128);
+      const cleanTab = String(tabId || socket.id).trim().slice(0, 64);
 
       if (!cleanUser) {
         return socket.emit('auth:error', { message: 'Lütfen bir kullanıcı adı girin.' });
@@ -389,16 +632,31 @@ io.on('connection', (socket) => {
         return socket.emit('auth:error', { message: 'Lütfen hesap şifrenizi girin.' });
       }
 
-      const finalHwid = cleanHwid || ('HWID_FALLBACK_' + socket.id);
-      console.log(`[AUTH] Login attempt from user: "${cleanUser}", HWID: "${finalHwid}", Tab: "${cleanTab}"`);
-
-      // Verify credentials & login or register via db
-      const result = db.loginOrRegister(cleanUser, cleanPass, finalHwid, backupData);
-      if (!result.success) {
-        return socket.emit('auth:error', { message: result.message || 'Giriş başarısız!' });
+      // Brute-force protection (IP + kullanıcı bazlı)
+      const failKey = clientIp + '|' + cleanUser.toLowerCase();
+      if (!loginIpLimiter.take(clientIp) || loginFailLimiter.isBlocked(failKey)) {
+        return socket.emit('auth:error', { message: 'Çok fazla başarısız giriş denemesi! Lütfen birkaç dakika sonra tekrar deneyin.' });
       }
 
+      const finalHwid = cleanHwid || ('HWID_FALLBACK_' + socket.id);
+      console.log(`[AUTH] Login attempt from user: "${cleanUser}", Tab: "${cleanTab}"`);
+
+      // İmzalı yedek yalnızca hesap sunucuda YOKSA (yeni kayıt/disk sıfırlanması) geri yüklenir
+      let trustedBackup = null;
+      if (!db.getUserByUsername(cleanUser)) {
+        trustedBackup = verifySnapshot(backupData, cleanUser);
+      }
+
+      // Verify credentials & login or register via db
+      const result = db.loginOrRegister(cleanUser, cleanPass, finalHwid, trustedBackup);
+      if (!result.success) {
+        loginFailLimiter.take(failKey);
+        return socket.emit('auth:error', { message: result.message || 'Giriş başarısız!' });
+      }
+      loginFailLimiter.reset(failKey);
+
       const user = result.user;
+      normalizeUserInventory(user);
 
       // Check Multi-Tab constraint:
       if (activeHwids.has(finalHwid)) {
@@ -416,6 +674,13 @@ io.on('connection', (socket) => {
             });
           }
         }
+      }
+
+      // Bu soket daha önce başka bir hesap/HWID ile giriş yaptıysa eski kaydı temizle (hayalet oturum kalmasın)
+      const previousSession = activeSockets.get(socket.id);
+      if (previousSession) {
+        const prevActive = activeHwids.get(previousSession.hwid);
+        if (prevActive && prevActive.socketId === socket.id) activeHwids.delete(previousSession.hwid);
       }
 
       // Track active connection
@@ -443,6 +708,7 @@ io.on('connection', (socket) => {
           inventory: user.inventory
         },
         cases: CASES,
+        keyPriceTL: KEY_PRICE_TL,
         isNewHwid: result.isNewHwid,
         bonusGiven: result.bonusGiven,
         luckEvent,
@@ -452,32 +718,41 @@ io.on('connection', (socket) => {
         chat: db.db.chat.slice(-50)
       });
 
+      // Güncel imzalı yedeği istemciye ver
+      socket.emit('backup:snapshot', makeSignedSnapshot(user));
+
       // Broadcast updated online players
       io.emit('players:online', getOnlineUsers());
     } catch (err) {
       console.error('[AUTH ERROR]:', err);
-      socket.emit('auth:error', { message: 'Sunucu giriş hatası: ' + err.message });
+      socket.emit('auth:error', { message: 'Sunucu giriş hatası. Lütfen tekrar deneyin.' });
     }
   });
 
   // Open Case
-  socket.on('case:open', ({ caseId }) => {
+  socket.on('case:open', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return socket.emit('case:error', { message: 'Oturum bulunamadı. Lütfen giriş yapın.' });
 
     const user = db.getUserById(session.userId);
     if (!user) return socket.emit('case:error', { message: 'Kullanıcı bulunamadı.' });
 
-    const caseObj = CASES.find(c => c.id === caseId);
+    const caseId = payload && typeof payload.caseId === 'string' ? payload.caseId : null;
+    const caseObj = caseId ? CASES.find(c => c.id === caseId) : null;
     if (!caseObj) return socket.emit('case:error', { message: 'Geçersiz kasa.' });
 
+    const caseCost = Number(caseObj.cost);
+    if (!Number.isFinite(caseCost) || caseCost <= 0 || !Array.isArray(caseObj.items) || caseObj.items.length === 0) {
+      return socket.emit('case:error', { message: 'Bu kasa şu anda açılamıyor.' });
+    }
+
     // Validate balance
-    if (user.balance < caseObj.cost) {
-      return socket.emit('case:error', { message: `Yetersiz anahtar! Bu kasa için ${caseObj.cost} anahtar gerekiyor.` });
+    if (!Number.isFinite(user.balance) || user.balance < caseCost) {
+      return socket.emit('case:error', { message: `Yetersiz anahtar! Bu kasa için ${caseCost} anahtar gerekiyor.` });
     }
 
     // Deduct cost
-    db.updateBalance(user.id, -caseObj.cost);
+    db.updateBalance(user.id, -caseCost);
 
     // Check if luck event is currently active on this case
     const isBoosted = luckEvent.active && luckEvent.caseId === caseId;
@@ -547,19 +822,23 @@ io.on('connection', (socket) => {
   // Instant Sell Item:
   // - If isQuickSell: sold immediately from case opening modal -> 75% of base price (quick sell discount)
   // - If sold from inventory ("envantere atıp satış yapılırsa") -> 100% full base price
-  socket.on('inventory:sell_instant', ({ instanceId, isQuickSell }) => {
+  socket.on('inventory:sell_instant', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
     const user = db.getUserById(session.userId);
     if (!user) return;
 
+    const instanceId = payload && typeof payload.instanceId === 'string' ? payload.instanceId : null;
+    if (!instanceId) return socket.emit('inventory:error', { message: 'Geçersiz eşya ID.' });
+
+    const isQuickSell = !!(payload && payload.isQuickSell);
     const removedItem = db.removeItemFromUser(user.id, instanceId);
     if (!removedItem) {
       return socket.emit('inventory:error', { message: 'Eşya envanterde bulunamadı.' });
     }
 
-    const itemBasePrice = Number(removedItem.basePrice || removedItem.price || 1);
+    const itemBasePrice = getOfficialBasePrice(removedItem);
     const sellPrice = isQuickSell
       ? Math.max(1, Math.round(itemBasePrice * 0.75))
       : Math.max(1, Math.round(itemBasePrice));
@@ -569,7 +848,7 @@ io.on('connection', (socket) => {
     socket.emit('inventory:sold', {
       instanceId,
       sellPrice,
-      isQuickSell: !!isQuickSell,
+      isQuickSell,
       newTLBalance: newTL,
       newBalance: user.balance,
       inventory: user.inventory
@@ -577,7 +856,7 @@ io.on('connection', (socket) => {
   });
 
   // Bulk Sell Items (From inventory: 100% base price)
-  socket.on('inventory:sell_bulk_instant', ({ instanceIds } = {}) => {
+  socket.on('inventory:sell_bulk_instant', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
@@ -586,8 +865,9 @@ io.on('connection', (socket) => {
       return socket.emit('inventory:error', { message: 'Envanterinizde satılacak eşya bulunmuyor.' });
     }
 
+    const instanceIds = payload && payload.instanceIds;
     const idsToSell = Array.isArray(instanceIds) && instanceIds.length > 0 
-      ? new Set(instanceIds) 
+      ? new Set(instanceIds.filter(id => typeof id === 'string')) 
       : null;
 
     let totalSellPrice = 0;
@@ -596,7 +876,7 @@ io.on('connection', (socket) => {
 
     for (const item of user.inventory) {
       if (!idsToSell || idsToSell.has(item.instanceId)) {
-        const itemBasePrice = Number(item.basePrice || item.price || 1);
+        const itemBasePrice = getOfficialBasePrice(item);
         const itemPrice = Math.max(1, Math.round(itemBasePrice));
         totalSellPrice += itemPrice;
         soldCount++;
@@ -623,16 +903,17 @@ io.on('connection', (socket) => {
   });
 
   // Market: Put skin up for sale
-  socket.on('market:list_item', ({ instanceId, price }) => {
+  socket.on('market:list_item', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
     const user = db.getUserById(session.userId);
     if (!user) return;
 
-    const askingPrice = Number(price);
-    if (isNaN(askingPrice) || askingPrice <= 0) {
-      return socket.emit('market:error', { message: 'Geçersiz satış fiyatı.' });
+    const instanceId = payload && typeof payload.instanceId === 'string' ? payload.instanceId : null;
+    const askingPrice = sanitizeListingPrice(payload && payload.price);
+    if (!askingPrice) {
+      return socket.emit('market:error', { message: 'Geçersiz satış fiyatı (1 TL - 10.000.000 TL arası olmalı).' });
     }
 
     const item = db.removeItemFromUser(user.id, instanceId);
@@ -651,7 +932,7 @@ io.on('connection', (socket) => {
   });
 
   // Market: Bulk List Items
-  socket.on('market:list_bulk', ({ items } = {}) => {
+  socket.on('market:list_bulk', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
@@ -660,14 +941,16 @@ io.on('connection', (socket) => {
       return socket.emit('market:error', { message: 'Envanterinizde pazara koyulacak eşya bulunmuyor.' });
     }
 
+    const items = payload && payload.items;
     if (!Array.isArray(items) || items.length === 0) {
       return socket.emit('market:error', { message: 'Pazara eklenecek eşya seçilmedi.' });
     }
 
     const itemMap = new Map();
     items.forEach(req => {
-      if (req && req.instanceId) {
-        itemMap.set(req.instanceId, Number(req.price));
+      if (req && typeof req.instanceId === 'string') {
+        const sanitized = sanitizeListingPrice(req.price);
+        itemMap.set(req.instanceId, sanitized);
       }
     });
 
@@ -676,9 +959,8 @@ io.on('connection', (socket) => {
 
     for (const item of user.inventory) {
       if (itemMap.has(item.instanceId)) {
-        const askPrice = itemMap.get(item.instanceId);
-        const finalPrice = (!isNaN(askPrice) && askPrice > 0) ? askPrice : item.basePrice;
-        const listing = db.addMarketListing(user.id, user.username, item, finalPrice);
+        const askPrice = itemMap.get(item.instanceId) || getOfficialBasePrice(item);
+        const listing = db.addMarketListing(user.id, user.username, item, askPrice);
         createdListings.push(listing);
       } else {
         remainingInventory.push(item);
@@ -701,12 +983,15 @@ io.on('connection', (socket) => {
   });
 
   // Market: Buy skin from player (Transacts in TL)
-  socket.on('market:buy_item', ({ listingId }) => {
+  socket.on('market:buy_item', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
     const buyer = db.getUserById(session.userId);
     if (!buyer) return;
+
+    const listingId = payload && typeof payload.listingId === 'string' ? payload.listingId : null;
+    if (!listingId) return socket.emit('market:error', { message: 'Geçersiz ilan.' });
 
     const listing = db.db.market.find(m => m.id === listingId);
     if (!listing) {
@@ -719,16 +1004,21 @@ io.on('connection', (socket) => {
 
     const buyerTL = buyer.tlBalance !== undefined ? buyer.tlBalance : 0;
     if (buyerTL < listing.price) {
-      return socket.emit('market:error', { message: `Yetersiz TL bakiyesi! İlan fiyatı: ₺${listing.price} TL, Mevcut: ₺${buyerTL} TL.` });
+      return socket.emit('market:error', { message: `Yetersiz TL bakiyesi! İlan fiyatı: ₺${listing.price.toLocaleString()} TL, Mevcut: ₺${buyerTL.toLocaleString()} TL.` });
+    }
+
+    // Atomic remove from market to prevent duplicate purchase race conditions
+    const removedListing = db.removeMarketListing(listingId);
+    if (!removedListing) {
+      return socket.emit('market:error', { message: 'Eşya sizden önce başka bir oyuncu tarafından satın alındı.' });
     }
 
     // Process transaction in TL
-    db.removeMarketListing(listingId);
-    const newBuyerTL = db.updateTLBalance(buyer.id, -listing.price);
-    const newSellerTL = db.updateTLBalance(listing.sellerId, listing.price);
+    const newBuyerTL = db.updateTLBalance(buyer.id, -removedListing.price);
+    const newSellerTL = db.updateTLBalance(removedListing.sellerId, removedListing.price);
 
-    const receivedItem = db.addItemToUser(buyer.id, listing.item);
-    const seller = db.getUserById(listing.sellerId);
+    const receivedItem = db.addItemToUser(buyer.id, removedListing.item);
+    const seller = db.getUserById(removedListing.sellerId);
 
     socket.emit('market:buy_success', {
       item: receivedItem,
@@ -739,10 +1029,10 @@ io.on('connection', (socket) => {
 
     // Notify seller
     for (const [sId, info] of activeSockets.entries()) {
-      if (info.userId === listing.sellerId) {
+      if (info.userId === removedListing.sellerId) {
         io.to(sId).emit('market:item_sold_to_player', {
-          itemName: listing.item.name,
-          price: listing.price,
+          itemName: removedListing.item.name,
+          price: removedListing.price,
           buyerName: buyer.username,
           newTLBalance: newSellerTL,
           newBalance: seller ? seller.balance : 0
@@ -753,11 +1043,12 @@ io.on('connection', (socket) => {
     io.emit('market:updated', db.db.market);
   });
 
-  // Wallet: Convert TL to Kasa Balance (40 TL = 1 Bakiye)
-  socket.on('wallet:convert_tl', ({ caseCount }) => {
+  // Wallet: Convert TL to Kasa Balance
+  socket.on('wallet:convert_tl', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
+    const caseCount = payload && payload.caseCount;
     const res = db.convertTLToCaseBalance(session.userId, caseCount);
     if (!res.success) {
       return socket.emit('wallet:error', { message: res.message });
@@ -772,10 +1063,11 @@ io.on('connection', (socket) => {
   });
 
   // Upgrader: Upgrade skin or lose it
-  socket.on('upgrade:roll', ({ inputInstanceId, targetSkinId, inputItemBackup }) => {
+  socket.on('upgrade:roll', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return socket.emit('upgrade:error', { message: 'Lütfen önce giriş yapın.' });
 
+    const { inputInstanceId, targetSkinId } = payload || {};
     if (!inputInstanceId || !targetSkinId) {
       return socket.emit('upgrade:error', { message: 'Yükseltilecek veya hedef eşya seçilmedi.' });
     }
@@ -785,7 +1077,7 @@ io.on('connection', (socket) => {
       return socket.emit('upgrade:error', { message: 'Hedef skin bulunamadı.' });
     }
 
-    const result = db.upgradeItem(session.userId, inputInstanceId, targetSkin, inputItemBackup);
+    const result = db.upgradeItem(session.userId, inputInstanceId, targetSkin, getOfficialBasePrice, secureRandom);
     if (!result.success) {
       return socket.emit('upgrade:error', { message: result.message });
     }
@@ -808,11 +1100,16 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Admin: Give Balance (Password: topraK)
-  socket.on('admin:give_balance', ({ password, targetUsername, tlAmount, caseAmount }) => {
-    if (password !== 'topraK') {
+  // Admin: Give Balance (Password: ADMIN_PASSWORD)
+  socket.on('admin:give_balance', (payload) => {
+    const { password, targetUsername, tlAmount, caseAmount } = payload || {};
+    if (!safeEqual(password || '', ADMIN_PASSWORD)) {
+      if (!adminFailLimiter.take(clientIp)) {
+        return socket.emit('admin:error', { message: 'Çok fazla yanlış şifre denemesi! Lütfen bekleyin.' });
+      }
       return socket.emit('admin:error', { message: 'Hatalı yönetici şifresi!' });
     }
+    adminFailLimiter.reset(clientIp);
 
     const session = activeSockets.get(socket.id);
     if (!session) return;
@@ -832,8 +1129,8 @@ io.on('connection', (socket) => {
       return socket.emit('admin:error', { message: 'Hedef kullanıcı bulunamadı.' });
     }
 
-    const addTL = Math.max(0, Number(tlAmount) || 0);
-    const addCase = Math.max(0, Number(caseAmount) || 0);
+    const addTL = Math.min(100000000, Math.max(0, Math.floor(Number(tlAmount) || 0)));
+    const addCase = Math.min(1000, Math.max(0, Math.floor(Number(caseAmount) || 0)));
 
     if (addTL > 0) {
       db.updateTLBalance(targetUser.id, addTL);
@@ -861,8 +1158,9 @@ io.on('connection', (socket) => {
   });
 
   // Trading: Fetch live inventory of target player
-  socket.on('trade:get_inventory', ({ targetUserId }) => {
-    const target = db.getUserById(targetUserId);
+  socket.on('trade:get_inventory', (payload) => {
+    const targetUserId = payload && payload.targetUserId;
+    const target = typeof targetUserId === 'string' ? db.getUserById(targetUserId) : null;
     if (!target) {
       return socket.emit('trade:error', { message: 'Hedef oyuncu bulunamadı.' });
     }
@@ -874,19 +1172,21 @@ io.on('connection', (socket) => {
   });
 
   // Trading: Propose trade offer
-  socket.on('trade:create_offer', ({ targetUserId, offeredInstanceIds, requestedInstanceIds }) => {
+  socket.on('trade:create_offer', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
+    const { targetUserId, offeredInstanceIds, requestedInstanceIds } = payload || {};
     const sender = db.getUserById(session.userId);
-    const receiver = db.getUserById(targetUserId);
+    const receiver = typeof targetUserId === 'string' ? db.getUserById(targetUserId) : null;
 
     if (!sender || !receiver || sender.id === receiver.id) {
       return socket.emit('trade:error', { message: 'Geçersiz takas hedefi.' });
     }
 
-    const cleanOfferedIds = Array.isArray(offeredInstanceIds) ? offeredInstanceIds : [];
-    const cleanRequestedIds = Array.isArray(requestedInstanceIds) ? requestedInstanceIds : [];
+    // Deduplicate IDs to prevent trade-duplication exploits
+    const cleanOfferedIds = Array.isArray(offeredInstanceIds) ? [...new Set(offeredInstanceIds.filter(id => typeof id === 'string'))] : [];
+    const cleanRequestedIds = Array.isArray(requestedInstanceIds) ? [...new Set(requestedInstanceIds.filter(id => typeof id === 'string'))] : [];
 
     // Validate offered items
     const offeredItems = sender.inventory.filter(i => cleanOfferedIds.includes(i.instanceId));
@@ -896,8 +1196,13 @@ io.on('connection', (socket) => {
       return socket.emit('trade:error', { message: 'Lütfen takasa eklemek veya istemek için en az bir eşya seçin.' });
     }
 
+    // Limit active trade offers count to prevent spam
+    if (db.db.tradeOffers.length > 500) {
+      db.db.tradeOffers.splice(0, 100);
+    }
+
     const tradeOffer = {
-      id: 'trd_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 6),
+      id: 'trd_' + Date.now().toString(36) + '_' + crypto.randomBytes(3).toString('hex'),
       fromUserId: sender.id,
       fromUsername: sender.username,
       toUserId: receiver.id,
@@ -923,10 +1228,11 @@ io.on('connection', (socket) => {
   });
 
   // Trading: Accept trade
-  socket.on('trade:accept_offer', ({ tradeId }) => {
+  socket.on('trade:accept_offer', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
+    const tradeId = payload && payload.tradeId;
     const offerIndex = db.db.tradeOffers.findIndex(t => t.id === tradeId);
     if (offerIndex === -1) {
       return socket.emit('trade:error', { message: 'Takas teklifi bulunamadı veya süresi geçmiş.' });
@@ -944,23 +1250,30 @@ io.on('connection', (socket) => {
       return socket.emit('trade:error', { message: 'Kullanıcı bulunamadı.' });
     }
 
-    // Verify all items are still in respective inventories
-    const aHasAll = offer.offeredItems.every(offered => userA.inventory.some(i => i.instanceId === offered.instanceId));
-    const bHasAll = offer.requestedItems.every(req => userB.inventory.some(i => i.instanceId === req.instanceId));
+    // Verify all items are still in respective inventories without duplicate counting
+    const userAInstIds = new Set(userA.inventory.map(i => i.instanceId));
+    const userBInstIds = new Set(userB.inventory.map(i => i.instanceId));
+
+    const aHasAll = offer.offeredItems.every(offered => userAInstIds.has(offered.instanceId));
+    const bHasAll = offer.requestedItems.every(req => userBInstIds.has(req.instanceId));
 
     if (!aHasAll || !bHasAll) {
       db.db.tradeOffers.splice(offerIndex, 1);
       return socket.emit('trade:error', { message: 'Takastaki eşyalar artık envanterde bulunmuyor (satılmış veya aktarılmış olabilir).' });
     }
 
-    // Atomically transfer items
+    // Atomically transfer items: only add if removed successfully!
     for (const item of offer.offeredItems) {
-      db.removeItemFromUser(userA.id, item.instanceId);
-      db.addItemToUser(userB.id, item);
+      const removed = db.removeItemFromUser(userA.id, item.instanceId);
+      if (removed) {
+        db.addItemToUser(userB.id, removed);
+      }
     }
     for (const item of offer.requestedItems) {
-      db.removeItemFromUser(userB.id, item.instanceId);
-      db.addItemToUser(userA.id, item);
+      const removed = db.removeItemFromUser(userB.id, item.instanceId);
+      if (removed) {
+        db.addItemToUser(userA.id, item);
+      }
     }
 
     db.db.tradeOffers.splice(offerIndex, 1);
@@ -984,10 +1297,11 @@ io.on('connection', (socket) => {
   });
 
   // Trading: Decline trade
-  socket.on('trade:decline_offer', ({ tradeId }) => {
+  socket.on('trade:decline_offer', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
+    const tradeId = payload && payload.tradeId;
     const offerIndex = db.db.tradeOffers.findIndex(t => t.id === tradeId);
     if (offerIndex !== -1) {
       const [offer] = db.db.tradeOffers.splice(offerIndex, 1);
@@ -1002,15 +1316,19 @@ io.on('connection', (socket) => {
   });
 
   // Global Chat
-  socket.on('chat:send_message', ({ text }) => {
+  socket.on('chat:send_message', (payload) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
-    const cleanText = String(text || '').trim();
-    if (!cleanText || cleanText.length > 250) return;
+    if (!chatLimiter.take(session.userId)) {
+      return; // flood protection
+    }
+
+    const cleanText = String((payload && payload.text) || '').trim().replace(/[\x00-\x1F\x7F]/g, '');
+    if (!cleanText || cleanText.length > 200) return;
 
     const msg = {
-      id: 'chat_' + Date.now().toString(36) + Math.random().toString(36).substring(2, 5),
+      id: 'chat_' + Date.now().toString(36) + crypto.randomBytes(2).toString('hex'),
       userId: session.userId,
       username: session.username,
       text: cleanText,

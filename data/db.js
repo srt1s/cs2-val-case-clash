@@ -1,132 +1,250 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const DB_FILE = path.join(__dirname, 'database.json');
 
-// Default initial state
-const defaultData = {
-  users: {},         // userId -> User
-  usernames: {},     // lowercase username -> userId
-  hwids: {},         // hwid -> { userId, firstSeenAt, bonusClaimed: true }
-  market: [],        // array of listings
-  tradeOffers: [],   // active/pending trades
-  chat: []           // message log
-};
+const MAX_KEYS = 1000;           // Max Anahtar sınırı
+const MAX_TL = 1e12;             // TL üst sınırı (taşma/Infinity koruması)
+const MAX_UPGRADE_RATIO = 1000;  // Upgrader'da hedef/girdi fiyat oranı üst sınırı
+const UPGRADE_HOUSE_EDGE = 0.95; // %5 kasa avantajı
+const UPGRADE_MAX_CHANCE = 85;   // Maksimum kazanma şansı (%)
 
-let dbData = { ...defaultData };
+function makeDefaultData() {
+  return {
+    users: {},         // userId -> User
+    usernames: {},     // lowercase username -> userId
+    hwids: {},         // hwid -> { userId, firstSeenAt, bonusClaimed: true }
+    market: [],        // array of listings
+    tradeOffers: [],   // active/pending trades
+    chat: []           // message log
+  };
+}
+
+let dbData = makeDefaultData();
+
+const hasOwn = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
+
+// ------------------------------------------------------------------
+// Persistence: debounced + atomic writes, corrupt-file protection
+// ------------------------------------------------------------------
+let saveTimer = null;
+let dirty = false;
+
+function writeNow() {
+  if (!dirty) return;
+  dirty = false;
+  try {
+    const tmp = DB_FILE + '.tmp';
+    fs.writeFileSync(tmp, JSON.stringify(dbData), 'utf-8');
+    fs.renameSync(tmp, DB_FILE); // atomic replace -> yarım yazılmış dosya riski yok
+  } catch (err) {
+    dirty = true;
+    console.error('Error saving database:', err);
+  }
+}
+
+function saveDb() {
+  dirty = true;
+  if (!saveTimer) {
+    saveTimer = setTimeout(() => {
+      saveTimer = null;
+      writeNow();
+    }, 300);
+  }
+}
+
+function flushDb() {
+  if (saveTimer) {
+    clearTimeout(saveTimer);
+    saveTimer = null;
+  }
+  writeNow();
+}
 
 function loadDb() {
   try {
     if (fs.existsSync(DB_FILE)) {
       const raw = fs.readFileSync(DB_FILE, 'utf-8');
-      dbData = { ...defaultData, ...JSON.parse(raw) };
+      let parsed;
+      try {
+        parsed = JSON.parse(raw);
+      } catch (parseErr) {
+        // Bozuk dosyayı ezmeden önce yedekle (veri kaybını önler)
+        const backupName = DB_FILE.replace(/\.json$/, '') + '.corrupt.' + Date.now() + '.json';
+        try { fs.copyFileSync(DB_FILE, backupName); } catch (e) {}
+        console.error('Database file is corrupt, backed up to:', backupName);
+        parsed = null;
+      }
+      const base = makeDefaultData();
+      if (parsed && typeof parsed === 'object') {
+        for (const key of Object.keys(base)) {
+          if (parsed[key] !== undefined && typeof parsed[key] === typeof base[key] && Array.isArray(parsed[key]) === Array.isArray(base[key])) {
+            base[key] = parsed[key];
+          }
+        }
+      }
+      dbData = base;
     } else {
+      dbData = makeDefaultData();
       saveDb();
     }
   } catch (err) {
     console.error('Error loading database:', err);
-    dbData = { ...defaultData };
+    dbData = makeDefaultData();
   }
 }
 
-function saveDb() {
-  try {
-    fs.writeFileSync(DB_FILE, JSON.stringify(dbData, null, 2), 'utf-8');
-  } catch (err) {
-    console.error('Error saving database:', err);
-  }
-}
-
-// Initialize db on startup
 loadDb();
 
+process.on('exit', flushDb);
+['SIGINT', 'SIGTERM'].forEach(sig => {
+  process.on(sig, () => {
+    flushDb();
+    process.exit(0);
+  });
+});
+
+// ------------------------------------------------------------------
+// Change listener (server pushes signed snapshots to clients)
+// ------------------------------------------------------------------
+let changeListener = null;
+function notifyChange(userId) {
+  if (changeListener) {
+    try { changeListener(userId); } catch (e) { /* ignore */ }
+  }
+}
+
+// ------------------------------------------------------------------
+// Password hashing (scrypt) with transparent legacy upgrade
+// ------------------------------------------------------------------
+function hashPassword(pw) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto.scryptSync(pw, salt, 64).toString('hex');
+  return `scrypt$${salt}$${hash}`;
+}
+
+function verifyPassword(pw, stored) {
+  if (typeof stored !== 'string' || !stored) return false;
+  if (stored.startsWith('scrypt$')) {
+    const parts = stored.split('$');
+    if (parts.length !== 3) return false;
+    const expected = Buffer.from(parts[2], 'hex');
+    const calc = crypto.scryptSync(pw, parts[1], 64);
+    return expected.length === calc.length && crypto.timingSafeEqual(expected, calc);
+  }
+  // Legacy (düz metin) kayıt: sabit zamanlı karşılaştır, başarılı girişte hash'e yükseltilir
+  const a = Buffer.from(stored);
+  const b = Buffer.from(pw);
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+}
+
+function randomId(prefix) {
+  return prefix + Date.now().toString(36) + '_' + crypto.randomBytes(4).toString('hex');
+}
+
+function isValidUsername(name) {
+  return typeof name === 'string' && name.length >= 2 && name.length <= 20 && /^[\p{L}\p{N}_ .\-]+$/u.test(name);
+}
+
+function clampFinite(n, min, max, fallback = 0) {
+  const v = Number(n);
+  if (!Number.isFinite(v)) return fallback;
+  return Math.min(max, Math.max(min, v));
+}
+
 module.exports = {
+  MAX_KEYS,
+  MAX_UPGRADE_RATIO,
+  isValidUsername,
+
   // Get all data reference
   get db() {
     return dbData;
   },
   save: saveDb,
+  flush: flushDb,
+  setChangeListener(fn) {
+    changeListener = fn;
+  },
 
   // User methods
   getUserById(id) {
+    if (typeof id !== 'string' || !hasOwn(dbData.users, id)) return null;
     return dbData.users[id] || null;
   },
 
   getUserByUsername(username) {
-    const userId = dbData.usernames[username.toLowerCase().trim()];
-    if (!userId) return null;
-    return dbData.users[userId] || null;
+    const key = String(username || '').toLowerCase().trim();
+    if (!key || !hasOwn(dbData.usernames, key)) return null;
+    const userId = dbData.usernames[key];
+    return this.getUserById(userId);
   },
 
-  // HWID-based login with password protection & 5 balance initial bonus
-  loginOrRegister(username, password, hwid, backupData) {
-    const cleanUsername = String(username || 'Oyuncu').trim() || 'Oyuncu_' + Math.floor(Math.random() * 1000);
+  // Login or register. `trustedBackup` MUST already be verified by the server (signed snapshot);
+  // client-supplied raw data is never accepted here.
+  loginOrRegister(username, password, hwid, trustedBackup) {
+    const cleanUsername = String(username || '').trim().replace(/\s+/g, ' ');
     const cleanPassword = String(password || '').trim();
-    const cleanHwid = String(hwid || ('HWID_' + Date.now().toString(36))).trim();
+    const cleanHwid = String(hwid || ('HWID_' + Date.now().toString(36))).trim().slice(0, 128);
     const lowerUser = cleanUsername.toLowerCase();
 
+    if (!cleanUsername) {
+      return { success: false, message: 'Lütfen bir kullanıcı adı girin.' };
+    }
     if (!cleanPassword) {
-      return {
-        success: false,
-        message: 'Lütfen hesap şifrenizi girin.'
-      };
+      return { success: false, message: 'Lütfen hesap şifrenizi girin.' };
+    }
+    if (cleanPassword.length > 64) {
+      return { success: false, message: 'Şifre en fazla 64 karakter olabilir.' };
     }
 
-    // Check if HWID is brand new
-    const isNewHwid = !dbData.hwids[cleanHwid];
+    const isNewHwid = !hasOwn(dbData.hwids, cleanHwid);
+    const existingUserId = hasOwn(dbData.usernames, lowerUser) ? dbData.usernames[lowerUser] : null;
+    let user = existingUserId && hasOwn(dbData.users, existingUserId) ? dbData.users[existingUserId] : null;
 
-    // Check if username exists
-    let existingUserId = dbData.usernames[lowerUser];
-    let user = null;
-
-    if (existingUserId) {
-      user = dbData.users[existingUserId];
-
+    if (user) {
       // Password verification
-      if (user.password && user.password !== cleanPassword) {
+      if (user.password) {
+        if (!verifyPassword(cleanPassword, user.password)) {
+          return {
+            success: false,
+            message: 'Bu kullanıcı adı zaten kayıtlı! Girdiğiniz şifre hatalı.'
+          };
+        }
+        // Legacy plaintext -> scrypt upgrade
+        if (!user.password.startsWith('scrypt$')) {
+          user.password = hashPassword(cleanPassword);
+        }
+      } else {
+        // Şifresi olmayan eski hesap: ilk girişte belirle
+        user.password = hashPassword(cleanPassword);
+      }
+      user.hwid = cleanHwid;
+    } else {
+      // --- New registration ---
+      if (!isValidUsername(cleanUsername)) {
         return {
           success: false,
-          message: 'Bu kullanıcı adı zaten kayıtlı! Girdiğiniz şifre hatalı.'
+          message: 'Kullanıcı adı 2-20 karakter olmalı; sadece harf, rakam, boşluk, "_", "." ve "-" içerebilir.'
         };
       }
-
-      // If existing user had no password set yet, set it now
-      if (!user.password) {
-        user.password = cleanPassword;
+      if (cleanPassword.length < 4) {
+        return { success: false, message: 'Şifre en az 4 karakter olmalıdır.' };
       }
 
-      // Update HWID association
-      user.hwid = cleanHwid;
-      
-      // If server was restarted and had empty/stale data but client has backup, merge/restore:
-      if (backupData && typeof backupData === 'object') {
-        if (Array.isArray(backupData.inventory) && backupData.inventory.length > (user.inventory ? user.inventory.length : 0)) {
-          user.inventory = backupData.inventory;
-        }
-        if (typeof backupData.balance === 'number' && backupData.balance > user.balance) {
-          user.balance = backupData.balance;
-        }
-        if (typeof backupData.tlBalance === 'number' && backupData.tlBalance > (user.tlBalance || 0)) {
-          user.tlBalance = backupData.tlBalance;
-        }
-      }
-    } else {
-      // Create new user (restore from backup if available)
-      const hasBackup = backupData && typeof backupData === 'object' && (Array.isArray(backupData.inventory) || typeof backupData.balance === 'number');
-      const newUserId = (hasBackup && backupData.id) ? backupData.id : ('usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 6));
-      
-      const initialBalance = hasBackup && typeof backupData.balance === 'number' ? backupData.balance : 0;
-      const initialTL = hasBackup && typeof backupData.tlBalance === 'number' ? backupData.tlBalance : 0;
-      const initialInv = hasBackup && Array.isArray(backupData.inventory) ? backupData.inventory : [];
+      const newUserId = (trustedBackup && typeof trustedBackup.id === 'string' && !hasOwn(dbData.users, trustedBackup.id))
+        ? trustedBackup.id
+        : randomId('usr_');
 
       user = {
         id: newUserId,
         username: cleanUsername,
-        password: cleanPassword,
+        password: hashPassword(cleanPassword),
         hwid: cleanHwid,
-        balance: initialBalance,
-        tlBalance: initialTL,
-        inventory: initialInv,
+        balance: trustedBackup ? clampFinite(trustedBackup.balance, 0, MAX_KEYS) : 0,
+        tlBalance: trustedBackup ? clampFinite(trustedBackup.tlBalance, 0, MAX_TL) : 0,
+        inventory: trustedBackup && Array.isArray(trustedBackup.inventory) ? trustedBackup.inventory : [],
         createdAt: Date.now()
       };
 
@@ -134,18 +252,20 @@ module.exports = {
       dbData.usernames[lowerUser] = newUserId;
     }
 
-    if (user.tlBalance === undefined) user.tlBalance = 0;
-    if (user.balance === undefined) user.balance = 0;
+    if (!Number.isFinite(user.tlBalance)) user.tlBalance = 0;
+    if (!Number.isFinite(user.balance)) user.balance = 0;
     if (!Array.isArray(user.inventory)) user.inventory = [];
 
     // Ensure every inventory item has a valid, unique instanceId
+    const seen = new Set();
+    user.inventory = user.inventory.filter(item => item && typeof item === 'object');
     user.inventory.forEach(item => {
-      if (!item.instanceId) {
-        item.instanceId = 'inv_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 7);
+      if (!item.instanceId || seen.has(item.instanceId)) {
+        item.instanceId = randomId('inv_');
       }
+      seen.add(item.instanceId);
     });
 
-    // Mark HWID as registered
     if (isNewHwid) {
       dbData.hwids[cleanHwid] = {
         userId: user.id,
@@ -159,88 +279,87 @@ module.exports = {
       success: true,
       user,
       isNewHwid,
-      bonusGiven: isNewHwid && (!backupData || !backupData.inventory || backupData.inventory.length === 0)
+      bonusGiven: isNewHwid && (!trustedBackup || !trustedBackup.inventory || trustedBackup.inventory.length === 0)
     };
   },
 
   // Add item to inventory
   addItemToUser(userId, item) {
-    const user = dbData.users[userId];
-    if (!user) return false;
-    
-    const instanceId = 'inv_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 7);
+    const user = this.getUserById(userId);
+    if (!user || !item) return false;
+    if (!Array.isArray(user.inventory)) user.inventory = [];
+
     const inventoryItem = {
       ...item,
-      instanceId,
+      instanceId: randomId('inv_'),
       acquiredAt: Date.now()
     };
     user.inventory.push(inventoryItem);
     saveDb();
+    notifyChange(userId);
     return inventoryItem;
   },
 
-  // Remove item from inventory (with fallback match by id)
+  // Remove item from inventory (strict instanceId match only)
   removeItemFromUser(userId, instanceId) {
-    const user = dbData.users[userId];
-    if (!user || !user.inventory) return null;
-    let index = user.inventory.findIndex(i => i.instanceId === instanceId);
-    if (index === -1 && typeof instanceId === 'string') {
-      index = user.inventory.findIndex(i => i.id === instanceId || i._id === instanceId);
-    }
+    const user = this.getUserById(userId);
+    if (!user || !Array.isArray(user.inventory) || typeof instanceId !== 'string') return null;
+    const index = user.inventory.findIndex(i => i && i.instanceId === instanceId);
     if (index === -1) return null;
     const [removed] = user.inventory.splice(index, 1);
     saveDb();
+    notifyChange(userId);
     return removed;
   },
 
-  // Upgrader Engine: Upgrade skin or lose it (Guaranteed robust inventory matching)
-  upgradeItem(userId, inputInstanceId, targetSkin, inputItemBackup = null) {
-    let user = dbData.users[userId];
+  // Upgrader Engine: server-authoritative (price from catalog, strict ownership, no client-supplied items)
+  // getPrice(item) -> official catalog price; randFloat() -> secure random in [0,1)
+  upgradeItem(userId, inputInstanceId, targetSkin, getPrice, randFloat) {
+    const user = this.getUserById(userId);
     if (!user) {
       return { success: false, message: 'Kullanıcı oturumu bulunamadı. Lütfen sayfayı yenileyin.' };
     }
     if (!Array.isArray(user.inventory)) user.inventory = [];
-
-    let index = user.inventory.findIndex(i => i && (i.instanceId === inputInstanceId || i.id === inputInstanceId || i._id === inputInstanceId));
-    
-    // Fallback: match by name or ID if instanceId differed due to backup restore
-    if (index === -1 && inputItemBackup) {
-      index = user.inventory.findIndex(i => i && (i.name === inputItemBackup.name || i.id === inputItemBackup.id));
+    if (typeof inputInstanceId !== 'string') {
+      return { success: false, message: 'Geçersiz eşya.' };
     }
 
-    // Fallback 2: If item is in client backup but server was restarted empty, add it temporarily so it can be consumed
-    let inputItem = null;
-    if (index !== -1) {
-      inputItem = user.inventory[index];
-      user.inventory.splice(index, 1);
-    } else if (inputItemBackup && typeof inputItemBackup === 'object' && inputItemBackup.name) {
-      inputItem = inputItemBackup;
-    } else {
+    const priceFn = (typeof getPrice === 'function') ? getPrice : (item => Number(item && (item.basePrice || item.price)) || 1);
+    const randFn = (typeof randFloat === 'function') ? randFloat : Math.random;
+
+    let index = user.inventory.findIndex(i => i && (i.instanceId === inputInstanceId || i.id === inputInstanceId));
+    if (index === -1) {
       return { success: false, message: 'Yükseltilecek eşya envanterinizde bulunamadı.' };
     }
 
-    const inputPrice = Math.max(1, Number(inputItem.officialBasePrice || inputItem.basePrice || 1));
-    const targetPrice = Math.max(1, Number(targetSkin.basePrice || targetSkin.price || 1));
+    const inputItem = user.inventory[index];
+    const inputPrice = Math.max(1, Number(priceFn(inputItem)) || 1);
+    const targetPrice = Math.max(1, Number(priceFn(targetSkin)) || 1);
 
     if (targetPrice <= inputPrice) {
       return { success: false, message: 'Hedef eşyanın fiyatı elinizdeki eşyadan daha yüksek olmalıdır.' };
     }
+    if (targetPrice / inputPrice > MAX_UPGRADE_RATIO) {
+      return { success: false, message: `Hedef eşya en fazla ${MAX_UPGRADE_RATIO}x değerinde olabilir.` };
+    }
 
-    // Calculate chance: House edge 5% -> rawChance * 0.95, clamp 0.5% - 85%
+    // Fair chance: %5 house edge, max 85%
     const rawChance = (inputPrice / targetPrice) * 100;
-    const winChance = Math.min(85, Math.max(0.5, Math.round(rawChance * 0.95 * 100) / 100));
+    const winChance = Math.min(UPGRADE_MAX_CHANCE, Math.floor(rawChance * UPGRADE_HOUSE_EDGE * 100) / 100);
     const multiplier = Math.round((targetPrice / inputPrice) * 100) / 100;
 
-    // Roll number 0.00 - 100.00
-    const roll = Math.round(Math.random() * 10000) / 100;
-    const isWin = roll <= winChance;
+    // Roll 0.00 - 99.99 ; win only if strictly below chance
+    const roll = Math.floor(randFn() * 10000) / 100;
+    const isWin = roll < winChance;
+
+    // Remove input item from inventory regardless of result
+    user.inventory.splice(index, 1);
 
     let wonItem = null;
     if (isWin) {
-      const newInstId = 'upg_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 7);
       wonItem = {
         ...targetSkin,
-        instanceId: newInstId,
+        instanceId: randomId('upg_'),
         officialBasePrice: targetPrice,
         basePrice: targetPrice,
         acquiredAt: Date.now()
@@ -249,6 +368,7 @@ module.exports = {
     }
 
     saveDb();
+    notifyChange(userId);
 
     return {
       success: true,
@@ -264,63 +384,70 @@ module.exports = {
 
   // Modify Kasa Opening Balance (1 Kasa = 1 Bakiye) — Max 1000 Anahtar
   updateBalance(userId, delta) {
-    const user = dbData.users[userId];
+    const user = this.getUserById(userId);
     if (!user) return null;
-    const MAX_KEYS = 1000;
-    user.balance = Math.min(MAX_KEYS, Math.max(0, Math.round((user.balance + delta) * 100) / 100));
+    const d = Number(delta);
+    const current = Number.isFinite(user.balance) ? user.balance : 0;
+    if (!Number.isFinite(d)) return current;
+    user.balance = Math.min(MAX_KEYS, Math.max(0, Math.round((current + d) * 100) / 100));
     saveDb();
+    notifyChange(userId);
     return user.balance;
   },
 
   // Modify Turkish Liras Balance (₺ TL)
   updateTLBalance(userId, delta) {
-    const user = dbData.users[userId];
+    const user = this.getUserById(userId);
     if (!user) return null;
-    if (user.tlBalance === undefined) user.tlBalance = 0;
-    user.tlBalance = Math.max(0, Math.round((user.tlBalance + delta) * 100) / 100);
+    const d = Number(delta);
+    const current = Number.isFinite(user.tlBalance) ? user.tlBalance : 0;
+    if (!Number.isFinite(d)) return current;
+    user.tlBalance = Math.min(MAX_TL, Math.max(0, Math.round((current + d) * 100) / 100));
     saveDb();
+    notifyChange(userId);
     return user.tlBalance;
   },
 
   // Convert TL to Key/Case Balance (20 TL = 1 Anahtar) — Max 1000 Anahtar Sınırı
   convertTLToCaseBalance(userId, count) {
-    const user = dbData.users[userId];
+    const user = this.getUserById(userId);
     if (!user) return { success: false, message: 'Kullanıcı bulunamadı.' };
-    
-    const MAX_KEYS = 1000;
-    const currentBalance = user.balance || 0;
-    const spaceLeft = Math.max(0, MAX_KEYS - currentBalance);
+
+    const currentBalance = Number.isFinite(user.balance) ? user.balance : 0;
+    const spaceLeft = Math.max(0, Math.floor(MAX_KEYS - currentBalance));
     if (spaceLeft <= 0) {
-      return { 
-        success: false, 
-        message: 'Zaten maksimum 1.000 anahtar sınırındasınız! Daha fazla anahtar alamazsınız.' 
+      return {
+        success: false,
+        message: 'Zaten maksimum 1.000 anahtar sınırındasınız! Daha fazla anahtar alamazsınız.'
       };
     }
 
-    const caseCount = parseInt(count, 10);
-    if (isNaN(caseCount) || caseCount <= 0) {
+    const caseCount = Math.floor(Number(count));
+    if (!Number.isSafeInteger(caseCount) || caseCount <= 0) {
       return { success: false, message: 'Geçersiz anahtar miktarı.' };
     }
 
     if (caseCount > spaceLeft) {
-      return { 
-        success: false, 
-        message: `Maksimum 1.000 anahtar sınırını aşamazsınız! En fazla ${spaceLeft} anahtar daha alabilirsiniz.` 
+      return {
+        success: false,
+        message: `Maksimum 1.000 anahtar sınırını aşamazsınız! En fazla ${spaceLeft} anahtar daha alabilirsiniz.`
       };
     }
 
-    const requiredTL = caseCount * 20;
-    if (user.tlBalance === undefined) user.tlBalance = 0;
-    if (user.tlBalance < requiredTL) {
-      return { 
-        success: false, 
-        message: `Yetersiz TL bakiyesi! ${caseCount} anahtar almak için ₺${requiredTL} gerekiyor. Mevcut TL: ₺${user.tlBalance}` 
+    const keyPrice = module.exports.KEY_PRICE_TL || 175;
+    const requiredTL = caseCount * keyPrice;
+    const currentTL = Number.isFinite(user.tlBalance) ? user.tlBalance : 0;
+    if (currentTL < requiredTL) {
+      return {
+        success: false,
+        message: `Yetersiz TL bakiyesi! ${caseCount} anahtar almak için ₺${requiredTL} gerekiyor. Mevcut TL: ₺${currentTL}`
       };
     }
 
-    user.tlBalance = Math.round((user.tlBalance - requiredTL) * 100) / 100;
-    user.balance = Math.min(MAX_KEYS, (user.balance || 0) + caseCount);
+    user.tlBalance = Math.round((currentTL - requiredTL) * 100) / 100;
+    user.balance = Math.min(MAX_KEYS, currentBalance + caseCount);
     saveDb();
+    notifyChange(userId);
 
     return {
       success: true,
@@ -331,21 +458,10 @@ module.exports = {
     };
   },
 
-  // Deposit Demo TL
-  depositDemoTL(userId, amount) {
-    const user = dbData.users[userId];
-    if (!user) return null;
-    if (user.tlBalance === undefined) user.tlBalance = 0;
-    user.tlBalance = Math.round((user.tlBalance + Number(amount)) * 100) / 100;
-    saveDb();
-    return user.tlBalance;
-  },
-
   // Market methods
   addMarketListing(sellerId, sellerName, item, price) {
-    const listingId = 'mkt_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 6);
     const listing = {
-      id: listingId,
+      id: randomId('mkt_'),
       sellerId,
       sellerName,
       item,
@@ -369,7 +485,7 @@ module.exports = {
   // Chat methods
   addChatMessage(msg) {
     dbData.chat.push(msg);
-    if (dbData.chat.length > 100) {
+    while (dbData.chat.length > 100) {
       dbData.chat.shift();
     }
     saveDb();

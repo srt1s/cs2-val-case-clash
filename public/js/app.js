@@ -43,6 +43,19 @@ const tradeModal = document.getElementById('tradeModal');
 const incomingTradeModal = document.getElementById('incomingTradeModal');
 const rareDropBanner = document.getElementById('rareDropBanner');
 
+let currentKeyPriceTL = 175;
+
+function updateKeyPriceDisplay() {
+  const rateText = document.getElementById('exchangeRateText');
+  if (rateText) rateText.textContent = `1 Anahtar = ${currentKeyPriceTL} TL`;
+  const labelPrice = document.getElementById('keyPriceInLabel');
+  if (labelPrice) labelPrice.textContent = currentKeyPriceTL;
+  const convertInput = document.getElementById('convertCaseInput');
+  const convertRequiredTL = document.getElementById('convertRequiredTL');
+  const count = parseInt(convertInput ? convertInput.value : 1, 10) || 1;
+  if (convertRequiredTL) convertRequiredTL.textContent = (count * currentKeyPriceTL).toLocaleString();
+}
+
 // Helper to display error inside login modal
 function showLoginError(msg) {
   const errBox = document.getElementById('loginErrorMessage');
@@ -472,7 +485,7 @@ function setupEventListeners() {
   if (convertInput && convertRequiredTL) {
     convertInput.addEventListener('input', () => {
       const count = parseInt(convertInput.value, 10) || 0;
-      convertRequiredTL.textContent = count * 20;
+      convertRequiredTL.textContent = (count * currentKeyPriceTL).toLocaleString();
     });
   }
 
@@ -630,16 +643,16 @@ function setupEventListeners() {
       }
 
       const userTL = currentUser && currentUser.tlBalance !== undefined ? currentUser.tlBalance : 0;
-      const maxAffordable = Math.floor(userTL / 20);
+      const maxAffordable = Math.floor(userTL / currentKeyPriceTL);
       if (maxAffordable < 1) {
-        showInAppToast(`Yetersiz TL! 1 Anahtar için ₺20 gerekir. (Mevcut: ₺${userTL})`, false);
+        showInAppToast(`Yetersiz TL! 1 Anahtar için ₺${currentKeyPriceTL} gerekir. (Mevcut: ₺${userTL.toLocaleString()})`, false);
         return;
       }
 
       const maxPossibleCases = Math.min(maxAffordable, spaceLeft);
       if (convertInput && convertRequiredTL) {
         convertInput.value = maxPossibleCases;
-        convertRequiredTL.textContent = maxPossibleCases * 20;
+        convertRequiredTL.textContent = (maxPossibleCases * currentKeyPriceTL).toLocaleString();
       }
 
       socket.emit('wallet:convert_tl', { caseCount: maxPossibleCases });
@@ -691,31 +704,29 @@ function showInAppToast(text, isSuccess = true) {
   }, 4500);
 }
 
-// Local Backup Storage Helpers (Protects balance & inventory across server reboots)
+// Local Signed Snapshot Helpers (Protects balance & inventory across server reboots via HMAC)
 function saveUserBackup(user) {
-  if (!user || !user.username) return;
-  try {
-    const data = {
-      id: user.id,
-      username: user.username,
-      balance: user.balance,
-      tlBalance: user.tlBalance !== undefined ? user.tlBalance : 0,
-      inventory: Array.isArray(user.inventory) ? user.inventory : [],
-      updatedAt: Date.now()
-    };
-    localStorage.setItem('case_clash_backup_' + user.username.toLowerCase(), JSON.stringify(data));
-  } catch(e) {}
+  // Snapshot is signed and provided by server via socket 'backup:snapshot' event to prevent client tampering.
 }
 
 function getUserBackup(username) {
   if (!username) return null;
   try {
-    const raw = localStorage.getItem('case_clash_backup_' + username.toLowerCase());
+    const raw = localStorage.getItem('case_clash_snapshot_' + username.toLowerCase());
     return raw ? JSON.parse(raw) : null;
   } catch(e) {
     return null;
   }
 }
+
+// Listen for cryptographically signed user snapshot from server
+socket.on('backup:snapshot', (snapshot) => {
+  try {
+    if (snapshot && currentUser && currentUser.username) {
+      localStorage.setItem('case_clash_snapshot_' + currentUser.username.toLowerCase(), JSON.stringify(snapshot));
+    }
+  } catch(e) {}
+});
 
 // Attempt login via HWID & Password
 async function attemptLogin(username, password) {
@@ -834,6 +845,10 @@ socket.on('auth:success', (data) => {
   
   currentUser = data.user;
   if (currentUser.tlBalance === undefined) currentUser.tlBalance = 0;
+  if (data.keyPriceTL) {
+    currentKeyPriceTL = data.keyPriceTL;
+    updateKeyPriceDisplay();
+  }
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   userNameText.textContent = currentUser.username;
   marketListings = data.market || [];
