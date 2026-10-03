@@ -248,6 +248,15 @@ const CS2_SKINS = {
     basePrice: 44800, // 35.000 TL + %28
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SD1iWwOpzj-1gSCGn20tztm_UyIn_JHKUbgYlWMcmQ-ZcskSwldS0MOnntAfd3YlMzH35jntXrnE8SOGRGG8'
   },
+  ak47_case_hardened: {
+    id: 'cs2_ak47_case_hardened',
+    name: 'AK-47 | Case Hardened (Tier 1)',
+    weapon: 'AK-47',
+    game: 'cs2',
+    rarity: 'classified',
+    basePrice: 9600, // 7.500 TL + %28
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiNK0P2nZKFpH_yaCW-Ej7sk5bE8Sn-2lEpz4zndzoyvdHuUPwFzWZYiE7EK4Bi4k9TlY-y24FbAy9USGSiZd5Q'
+  },
   awp_lightning_strike: {
     id: 'cs2_awp_lightning_strike',
     name: 'AWP | Lightning Strike',
