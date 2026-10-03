@@ -1097,30 +1097,26 @@ socket.on('market:listed_success', (data) => {
   if (data.inventory) currentUser.inventory = data.inventory;
   renderInventory();
   saveUserBackup(currentUser);
-  showInAppToast('Eşyanız pazarda başarıyla listelendi.', true);
 });
 
 socket.on('market:warning_5min', (data) => {
-  window.soundEngine.playNotification();
-  alert(`PAZAR UYARISI:\n"${data.itemName}" eşyanızın satılması için son 5 dakika.\nSüre bitince sistem botu eşyanızı taban değeri (₺${data.officialBasePrice} TL) üzerinden %86 fiyatına (₺${data.botPrice} TL) otomatik olarak satın alacaktır.`);
+  // Silent update - removed intrusive alert notifications
 });
 
 socket.on('market:bot_bought', (data) => {
-  window.soundEngine.playNotification();
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
   if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   saveUserBackup(currentUser);
-  alert(`SİSTEM ALIMI:\n"${data.itemName}" eşyanız 30 dakika satılmadığı için bot tarafından taban değeri (₺${data.officialBasePrice} TL) üzerinden %86 fiyatına (₺${data.botPrice} TL) satın alındı ve TL bakiyenize eklendi.`);
+  // Silent update - removed intrusive alert popup
 });
 
 socket.on('market:item_sold_to_player', (data) => {
-  window.soundEngine.playNotification();
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
   if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   saveUserBackup(currentUser);
-  alert(`EŞYANIZ SATILDI\n"${data.itemName}" eşyanızı ${data.buyerName} oyuncusu ₺${data.price} TL fiyata satın aldı.`);
+  // Silent update - removed intrusive alert popup
 });
 
 socket.on('market:buy_success', (data) => {
@@ -1180,8 +1176,6 @@ socket.on('market:bulk_listed_success', (data) => {
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   renderInventory();
   saveUserBackup(currentUser);
-  showInAppToast(`${data.count} adet eşya pazara başarıyla çıkarıldı!`, true);
-  try { window.soundEngine.playWin(); } catch(e) {}
 });
 
 // 8. Wallet Events (TL -> Kasa Bakiye Çevirme)
@@ -1780,8 +1774,6 @@ function openMarketListModal(item) {
     }
     socket.emit('market:list_item', { instanceId: item.instanceId, price });
     modal.style.display = 'none';
-    showInAppToast(`🏷️ "${item.name}" pazara ₺${price} TL fiyatla ilana konuldu!`, true);
-    try { window.soundEngine.playNotification(); } catch(e) {}
   };
 
   modal.style.display = 'flex';
