@@ -193,6 +193,63 @@ module.exports = {
     return removed;
   },
 
+  // Upgrader Engine: Upgrade skin or lose it
+  upgradeItem(userId, inputInstanceId, targetSkin) {
+    const user = dbData.users[userId];
+    if (!user || !user.inventory) return { success: false, message: 'Kullanıcı bulunamadı.' };
+
+    let index = user.inventory.findIndex(i => i.instanceId === inputInstanceId);
+    if (index === -1 && typeof inputInstanceId === 'string') {
+      index = user.inventory.findIndex(i => i.id === inputInstanceId || i._id === inputInstanceId);
+    }
+    if (index === -1) return { success: false, message: 'Yükseltilecek eşya envanterinizde bulunamadı.' };
+
+    const inputItem = user.inventory[index];
+    const inputPrice = Math.max(1, Number(inputItem.officialBasePrice || inputItem.basePrice || 1));
+    const targetPrice = Math.max(1, Number(targetSkin.basePrice || targetSkin.price || 1));
+
+    if (targetPrice <= inputPrice) {
+      return { success: false, message: 'Hedef eşyanın fiyatı elinizdeki eşyadan daha yüksek olmalıdır.' };
+    }
+
+    // Calculate chance: House edge 5% -> rawChance * 0.95, clamp 0.5% - 85%
+    const rawChance = (inputPrice / targetPrice) * 100;
+    const winChance = Math.min(85, Math.max(0.5, Math.round(rawChance * 0.95 * 100) / 100));
+    const multiplier = Math.round((targetPrice / inputPrice) * 100) / 100;
+
+    // Roll number 0.00 - 100.00
+    const roll = Math.round(Math.random() * 10000) / 100;
+    const isWin = roll <= winChance;
+
+    // Remove input item from inventory regardless of win/lose
+    user.inventory.splice(index, 1);
+
+    let wonItem = null;
+    if (isWin) {
+      const newInstId = 'upg_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 7);
+      wonItem = {
+        ...targetSkin,
+        instanceId: newInstId,
+        officialBasePrice: targetPrice,
+        acquiredAt: Date.now()
+      };
+      user.inventory.push(wonItem);
+    }
+
+    saveDb();
+
+    return {
+      success: true,
+      isWin,
+      roll,
+      winChance,
+      multiplier,
+      inputItem,
+      wonItem,
+      newInventory: user.inventory
+    };
+  },
+
   // Modify Kasa Opening Balance (1 Kasa = 1 Bakiye) — Max 1000 Anahtar
   updateBalance(userId, delta) {
     const user = dbData.users[userId];

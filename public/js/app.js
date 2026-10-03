@@ -31,6 +31,7 @@ const viewOpener = document.getElementById('viewOpener');
 const viewInventory = document.getElementById('viewInventory');
 const viewMarket = document.getElementById('viewMarket');
 const viewTrading = document.getElementById('viewTrading');
+const viewUpgrader = document.getElementById('viewUpgrader');
 
 // Modals
 const loginModal = document.getElementById('loginModal');
@@ -79,6 +80,7 @@ function initApp() {
 
   // 1. Attach Event Listeners IMMEDIATELY
   setupEventListeners();
+  initUpgraderEvents();
 
   // 2. Calculate HWID in background
   window.getHardwareFingerprint().then(hwid => {
@@ -655,10 +657,12 @@ function switchView(viewName) {
   viewInventory.style.display = viewName === 'inventory' ? 'block' : 'none';
   viewMarket.style.display = viewName === 'market' ? 'block' : 'none';
   viewTrading.style.display = viewName === 'trading' ? 'block' : 'none';
+  if (viewUpgrader) viewUpgrader.style.display = viewName === 'upgrader' ? 'block' : 'none';
 
   if (viewName === 'inventory') renderInventory();
   if (viewName === 'market') renderMarket();
   if (viewName === 'trading') renderOnlinePlayers();
+  if (viewName === 'upgrader') renderUpgrader();
 }
 
 function showInAppToast(text, isSuccess = true) {
@@ -1979,3 +1983,382 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
+
+// ==========================================
+// 10. UPGRADER (SKIN YÜKSELTİCİ) CLIENT ENGINE
+// ==========================================
+let upgSelectedInputItem = null;
+let upgSelectedTargetSkin = null;
+let isUpgradingRolling = false;
+let upgCurrentMultiplierFilter = 'all';
+let upgCurrentNeedleRotation = 0;
+
+function getAllAvailableTargetSkins() {
+  const skinsMap = new Map();
+  const casesToScan = (allCases && allCases.length > 0) ? allCases : (window.INITIAL_CASES || []);
+  for (const c of casesToScan) {
+    if (!c.items) continue;
+    for (const it of c.items) {
+      if (it.skin && it.skin.id && !skinsMap.has(it.skin.id)) {
+        skinsMap.set(it.skin.id, it.skin);
+      }
+    }
+  }
+  return Array.from(skinsMap.values()).sort((a, b) => (Number(a.basePrice) || 0) - (Number(b.basePrice) || 0));
+}
+
+function renderUpgrader() {
+  renderUpgraderInventory();
+  renderUpgraderTargets();
+  updateUpgraderWheel();
+}
+
+function renderUpgraderInventory() {
+  const container = document.getElementById('upgInventoryList');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const inventory = (currentUser && Array.isArray(currentUser.inventory)) ? currentUser.inventory : [];
+  if (inventory.length === 0) {
+    container.innerHTML = '<div style="color:var(--text-muted); font-size:0.8rem; grid-column:1/-1; padding:20px 0; text-align:center;">Envanterinizde hiç eşya yok.</div>';
+    return;
+  }
+
+  const sorted = [...inventory].sort((a, b) => (Number(b.officialBasePrice || b.basePrice) || 0) - (Number(a.officialBasePrice || a.basePrice) || 0));
+
+  sorted.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'upg-mini-item' + (upgSelectedInputItem && upgSelectedInputItem.instanceId === item.instanceId ? ' selected' : '');
+    const price = Number(item.officialBasePrice || item.basePrice || 0);
+    el.innerHTML = `
+      <img src="${item.image}" class="upg-mini-img" alt="${escapeHtml(item.name)}">
+      <div class="upg-mini-name" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</div>
+      <div class="upg-mini-price">₺${price.toLocaleString()}</div>
+    `;
+    el.addEventListener('click', () => {
+      if (isUpgradingRolling) return;
+      selectUpgraderInput(item);
+    });
+    container.appendChild(el);
+  });
+}
+
+function selectUpgraderInput(item) {
+  upgSelectedInputItem = item;
+  const preview = document.getElementById('upgInputPreview');
+  const priceBadge = document.getElementById('upgInputPriceBadge');
+  const price = Number(item.officialBasePrice || item.basePrice || 0);
+
+  if (priceBadge) priceBadge.textContent = `₺${price.toLocaleString()} TL`;
+
+  if (preview) {
+    preview.className = 'upg-selected-preview active';
+    preview.innerHTML = `
+      <div class="upg-preview-card">
+        <img src="${item.image}" class="upg-preview-img" alt="${escapeHtml(item.name)}">
+        <div class="upg-preview-meta">
+          <div class="upg-preview-name">${escapeHtml(item.name)}</div>
+          <div class="upg-preview-weapon">${escapeHtml(item.weapon || '')}</div>
+          <div class="upg-preview-price">₺${price.toLocaleString()} TL</div>
+        </div>
+      </div>
+    `;
+  }
+
+  renderUpgraderInventory();
+  renderUpgraderTargets();
+  updateUpgraderWheel();
+}
+
+function renderUpgraderTargets() {
+  const container = document.getElementById('upgTargetList');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const searchInput = document.getElementById('upgSearchInput');
+  const searchFilter = (searchInput ? searchInput.value.toLowerCase().trim() : '');
+
+  const inputPrice = upgSelectedInputItem ? Math.max(1, Number(upgSelectedInputItem.officialBasePrice || upgSelectedInputItem.basePrice || 1)) : 0;
+  const allSkins = getAllAvailableTargetSkins();
+
+  const filtered = allSkins.filter(skin => {
+    const skinPrice = Number(skin.basePrice || 0);
+    if (inputPrice > 0 && skinPrice <= inputPrice) return false;
+
+    if (searchFilter) {
+      const matchName = (skin.name || '').toLowerCase().includes(searchFilter);
+      const matchWeapon = (skin.weapon || '').toLowerCase().includes(searchFilter);
+      if (!matchName && !matchWeapon) return false;
+    }
+
+    if (inputPrice > 0 && upgCurrentMultiplierFilter !== 'all') {
+      const multThreshold = parseFloat(upgCurrentMultiplierFilter);
+      const skinMult = skinPrice / inputPrice;
+      if (skinMult < multThreshold) return false;
+    }
+
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div style="color:var(--text-muted); font-size:0.8rem; grid-column:1/-1; padding:20px 0; text-align:center;">Uygun hedef skin bulunamadı.</div>';
+    return;
+  }
+
+  filtered.forEach(skin => {
+    const el = document.createElement('div');
+    el.className = 'upg-mini-item' + (upgSelectedTargetSkin && upgSelectedTargetSkin.id === skin.id ? ' selected' : '');
+    const price = Number(skin.basePrice || 0);
+    const multStr = inputPrice > 0 ? (price / inputPrice).toFixed(1) + 'x' : '';
+    el.innerHTML = `
+      <img src="${skin.image}" class="upg-mini-img" alt="${escapeHtml(skin.name)}">
+      <div class="upg-mini-name" title="${escapeHtml(skin.name)}">${escapeHtml(skin.name)}</div>
+      <div class="upg-mini-price">₺${price.toLocaleString()}</div>
+      ${multStr ? `<div style="font-size:0.65rem; color:#f59e0b; font-weight:800; margin-top:2px;">${multStr}</div>` : ''}
+    `;
+    el.addEventListener('click', () => {
+      if (isUpgradingRolling) return;
+      selectUpgraderTarget(skin);
+    });
+    container.appendChild(el);
+  });
+}
+
+function selectUpgraderTarget(skin) {
+  upgSelectedTargetSkin = skin;
+  const preview = document.getElementById('upgTargetPreview');
+  const priceBadge = document.getElementById('upgTargetPriceBadge');
+  const price = Number(skin.basePrice || 0);
+
+  if (priceBadge) priceBadge.textContent = `₺${price.toLocaleString()} TL`;
+
+  if (preview) {
+    preview.className = 'upg-selected-preview active';
+    preview.innerHTML = `
+      <div class="upg-preview-card">
+        <img src="${skin.image}" class="upg-preview-img" alt="${escapeHtml(skin.name)}">
+        <div class="upg-preview-meta">
+          <div class="upg-preview-name">${escapeHtml(skin.name)}</div>
+          <div class="upg-preview-weapon">${escapeHtml(skin.weapon || '')}</div>
+          <div class="upg-preview-price">₺${price.toLocaleString()} TL</div>
+        </div>
+      </div>
+    `;
+  }
+
+  renderUpgraderTargets();
+  updateUpgraderWheel();
+}
+
+function updateUpgraderWheel() {
+  const wheelWinSlice = document.getElementById('wheelWinSlice');
+  const wheelChanceText = document.getElementById('wheelChanceText');
+  const wheelMultiplierText = document.getElementById('wheelMultiplierText');
+  const btnExecute = document.getElementById('btnExecuteUpgrade');
+  const statusMsg = document.getElementById('upgStatusMsg');
+
+  if (!upgSelectedInputItem || !upgSelectedTargetSkin) {
+    if (wheelWinSlice) wheelWinSlice.style.strokeDasharray = '0 723';
+    if (wheelChanceText) wheelChanceText.textContent = '0.00%';
+    if (wheelMultiplierText) wheelMultiplierText.textContent = '0.00x';
+    if (btnExecute) btnExecute.disabled = true;
+    if (statusMsg && !isUpgradingRolling) {
+      statusMsg.className = 'upg-status-text';
+      if (!upgSelectedInputItem) statusMsg.textContent = 'Sol taraftan feda edilecek bir eşya seçin';
+      else statusMsg.textContent = 'Sağ taraftan hedef bir skin seçin';
+    }
+    return;
+  }
+
+  const inputPrice = Math.max(1, Number(upgSelectedInputItem.officialBasePrice || upgSelectedInputItem.basePrice || 1));
+  const targetPrice = Math.max(1, Number(upgSelectedTargetSkin.basePrice || 1));
+
+  if (targetPrice <= inputPrice) {
+    if (wheelWinSlice) wheelWinSlice.style.strokeDasharray = '0 723';
+    if (wheelChanceText) wheelChanceText.textContent = '0.00%';
+    if (wheelMultiplierText) wheelMultiplierText.textContent = '0.00x';
+    if (btnExecute) btnExecute.disabled = true;
+    if (statusMsg && !isUpgradingRolling) {
+      statusMsg.className = 'upg-status-text lose';
+      statusMsg.textContent = 'Hedef eşya, elinizdeki eşyadan daha pahalı olmalıdır!';
+    }
+    return;
+  }
+
+  const rawChance = (inputPrice / targetPrice) * 100;
+  const winChance = Math.min(85, Math.max(0.5, Math.round(rawChance * 0.95 * 100) / 100));
+  const multiplier = Math.round((targetPrice / inputPrice) * 100) / 100;
+
+  const circ = 722.56;
+  const winLen = (winChance / 100) * circ;
+
+  if (wheelWinSlice) {
+    wheelWinSlice.setAttribute('d', 'M 140,25 A 115,115 0 1,1 139.99,25');
+    wheelWinSlice.style.strokeDasharray = `${winLen} ${circ - winLen}`;
+  }
+
+  if (wheelChanceText) wheelChanceText.textContent = winChance.toFixed(2) + '%';
+  if (wheelMultiplierText) wheelMultiplierText.textContent = multiplier.toFixed(2) + 'x';
+
+  if (statusMsg && !isUpgradingRolling) {
+    statusMsg.className = 'upg-status-text';
+    statusMsg.textContent = `Kazanma Şansı: %${winChance.toFixed(2)} (${multiplier.toFixed(2)}x)`;
+  }
+
+  if (btnExecute) {
+    btnExecute.disabled = isUpgradingRolling;
+  }
+}
+
+function initUpgraderEvents() {
+  const btnExecute = document.getElementById('btnExecuteUpgrade');
+  if (btnExecute) {
+    btnExecute.addEventListener('click', () => {
+      if (isUpgradingRolling) return;
+      if (!upgSelectedInputItem || !upgSelectedTargetSkin) {
+        showInAppToast('Lütfen önce eşyaları seçin.', false);
+        return;
+      }
+
+      isUpgradingRolling = true;
+      btnExecute.disabled = true;
+      btnExecute.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> DÖNÜYOR...';
+
+      const statusMsg = document.getElementById('upgStatusMsg');
+      if (statusMsg) {
+        statusMsg.className = 'upg-status-text';
+        statusMsg.textContent = 'İbre dönüyor... Şans seninle olsun!';
+      }
+
+      socket.emit('upgrade:roll', {
+        inputInstanceId: upgSelectedInputItem.instanceId,
+        targetSkinId: upgSelectedTargetSkin.id
+      });
+    });
+  }
+
+  const searchInput = document.getElementById('upgSearchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      renderUpgraderTargets();
+    });
+  }
+
+  document.querySelectorAll('.upg-mult-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.upg-mult-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      upgCurrentMultiplierFilter = btn.getAttribute('data-mult') || 'all';
+      renderUpgraderTargets();
+    });
+  });
+}
+
+// Socket Listeners for Upgrader
+socket.on('upgrade:result', (data) => {
+  const needle = document.getElementById('wheelNeedle');
+  const btnExecute = document.getElementById('btnExecuteUpgrade');
+  const statusMsg = document.getElementById('upgStatusMsg');
+
+  // Calculate final angle
+  // Win slice is 0 to (winChance * 3.6) degrees
+  const winDegrees = (data.winChance / 100) * 360;
+  let stopAngle = 0;
+
+  if (data.isWin) {
+    // Lands inside the win zone
+    stopAngle = Math.random() * (winDegrees - 4) + 2;
+  } else {
+    // Lands inside the lose zone
+    stopAngle = winDegrees + Math.random() * (356 - winDegrees) + 2;
+  }
+
+  // Add 5 full rotations (1800 deg)
+  const spins = 1800;
+  upgCurrentNeedleRotation += spins + (360 - (upgCurrentNeedleRotation % 360)) + stopAngle;
+
+  if (needle) {
+    needle.style.transition = 'transform 3.5s cubic-bezier(0.12, 0.85, 0.2, 1)';
+    needle.style.transform = `rotate(${upgCurrentNeedleRotation}deg)`;
+  }
+
+  // Ticking sound during spin
+  let ticks = 0;
+  const tickInterval = setInterval(() => {
+    ticks++;
+    try { window.soundEngine.playSpinTick(); } catch(e) {}
+    if (ticks > 16) clearInterval(tickInterval);
+  }, 180);
+
+  // Complete spin after 3.5 seconds
+  setTimeout(() => {
+    isUpgradingRolling = false;
+    if (btnExecute) {
+      btnExecute.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> YÜKSELT';
+    }
+
+    if (currentUser) {
+      currentUser.inventory = data.newInventory || [];
+      saveUserBackup(currentUser);
+      updateInventoryBadge();
+    }
+
+    if (data.isWin) {
+      try { window.soundEngine.playRareFanfare(true); } catch(e) {}
+      if (statusMsg) {
+        statusMsg.className = 'upg-status-text win';
+        statusMsg.textContent = `🎉 TEBRİKLER! ${data.wonItem.name} KAZANDINIZ!`;
+      }
+      showInAppToast(`⚡ YÜKSELTME BAŞARILI! ${data.wonItem.name} kazandınız!`, true);
+      
+      // Auto-select won item as new input item for chaining upgrades!
+      upgSelectedInputItem = data.wonItem;
+      selectUpgraderInput(data.wonItem);
+    } else {
+      try { window.soundEngine.playLose(); } catch(e) {}
+      if (statusMsg) {
+        statusMsg.className = 'upg-status-text lose';
+        statusMsg.textContent = `💥 BAŞARISIZ! ${data.inputItem.name} eşyası yandı.`;
+      }
+      showInAppToast(`Yükseltme başarısız: ${data.inputItem.name} kaybedildi!`, false);
+      
+      // Reset input item
+      upgSelectedInputItem = null;
+      const preview = document.getElementById('upgInputPreview');
+      if (preview) {
+        preview.className = 'upg-selected-preview';
+        preview.innerHTML = `
+          <div class="upg-placeholder-text">
+            <i class="fa-solid fa-hand-pointer fa-2x" style="opacity:0.4; margin-bottom:8px;"></i>
+            <div>Aşağıdan bir eşya seçin</div>
+          </div>
+        `;
+      }
+      const priceBadge = document.getElementById('upgInputPriceBadge');
+      if (priceBadge) priceBadge.textContent = '₺0 TL';
+    }
+
+    renderUpgrader();
+  }, 3550);
+});
+
+socket.on('upgrade:error', (data) => {
+  isUpgradingRolling = false;
+  const btnExecute = document.getElementById('btnExecuteUpgrade');
+  if (btnExecute) {
+    btnExecute.disabled = false;
+    btnExecute.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> YÜKSELT';
+  }
+  showInAppToast(data.message || 'Yükseltme hatası!', false);
+  const statusMsg = document.getElementById('upgStatusMsg');
+  if (statusMsg) {
+    statusMsg.className = 'upg-status-text lose';
+    statusMsg.textContent = data.message || 'İşlem başarısız oldu.';
+  }
+});
+
+// Initialize upgrader events when page is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  initUpgraderEvents();
+});
+

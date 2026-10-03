@@ -217,10 +217,16 @@ setInterval(() => {
 // ==========================================
 // Map canonical skin base prices directly from CASES definitions
 const SKIN_BASE_PRICES = new Map();
+const ALL_SKINS_MAP = new Map();
 for (const c of CASES) {
   for (const it of c.items) {
     if (it.skin) {
-      if (it.skin.id) SKIN_BASE_PRICES.set(it.skin.id, it.skin.basePrice);
+      if (it.skin.id) {
+        SKIN_BASE_PRICES.set(it.skin.id, it.skin.basePrice);
+        if (!ALL_SKINS_MAP.has(it.skin.id)) {
+          ALL_SKINS_MAP.set(it.skin.id, it.skin);
+        }
+      }
       if (it.skin.name) SKIN_BASE_PRICES.set(it.skin.name.toLowerCase().trim(), it.skin.basePrice);
     }
   }
@@ -756,6 +762,43 @@ io.on('connection', (socket) => {
       newTL: res.newTL,
       newBalance: res.newBalance
     });
+  });
+
+  // Upgrader: Upgrade skin or lose it
+  socket.on('upgrade:roll', ({ inputInstanceId, targetSkinId }) => {
+    const session = activeSockets.get(socket.id);
+    if (!session) return socket.emit('upgrade:error', { message: 'Lütfen önce giriş yapın.' });
+
+    if (!inputInstanceId || !targetSkinId) {
+      return socket.emit('upgrade:error', { message: 'Yükseltilecek veya hedef eşya seçilmedi.' });
+    }
+
+    const targetSkin = ALL_SKINS_MAP.get(targetSkinId);
+    if (!targetSkin) {
+      return socket.emit('upgrade:error', { message: 'Hedef skin bulunamadı.' });
+    }
+
+    const result = db.upgradeItem(session.userId, inputInstanceId, targetSkin);
+    if (!result.success) {
+      return socket.emit('upgrade:error', { message: result.message });
+    }
+
+    // Send result to the user
+    socket.emit('upgrade:result', result);
+
+    // Announce big wins in global chat (multiplier >= 4 or targetPrice >= 2000)
+    if (result.isWin && (result.multiplier >= 4 || targetSkin.basePrice >= 2000)) {
+      const upgradeChatMsg = {
+        id: 'sys_upg_' + Date.now(),
+        userId: 'system',
+        username: 'UPGRADER',
+        text: `⚡ TEBRİKLER! [${session.username}] ${result.inputItem.name} eşyasını %${result.winChance} şansla (${result.multiplier}x) ${result.wonItem.name} eşyasına başarıyla yükseltti!`,
+        timestamp: Date.now(),
+        isHighlight: true
+      };
+      db.addChatMessage(upgradeChatMsg);
+      io.emit('chat:message', upgradeChatMsg);
+    }
   });
 
   // Admin: Give Balance (Password: topraK)

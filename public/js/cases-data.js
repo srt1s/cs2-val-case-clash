@@ -134,7 +134,7 @@ window.INITIAL_CASES = [
           "weapon": "Butterfly Knife",
           "game": "cs2",
           "rarity": "knife",
-          "basePrice": 3200,
+          "basePrice": 6800,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Z-ua6bbZrLOmsD2avx-9ytd5lRi67gVNwsDvSwtqqc3iXZg4kCZYjReYLtRbum9XgYuvm5wbWjtgUzCn3iSsf8G81tFEeH9rw"
         },
         "weight": 0.35
@@ -253,7 +253,7 @@ window.INITIAL_CASES = [
           "weapon": "Butterfly Knife",
           "game": "cs2",
           "rarity": "knife",
-          "basePrice": 2850,
+          "basePrice": 6200,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Z-ua6bbZrLOmsD2qvw-J3s-p5SiihmSIqsi-HlorwOy7DAVRPVssnHaMUuhe9xIHlMuvqtgPf2IoTyC383Sod7CY-sr4DVfZ2qKPU3g-TNuE-545DeqjFvb87vg"
         },
         "weight": 0.4
@@ -372,7 +372,7 @@ window.INITIAL_CASES = [
           "weapon": "Karambit",
           "game": "cs2",
           "rarity": "knife",
-          "basePrice": 2400,
+          "basePrice": 5600,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SD1iWwOpzj-1gSCGn20tztm_UyIn_JHKUbgYlWMcmQ-ZcskSwldS0MOnntAfd3YlMzH35jntXrnE8SOGRGG8"
         },
         "weight": 0.35
@@ -479,7 +479,7 @@ window.INITIAL_CASES = [
           "weapon": "M9 Bayonet",
           "game": "cs2",
           "rarity": "knife",
-          "basePrice": 1650,
+          "basePrice": 4900,
           "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Wts2sab1iLvWHMWSF_uMvj-NoVha_mg8ijDGMnYftbyrBOw52D5R0FOYPtkG6ltOxNrjl4FPdiN0WzC723SxP6ypp6u8LVKY7uvqAFpeI3XY"
         },
         "weight": 0.45
