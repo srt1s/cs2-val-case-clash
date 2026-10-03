@@ -238,14 +238,14 @@ const CS2_SKINS = {
     basePrice: 3.2,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0POlPPNSLfGAGmKC2NF6ueZhW2e2wh9y5GjTztirdSqfP1dyCpclR7FZ5xe9wNbhZei25FGPjokXxC2vkGoXuQLr5jvs'
   },
-  // CS:GO Weapon Case #1 Skins (+%28 Gerçek Piyasa Fiyatı Artırıldı)
+  // CS:GO Weapon Case #1 Skins (Orijinal Taban Fiyatlar)
   karambit_ch: {
     id: 'cs2_karambit_ch',
     name: '★ Karambit | Case Hardened (Blue Gem)',
     weapon: 'Karambit',
     game: 'cs2',
     rarity: 'knife',
-    basePrice: 44800, // 35.000 TL + %28
+    basePrice: 35000,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SH1ifyOJztN5lRi67gVNz5DvUmdj4eXuWOFAhAsF4RLFc5BC4xtbuY7yx7wDbgo9CzSj2h3xK8G81tB_XeHWq'
   },
   ak47_case_hardened: {
@@ -254,7 +254,7 @@ const CS2_SKINS = {
     weapon: 'AK-47',
     game: 'cs2',
     rarity: 'classified',
-    basePrice: 9600, // 7.500 TL + %28
+    basePrice: 7500,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiNK0P2nZKFpH_yaCW-Ej7sk5bE8Sn-2lEpz4zndzoyvdHuUPwFzWZYiE7EK4Bi4k9TlY-y24FbAy9USGSiZd5Q'
   },
   awp_lightning_strike: {
@@ -263,7 +263,7 @@ const CS2_SKINS = {
     weapon: 'AWP',
     game: 'cs2',
     rarity: 'covert',
-    basePrice: 19200, // 15.000 TL + %28
+    basePrice: 15000,
     image: 'https://community.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_C9k4_upYLBjKf6UMWaH0dF6ueZhW2frwU1_sW2EmNyvc32RZwMpCpcjQ-EJ4xbtmt3gYezk4wzb3tpAy3mrkGoXubsGIfVN'
   },
   deagle_hypnotic: {
@@ -272,7 +272,7 @@ const CS2_SKINS = {
     weapon: 'Desert Eagle',
     game: 'cs2',
     rarity: 'classified',
-    basePrice: 4480, // 3.500 TL + %28
+    basePrice: 3500,
     image: 'https://community.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk7vORfqF_NPmUAVicyOl-pK9qSyyywxgjtmnVytyocnLGPA4iWcYmRLYIu0S-xtbuMLjg51DXjoJC02yg2VjGnh4J'
   },
   glock_dragon_tattoo: {
@@ -281,7 +281,7 @@ const CS2_SKINS = {
     weapon: 'Glock-18',
     game: 'cs2',
     rarity: 'restricted',
-    basePrice: 2816, // 2.200 TL + %28
+    basePrice: 2200,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1a4s2qeqVqL_6sCWufwuVJvOhuRz39xUl-6miDzI37dHyXOlIkA8MmROVfshO9w9G1Ye-ztgPX34tEyi74jjQJsHi_DRfxVg'
   },
   m4a1s_dark_water: {
@@ -290,7 +290,7 @@ const CS2_SKINS = {
     weapon: 'M4A1-S',
     game: 'cs2',
     rarity: 'restricted',
-    basePrice: 2560, // 2.000 TL + %28
+    basePrice: 2000,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_OGMWrEwL9Jo-9oRCyMnRgmpSTLy9igc3PDbVcnDZd3R-de5hHpl4CxZO6z4gLWjt5Dzyv8iCJA6C5j5vFCD_ThScH7Ig'
   },
   usps_dark_water: {
@@ -299,7 +299,7 @@ const CS2_SKINS = {
     weapon: 'USP-S',
     game: 'cs2',
     rarity: 'milspec',
-    basePrice: 1920, // 1.500 TL + %28
+    basePrice: 1500,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSIf2sFGKS0-9JtOB7RBa_nBovp3OHy9v8J3vFbgIhC5UmQ7UIsxm7wNDnNr_rswOMiNlGmCWoiH9Juis9_a9cBl2xnYuj'
   },
   aug_wings: {
@@ -308,7 +308,7 @@ const CS2_SKINS = {
     weapon: 'AUG',
     game: 'cs2',
     rarity: 'milspec',
-    basePrice: 576, // 450 TL + %28
+    basePrice: 450,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwi5Hf9Ttk6fevfKxoMuOsD3KX_uJ_t-l9AX7qzE5_sGmEw9uoJCrBOgMoDsN2ReMI4EPrm4fvY-m04ASPgt8Uz3_gznQePzx-iqc'
   },
   sg553_ultraviolet: {
@@ -317,7 +317,7 @@ const CS2_SKINS = {
     weapon: 'SG 553',
     game: 'cs2',
     rarity: 'milspec',
-    basePrice: 448, // 350 TL + %28
+    basePrice: 350,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLimcO1qx1I4M2-fbZ9LPWsAm6Xyfo44bQ-Tn7gwRt-t2uAw96tIn7FOAF1CsckQLUJ4xXskdO2NLzrtAyIi5UFk3tU_MwgmA'
   },
 
@@ -940,23 +940,23 @@ const CASES = [
   {
     id: 'cs2_weapon_case_1',
     name: 'CS:GO Silah Kasası #1',
-    subtitle: 'Tarihin En Değerli Kasası (+%28 Fiyat)',
+    subtitle: 'Tarihin En Değerli Kasası',
     game: 'cs2',
     cost: 20,
     icon: 'fa-box-open',
     image: 'https://community.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bji61XxRCKg0MSz_nUDvPb-OPFvdKTFDzbAkbp16bY5Gn6wkx9ysj7Xntf9IC6WZgA-Sswnnj45WXo',
     items: [
-      // 1 SARI (Gold / Knife) - %28 Artırılmış
+      // 1 SARI (Gold / Knife)
       { skin: CS2_SKINS.karambit_ch, weight: 0.4 },
-      // 1 KIRMIZI (Covert / Red) - %28 Artırılmış
+      // 1 KIRMIZI (Covert / Red)
       { skin: CS2_SKINS.awp_lightning_strike, weight: 1.6 },
-      // 2 PEMBE (Classified / Pink) - %28 Artırılmış
+      // 2 PEMBE (Classified / Pink)
       { skin: CS2_SKINS.ak47_case_hardened, weight: 5.0 },
       { skin: CS2_SKINS.deagle_hypnotic, weight: 8.0 },
-      // 2 MOR (Restricted / Purple) - %28 Artırılmış
+      // 2 MOR (Restricted / Purple)
       { skin: CS2_SKINS.glock_dragon_tattoo, weight: 15.0 },
       { skin: CS2_SKINS.m4a1s_dark_water, weight: 18.0 },
-      // 3 MAVİ (Mil-Spec / Blue) - %28 Artırılmış
+      // 3 MAVİ (Mil-Spec / Blue)
       { skin: CS2_SKINS.usps_dark_water, weight: 22.0 },
       { skin: CS2_SKINS.aug_wings, weight: 15.0 },
       { skin: CS2_SKINS.sg553_ultraviolet, weight: 15.0 }
