@@ -300,7 +300,7 @@ const CS2_SKINS = {
     game: 'cs2',
     rarity: 'milspec',
     basePrice: 1920, // 1.500 TL + %28
-    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_u1jpN5lRi67gVNz4G7Qm938cS_Da1AhXpB1EeVb4xm4mtDjN7vj4A3b2NpGyCr52i4Y8G81tMzdoYZ7'
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSIf2sFGKS0-9JtOB7RBa-kBkupjDLzN_9cCnDb1B0WJojRrUJ40W-m9SxP-PqtFHY2Y5CyH75iStA6C9r4vFCD_RbxSloIA'
   },
   aug_wings: {
     id: 'cs2_aug_wings',
