@@ -1,5 +1,124 @@
 window.INITIAL_CASES = [
   {
+    "id": "cs2_weapon_case_1",
+    "name": "CS:GO Silah Kasası #1",
+    "subtitle": "Tarihin En Değerli Kasası (+%28 Fiyat)",
+    "game": "cs2",
+    "cost": 20,
+    "icon": "fa-box-open",
+    "image": "https://community.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bji61XxRCKg0MSz_nUDvPb-OPFvdKTFDzbAkbp16bY5Gn6wkx9ysj7Xntf9IC6WZgA-Sswnnj45WXo",
+    "items": [
+      {
+        "skin": {
+          "id": "cs2_karambit_ch",
+          "name": "★ Karambit | Case Hardened (Blue Gem)",
+          "weapon": "Karambit",
+          "game": "cs2",
+          "rarity": "knife",
+          "basePrice": 44800,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SD1iWwOpzj-1gSCGn20tztm_UyIn_JHKUbgYlWMcmQ-ZcskSwldS0MOnntAfd3YlMzH35jntXrnE8SOGRGG8"
+        },
+        "weight": 0.4
+      },
+      {
+        "skin": {
+          "id": "cs2_awp_lightning_strike",
+          "name": "AWP | Lightning Strike",
+          "weapon": "AWP",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 19200,
+          "image": "https://community.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_C9k4_upYLBjKf6UMWaH0dF6ueZhW2frwU1_sW2EmNyvc32RZwMpCpcjQ-EJ4xbtmt3gYezk4wzb3tpAy3mrkGoXubsGIfVN"
+        },
+        "weight": 1.6
+      },
+      {
+        "skin": {
+          "id": "cs2_ak47_case_hardened",
+          "name": "AK-47 | Case Hardened (Tier 1)",
+          "weapon": "AK-47",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 9600,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiNK0P2nZKFpH_yaCW-Ej7sk5bE8Sn-2lEpz4zndzoyvdHuUPwFzWZYiE7EK4Bi4k9TlY-y24FbAy9USGSiZd5Q"
+        },
+        "weight": 5.0
+      },
+      {
+        "skin": {
+          "id": "cs2_deagle_hypnotic",
+          "name": "Desert Eagle | Hypnotic",
+          "weapon": "Desert Eagle",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 4480,
+          "image": "https://community.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk7vORfqF_NPmUAVicyOl-pK9qSyyywxgjtmnVytyocnLGPA4iWcYmRLYIu0S-xtbuMLjg51DXjoJC02yg2VjGnh4J"
+        },
+        "weight": 8.0
+      },
+      {
+        "skin": {
+          "id": "cs2_glock_dragon_tattoo",
+          "name": "Glock-18 | Dragon Tattoo",
+          "weapon": "Glock-18",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 2816,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1a7s24bbZ5KfecMWWc1OtJvOhuRz39zU5yt2vQntn9dC3Dbw8iDJQhF-IJ5xDqkdSxMr6251aMiI5BynqtiTQJsHhqpMNExQ"
+        },
+        "weight": 15.0
+      },
+      {
+        "skin": {
+          "id": "cs2_m4a1s_dark_water",
+          "name": "M4A1-S | Dark Water",
+          "weapon": "M4A1-S",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 2560,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_OGMWrEwL9Jo-9oRCyMnRgmpSTLy9igc3PDbVcnDZd3R-de5hHpl4CxZO6z4gLWjt5Dzyv8iCJA6C5j5vFCD_ThScH7Ig"
+        },
+        "weight": 18.0
+      },
+      {
+        "skin": {
+          "id": "cs2_usps_dark_water",
+          "name": "USP-S | Dark Water",
+          "weapon": "USP-S",
+          "game": "cs2",
+          "rarity": "milspec",
+          "basePrice": 1920,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_u1jpN5lRi67gVNz4G7Qm938cS_Da1AhXpB1EeVb4xm4mtDjN7vj4A3b2NpGyCr52i4Y8G81tMzdoYZ7"
+        },
+        "weight": 22.0
+      },
+      {
+        "skin": {
+          "id": "cs2_aug_wings",
+          "name": "AUG | Wings",
+          "weapon": "AUG",
+          "game": "cs2",
+          "rarity": "milspec",
+          "basePrice": 576,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiVI0P_6afBSI_icHneV09FxuO56Wxa_nBovp3OAzo2vdHPFPFUmCJRxRbNZ4xewx9W1Nb7j4gzXg99Ayy73iC1Aun1q_a9cBiEfMG3G"
+        },
+        "weight": 15.0
+      },
+      {
+        "skin": {
+          "id": "cs2_sg553_ultraviolet",
+          "name": "SG 553 | Ultraviolet",
+          "weapon": "SG 553",
+          "game": "cs2",
+          "rarity": "milspec",
+          "basePrice": 448,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0POlPPNSIeqHC2SvzedxuPUnFnCwwBl_5D_Syon8dnyUaQUlD5oiQ7ECuxW7l920ZL-w4AfX2IlByTK-0H0PRM7cOA"
+        },
+        "weight": 15.0
+      }
+    ]
+  },
+  {
     "id": "cs2_kilowatt",
     "name": "Kilowatt Kasası",
     "subtitle": "İlk Resmi CS2 Kasası",

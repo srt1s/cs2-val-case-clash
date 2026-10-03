@@ -213,14 +213,33 @@ module.exports = {
     return user.tlBalance;
   },
 
-  // Convert TL to Key/Case Balance (20 TL = 1 Anahtar)
+  // Convert TL to Key/Case Balance (20 TL = 1 Anahtar) — Max 1000 Anahtar Sınırı
   convertTLToCaseBalance(userId, count) {
     const user = dbData.users[userId];
     if (!user) return { success: false, message: 'Kullanıcı bulunamadı.' };
+    
+    const MAX_KEYS = 1000;
+    const currentBalance = user.balance || 0;
+    const spaceLeft = Math.max(0, MAX_KEYS - currentBalance);
+    if (spaceLeft <= 0) {
+      return { 
+        success: false, 
+        message: 'Zaten maksimum 1.000 anahtar sınırındasınız! Daha fazla anahtar alamazsınız.' 
+      };
+    }
+
     const caseCount = parseInt(count, 10);
     if (isNaN(caseCount) || caseCount <= 0) {
       return { success: false, message: 'Geçersiz anahtar miktarı.' };
     }
+
+    if (caseCount > spaceLeft) {
+      return { 
+        success: false, 
+        message: `Maksimum 1.000 anahtar sınırını aşamazsınız! En fazla ${spaceLeft} anahtar daha alabilirsiniz.` 
+      };
+    }
+
     const requiredTL = caseCount * 20;
     if (user.tlBalance === undefined) user.tlBalance = 0;
     if (user.tlBalance < requiredTL) {
@@ -231,7 +250,7 @@ module.exports = {
     }
 
     user.tlBalance = Math.round((user.tlBalance - requiredTL) * 100) / 100;
-    user.balance = (user.balance || 0) + caseCount;
+    user.balance = Math.min(MAX_KEYS, (user.balance || 0) + caseCount);
     saveDb();
 
     return {

@@ -154,23 +154,23 @@ setInterval(() => {
 }, 1000);
 
 // ==========================================
-// 2.6. 10-MINUTE 50-KEY RAFFLE (ÇEKİLİŞ) CYCLE
+// 2.6. 5-MINUTE 50-KEY RAFFLE (ÇEKİLİŞ) CYCLE
 // ==========================================
-// Every 10 minutes (600s), holds a 50-Key raffle if more than 2 online players (min 3 players required)
-let raffleCountdown = 600;
+// Every 5 minutes (300s), holds a 50-Key raffle if more than 2 online players (min 3 players required)
+let raffleCountdown = 300;
 
 setInterval(() => {
   if (raffleCountdown > 0) {
     raffleCountdown--;
   } else {
-    raffleCountdown = 600; // Reset to 10 minutes
+    raffleCountdown = 300; // Reset to 5 minutes
 
     const onlineUsers = getOnlineUsers();
     // Rule: "2 oyuncu veya daha azsa çekiliş olmasın" -> requires onlineUsers.length > 2
     if (onlineUsers.length <= 2) {
       console.log(`[RAFFLE] Çekiliş yapılmadı: Çevrimiçi ${onlineUsers.length} oyuncu var (En az 3 oyuncu gerekli).`);
       io.emit('raffle:skipped', {
-        message: `Çekiliş ertelendi: Yeterli oyuncu yok (${onlineUsers.length}/3 oyuncu çevrimiçi). Bir sonraki çekiliş 10 dakika sonra!`,
+        message: `Çekiliş ertelendi: Yeterli oyuncu yok (${onlineUsers.length}/3 oyuncu çevrimiçi). Bir sonraki çekiliş 5 dakika sonra!`,
         playerCount: onlineUsers.length
       });
     } else {

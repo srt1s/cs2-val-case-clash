@@ -594,29 +594,52 @@ function setupEventListeners() {
 
   if (btnConvert && convertInput) {
     btnConvert.addEventListener('click', () => {
+      const currentBalance = currentUser && currentUser.balance !== undefined ? currentUser.balance : 0;
+      const spaceLeft = Math.max(0, 1000 - currentBalance);
+      if (spaceLeft <= 0) {
+        showInAppToast('Zaten maksimum 1.000 anahtar sınırındasınız!', false);
+        return;
+      }
+
       const count = parseInt(convertInput.value, 10);
       if (!count || count <= 0) {
         showInAppToast('Lütfen geçerli bir anahtar miktarı girin.', false);
         return;
       }
+
+      if (count > spaceLeft) {
+        showInAppToast(`Maksimum 1.000 anahtar sınırını aşamazsınız! En fazla ${spaceLeft} anahtar daha alabilirsiniz.`, false);
+        return;
+      }
+
       socket.emit('wallet:convert_tl', { caseCount: count });
     });
   }
 
-  // Single-Click Convert All TL to Case Balance
+  // Single-Click Convert All TL to Case Balance (Up to 1000 Key limit)
   const btnConvertAll = document.getElementById('btnConvertAllTL');
   if (btnConvertAll) {
     btnConvertAll.addEventListener('click', () => {
-      const userTL = currentUser && currentUser.tlBalance !== undefined ? currentUser.tlBalance : 0;
-      const maxPossibleCases = Math.floor(userTL / 20);
-      if (maxPossibleCases < 1) {
-        showInAppToast(`Yetersiz TL! 1 Anahtar için ₺20 TL gerekir. (Mevcut: ₺${userTL} TL)`, false);
+      const currentBalance = currentUser && currentUser.balance !== undefined ? currentUser.balance : 0;
+      const spaceLeft = Math.max(0, 1000 - currentBalance);
+      if (spaceLeft <= 0) {
+        showInAppToast('Zaten maksimum 1.000 anahtar sınırındasınız!', false);
         return;
       }
+
+      const userTL = currentUser && currentUser.tlBalance !== undefined ? currentUser.tlBalance : 0;
+      const maxAffordable = Math.floor(userTL / 20);
+      if (maxAffordable < 1) {
+        showInAppToast(`Yetersiz TL! 1 Anahtar için ₺20 gerekir. (Mevcut: ₺${userTL})`, false);
+        return;
+      }
+
+      const maxPossibleCases = Math.min(maxAffordable, spaceLeft);
       if (convertInput && convertRequiredTL) {
         convertInput.value = maxPossibleCases;
         convertRequiredTL.textContent = maxPossibleCases * 20;
       }
+
       socket.emit('wallet:convert_tl', { caseCount: maxPossibleCases });
     });
   }
