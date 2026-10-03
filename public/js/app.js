@@ -86,6 +86,59 @@ window.handleLoginSubmit = function() {
   attemptLogin(username, password);
 };
 
+// Built-in resilient Hardware Fingerprint Generator (bypasses adblockers and script blocking)
+async function getHardwareFingerprint() {
+  const components = [];
+  try {
+    components.push((window.screen && window.screen.width ? window.screen.width : '1920') + 'x' + 
+                    (window.screen && window.screen.height ? window.screen.height : '1080') + 'x' + 
+                    (window.screen && window.screen.colorDepth ? window.screen.colorDepth : '24'));
+    components.push(navigator.hardwareConcurrency || '4');
+    components.push(navigator.deviceMemory || '8');
+    try { components.push(Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC'); } catch(e) { components.push('UTC'); }
+
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 200;
+      canvas.height = 50;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.textBaseline = 'top';
+        ctx.font = '14px Arial';
+        ctx.fillStyle = '#f60';
+        ctx.fillRect(125, 1, 62, 20);
+        ctx.fillStyle = '#069';
+        ctx.fillText('CS2_VAL_HWID_<@>!', 2, 15);
+        components.push(canvas.toDataURL());
+      }
+    } catch(e) { components.push('no_canvas'); }
+
+    let persistentSeed = null;
+    try {
+      persistentSeed = localStorage.getItem('cs2_val_device_seed');
+      if (!persistentSeed) {
+        persistentSeed = 'dev_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+        localStorage.setItem('cs2_val_device_seed', persistentSeed);
+      }
+    } catch(e) {
+      persistentSeed = 'seed_fallback_' + (navigator.userAgent || 'ua');
+    }
+    components.push(persistentSeed);
+
+    const rawString = components.join('###');
+    let hash = 0;
+    for (let i = 0; i < rawString.length; i++) {
+      const char = rawString.charCodeAt(i);
+      hash = (hash << 5) - hash + char;
+      hash |= 0;
+    }
+    return 'HWID-' + Math.abs(hash).toString(16).toUpperCase().padStart(8, '0');
+  } catch(err) {
+    return 'HWID-' + Math.random().toString(16).substring(2, 10).toUpperCase();
+  }
+}
+window.getHardwareFingerprint = getHardwareFingerprint;
+
 // Initialize App
 function initApp() {
   // Render cases immediately on startup
@@ -95,14 +148,22 @@ function initApp() {
   setupEventListeners();
   initUpgraderEvents();
 
-  // 2. Calculate HWID in background
-  window.getHardwareFingerprint().then(hwid => {
-    currentHwid = hwid;
-    if (hwidPill) hwidPill.textContent = hwid.substring(0, 10) + '...';
-  }).catch(() => {
+  // 2. Calculate HWID safely in background (zero crash risk)
+  try {
+    const fetchFp = (typeof window.getHardwareFingerprint === 'function')
+      ? window.getHardwareFingerprint
+      : getHardwareFingerprint;
+    fetchFp().then(hwid => {
+      currentHwid = hwid;
+      if (hwidPill) hwidPill.textContent = hwid.substring(0, 10) + '...';
+    }).catch(() => {
+      currentHwid = 'HWID_' + Math.random().toString(16).substring(2, 10).toUpperCase();
+      if (hwidPill) hwidPill.textContent = currentHwid.substring(0, 10) + '...';
+    });
+  } catch(e) {
     currentHwid = 'HWID_' + Math.random().toString(16).substring(2, 10).toUpperCase();
     if (hwidPill) hwidPill.textContent = currentHwid.substring(0, 10) + '...';
-  });
+  }
 
   // 3. Fetch Cases in background
   fetch('/api/cases').then(res => res.json()).then(data => {
@@ -207,18 +268,48 @@ function setupEventListeners() {
     });
   }
 
-  // Open Case Button
-  document.getElementById('btnOpenCurrentCase').addEventListener('click', () => {
-    if (!selectedCase || isSpinning) return;
-    const cost = selectedCase.cost || 1;
-    if (!currentUser || currentUser.balance < cost) {
-      alert(`Yetersiz anahtar! Bu kasa için ${cost} anahtar gerekiyor.`);
-      return;
-    }
-    isSpinning = true;
-    document.getElementById('btnOpenCurrentCase').disabled = true;
-    socket.emit('case:open', { caseId: selectedCase.id });
-  });
+  // Open Case Button with Safety Watchdog
+  let caseOpeningSafetyTimer = null;
+  const btnOpenCase = document.getElementById('btnOpenCurrentCase');
+  if (btnOpenCase) {
+    btnOpenCase.addEventListener('click', () => {
+      if (!selectedCase || isSpinning) return;
+      if (!currentUser) {
+        const modal = document.getElementById('loginModal');
+        if (modal) modal.style.display = 'flex';
+        showLoginError('Kasa açabilmek için lütfen giriş yapın.');
+        return;
+      }
+      const cost = selectedCase.cost || 1;
+      if (currentUser.balance < cost) {
+        showInAppToast(`Yetersiz anahtar! Bu kasa için ${cost} anahtar gerekiyor (Mevcut: ${currentUser.balance}).`, false);
+        const walletModal = document.getElementById('walletModal');
+        if (walletModal) {
+          updateBalanceUI();
+          walletModal.style.display = 'flex';
+        }
+        return;
+      }
+
+      isSpinning = true;
+      btnOpenCase.disabled = true;
+      socket.emit('case:open', { caseId: selectedCase.id });
+
+      // Safety watchdog: if server does not reply within 6.5s, unfreeze button!
+      clearTimeout(caseOpeningSafetyTimer);
+      caseOpeningSafetyTimer = setTimeout(() => {
+        if (isSpinning) {
+          console.warn('[CASE OPEN] Safety timeout reached, unfreezing case open button.');
+          isSpinning = false;
+          btnOpenCase.disabled = false;
+          const btnText = document.getElementById('openCurrentCaseBtnText');
+          if (btnText && selectedCase) {
+            btnText.textContent = `KASAYI AÇ (${selectedCase.cost || 1} ANAHTAR)`;
+          }
+        }
+      }, 6500);
+    });
+  }
 
   // Winning Modal Actions
   document.getElementById('btnRevealKeep').addEventListener('click', () => {
@@ -836,10 +927,17 @@ async function attemptLogin(username, password) {
 
   if (!currentHwid) {
     try {
-      currentHwid = await Promise.race([
-        window.getHardwareFingerprint(),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 800))
-      ]);
+      const getFp = (typeof window.getHardwareFingerprint === 'function')
+        ? window.getHardwareFingerprint
+        : (typeof getHardwareFingerprint === 'function' ? getHardwareFingerprint : null);
+      if (getFp) {
+        currentHwid = await Promise.race([
+          getFp(),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 800))
+        ]);
+      } else {
+        currentHwid = 'HWID_' + Math.random().toString(16).substring(2, 10).toUpperCase();
+      }
     } catch(e) {
       currentHwid = 'HWID_' + Math.random().toString(16).substring(2, 10).toUpperCase();
     }
@@ -1157,6 +1255,7 @@ socket.on('rare_drop:broadcast', (data) => {
 
 // 5. Case Opening Result Animation
 socket.on('case:result', (data) => {
+  clearTimeout(caseOpeningSafetyTimer);
   lastOpenedItem = data.item;
   currentUser.balance = data.newBalance;
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
@@ -1169,6 +1268,7 @@ socket.on('case:result', (data) => {
 });
 
 socket.on('case:error', (data) => {
+  clearTimeout(caseOpeningSafetyTimer);
   isSpinning = false;
   document.getElementById('btnOpenCurrentCase').disabled = false;
   const cost = selectedCase ? (selectedCase.cost || 1) : 1;
@@ -1176,7 +1276,7 @@ socket.on('case:error', (data) => {
   if (btnText) {
     btnText.textContent = `KASAYI AÇ (${cost} ANAHTAR)`;
   }
-  alert(data.message || 'Kasa açılamadı.');
+  showInAppToast(data.message || 'Kasa açılamadı.', false);
 });
 
 // 6. Market Events
