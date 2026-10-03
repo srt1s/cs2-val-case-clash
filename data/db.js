@@ -7,8 +7,8 @@ const DB_FILE = path.join(__dirname, 'database.json');
 const MAX_KEYS = 1000;           // Max Anahtar sınırı
 const MAX_TL = 1e12;             // TL üst sınırı (taşma/Infinity koruması)
 const MAX_UPGRADE_RATIO = 1000;  // Upgrader'da hedef/girdi fiyat oranı üst sınırı
-const UPGRADE_HOUSE_EDGE = 0.95; // %5 kasa avantajı
-const UPGRADE_MAX_CHANCE = 85;   // Maksimum kazanma şansı (%)
+const UPGRADE_HOUSE_EDGE = 0.88; // %12 kasa avantajı (kullanıcı talebiyle şans düşürüldü)
+const UPGRADE_MAX_CHANCE = 75;   // Maksimum kazanma şansı (%)
 
 function makeDefaultData() {
   return {
@@ -343,7 +343,7 @@ module.exports = {
       return { success: false, message: `Hedef eşya en fazla ${MAX_UPGRADE_RATIO}x değerinde olabilir.` };
     }
 
-    // Fair chance: %5 house edge, max 85%
+    // Fair chance: %12 house edge, max 75%
     const rawChance = (inputPrice / targetPrice) * 100;
     const winChance = Math.min(UPGRADE_MAX_CHANCE, Math.floor(rawChance * UPGRADE_HOUSE_EDGE * 100) / 100);
     const multiplier = Math.round((targetPrice / inputPrice) * 100) / 100;

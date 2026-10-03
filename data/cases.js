@@ -319,6 +319,143 @@ const CS2_SKINS = {
     rarity: 'milspec',
     basePrice: 448, // 350 TL + %28
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLimcO1qx1I4M2-fbZ9LPWsAm6Xyfo44bQ-Tn7gwRt-t2uAw96tIn7FOAF1CsckQLUJ4xXskdO2NLzrtAyIi5UFk3tU_MwgmA'
+  },
+
+  // New CS2 Skins (Chroma & Clutch/Prisma)
+  karambit_doppler: {
+    id: 'cs2_karambit_doppler',
+    name: '★ Karambit | Doppler',
+    weapon: 'Karambit',
+    game: 'cs2',
+    rarity: 'knife',
+    basePrice: 4800,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SA1iSze91u_FsTju_qhAmoT-Jn4bjJC_4Ml93UtZuRLQPsBawkNfiMbnl5AKMiopCnin7iCJBv31j4rkBBKEg-6zUjV3GY6p9v8dpLWT3Fg'
+  },
+  bfk_marble_fade: {
+    id: 'cs2_bfk_marble_fade',
+    name: '★ Butterfly Knife | Marble Fade',
+    weapon: 'Butterfly Knife',
+    game: 'cs2',
+    rarity: 'knife',
+    basePrice: 5800,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Z-ua6bbZrLOmsD2qvzO9ksu1scC-ykRgYvzSCkpu3JCrBPVMkCZIiFLUC40S-l9DkZerg4Qfc3Y9DzCuo3SlK6ydv5e9UA71lpPNwsjHPzA'
+  },
+  skeleton_fade: {
+    id: 'cs2_skeleton_fade',
+    name: '★ Skeleton Knife | Fade',
+    weapon: 'Skeleton Knife',
+    game: 'cs2',
+    rarity: 'knife',
+    basePrice: 4800,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1I5PeibbBiLs-SD1iWwOpzj-1gSCGn20kjt2-En9mpcCmQag8hXsciQeJYthW9kILkMLji4g3Ygo8Uznj6jX9XrnE8raC5r1M'
+  },
+  ak47_vulcan: {
+    id: 'cs2_ak47_vulcan',
+    name: 'AK-47 | Vulcan',
+    weapon: 'AK-47',
+    game: 'cs2',
+    rarity: 'covert',
+    basePrice: 650,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0POlPPNSMuWRDGKC_uJ_t-l9AXCxxEh14zjTztivci2ePQZ2W8NzTecD4BKwloLiYeqxtAOIj9gUyyngznQeF7I6QE8'
+  },
+  awp_hyper_beast: {
+    id: 'cs2_awp_hyper_beast',
+    name: 'AWP | Hyper Beast',
+    weapon: 'AWP',
+    game: 'cs2',
+    rarity: 'covert',
+    basePrice: 280,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk7uW-V6x0MPWBMWWVwP1ij-1gSCGn20pxtm_WzNuoeHKeaFAnCZUiTe5bt0HqxofmZOrm5Q2IjoMQzS_5iShXrnE8NzWs__c'
+  },
+  m4a4_emperor: {
+    id: 'cs2_m4a4_emperor',
+    name: 'M4A4 | The Emperor',
+    weapon: 'M4A4',
+    game: 'cs2',
+    rarity: 'covert',
+    basePrice: 320,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiVI0P_6afBSJf2DC3Wf09F6ueZhW2exwBh_6m3dnt36InjDPQ4oXJt1TbJeshW_mtfjN-vrsgaKiokWy333kGoXuRj4z9Nd'
+  },
+  m4a1s_cyrex: {
+    id: 'cs2_m4a1s_cyrex',
+    name: 'M4A1-S | Cyrex',
+    weapon: 'M4A1-S',
+    game: 'cs2',
+    rarity: 'covert',
+    basePrice: 160,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_OGMWrEwL9lj-JwXSyrqhEutDWR1N77cimSbQQgC8F5QLYCsELpltTnZuvk7wbcjdhDzy_43yMb6ilvt7kcEf1yDWu2yf8'
+  },
+  ak47_bloodsport: {
+    id: 'cs2_ak47_bloodsport',
+    name: 'AK-47 | Bloodsport',
+    weapon: 'AK-47',
+    game: 'cs2',
+    rarity: 'covert',
+    basePrice: 380,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiVI0POlPPNSIvycAWOD0eFkpN5lRi67gVN15mmDw9egci_EPFAkDMQlTeZe4EXplNa0Yrvr5wbd345GyHioiC4b8G81tFuqg_k_'
+  },
+  usps_neonoir: {
+    id: 'cs2_usps_neonoir',
+    name: 'USP-S | Neo-Noir',
+    weapon: 'USP-S',
+    game: 'cs2',
+    rarity: 'classified',
+    basePrice: 110,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA0tF4v-h7cCW6khUz_WXdmd-vI3uRPwEkApR4QuBcu0Xrk4biYr_mtQXdidlCz3r63Ska7Hx1o7FVWuokIcU'
+  },
+  deagle_ocean_drive: {
+    id: 'cs2_deagle_ocean_drive',
+    name: 'Desert Eagle | Ocean Drive',
+    weapon: 'Desert Eagle',
+    game: 'cs2',
+    rarity: 'classified',
+    basePrice: 130,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk7OeRbKFsJ_yWMWyZ1e1-j-1gSCGn2x5-sG7Wzdyvc3OSbgcnXpR5FO9bukTtm9WzMePhswaN2N5CmCj_jyhXrnE8ibjhEyc'
+  },
+  deagle_code_red: {
+    id: 'cs2_deagle_code_red',
+    name: 'Desert Eagle | Code Red',
+    weapon: 'Desert Eagle',
+    game: 'cs2',
+    rarity: 'covert',
+    basePrice: 190,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk6OGRbKFsJ_yWMWaXxvxzo_JmXRa_nBovp3PRmNj4c3mTb1RxC5cjF-EItRnrlNzkYrnk5gaI3Y0UmyX52H9K7ixs_a9cBsGEcOCn'
+  },
+  glock_vogue: {
+    id: 'cs2_glock_vogue',
+    name: 'Glock-18 | Vogue',
+    weapon: 'Glock-18',
+    game: 'cs2',
+    rarity: 'classified',
+    basePrice: 45,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1Y-s2pZKtuK8-WF2KTzuBiseJ9cCW6khUz_T-GyNavdCqRawN1CMFwTOcO5hO7loXiY-zmsQKPi44QzHj22ikcvy11o7FVfFOBmfY'
+  },
+  ssg_dragonfire: {
+    id: 'cs2_ssg_dragonfire',
+    name: 'SSG 08 | Dragonfire',
+    weapon: 'SSG 08',
+    game: 'cs2',
+    rarity: 'classified',
+    basePrice: 75,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLijZGwpR1Y-s29e6M9eM-XHGaXzuBwufNscDqwmg0ijDGMnYftbyrFPVAoWcQjELQOuxO4k4e1N-nnsQfW2I5Mz3ivi3wb7Stj5ukAUKY7uvqAqS55_Pw'
+  },
+  m4a4_in_living_color: {
+    id: 'cs2_m4a4_in_living_color',
+    name: 'M4A4 | In Living Color',
+    weapon: 'M4A4',
+    game: 'cs2',
+    rarity: 'classified',
+    basePrice: 65,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiFO0P_6afBSLP-FC1icyOl-pK84GH2wxhty4DjcyNuhdHyXbAVxW8QjTbEMthC8kNa0MLmzs1Hbj95E02yg2bbWGcKW'
+  },
+  awp_wildfire: {
+    id: 'cs2_awp_wildfire',
+    name: 'AWP | Wildfire',
+    weapon: 'AWP',
+    game: 'cs2',
+    rarity: 'covert',
+    basePrice: 420,
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk7uW-V7NkLPSVB3WV_uJ_t-l9AX7rxhl-tmzSwomtdC6TPwQnW5UkR-YD5kK-ltCzP-Ox4FfXiNoQyyrgznQeu9L0PzQ'
   }
 };
 
@@ -601,6 +738,197 @@ const VAL_SKINS = {
     rarity: 'select',
     basePrice: 2.2,
     image: 'https://media.valorant-api.com/weaponskins/89be9866-4807-6235-2a95-499cd23828df/displayicon.png'
+  },
+
+  // Yeni Eklenen Valorant Skinleri (Oni & Samuray / Kaos & Tekillik)
+  onimaru_kunitsuna: {
+    id: 'val_onimaru_kunitsuna',
+    name: '★ Onimaru Kunitsuna Katana',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3500,
+    image: 'https://media.valorant-api.com/weaponskins/4e7342a5-4820-2d79-a488-0fa51a4357f7/displayicon.png'
+  },
+  ruined_king_blade: {
+    id: 'val_ruined_king_blade',
+    name: '★ Mahvolmuş Kralın Kılıcı',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 2950,
+    image: 'https://media.valorant-api.com/weaponskins/b1e9530d-4618-4f2e-1b75-f1a90c91b19e/displayicon.png'
+  },
+  oni_vandal: {
+    id: 'val_oni_vandal',
+    name: 'Oni Vandal',
+    weapon: 'Vandal',
+    game: 'val',
+    rarity: 'exclusive',
+    basePrice: 450,
+    image: 'https://media.valorant-api.com/weaponskins/7156c2ee-41fc-f8f4-d457-ebb287965c08/displayicon.png'
+  },
+  oni_phantom: {
+    id: 'val_oni_phantom',
+    name: 'Oni Phantom',
+    weapon: 'Phantom',
+    game: 'val',
+    rarity: 'exclusive',
+    basePrice: 450,
+    image: 'https://media.valorant-api.com/weaponskins/36791b03-452d-8dad-0091-898cc28d2196/displayicon.png'
+  },
+  ion_vandal: {
+    id: 'val_ion_vandal',
+    name: 'İyon Vandal',
+    weapon: 'Vandal',
+    game: 'val',
+    rarity: 'exclusive',
+    basePrice: 420,
+    image: 'https://media.valorant-api.com/weaponskins/596ce51d-40e3-dc21-b02d-b08d070a7883/displayicon.png'
+  },
+  ruination_phantom: {
+    id: 'val_ruination_phantom',
+    name: 'Mahvolmuş Phantom',
+    weapon: 'Phantom',
+    game: 'val',
+    rarity: 'premium',
+    basePrice: 390,
+    image: 'https://media.valorant-api.com/weaponskins/5b43d27b-419c-f2bc-53fe-d7829dad46b3/displayicon.png'
+  },
+  sovereign_ghost: {
+    id: 'val_sovereign_ghost',
+    name: 'Asil Ruh Ghost',
+    weapon: 'Ghost',
+    game: 'val',
+    rarity: 'deluxe',
+    basePrice: 120,
+    image: 'https://media.valorant-api.com/weaponskins/a9890917-41ea-eb55-47e7-ee990a87fa4e/displayicon.png'
+  },
+  sakura_vandal: {
+    id: 'val_sakura_vandal',
+    name: 'Sakura Vandal',
+    weapon: 'Vandal',
+    game: 'val',
+    rarity: 'deluxe',
+    basePrice: 60,
+    image: 'https://media.valorant-api.com/weaponskins/f946ef5c-46ab-e146-a712-1d99a1651356/displayicon.png'
+  },
+  sakura_classic: {
+    id: 'val_sakura_classic',
+    name: 'Sakura Classic',
+    weapon: 'Classic',
+    game: 'val',
+    rarity: 'select',
+    basePrice: 18,
+    image: 'https://media.valorant-api.com/weaponskins/6ba7a7a0-4057-4d5c-7c98-579f232db298/displayicon.png'
+  },
+  kohaku_classic: {
+    id: 'val_kohaku_classic',
+    name: 'Kohaku & Matsuba Classic',
+    weapon: 'Classic',
+    game: 'val',
+    rarity: 'select',
+    basePrice: 12,
+    image: 'https://media.valorant-api.com/weaponskins/be7cf362-4993-b9e4-9ba9-cdac6c99b8e4/displayicon.png'
+  },
+  blade_of_chaos: {
+    id: 'val_blade_of_chaos',
+    name: '★ Kaosun Kılıcı',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3600,
+    image: 'https://media.valorant-api.com/weaponskins/6e0496c1-4c98-7abe-16c4-7ca3653e5cd8/displayicon.png'
+  },
+  singularity_butterfly: {
+    id: 'val_singularity_butterfly',
+    name: '★ Singularity Kelebek Bıçağı',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3400,
+    image: 'https://media.valorant-api.com/weaponskins/a114e83d-4662-6a6f-4717-bfb82fd9b8e0/displayicon.png'
+  },
+  rgx_firefly: {
+    id: 'val_rgx_firefly',
+    name: '★ RGX 11z Pro Firefly Kelebek',
+    weapon: 'Melee',
+    game: 'val',
+    rarity: 'knife',
+    basePrice: 3200,
+    image: 'https://media.valorant-api.com/weaponskins/03de6b1a-4497-72e8-ae0c-2984b2e7e2b9/displayicon.png'
+  },
+  prelude_vandal: {
+    id: 'val_prelude_vandal',
+    name: 'Kaosun Başlangıcı Vandal',
+    weapon: 'Vandal',
+    game: 'val',
+    rarity: 'exclusive',
+    basePrice: 490,
+    image: 'https://media.valorant-api.com/weaponskins/522a264e-4ca7-adb0-6cf1-28b2ef938727/displayicon.png'
+  },
+  singularity_vandal: {
+    id: 'val_singularity_vandal',
+    name: 'Singularity Vandal',
+    weapon: 'Vandal',
+    game: 'val',
+    rarity: 'exclusive',
+    basePrice: 470,
+    image: 'https://media.valorant-api.com/weaponskins/d6c7ff28-467e-bb3f-3c0c-c5b9445e55ca/displayicon.png'
+  },
+  rgx_vandal: {
+    id: 'val_rgx_vandal',
+    name: 'RGX 11z Pro Vandal',
+    weapon: 'Vandal',
+    game: 'val',
+    rarity: 'exclusive',
+    basePrice: 460,
+    image: 'https://media.valorant-api.com/weaponskins/e5490f71-455b-74ad-f762-f5a876d4dff9/displayicon.png'
+  },
+  singularity_phantom: {
+    id: 'val_singularity_phantom',
+    name: 'Singularity Phantom',
+    weapon: 'Phantom',
+    game: 'val',
+    rarity: 'exclusive',
+    basePrice: 450,
+    image: 'https://media.valorant-api.com/weaponskins/5eec4ce6-443d-e9b5-4c5b-2b967d426bd3/displayicon.png'
+  },
+  sentinels_vandal: {
+    id: 'val_sentinels_vandal',
+    name: 'Işığın Muhafızı Vandal',
+    weapon: 'Vandal',
+    game: 'val',
+    rarity: 'premium',
+    basePrice: 380,
+    image: 'https://media.valorant-api.com/weaponskins/e8df3725-40de-b8ec-77bd-62a989685a85/displayicon.png'
+  },
+  minima_phantom: {
+    id: 'val_minima_phantom',
+    name: 'Minima Phantom',
+    weapon: 'Phantom',
+    game: 'val',
+    rarity: 'deluxe',
+    basePrice: 50,
+    image: 'https://media.valorant-api.com/weaponskins/2e3538f1-450f-cfe6-f93e-73862cd39314/displayicon.png'
+  },
+  prism_phantom: {
+    id: 'val_prism_phantom',
+    name: 'Prizma Phantom',
+    weapon: 'Phantom',
+    game: 'val',
+    rarity: 'deluxe',
+    basePrice: 40,
+    image: 'https://media.valorant-api.com/weaponskins/6586a7db-4041-6a29-f37c-d6817657caa5/displayicon.png'
+  },
+  reverie_classic: {
+    id: 'val_reverie_classic',
+    name: 'Hülya Classic',
+    weapon: 'Classic',
+    game: 'val',
+    rarity: 'select',
+    basePrice: 14,
+    image: 'https://media.valorant-api.com/weaponskins/8bc021a4-4832-300e-2844-afa3d1d9465f/displayicon.png'
   }
 };
 
@@ -728,6 +1056,44 @@ const CASES = [
       { skin: CS2_SKINS.m4a4_magnesium, weight: 13.05 }
     ]
   },
+  {
+    id: 'cs2_chroma',
+    name: 'Kroma Kasası',
+    subtitle: 'Karambit Doppler & Vulcan',
+    game: 'cs2',
+    cost: 1,
+    icon: 'fa-cube',
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_fq2wP7qr6bqI5cvHDCzfBlbcv57JqF3zrxRkj4W6Dwo34dy6QPQAoC5ZyW6dU5cxvklfG',
+    items: [
+      { skin: CS2_SKINS.karambit_doppler, weight: 0.4 },
+      { skin: CS2_SKINS.ak47_vulcan, weight: 3.5 },
+      { skin: CS2_SKINS.m4a1s_cyrex, weight: 4.5 },
+      { skin: CS2_SKINS.awp_hyper_beast, weight: 9.0 },
+      { skin: CS2_SKINS.usps_neonoir, weight: 14.0 },
+      { skin: CS2_SKINS.ssg_dragonfire, weight: 20.0 },
+      { skin: CS2_SKINS.glock_vogue, weight: 22.0 },
+      { skin: CS2_SKINS.m4a4_magnesium, weight: 26.6 }
+    ]
+  },
+  {
+    id: 'cs2_clutch_prisma',
+    name: 'Prizma & Kavrama Kasası',
+    subtitle: 'Butterfly Marble Fade & Bloodsport',
+    game: 'cs2',
+    cost: 1,
+    icon: 'fa-gem',
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_fr3AV6aD8O6BpdKKQVmPEwr1zs-c8Tnngl09w52zTmY2sc3jBag8jXpohE_lK7Ede7E2Kfw',
+    items: [
+      { skin: CS2_SKINS.bfk_marble_fade, weight: 0.35 },
+      { skin: CS2_SKINS.ak47_bloodsport, weight: 3.5 },
+      { skin: CS2_SKINS.m4a4_emperor, weight: 4.0 },
+      { skin: CS2_SKINS.awp_wildfire, weight: 7.0 },
+      { skin: CS2_SKINS.deagle_code_red, weight: 11.0 },
+      { skin: CS2_SKINS.deagle_ocean_drive, weight: 18.0 },
+      { skin: CS2_SKINS.m4a4_in_living_color, weight: 22.0 },
+      { skin: CS2_SKINS.glock_polymer, weight: 34.15 }
+    ]
+  },
 
   // ==========================================
   // === VALORANT CASES
@@ -849,6 +1215,49 @@ const CASES = [
       { skin: VAL_SKINS.convex_judge, weight: 18.0 },
       { skin: VAL_SKINS.endeavour_bulldog, weight: 15.0 },
       { skin: VAL_SKINS.altitude_odin, weight: 13.5 }
+    ]
+  },
+  {
+    id: 'val_oni_samurai',
+    name: 'Oni & Samuray Kasası',
+    subtitle: 'Onimaru Kunitsuna & Oni Koleksiyonu',
+    game: 'val',
+    cost: 1,
+    icon: 'fa-khanda',
+    image: 'https://media.valorant-api.com/weaponskins/4e7342a5-4820-2d79-a488-0fa51a4357f7/displayicon.png',
+    items: [
+      { skin: VAL_SKINS.onimaru_kunitsuna, weight: 0.4 },
+      { skin: VAL_SKINS.ruined_king_blade, weight: 0.5 },
+      { skin: VAL_SKINS.oni_vandal, weight: 3.5 },
+      { skin: VAL_SKINS.oni_phantom, weight: 3.5 },
+      { skin: VAL_SKINS.ion_vandal, weight: 4.0 },
+      { skin: VAL_SKINS.ruination_phantom, weight: 6.0 },
+      { skin: VAL_SKINS.sovereign_ghost, weight: 15.0 },
+      { skin: VAL_SKINS.sakura_vandal, weight: 20.0 },
+      { skin: VAL_SKINS.sakura_classic, weight: 23.0 },
+      { skin: VAL_SKINS.kohaku_classic, weight: 24.1 }
+    ]
+  },
+  {
+    id: 'val_chaos_singularity',
+    name: 'Kaos & Tekillik Kasası',
+    subtitle: 'Kaosun Başlangıcı & Singularity',
+    game: 'val',
+    cost: 1,
+    icon: 'fa-meteor',
+    image: 'https://media.valorant-api.com/weaponskins/6e0496c1-4c98-7abe-16c4-7ca3653e5cd8/displayicon.png',
+    items: [
+      { skin: VAL_SKINS.blade_of_chaos, weight: 0.35 },
+      { skin: VAL_SKINS.singularity_butterfly, weight: 0.45 },
+      { skin: VAL_SKINS.rgx_firefly, weight: 0.45 },
+      { skin: VAL_SKINS.prelude_vandal, weight: 3.25 },
+      { skin: VAL_SKINS.singularity_vandal, weight: 3.5 },
+      { skin: VAL_SKINS.rgx_vandal, weight: 4.0 },
+      { skin: VAL_SKINS.singularity_phantom, weight: 4.0 },
+      { skin: VAL_SKINS.sentinels_vandal, weight: 6.0 },
+      { skin: VAL_SKINS.minima_phantom, weight: 18.0 },
+      { skin: VAL_SKINS.prism_phantom, weight: 25.0 },
+      { skin: VAL_SKINS.reverie_classic, weight: 35.0 }
     ]
   }
 ];

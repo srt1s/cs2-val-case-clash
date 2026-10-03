@@ -2193,7 +2193,7 @@ function updateUpgraderWheel() {
   }
 
   const rawChance = (inputPrice / targetPrice) * 100;
-  const winChance = Math.min(85, Math.max(0.5, Math.round(rawChance * 0.95 * 100) / 100));
+  const winChance = Math.min(75, Math.max(0.5, Math.round(rawChance * 0.88 * 100) / 100));
   const multiplier = Math.round((targetPrice / inputPrice) * 100) / 100;
 
   const circ = 722.56;
