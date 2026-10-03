@@ -2217,7 +2217,11 @@ function updateUpgraderWheel() {
   }
 }
 
+let upgEventsBound = false;
 function initUpgraderEvents() {
+  if (upgEventsBound) return;
+  upgEventsBound = true;
+
   const btnExecute = document.getElementById('btnExecuteUpgrade');
   if (btnExecute) {
     btnExecute.addEventListener('click', () => {
@@ -2273,15 +2277,24 @@ socket.on('upgrade:result', (data) => {
 
   // Calculate final angle
   // Win slice is 0 to (winChance * 3.6) degrees
-  const winDegrees = (data.winChance / 100) * 360;
+  const winDegrees = Math.max(0.5, Math.min(359.5, (data.winChance / 100) * 360));
   let stopAngle = 0;
 
   if (data.isWin) {
-    // Lands inside the win zone
-    stopAngle = Math.random() * (winDegrees - 4) + 2;
+    // Lands strictly inside the win zone
+    if (winDegrees > 6) {
+      stopAngle = 2 + Math.random() * (winDegrees - 4);
+    } else {
+      stopAngle = winDegrees * (0.15 + Math.random() * 0.7);
+    }
   } else {
-    // Lands inside the lose zone
-    stopAngle = winDegrees + Math.random() * (356 - winDegrees) + 2;
+    // Lands strictly inside the lose zone
+    const loseSpan = 360 - winDegrees;
+    if (loseSpan > 6) {
+      stopAngle = winDegrees + 2 + Math.random() * (loseSpan - 4);
+    } else {
+      stopAngle = winDegrees + loseSpan * (0.15 + Math.random() * 0.7);
+    }
   }
 
   // 8 full rotations (2880 deg) + angle for dramatic tension (Total ~6.5 seconds)
@@ -2335,9 +2348,8 @@ socket.on('upgrade:result', (data) => {
 
     // Force synchronize inventory immediately
     if (currentUser) {
-      currentUser.inventory = data.newInventory || [];
+      currentUser.inventory = Array.isArray(data.newInventory) ? data.newInventory : (currentUser.inventory || []);
       saveUserBackup(currentUser);
-      updateInventoryBadge();
       renderInventory(); // Real-time sync with inventory view
     }
 
@@ -2349,28 +2361,48 @@ socket.on('upgrade:result', (data) => {
         }
       } catch(e) {}
 
-      if (statusMsg) {
-        statusMsg.className = 'upg-status-text win';
-        statusMsg.textContent = `🎉 TEBRİKLER! ${data.wonItem.name} KAZANDINIZ!`;
+      // Reset target selection so it doesn't clash with newly won item
+      upgSelectedTargetSkin = null;
+      const targetPreview = document.getElementById('upgTargetPreview');
+      if (targetPreview) {
+        targetPreview.className = 'upg-selected-preview';
+        targetPreview.innerHTML = `
+          <div class="upg-placeholder-text">
+            <i class="fa-solid fa-bullseye fa-2x" style="opacity:0.4; margin-bottom:8px;"></i>
+            <div>Aşağıdan hedef skin seçin</div>
+          </div>
+        `;
       }
+      const targetPriceBadge = document.getElementById('upgTargetPriceBadge');
+      if (targetPriceBadge) targetPriceBadge.textContent = '₺0 TL';
 
       // Auto-select won item as new input item for chaining upgrades!
-      upgSelectedInputItem = data.wonItem;
-      selectUpgraderInput(data.wonItem);
+      if (data.wonItem) {
+        upgSelectedInputItem = data.wonItem;
+        selectUpgraderInput(data.wonItem);
+      } else {
+        renderUpgraderInventory();
+      }
 
-      // Now set the winning text explicitly so it is prominent
+      if (statusMsg) {
+        statusMsg.className = 'upg-status-text win';
+        statusMsg.textContent = `🎉 TEBRİKLER! ${data.wonItem ? data.wonItem.name : 'Skin'} KAZANDINIZ!`;
+      }
+
       if (wheelChanceText) {
         wheelChanceText.textContent = 'KAZANDIN!';
         wheelChanceText.style.color = '#10b981';
       }
       if (wheelMultiplierText) {
-        wheelMultiplierText.textContent = `+₺${Number(data.wonItem.basePrice).toLocaleString()} TL (${data.multiplier}x)`;
+        const winPrice = data.wonItem ? Number(data.wonItem.basePrice).toLocaleString() : '0';
+        wheelMultiplierText.textContent = `+₺${winPrice} TL (${data.multiplier || 1}x)`;
       }
     } else {
       try { window.soundEngine.playLose(); } catch(e) {}
+      const lostName = (data.inputItem && data.inputItem.name) ? data.inputItem.name : 'Eşya';
       if (statusMsg) {
         statusMsg.className = 'upg-status-text lose';
-        statusMsg.textContent = `💥 BAŞARISIZ! ${data.inputItem.name} eşyası kaybedildi.`;
+        statusMsg.textContent = `💥 BAŞARISIZ! ${lostName} eşyası kaybedildi.`;
       }
 
       // Reset input item
@@ -2420,6 +2452,11 @@ function showUpgraderResultModal(data) {
 
   if (!modal || !card) return;
 
+  const wonItem = data.wonItem || {};
+  const inputItem = data.inputItem || {};
+  const winChance = Number(data.winChance) || 0;
+  const multiplier = Number(data.multiplier) || 1;
+
   if (data.isWin) {
     card.style.borderColor = '#10b981';
     card.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.55)';
@@ -2427,18 +2464,18 @@ function showUpgraderResultModal(data) {
       badge.textContent = '🎉 KAZANDINIZ!';
       badge.style.color = '#10b981';
     }
-    if (title) title.textContent = data.wonItem.name;
-    if (sub) sub.textContent = `Yükseltme Başarılı! %${data.winChance.toFixed(2)} şans tutturuldu!`;
+    if (title) title.textContent = wonItem.name || 'Yeni Eşya';
+    if (sub) sub.textContent = `Yükseltme Başarılı! %${winChance.toFixed(2)} şans tutturuldu!`;
     if (img) {
-      img.src = data.wonItem.image;
+      img.src = wonItem.image || '';
       img.style.filter = 'drop-shadow(0 0 16px rgba(16, 185, 129, 0.6))';
       img.style.opacity = '1';
     }
     if (price) {
-      price.textContent = `₺${Number(data.wonItem.basePrice).toLocaleString()} TL`;
+      price.textContent = `₺${Number(wonItem.basePrice || 0).toLocaleString()} TL`;
       price.style.color = '#10b981';
     }
-    if (mult) mult.textContent = `⚡ ${data.multiplier}x Değerine Katlandı!`;
+    if (mult) mult.textContent = `⚡ ${multiplier}x Değerine Katlandı!`;
   } else {
     card.style.borderColor = '#ef4444';
     card.style.boxShadow = '0 0 40px rgba(239, 68, 68, 0.55)';
@@ -2447,16 +2484,17 @@ function showUpgraderResultModal(data) {
       badge.style.color = '#ef4444';
     }
     if (title) title.textContent = 'Yükseltme Başarısız';
-    if (sub) sub.textContent = `Feda edilen "${data.inputItem.name}" eşyası yandı.`;
+    const itemName = inputItem.name || 'Eşya';
+    if (sub) sub.textContent = `Feda edilen "${itemName}" eşyası yandı.`;
     if (img) {
-      img.src = data.inputItem.image;
+      img.src = inputItem.image || '';
       img.style.filter = 'grayscale(1) opacity(0.5)';
     }
     if (price) {
       price.textContent = '₺0 TL';
       price.style.color = '#ef4444';
     }
-    if (mult) mult.textContent = `Kazanma Şansı %${data.winChance.toFixed(2)} idi (${data.multiplier}x)`;
+    if (mult) mult.textContent = `Kazanma Şansı %${winChance.toFixed(2)} idi (${multiplier}x)`;
   }
 
   if (btnClose) {

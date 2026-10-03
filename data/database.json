@@ -1,8 +1,6 @@
 {
   "users": {},
-  "usernames": {},
-  "hwids": {},
   "market": [],
-  "tradeOffers": [],
-  "chat": []
+  "chat": [],
+  "hwids": {}
 }

@@ -1072,7 +1072,7 @@ io.on('connection', (socket) => {
       return socket.emit('upgrade:error', { message: 'Yükseltilecek veya hedef eşya seçilmedi.' });
     }
 
-    const targetSkin = ALL_SKINS_MAP.get(targetSkinId);
+    const targetSkin = ALL_SKINS_MAP.get(targetSkinId) || (typeof targetSkinId === 'string' ? ALL_SKINS_MAP.get(targetSkinId.trim()) : null);
     if (!targetSkin) {
       return socket.emit('upgrade:error', { message: 'Hedef skin bulunamadı.' });
     }
@@ -1087,11 +1087,13 @@ io.on('connection', (socket) => {
 
     // Announce big wins in global chat (multiplier >= 4 or targetPrice >= 2000)
     if (result.isWin && (result.multiplier >= 4 || targetSkin.basePrice >= 2000)) {
+      const inName = (result.inputItem && result.inputItem.name) || 'Skin';
+      const outName = (result.wonItem && result.wonItem.name) || targetSkin.name || 'Skin';
       const upgradeChatMsg = {
         id: 'sys_upg_' + Date.now(),
         userId: 'system',
         username: 'UPGRADER',
-        text: `⚡ TEBRİKLER! [${session.username}] ${result.inputItem.name} eşyasını %${result.winChance} şansla (${result.multiplier}x) ${result.wonItem.name} eşyasına başarıyla yükseltti!`,
+        text: `⚡ TEBRİKLER! [${session.username}] ${inName} eşyasını %${result.winChance} şansla (${result.multiplier}x) ${outName} eşyasına başarıyla yükseltti!`,
         timestamp: Date.now(),
         isHighlight: true
       };
