@@ -43,7 +43,7 @@ const tradeModal = document.getElementById('tradeModal');
 const incomingTradeModal = document.getElementById('incomingTradeModal');
 const rareDropBanner = document.getElementById('rareDropBanner');
 
-let currentKeyPriceTL = 175;
+let currentKeyPriceTL = 70;
 
 function updateKeyPriceDisplay() {
   const rateText = document.getElementById('exchangeRateText');

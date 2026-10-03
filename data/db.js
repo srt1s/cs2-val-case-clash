@@ -434,7 +434,7 @@ module.exports = {
       };
     }
 
-    const keyPrice = module.exports.KEY_PRICE_TL || 175;
+    const keyPrice = module.exports.KEY_PRICE_TL || 70;
     const requiredTL = caseCount * keyPrice;
     const currentTL = Number.isFinite(user.tlBalance) ? user.tlBalance : 0;
     if (currentTL < requiredTL) {

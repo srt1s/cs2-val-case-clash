@@ -26,7 +26,7 @@ const PORT = process.env.PORT || 3000;
 // ==========================================
 // 1 Anahtar'ın TL karşılığı. Tüm kasaların beklenen değeri (EV) bu fiyatın altında kalacak şekilde
 // ayarlanmıştır; aksi halde "TL -> Anahtar -> Kasa -> Skin sat -> TL" döngüsü sınırsız para basar.
-const KEY_PRICE_TL = Math.max(1, parseInt(process.env.KEY_PRICE_TL, 10) || 175);
+const KEY_PRICE_TL = Math.max(1, parseInt(process.env.KEY_PRICE_TL, 10) || 70);
 db.KEY_PRICE_TL = KEY_PRICE_TL;
 
 // Admin şifresi artık ortam değişkeninden okunur (ADMIN_PASSWORD). Tanımlı değilse eski şifre
