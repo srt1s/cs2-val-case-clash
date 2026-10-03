@@ -544,8 +544,10 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Instant Sell Item (Awards TL: 75% of base price)
-  socket.on('inventory:sell_instant', ({ instanceId }) => {
+  // Instant Sell Item:
+  // - If isQuickSell: sold immediately from case opening modal -> 75% of base price (quick sell discount)
+  // - If sold from inventory ("envantere atıp satış yapılırsa") -> 100% full base price
+  socket.on('inventory:sell_instant', ({ instanceId, isQuickSell }) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
 
@@ -557,20 +559,24 @@ io.on('connection', (socket) => {
       return socket.emit('inventory:error', { message: 'Eşya envanterde bulunamadı.' });
     }
 
-    // Instant sell value = 75% of base price (in TL)
-    const sellPrice = Math.max(1, Math.round(removedItem.basePrice * 0.75));
+    const itemBasePrice = Number(removedItem.basePrice || removedItem.price || 1);
+    const sellPrice = isQuickSell
+      ? Math.max(1, Math.round(itemBasePrice * 0.75))
+      : Math.max(1, Math.round(itemBasePrice));
+
     const newTL = db.updateTLBalance(user.id, sellPrice);
 
     socket.emit('inventory:sold', {
       instanceId,
       sellPrice,
+      isQuickSell: !!isQuickSell,
       newTLBalance: newTL,
       newBalance: user.balance,
       inventory: user.inventory
     });
   });
 
-  // Bulk Instant Sell Items (Selected or All, Awards TL: 75%)
+  // Bulk Sell Items (From inventory: 100% base price)
   socket.on('inventory:sell_bulk_instant', ({ instanceIds } = {}) => {
     const session = activeSockets.get(socket.id);
     if (!session) return;
@@ -590,7 +596,8 @@ io.on('connection', (socket) => {
 
     for (const item of user.inventory) {
       if (!idsToSell || idsToSell.has(item.instanceId)) {
-        const itemPrice = Math.max(1, Math.round(item.basePrice * 0.75));
+        const itemBasePrice = Number(item.basePrice || item.price || 1);
+        const itemPrice = Math.max(1, Math.round(itemBasePrice));
         totalSellPrice += itemPrice;
         soldCount++;
       } else {

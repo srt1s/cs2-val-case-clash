@@ -218,7 +218,7 @@ function setupEventListeners() {
     if (itemToSell && itemToSell.instanceId) {
       const btn = e.currentTarget;
       btn.disabled = true;
-      socket.emit('inventory:sell_instant', { instanceId: itemToSell.instanceId });
+      socket.emit('inventory:sell_instant', { instanceId: itemToSell.instanceId, isQuickSell: true });
       winningRevealModal.style.display = 'none';
       currentModalItem = null;
       setTimeout(() => { btn.disabled = false; }, 600);
@@ -239,7 +239,7 @@ function setupEventListeners() {
     });
   }
 
-  // Bulk Instant Sell
+  // Bulk Instant Sell (Sells from inventory at 100% full base price)
   const btnBulkSell = document.getElementById('btnBulkSellInstant');
   if (btnBulkSell) {
     btnBulkSell.addEventListener('click', () => {
@@ -252,10 +252,10 @@ function setupEventListeners() {
 
       if (targetItems.length === 0) return;
 
-      const totalTL = targetItems.reduce((acc, cur) => acc + Math.max(1, Math.round(cur.basePrice * 0.75)), 0);
+      const totalTL = targetItems.reduce((acc, cur) => acc + Math.max(1, Math.round(Number(cur.basePrice || cur.price || 1))), 0);
       const confirmMsg = isSelectedOnly
-        ? `Seçili ${targetItems.length} adet eşyayı toplam ₺${totalTL.toLocaleString()} TL karşılığında hemen satmak istiyor musunuz?`
-        : `Envanterinizdeki TÜM (${targetItems.length} adet) eşyayı toplam ₺${totalTL.toLocaleString()} TL karşılığında hemen satmak istiyor musunuz?`;
+        ? `Seçili ${targetItems.length} adet eşyayı taban fiyatından (toplam ₺${totalTL.toLocaleString()} TL) satmak istiyor musunuz?`
+        : `Envanterinizdeki TÜM (${targetItems.length} adet) eşyayı taban fiyatından (toplam ₺${totalTL.toLocaleString()} TL) satmak istiyor musunuz?`;
 
       if (confirm(confirmMsg)) {
         btnBulkSell.disabled = true;
@@ -1149,7 +1149,11 @@ socket.on('inventory:sold', (data) => {
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   renderInventory();
   saveUserBackup(currentUser);
-  showInAppToast(`Eşya satıldı: +₺${data.sellPrice} TL`, true);
+  if (data.isQuickSell) {
+    showInAppToast(`Eşya hızlı satıldı (Quick Sell -%25): +₺${Number(data.sellPrice).toLocaleString()} TL`, true);
+  } else {
+    showInAppToast(`Eşya satıldı (Base Fiyat): +₺${Number(data.sellPrice).toLocaleString()} TL`, true);
+  }
   try { window.soundEngine.playWin(); } catch(e) {}
 });
 
@@ -1157,7 +1161,7 @@ socket.on('inventory:bulk_sold', (data) => {
   const btnBulkSell = document.getElementById('btnBulkSellInstant');
   if (btnBulkSell) {
     btnBulkSell.disabled = false;
-    btnBulkSell.innerHTML = '<i class="fa-solid fa-money-bill-wave"></i> <span id="btnBulkSellText">Tümünü Hemen Sat</span>';
+    btnBulkSell.innerHTML = '<i class="fa-solid fa-money-bill-wave"></i> <span id="btnBulkSellText">Tümünü Sat</span>';
   }
   selectedInventoryIds.clear();
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
@@ -1166,7 +1170,7 @@ socket.on('inventory:bulk_sold', (data) => {
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   renderInventory();
   saveUserBackup(currentUser);
-  showInAppToast(`${data.soldCount} adet eşya satıldı: +₺${data.totalSellPrice.toLocaleString()} TL`, true);
+  showInAppToast(`${data.soldCount} adet eşya taban fiyatından satıldı: +₺${Number(data.totalSellPrice).toLocaleString()} TL`, true);
   try { window.soundEngine.playWin(); } catch(e) {}
 });
 
@@ -1595,9 +1599,9 @@ function showRevealModal(item) {
   document.getElementById('winningSkinImg').src = item.image;
   document.getElementById('winningSkinPrice').textContent = `₺${item.basePrice}`;
 
-  // Instant sell price = 75%
+  // Quick sell price = 75% (-%25 indirimli)
   const sellVal = Math.max(1, Math.round(item.basePrice * 0.75));
-  document.getElementById('revealSellPrice').textContent = `₺${sellVal}`;
+  document.getElementById('revealSellPrice').textContent = `₺${sellVal.toLocaleString()}`;
 
   modal.style.display = 'flex';
 }
@@ -1649,18 +1653,14 @@ function renderInventory() {
   }
 
   let totalValue = 0;
-  let totalInstantAll = 0;
   let selectedBaseSum = 0;
-  let selectedInstantSum = 0;
 
   currentUser.inventory.forEach(item => {
-    totalValue += item.basePrice;
-    const instantPrice = Math.max(1, Math.round(item.basePrice * 0.75));
-    totalInstantAll += instantPrice;
+    const itemPrice = Math.max(1, Number(item.basePrice || item.price || 1));
+    totalValue += itemPrice;
 
     if (selectedInventoryIds.has(item.instanceId)) {
-      selectedBaseSum += item.basePrice;
-      selectedInstantSum += instantPrice;
+      selectedBaseSum += itemPrice;
     }
   });
 
@@ -1685,8 +1685,8 @@ function renderInventory() {
 
   if (btnBulkSellText) {
     btnBulkSellText.textContent = selectedCount > 0
-      ? `Seçilenleri Hemen Sat (₺${selectedInstantSum.toLocaleString()} TL)`
-      : `Tümünü Hemen Sat (₺${totalInstantAll.toLocaleString()} TL)`;
+      ? `Seçilenleri Sat (₺${selectedBaseSum.toLocaleString()} TL)`
+      : `Tümünü Sat (₺${totalValue.toLocaleString()} TL)`;
   }
 
   if (btnBulkMarketText) {
@@ -1695,9 +1695,9 @@ function renderInventory() {
       : `Tümünü Pazara Koy (${totalCount} Eşya)`;
   }
 
-  // Render skin cards
+  // Render skin cards (Envanterden satış: 100% base fiyatı)
   currentUser.inventory.forEach(item => {
-    const instantSellPrice = Math.max(1, Math.round(item.basePrice * 0.75));
+    const basePrice = Math.max(1, Number(item.basePrice || item.price || 1));
     const isSelected = selectedInventoryIds.has(item.instanceId);
 
     const card = document.createElement('div');
@@ -1706,10 +1706,10 @@ function renderInventory() {
       <input type="checkbox" class="skin-select-box" data-id="${item.instanceId}" ${isSelected ? 'checked' : ''} title="Seç">
       <img src="${item.image}" alt="${item.name}" class="skin-item-img">
       <div class="skin-item-name" title="${item.name}">${item.name}</div>
-      <div class="skin-item-price">₺${item.basePrice}</div>
+      <div class="skin-item-price">₺${basePrice.toLocaleString()}</div>
       <div class="skin-item-actions">
         <button class="btn-small btn-sell-fast" data-id="${item.instanceId}">
-          Hemen Sat (₺${instantSellPrice})
+          Sat (₺${basePrice.toLocaleString()})
         </button>
         <button class="btn-small btn-list-market" data-id="${item.instanceId}">
           Pazara Koy
@@ -1730,14 +1730,14 @@ function renderInventory() {
       renderInventory();
     });
 
-    // Instant Sell (direct & responsive with visual feedback)
+    // Sell item from inventory (Full base price)
     const sellBtn = card.querySelector('.btn-sell-fast');
     sellBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (sellBtn.disabled) return;
       sellBtn.disabled = true;
       sellBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-      socket.emit('inventory:sell_instant', { instanceId: item.instanceId });
+      socket.emit('inventory:sell_instant', { instanceId: item.instanceId, isQuickSell: false });
     });
 
     // List on Market
