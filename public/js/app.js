@@ -2222,9 +2222,11 @@ function initUpgraderEvents() {
         statusMsg.textContent = 'İbre dönüyor... Şans seninle olsun!';
       }
 
+      const itemInstId = upgSelectedInputItem.instanceId || upgSelectedInputItem.id || ('tmp_item_' + Date.now());
       socket.emit('upgrade:roll', {
-        inputInstanceId: upgSelectedInputItem.instanceId,
-        targetSkinId: upgSelectedTargetSkin.id
+        inputInstanceId: itemInstId,
+        targetSkinId: upgSelectedTargetSkin.id,
+        inputItemBackup: upgSelectedInputItem
       });
     });
   }
@@ -2290,7 +2292,6 @@ socket.on('upgrade:result', (data) => {
     if (elapsed >= spinDurationMs - 150) return; // Stop near the end
 
     const progress = elapsed / spinDurationMs; // 0.0 to 1.0
-    // Gradually slow down ticks as wheel slows down
     if (progress < 0.4) {
       nextTickDelay = 45 + progress * 50;
     } else if (progress < 0.7) {
@@ -2317,23 +2318,12 @@ socket.on('upgrade:result', (data) => {
       btnExecute.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> YÜKSELT';
     }
 
+    // Force synchronize inventory immediately
     if (currentUser) {
       currentUser.inventory = data.newInventory || [];
       saveUserBackup(currentUser);
       updateInventoryBadge();
-    }
-
-    // Update wheel center info clearly with KAZANDIN / KAYBETTİN
-    if (wheelChanceText && wheelMultiplierText) {
-      if (data.isWin) {
-        wheelChanceText.textContent = 'KAZANDIN!';
-        wheelChanceText.style.color = '#10b981';
-        wheelMultiplierText.textContent = `+₺${Number(data.wonItem.basePrice).toLocaleString()} TL (${data.multiplier}x)`;
-      } else {
-        wheelChanceText.textContent = 'KAYBETTİN!';
-        wheelChanceText.style.color = '#ef4444';
-        wheelMultiplierText.textContent = 'EŞYA YANDI';
-      }
+      renderInventory(); // Real-time sync with inventory view
     }
 
     if (data.isWin) {
@@ -2352,6 +2342,15 @@ socket.on('upgrade:result', (data) => {
       // Auto-select won item as new input item for chaining upgrades!
       upgSelectedInputItem = data.wonItem;
       selectUpgraderInput(data.wonItem);
+
+      // Now set the winning text explicitly so it is prominent
+      if (wheelChanceText) {
+        wheelChanceText.textContent = 'KAZANDIN!';
+        wheelChanceText.style.color = '#10b981';
+      }
+      if (wheelMultiplierText) {
+        wheelMultiplierText.textContent = `+₺${Number(data.wonItem.basePrice).toLocaleString()} TL (${data.multiplier}x)`;
+      }
     } else {
       try { window.soundEngine.playLose(); } catch(e) {}
       if (statusMsg) {
@@ -2373,9 +2372,18 @@ socket.on('upgrade:result', (data) => {
       }
       const priceBadge = document.getElementById('upgInputPriceBadge');
       if (priceBadge) priceBadge.textContent = '₺0 TL';
-    }
 
-    renderUpgrader();
+      renderUpgraderInventory();
+      renderUpgraderTargets();
+
+      if (wheelChanceText) {
+        wheelChanceText.textContent = 'KAYBETTİN!';
+        wheelChanceText.style.color = '#ef4444';
+      }
+      if (wheelMultiplierText) {
+        wheelMultiplierText.textContent = 'EŞYA YANDI';
+      }
+    }
 
     // Show big animated result modal so the outcome is unmistakable
     showUpgraderResultModal(data);
@@ -2399,7 +2407,7 @@ function showUpgraderResultModal(data) {
 
   if (data.isWin) {
     card.style.borderColor = '#10b981';
-    card.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.45)';
+    card.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.55)';
     if (badge) {
       badge.textContent = '🎉 KAZANDINIZ!';
       badge.style.color = '#10b981';
@@ -2418,7 +2426,7 @@ function showUpgraderResultModal(data) {
     if (mult) mult.textContent = `⚡ ${data.multiplier}x Değerine Katlandı!`;
   } else {
     card.style.borderColor = '#ef4444';
-    card.style.boxShadow = '0 0 40px rgba(239, 68, 68, 0.45)';
+    card.style.boxShadow = '0 0 40px rgba(239, 68, 68, 0.55)';
     if (badge) {
       badge.textContent = '💥 KAYBETTİNİZ!';
       badge.style.color = '#ef4444';
@@ -2442,6 +2450,14 @@ function showUpgraderResultModal(data) {
     };
   }
 
+  // Also close when clicking backdrop
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  };
+
+  modal.style.zIndex = '99999';
   modal.style.display = 'flex';
 }
 

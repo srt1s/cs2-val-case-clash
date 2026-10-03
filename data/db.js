@@ -193,18 +193,32 @@ module.exports = {
     return removed;
   },
 
-  // Upgrader Engine: Upgrade skin or lose it
-  upgradeItem(userId, inputInstanceId, targetSkin) {
-    const user = dbData.users[userId];
-    if (!user || !user.inventory) return { success: false, message: 'Kullanıcı bulunamadı.' };
-
-    let index = user.inventory.findIndex(i => i.instanceId === inputInstanceId);
-    if (index === -1 && typeof inputInstanceId === 'string') {
-      index = user.inventory.findIndex(i => i.id === inputInstanceId || i._id === inputInstanceId);
+  // Upgrader Engine: Upgrade skin or lose it (Guaranteed robust inventory matching)
+  upgradeItem(userId, inputInstanceId, targetSkin, inputItemBackup = null) {
+    let user = dbData.users[userId];
+    if (!user) {
+      return { success: false, message: 'Kullanıcı oturumu bulunamadı. Lütfen sayfayı yenileyin.' };
     }
-    if (index === -1) return { success: false, message: 'Yükseltilecek eşya envanterinizde bulunamadı.' };
+    if (!Array.isArray(user.inventory)) user.inventory = [];
 
-    const inputItem = user.inventory[index];
+    let index = user.inventory.findIndex(i => i && (i.instanceId === inputInstanceId || i.id === inputInstanceId || i._id === inputInstanceId));
+    
+    // Fallback: match by name or ID if instanceId differed due to backup restore
+    if (index === -1 && inputItemBackup) {
+      index = user.inventory.findIndex(i => i && (i.name === inputItemBackup.name || i.id === inputItemBackup.id));
+    }
+
+    // Fallback 2: If item is in client backup but server was restarted empty, add it temporarily so it can be consumed
+    let inputItem = null;
+    if (index !== -1) {
+      inputItem = user.inventory[index];
+      user.inventory.splice(index, 1);
+    } else if (inputItemBackup && typeof inputItemBackup === 'object' && inputItemBackup.name) {
+      inputItem = inputItemBackup;
+    } else {
+      return { success: false, message: 'Yükseltilecek eşya envanterinizde bulunamadı.' };
+    }
+
     const inputPrice = Math.max(1, Number(inputItem.officialBasePrice || inputItem.basePrice || 1));
     const targetPrice = Math.max(1, Number(targetSkin.basePrice || targetSkin.price || 1));
 
@@ -221,9 +235,6 @@ module.exports = {
     const roll = Math.round(Math.random() * 10000) / 100;
     const isWin = roll <= winChance;
 
-    // Remove input item from inventory regardless of win/lose
-    user.inventory.splice(index, 1);
-
     let wonItem = null;
     if (isWin) {
       const newInstId = 'upg_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 7);
@@ -231,6 +242,7 @@ module.exports = {
         ...targetSkin,
         instanceId: newInstId,
         officialBasePrice: targetPrice,
+        basePrice: targetPrice,
         acquiredAt: Date.now()
       };
       user.inventory.push(wonItem);

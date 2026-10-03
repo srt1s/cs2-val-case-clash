@@ -765,7 +765,7 @@ io.on('connection', (socket) => {
   });
 
   // Upgrader: Upgrade skin or lose it
-  socket.on('upgrade:roll', ({ inputInstanceId, targetSkinId }) => {
+  socket.on('upgrade:roll', ({ inputInstanceId, targetSkinId, inputItemBackup }) => {
     const session = activeSockets.get(socket.id);
     if (!session) return socket.emit('upgrade:error', { message: 'Lütfen önce giriş yapın.' });
 
@@ -778,7 +778,7 @@ io.on('connection', (socket) => {
       return socket.emit('upgrade:error', { message: 'Hedef skin bulunamadı.' });
     }
 
-    const result = db.upgradeItem(session.userId, inputInstanceId, targetSkin);
+    const result = db.upgradeItem(session.userId, inputInstanceId, targetSkin, inputItemBackup);
     if (!result.success) {
       return socket.emit('upgrade:error', { message: result.message });
     }
