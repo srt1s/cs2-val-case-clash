@@ -2251,6 +2251,8 @@ socket.on('upgrade:result', (data) => {
   const needle = document.getElementById('wheelNeedle');
   const btnExecute = document.getElementById('btnExecuteUpgrade');
   const statusMsg = document.getElementById('upgStatusMsg');
+  const wheelChanceText = document.getElementById('wheelChanceText');
+  const wheelMultiplierText = document.getElementById('wheelMultiplierText');
 
   // Calculate final angle
   // Win slice is 0 to (winChance * 3.6) degrees
@@ -2265,24 +2267,50 @@ socket.on('upgrade:result', (data) => {
     stopAngle = winDegrees + Math.random() * (356 - winDegrees) + 2;
   }
 
-  // Add 5 full rotations (1800 deg)
-  const spins = 1800;
+  // 8 full rotations (2880 deg) + angle for dramatic tension (Total ~6.5 seconds)
+  const spins = 2880;
   upgCurrentNeedleRotation += spins + (360 - (upgCurrentNeedleRotation % 360)) + stopAngle;
 
+  const spinDurationMs = 6500;
   if (needle) {
-    needle.style.transition = 'transform 3.5s cubic-bezier(0.12, 0.85, 0.2, 1)';
+    needle.style.transition = `transform ${spinDurationMs / 1000}s cubic-bezier(0.08, 0.85, 0.15, 1)`;
     needle.style.transform = `rotate(${upgCurrentNeedleRotation}deg)`;
   }
 
-  // Ticking sound during spin
-  let ticks = 0;
-  const tickInterval = setInterval(() => {
-    ticks++;
-    try { window.soundEngine.playSpinTick(); } catch(e) {}
-    if (ticks > 16) clearInterval(tickInterval);
-  }, 180);
+  if (statusMsg) {
+    statusMsg.className = 'upg-status-text';
+    statusMsg.textContent = 'İbre dönüyor... Şans seninle olsun!';
+  }
 
-  // Complete spin after 3.5 seconds
+  // Dynamic sound tick generator that decelerates realistically with the wheel
+  const startTime = Date.now();
+  let nextTickDelay = 45; // Start fast
+  function scheduleNextTick() {
+    const elapsed = Date.now() - startTime;
+    if (elapsed >= spinDurationMs - 150) return; // Stop near the end
+
+    const progress = elapsed / spinDurationMs; // 0.0 to 1.0
+    // Gradually slow down ticks as wheel slows down
+    if (progress < 0.4) {
+      nextTickDelay = 45 + progress * 50;
+    } else if (progress < 0.7) {
+      nextTickDelay = 70 + (progress - 0.4) * 250;
+    } else if (progress < 0.9) {
+      nextTickDelay = 150 + (progress - 0.7) * 900;
+    } else {
+      nextTickDelay = 330 + (progress - 0.9) * 2200;
+    }
+
+    try {
+      const pitch = 580 - progress * 160;
+      window.soundEngine.playSpinTick(pitch);
+    } catch(e) {}
+
+    setTimeout(scheduleNextTick, nextTickDelay);
+  }
+  scheduleNextTick();
+
+  // Complete spin after 6.5 seconds
   setTimeout(() => {
     isUpgradingRolling = false;
     if (btnExecute) {
@@ -2295,14 +2323,32 @@ socket.on('upgrade:result', (data) => {
       updateInventoryBadge();
     }
 
+    // Update wheel center info clearly with KAZANDIN / KAYBETTİN
+    if (wheelChanceText && wheelMultiplierText) {
+      if (data.isWin) {
+        wheelChanceText.textContent = 'KAZANDIN!';
+        wheelChanceText.style.color = '#10b981';
+        wheelMultiplierText.textContent = `+₺${Number(data.wonItem.basePrice).toLocaleString()} TL (${data.multiplier}x)`;
+      } else {
+        wheelChanceText.textContent = 'KAYBETTİN!';
+        wheelChanceText.style.color = '#ef4444';
+        wheelMultiplierText.textContent = 'EŞYA YANDI';
+      }
+    }
+
     if (data.isWin) {
       try { window.soundEngine.playRareFanfare(true); } catch(e) {}
+      try {
+        if (typeof confetti === 'function') {
+          confetti({ particleCount: 140, spread: 80, origin: { y: 0.6 } });
+        }
+      } catch(e) {}
+
       if (statusMsg) {
         statusMsg.className = 'upg-status-text win';
         statusMsg.textContent = `🎉 TEBRİKLER! ${data.wonItem.name} KAZANDINIZ!`;
       }
-      showInAppToast(`⚡ YÜKSELTME BAŞARILI! ${data.wonItem.name} kazandınız!`, true);
-      
+
       // Auto-select won item as new input item for chaining upgrades!
       upgSelectedInputItem = data.wonItem;
       selectUpgraderInput(data.wonItem);
@@ -2310,10 +2356,9 @@ socket.on('upgrade:result', (data) => {
       try { window.soundEngine.playLose(); } catch(e) {}
       if (statusMsg) {
         statusMsg.className = 'upg-status-text lose';
-        statusMsg.textContent = `💥 BAŞARISIZ! ${data.inputItem.name} eşyası yandı.`;
+        statusMsg.textContent = `💥 BAŞARISIZ! ${data.inputItem.name} eşyası kaybedildi.`;
       }
-      showInAppToast(`Yükseltme başarısız: ${data.inputItem.name} kaybedildi!`, false);
-      
+
       // Reset input item
       upgSelectedInputItem = null;
       const preview = document.getElementById('upgInputPreview');
@@ -2331,8 +2376,74 @@ socket.on('upgrade:result', (data) => {
     }
 
     renderUpgrader();
-  }, 3550);
+
+    // Show big animated result modal so the outcome is unmistakable
+    showUpgraderResultModal(data);
+
+  }, spinDurationMs + 100);
 });
+
+// Show Win/Lose Result Modal
+function showUpgraderResultModal(data) {
+  const modal = document.getElementById('upgraderResultModal');
+  const card = document.getElementById('upgraderResultCard');
+  const badge = document.getElementById('upgResultStatusBadge');
+  const title = document.getElementById('upgResultTitle');
+  const sub = document.getElementById('upgResultSub');
+  const img = document.getElementById('upgResultImg');
+  const price = document.getElementById('upgResultPrice');
+  const mult = document.getElementById('upgResultMultiplier');
+  const btnClose = document.getElementById('btnCloseUpgraderResult');
+
+  if (!modal || !card) return;
+
+  if (data.isWin) {
+    card.style.borderColor = '#10b981';
+    card.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.45)';
+    if (badge) {
+      badge.textContent = '🎉 KAZANDINIZ!';
+      badge.style.color = '#10b981';
+    }
+    if (title) title.textContent = data.wonItem.name;
+    if (sub) sub.textContent = `Yükseltme Başarılı! %${data.winChance.toFixed(2)} şans tutturuldu!`;
+    if (img) {
+      img.src = data.wonItem.image;
+      img.style.filter = 'drop-shadow(0 0 16px rgba(16, 185, 129, 0.6))';
+      img.style.opacity = '1';
+    }
+    if (price) {
+      price.textContent = `₺${Number(data.wonItem.basePrice).toLocaleString()} TL`;
+      price.style.color = '#10b981';
+    }
+    if (mult) mult.textContent = `⚡ ${data.multiplier}x Değerine Katlandı!`;
+  } else {
+    card.style.borderColor = '#ef4444';
+    card.style.boxShadow = '0 0 40px rgba(239, 68, 68, 0.45)';
+    if (badge) {
+      badge.textContent = '💥 KAYBETTİNİZ!';
+      badge.style.color = '#ef4444';
+    }
+    if (title) title.textContent = 'Yükseltme Başarısız';
+    if (sub) sub.textContent = `Feda edilen "${data.inputItem.name}" eşyası yandı.`;
+    if (img) {
+      img.src = data.inputItem.image;
+      img.style.filter = 'grayscale(1) opacity(0.5)';
+    }
+    if (price) {
+      price.textContent = '₺0 TL';
+      price.style.color = '#ef4444';
+    }
+    if (mult) mult.textContent = `Kazanma Şansı %${data.winChance.toFixed(2)} idi (${data.multiplier}x)`;
+  }
+
+  if (btnClose) {
+    btnClose.onclick = () => {
+      modal.style.display = 'none';
+    };
+  }
+
+  modal.style.display = 'flex';
+}
 
 socket.on('upgrade:error', (data) => {
   isUpgradingRolling = false;

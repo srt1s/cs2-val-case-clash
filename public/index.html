@@ -371,6 +371,28 @@
     </div>
   </div>
 
+  <!-- UPGRADER RESULT MODAL (KAZANDIN / KAYBETTİN) -->
+  <div class="reveal-modal" id="upgraderResultModal" style="display: none;">
+    <div class="reveal-card" id="upgraderResultCard" style="max-width: 440px;">
+      <div id="upgResultStatusBadge" style="font-size: 1.1rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem;">KAZANDINIZ!</div>
+      <h2 style="font-size: 1.6rem; font-weight: 900; margin-top: 0.2rem;" id="upgResultTitle">AWP | Dragon Lore</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem;" id="upgResultSub">Yükseltme Başarılı</p>
+      
+      <div id="upgResultImgWrapper" style="position: relative; margin: 1.25rem 0;">
+        <img id="upgResultImg" src="" alt="Skin" class="reveal-img">
+      </div>
+      
+      <div style="font-size: 1.6rem; font-weight: 900; margin-bottom: 0.4rem;" id="upgResultPrice">₺0 TL</div>
+      <div style="font-size: 0.95rem; font-weight: 700; color: #f59e0b; margin-bottom: 1.25rem;" id="upgResultMultiplier">0.00x Çarpan</div>
+      
+      <div class="reveal-actions" style="justify-content: center; width: 100%;">
+        <button class="btn-primary" id="btnCloseUpgraderResult" style="min-width: 160px; padding: 0.8rem 1.5rem;">
+          <i class="fa-solid fa-check"></i> Tamam
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- MARKET LISTING MODAL -->
   <div class="reveal-modal" id="marketListModal" style="display: none;">
     <div class="reveal-card" style="max-width: 400px; border-color: #3b82f6;">
