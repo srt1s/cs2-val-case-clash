@@ -291,6 +291,10 @@ function setupEventListeners() {
         }
         return;
       }
+      if (!socket || !socket.connected) {
+        showInAppToast('Sunucu bağlantısı koptu. Lütfen biraz bekleyip tekrar deneyin.', false);
+        return;
+      }
 
       isSpinning = true;
       btnOpenCase.disabled = true;
@@ -307,6 +311,7 @@ function setupEventListeners() {
           if (btnText && selectedCase) {
             btnText.textContent = `KASAYI AÇ (${selectedCase.cost || 1} ANAHTAR)`;
           }
+          showInAppToast('Sunucudan yanıt alınamadı. İşlem iptal edildi.', false);
         }
       }, 6500);
     });
@@ -2406,7 +2411,7 @@ function updateUpgraderWheel() {
   }
 
   const rawChance = (inputPrice / targetPrice) * 100;
-  const winChance = Math.min(75, Math.max(0.5, Math.round(rawChance * 0.88 * 100) / 100));
+  const winChance = Math.min(65, Math.max(0.5, Math.round(rawChance * 0.82 * 100) / 100));
   const multiplier = Math.round((targetPrice / inputPrice) * 100) / 100;
 
   const circ = 722.56;

@@ -768,8 +768,9 @@ io.on('connection', (socket) => {
 
   // Open Case
   socket.on('case:open', (payload) => {
-    const session = activeSockets.get(socket.id);
-    if (!session) { socket.emit('case:error', { message: 'Oturum yenileniyor, tekrar deneyin.' }); return socket.emit('session:lost'); }
+    try {
+      const session = activeSockets.get(socket.id);
+      if (!session) { socket.emit('case:error', { message: 'Oturum yenileniyor, tekrar deneyin.' }); return socket.emit('session:lost'); }
 
     const user = db.getUserById(session.userId);
     if (!user) return socket.emit('case:error', { message: 'Kullanıcı bulunamadı.' });
@@ -853,6 +854,10 @@ io.on('connection', (socket) => {
         db.addChatMessage(alertMsg);
         io.emit('chat:message', alertMsg);
       }, 6100);
+    }
+    } catch (err) {
+      console.error('[CASE OPEN ERROR]', err);
+      socket.emit('case:error', { message: 'Kasa açılırken sunucu hatası oluştu. Lütfen tekrar deneyin.' });
     }
   });
 
