@@ -1648,7 +1648,7 @@ window.INITIAL_CASES = [
     "game": "cs2",
     "cost": 1,
     "icon": "fa-cube",
-    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VToUxSsi4_frHBVsva3afI0cq3AXbXNxYm1xXQ6CSpnlx8gsWjXzdjwdi_BawIqDJYkE_lK7EaGk8eB_g",
+    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_fr3cV6vT9avBvefWWDDGTxbZ14rhsTX7qkE90sDiHwt2pdC-TblJ2DsB1QPlK7Ee9riHKAA",
     "items": [
       {
         "skin": {
@@ -1755,7 +1755,7 @@ window.INITIAL_CASES = [
     "game": "cs2",
     "cost": 1,
     "icon": "fa-rainbow",
-    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTsUB35i_frHXFvs-b6PfU8eC2eWWiWkvtw4eM-Hiyglk0k5m_Wytz7dyzBPQMoCJYkE_lK7EZf-q3rTQ",
+    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frHoVu6D7PaA0JaDACjKUwOom47VrTSzrw0Vx4W_Sydz9JC7FZgckCZYjRPlK7EcPuDAQzw",
     "items": [
       {
         "skin": {
@@ -1862,7 +1862,7 @@ window.INITIAL_CASES = [
     "game": "cs2",
     "cost": 1,
     "icon": "fa-atom",
-    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqUh35hY_frHRUtPaqafA1fquXWTKVkuB3tOB8HiiyllAjtDqIytz9cCyRPABwD5YkE_lK7EXQ03b1jQ",
+    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bjz61TqQCKj0JfipHMN7aX2bfM9eaPDXT7Glbx1s7Y8HHHnw0sltWXSmYmqcH-UaAU-Sswn_16VNj0",
     "items": [
       {
         "skin": {
@@ -2076,7 +2076,7 @@ window.INITIAL_CASES = [
     "game": "cs2",
     "cost": 1,
     "icon": "fa-fire-flame-curved",
-    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqUB_7ho_frHVVuva-afU2e_6TWjLFku4itvVjGimllggk4G7Qn4b8di3DaAZwDJYkE_lK7EZL-fG4qQ",
+    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frHMVu6r9MaA6ePPAWjbGwrwm47dtTnu2kUl14mzUnomudnqQaQ4iApF5TPlK7Ee3MsZV-w",
     "items": [
       {
         "skin": {
@@ -2183,7 +2183,7 @@ window.INITIAL_CASES = [
     "game": "val",
     "cost": 1,
     "icon": "fa-bolt",
-    "image": "https://media.valorant-api.com/weaponskins/3c0bb9bf-4886-89bf-7267-27b592186844/displayicon.png",
+    "image": "https://media.valorant-api.com/weaponskins/6029ac35-4eca-8428-26d5-0896013e4c63/displayicon.png",
     "items": [
       {
         "skin": {
@@ -2290,7 +2290,7 @@ window.INITIAL_CASES = [
     "game": "val",
     "cost": 1,
     "icon": "fa-snowflake",
-    "image": "https://media.valorant-api.com/weaponskins/f5e3bc82-4fcf-8419-5d25-9fa83f886f68/displayicon.png",
+    "image": "https://media.valorant-api.com/weaponskins/feb4eb97-4ab3-793a-9a92-1b8af59dc023/displayicon.png",
     "items": [
       {
         "skin": {
@@ -2397,7 +2397,7 @@ window.INITIAL_CASES = [
     "game": "val",
     "cost": 1,
     "icon": "fa-compass",
-    "image": "https://media.valorant-api.com/weaponskins/e7868019-4824-2c67-6240-278cf05fa0e2/displayicon.png",
+    "image": "https://media.valorant-api.com/weaponskins/6bea8564-48a8-5011-dbf7-a2856713de08/displayicon.png",
     "items": [
       {
         "skin": {
@@ -2504,7 +2504,7 @@ window.INITIAL_CASES = [
     "game": "val",
     "cost": 1,
     "icon": "fa-hat-cowboy",
-    "image": "https://media.valorant-api.com/weaponskins/c67f8045-4293-270f-1555-d39bfeae2872/displayicon.png",
+    "image": "https://media.valorant-api.com/weaponskins/cdcfab50-425d-6410-7a54-6aa913b7ce48/displayicon.png",
     "items": [
       {
         "skin": {
@@ -2611,7 +2611,7 @@ window.INITIAL_CASES = [
     "game": "val",
     "cost": 1,
     "icon": "fa-robot",
-    "image": "https://media.valorant-api.com/weaponskins/1b7bc880-4cf8-5e82-e3d6-44b2f3df7b9c/displayicon.png",
+    "image": "https://media.valorant-api.com/weaponskins/c5482640-4652-6948-29c6-769e8198db27/displayicon.png",
     "items": [
       {
         "skin": {
