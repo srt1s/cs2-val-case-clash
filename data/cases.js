@@ -245,7 +245,7 @@ const CS2_SKINS = {
     weapon: 'Karambit',
     game: 'cs2',
     rarity: 'knife',
-    basePrice: 35000,
+    basePrice: 30800,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1Q7uCvZaZkNM-SH1ifyOJztN5lRi67gVNz5DvUmdj4eXuWOFAhAsF4RLFc5BC4xtbuY7yx7wDbgo9CzSj2h3xK8G81tB_XeHWq'
   },
   ak47_case_hardened: {
@@ -254,7 +254,7 @@ const CS2_SKINS = {
     weapon: 'AK-47',
     game: 'cs2',
     rarity: 'classified',
-    basePrice: 7500,
+    basePrice: 6600,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiNK0P2nZKFpH_yaCW-Ej7sk5bE8Sn-2lEpz4zndzoyvdHuUPwFzWZYiE7EK4Bi4k9TlY-y24FbAy9USGSiZd5Q'
   },
   awp_lightning_strike: {
@@ -263,7 +263,7 @@ const CS2_SKINS = {
     weapon: 'AWP',
     game: 'cs2',
     rarity: 'covert',
-    basePrice: 15000,
+    basePrice: 13200,
     image: 'https://community.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_C9k4_upYLBjKf6UMWaH0dF6ueZhW2frwU1_sW2EmNyvc32RZwMpCpcjQ-EJ4xbtmt3gYezk4wzb3tpAy3mrkGoXubsGIfVN'
   },
   deagle_hypnotic: {
@@ -272,7 +272,7 @@ const CS2_SKINS = {
     weapon: 'Desert Eagle',
     game: 'cs2',
     rarity: 'classified',
-    basePrice: 3500,
+    basePrice: 3080,
     image: 'https://community.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk7vORfqF_NPmUAVicyOl-pK9qSyyywxgjtmnVytyocnLGPA4iWcYmRLYIu0S-xtbuMLjg51DXjoJC02yg2VjGnh4J'
   },
   glock_dragon_tattoo: {
@@ -281,7 +281,7 @@ const CS2_SKINS = {
     weapon: 'Glock-18',
     game: 'cs2',
     rarity: 'restricted',
-    basePrice: 2200,
+    basePrice: 1936,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1a4s2qeqVqL_6sCWufwuVJvOhuRz39xUl-6miDzI37dHyXOlIkA8MmROVfshO9w9G1Ye-ztgPX34tEyi74jjQJsHi_DRfxVg'
   },
   m4a1s_dark_water: {
@@ -290,7 +290,7 @@ const CS2_SKINS = {
     weapon: 'M4A1-S',
     game: 'cs2',
     rarity: 'restricted',
-    basePrice: 2000,
+    basePrice: 1760,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_OGMWrEwL9Jo-9oRCyMnRgmpSTLy9igc3PDbVcnDZd3R-de5hHpl4CxZO6z4gLWjt5Dzyv8iCJA6C5j5vFCD_ThScH7Ig'
   },
   usps_dark_water: {
@@ -299,7 +299,7 @@ const CS2_SKINS = {
     weapon: 'USP-S',
     game: 'cs2',
     rarity: 'milspec',
-    basePrice: 1500,
+    basePrice: 1320,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSIf2sFGKS0-9JtOB7RBa_nBovp3OHy9v8J3vFbgIhC5UmQ7UIsxm7wNDnNr_rswOMiNlGmCWoiH9Juis9_a9cBl2xnYuj'
   },
   aug_wings: {
@@ -308,7 +308,7 @@ const CS2_SKINS = {
     weapon: 'AUG',
     game: 'cs2',
     rarity: 'milspec',
-    basePrice: 450,
+    basePrice: 396,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwi5Hf9Ttk6fevfKxoMuOsD3KX_uJ_t-l9AX7qzE5_sGmEw9uoJCrBOgMoDsN2ReMI4EPrm4fvY-m04ASPgt8Uz3_gznQePzx-iqc'
   },
   sg553_ultraviolet: {
@@ -317,7 +317,7 @@ const CS2_SKINS = {
     weapon: 'SG 553',
     game: 'cs2',
     rarity: 'milspec',
-    basePrice: 350,
+    basePrice: 308,
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLimcO1qx1I4M2-fbZ9LPWsAm6Xyfo44bQ-Tn7gwRt-t2uAw96tIn7FOAF1CsckQLUJ4xXskdO2NLzrtAyIi5UFk3tU_MwgmA'
   },
 
