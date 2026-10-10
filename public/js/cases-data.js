@@ -786,7 +786,7 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_champions_vault",
-    "name": "Champions Kasası",
+    "name": "Şampiyonlar Kasası",
     "subtitle": "2021-2026 Yıllarına Özel Champions Koleksiyonu",
     "game": "val",
     "cost": 100,
@@ -796,7 +796,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2021_vandal",
-          "name": "Champions 2021 Vandal",
+          "name": "Şampiyonlar 2021 Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "knife",
@@ -808,7 +808,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2021_knife",
-          "name": "Champions 2021 Karambit",
+          "name": "Şampiyonlar 2021 Karambit",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -820,7 +820,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2022_phantom",
-          "name": "Champions 2022 Phantom",
+          "name": "Şampiyonlar 2022 Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
@@ -832,7 +832,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2022_knife",
-          "name": "Champions 2022 Butterfly Knife",
+          "name": "Şampiyonlar 2022 Kelebek Bıçağı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "exclusive",
@@ -844,7 +844,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2023_vandal",
-          "name": "Champions 2023 Vandal",
+          "name": "Şampiyonlar 2023 Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "premium",
@@ -856,7 +856,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2023_kunai",
-          "name": "Champions 2023 Kunai",
+          "name": "Şampiyonlar 2023 Kunai",
           "weapon": "Melee",
           "game": "val",
           "rarity": "premium",
@@ -868,7 +868,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2024_phantom",
-          "name": "Champions 2024 Phantom",
+          "name": "Şampiyonlar 2024 Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "deluxe",
@@ -880,7 +880,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2024_blade",
-          "name": "Champions 2024 Blade",
+          "name": "Şampiyonlar 2024 Bıçağı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "deluxe",
@@ -892,7 +892,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2025_vandal",
-          "name": "Champions 2025 Vandal",
+          "name": "Şampiyonlar 2025 Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "select",
@@ -904,7 +904,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2025_knife",
-          "name": "Champions 2025 Butterfly Knife",
+          "name": "Şampiyonlar 2025 Kelebek Bıçağı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "select",
@@ -916,7 +916,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2026_phantom",
-          "name": "Champions 2026 Phantom",
+          "name": "Şampiyonlar 2026 Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "standard",
@@ -928,7 +928,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_champs2026_fan",
-          "name": "Champions 2026 Fan",
+          "name": "Şampiyonlar 2026 Yelpazesi",
           "weapon": "Melee",
           "game": "val",
           "rarity": "standard",
@@ -941,24 +941,36 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_kuronami_edition",
-    "name": "Kuronami Koleksiyon Kasası",
-    "subtitle": "1 Sarı, 2 Kırmızı",
+    "name": "Kuronami Kasası",
+    "subtitle": "Sadece Kuronami Koleksiyonu",
     "game": "val",
     "cost": 1,
-    "icon": "fa-water",
+    "icon": "fa-moon",
     "image": "https://media.valorant-api.com/weaponskins/e37229ed-4ddf-5e7e-e744-8fba60fa2c37/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_kuronami_yaiba",
+          "id": "val_kuronami_no_yaiba",
           "name": "Kuronami no Yaiba",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3500,
+          "basePrice": 3400,
           "image": "https://media.valorant-api.com/weaponskins/e37229ed-4ddf-5e7e-e744-8fba60fa2c37/displayicon.png"
         },
-        "weight": 0.4
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_kuronami_naru_kami",
+          "name": "Kuronami Naru-Kami",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3000,
+          "image": "https://media.valorant-api.com/weaponskins/d0873346-4e42-238e-0251-a399eff11f2f/displayicon.png"
+        },
+        "weight": 0.45
       },
       {
         "skin": {
@@ -967,102 +979,126 @@ window.INITIAL_CASES = [
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 480,
+          "basePrice": 450,
           "image": "https://media.valorant-api.com/weaponskins/d8d5d7a1-4d81-8560-54bc-0692ab40f69b/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_elderflame_vandal",
-          "name": "Elderflame Vandal",
-          "weapon": "Vandal",
+          "id": "val_kuronami_phantom",
+          "name": "Kuronami Phantom",
+          "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 490,
-          "image": "https://media.valorant-api.com/weaponskins/18609205-4edb-5966-cff8-0fba0230ba1e/displayicon.png"
+          "basePrice": 440,
+          "image": "https://media.valorant-api.com/weaponskins/3f6410af-4fd7-74fb-c0f4-6ab61d30022c/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_smite_classic",
-          "name": "Smite Classic",
-          "weapon": "Classic",
+          "id": "val_kuronami_operator",
+          "name": "Kuronami Operator",
+          "weapon": "Operator",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 1.2,
-          "image": "https://media.valorant-api.com/weaponskins/22fdc42d-4ad6-2bec-8033-8a8bdf178826/displayicon.png"
+          "rarity": "premium",
+          "basePrice": 420,
+          "image": "https://media.valorant-api.com/weaponskins/a709ad22-45d5-0b51-5de2-85ad5c5ca405/displayicon.png"
         },
-        "weight": 25
+        "weight": 11.51
       },
       {
         "skin": {
-          "id": "val_luxe_ghost",
-          "name": "Luxe Ghost",
+          "id": "val_kuronami_guardian",
+          "name": "Kuronami Guardian",
+          "weapon": "Guardian",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 400,
+          "image": "https://media.valorant-api.com/weaponskins/cf3ccc67-4570-9a21-1902-4ea07a0070af/displayicon.png"
+        },
+        "weight": 11.51
+      },
+      {
+        "skin": {
+          "id": "val_kuronami_marshal",
+          "name": "Kuronami Marshal",
+          "weapon": "Marshal",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 120,
+          "image": "https://media.valorant-api.com/weaponskins/fb9ff2b0-4d71-d53c-364e-fe98fb5a2411/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_kuronami_sheriff",
+          "name": "Kuronami Sheriff",
+          "weapon": "Sheriff",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 90,
+          "image": "https://media.valorant-api.com/weaponskins/0eec6f2b-4d64-9c16-7846-b8865030f61c/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_kuronami_spectre",
+          "name": "Kuronami Spectre",
+          "weapon": "Spectre",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 18,
+          "image": "https://media.valorant-api.com/weaponskins/f743fe2f-4cab-71d9-81e2-5b8f2f52923f/displayicon.png"
+        },
+        "weight": 20.72
+      },
+      {
+        "skin": {
+          "id": "val_kuronami_ghost",
+          "name": "Kuronami Ghost",
           "weapon": "Ghost",
           "game": "val",
           "rarity": "select",
-          "basePrice": 1.8,
-          "image": "https://media.valorant-api.com/weaponskins/cb98b0d6-4e26-973c-c10d-a38637d04b65/displayicon.png"
+          "basePrice": 12,
+          "image": "https://media.valorant-api.com/weaponskins/431799d6-4e79-bdf2-573d-4cbc8112982e/displayicon.png"
         },
-        "weight": 22
-      },
-      {
-        "skin": {
-          "id": "val_infantry_operator",
-          "name": "Infantry Operator",
-          "weapon": "Operator",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 2.5,
-          "image": "https://media.valorant-api.com/weaponskins/341ef273-43fb-7911-71e8-50adada4cee1/displayicon.png"
-        },
-        "weight": 18
-      },
-      {
-        "skin": {
-          "id": "val_convex_judge",
-          "name": "Convex Judge",
-          "weapon": "Judge",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 1.6,
-          "image": "https://media.valorant-api.com/weaponskins/03751fa0-46db-0df3-b8cb-99adf373ecda/displayicon.png"
-        },
-        "weight": 15
-      },
-      {
-        "skin": {
-          "id": "val_schema_stinger",
-          "name": "Schema Stinger",
-          "weapon": "Stinger",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 1.5,
-          "image": "https://media.valorant-api.com/weaponskins/46c8b165-4ba5-d42c-79e9-4fba8951ca48/displayicon.png"
-        },
-        "weight": 12.6
+        "weight": 20.72
       }
     ]
   },
   {
     "id": "val_reaver_prime_edition",
-    "name": "Yağmacı & Asil Kasası",
-    "subtitle": "1 Sarı, 2 Kırmızı",
+    "name": "Yağmacı Kasası",
+    "subtitle": "Sadece Yağmacı Koleksiyonu",
     "game": "val",
     "cost": 1,
-    "icon": "fa-gem",
-    "image": "https://media.valorant-api.com/weaponskins/b73d7b16-4652-bc5b-5c4c-068aabb19d0a/displayicon.png",
+    "icon": "fa-skull",
+    "image": "https://media.valorant-api.com/weaponskins/0aecb2b8-49cc-560e-42c7-6cbce44f05cf/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_reaver_karambit",
-          "name": "Reaver Karambit",
+          "id": "val_reaver_knife",
+          "name": "Yağmacı Bıçağı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3100,
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/0aecb2b8-49cc-560e-42c7-6cbce44f05cf/displayicon.png"
+        },
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_reaver_karambit",
+          "name": "Yağmacı Karambit",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3000,
           "image": "https://media.valorant-api.com/weaponskins/b73d7b16-4652-bc5b-5c4c-068aabb19d0a/displayicon.png"
         },
         "weight": 0.45
@@ -1070,109 +1106,145 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_reaver_vandal",
-          "name": "Reaver Vandal",
+          "name": "Yağmacı Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 420,
+          "basePrice": 450,
           "image": "https://media.valorant-api.com/weaponskins/30388628-42f0-606c-82c0-73ad43de997f/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_prime_vandal",
-          "name": "Prime Vandal",
-          "weapon": "Vandal",
+          "id": "val_reaver_phantom",
+          "name": "Yağmacı Phantom",
+          "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 400,
-          "image": "https://media.valorant-api.com/weaponskins/b9ee2457-481c-6776-3f5b-0ca8e8f90c89/displayicon.png"
+          "basePrice": 440,
+          "image": "https://media.valorant-api.com/weaponskins/044b28ba-4c3b-d315-140d-d9a249da5567/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_endeavour_bulldog",
-          "name": "Endeavour Bulldog",
-          "weapon": "Bulldog",
+          "id": "val_reaver_operator",
+          "name": "Yağmacı Operator",
+          "weapon": "Operator",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 1.8,
-          "image": "https://media.valorant-api.com/weaponskins/3f8be578-4e47-8afd-1e6c-cb9bb326e8b5/displayicon.png"
+          "rarity": "premium",
+          "basePrice": 420,
+          "image": "https://media.valorant-api.com/weaponskins/aecab890-43b7-d719-06bc-9295e3d116dc/displayicon.png"
         },
-        "weight": 25
+        "weight": 7.68
       },
       {
         "skin": {
-          "id": "val_luxe_ghost",
-          "name": "Luxe Ghost",
+          "id": "val_reaver_guardian",
+          "name": "Yağmacı Guardian",
+          "weapon": "Guardian",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 400,
+          "image": "https://media.valorant-api.com/weaponskins/db348da1-49f2-0bad-b70a-e4ade9d31655/displayicon.png"
+        },
+        "weight": 7.68
+      },
+      {
+        "skin": {
+          "id": "val_reaver_sheriff",
+          "name": "Yağmacı Sheriff",
+          "weapon": "Sheriff",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 380,
+          "image": "https://media.valorant-api.com/weaponskins/a40a6ce2-462c-c864-5d30-7b9408b98d3d/displayicon.png"
+        },
+        "weight": 7.68
+      },
+      {
+        "skin": {
+          "id": "val_reaver_spectre",
+          "name": "Yağmacı Spectre",
+          "weapon": "Spectre",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 120,
+          "image": "https://media.valorant-api.com/weaponskins/1cb1ab52-4c7d-0775-77f4-eaac99968261/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_reaver_odin",
+          "name": "Yağmacı Odin",
+          "weapon": "Odin",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 90,
+          "image": "https://media.valorant-api.com/weaponskins/8dda01a6-4237-f430-ac70-c3ba677963e9/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_reaver_ghost",
+          "name": "Yağmacı Ghost",
           "weapon": "Ghost",
           "game": "val",
           "rarity": "select",
-          "basePrice": 1.8,
-          "image": "https://media.valorant-api.com/weaponskins/cb98b0d6-4e26-973c-c10d-a38637d04b65/displayicon.png"
+          "basePrice": 18,
+          "image": "https://media.valorant-api.com/weaponskins/c7261be6-47d2-ef86-82f4-6a844e45d33c/displayicon.png"
         },
-        "weight": 22
+        "weight": 20.7
       },
       {
         "skin": {
-          "id": "val_convex_judge",
-          "name": "Convex Judge",
-          "weapon": "Judge",
+          "id": "val_reaver_bandit",
+          "name": "Yağmacı Bandit",
+          "weapon": "Bandit",
           "game": "val",
           "rarity": "select",
-          "basePrice": 1.6,
-          "image": "https://media.valorant-api.com/weaponskins/03751fa0-46db-0df3-b8cb-99adf373ecda/displayicon.png"
+          "basePrice": 12,
+          "image": "https://media.valorant-api.com/weaponskins/ff766c80-4c4a-269d-2164-3ebb341de27a/displayicon.png"
         },
-        "weight": 18
-      },
-      {
-        "skin": {
-          "id": "val_schema_stinger",
-          "name": "Schema Stinger",
-          "weapon": "Stinger",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 1.5,
-          "image": "https://media.valorant-api.com/weaponskins/46c8b165-4ba5-d42c-79e9-4fba8951ca48/displayicon.png"
-        },
-        "weight": 15
-      },
-      {
-        "skin": {
-          "id": "val_infantry_operator",
-          "name": "Infantry Operator",
-          "weapon": "Operator",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 2.5,
-          "image": "https://media.valorant-api.com/weaponskins/341ef273-43fb-7911-71e8-50adada4cee1/displayicon.png"
-        },
-        "weight": 12.55
+        "weight": 20.72
       }
     ]
   },
   {
     "id": "val_araxys_glitchpop",
-    "name": "Araxys & Kaos Kasası",
-    "subtitle": "1 Sarı, 2 Kırmızı",
+    "name": "Araxys Kasası",
+    "subtitle": "Sadece Araxys Koleksiyonu",
     "game": "val",
     "cost": 1,
-    "icon": "fa-crown",
-    "image": "https://media.valorant-api.com/weaponskins/4c926aa9-4f26-bc80-c486-9b888333373f/displayicon.png",
+    "icon": "fa-bug",
+    "image": "https://media.valorant-api.com/weaponskins/a486efac-4415-1bfa-68d1-19bca9968101/displayicon.png",
     "items": [
       {
         "skin": {
           "id": "val_araxys_bio_harvester",
-          "name": "Araxys Bio Harvester",
+          "name": "Araxys Biyo Hasatçı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3200,
+          "basePrice": 3400,
           "image": "https://media.valorant-api.com/weaponskins/a486efac-4415-1bfa-68d1-19bca9968101/displayicon.png"
         },
-        "weight": 0.35
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_araxys_bio_atomizers",
+          "name": "Araxys Biyo Atomizör",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3000,
+          "image": "https://media.valorant-api.com/weaponskins/3cc0aac5-45ff-e648-80f2-b9932ddf8bed/displayicon.png"
+        },
+        "weight": 0.45
       },
       {
         "skin": {
@@ -1181,10 +1253,129 @@ window.INITIAL_CASES = [
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 440,
+          "basePrice": 450,
           "image": "https://media.valorant-api.com/weaponskins/4c926aa9-4f26-bc80-c486-9b888333373f/displayicon.png"
         },
         "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_araxys_phantom",
+          "name": "Araxys Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 440,
+          "image": "https://media.valorant-api.com/weaponskins/1cb0bdf7-46e1-92d5-b400-988c99f25d81/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_araxys_operator",
+          "name": "Araxys Operator",
+          "weapon": "Operator",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 420,
+          "image": "https://media.valorant-api.com/weaponskins/6db556e4-4255-6c2c-6a80-8a9dfac96aa9/displayicon.png"
+        },
+        "weight": 11.51
+      },
+      {
+        "skin": {
+          "id": "val_araxys_guardian",
+          "name": "Araxys Guardian",
+          "weapon": "Guardian",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 400,
+          "image": "https://media.valorant-api.com/weaponskins/851c1abc-4a84-7bab-7e44-16a5aadf5afc/displayicon.png"
+        },
+        "weight": 11.51
+      },
+      {
+        "skin": {
+          "id": "val_araxys_sheriff",
+          "name": "Araxys Sheriff",
+          "weapon": "Sheriff",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 120,
+          "image": "https://media.valorant-api.com/weaponskins/317574ca-4a9d-9e5a-f9c4-a79aa378f75b/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_araxys_bulldog",
+          "name": "Araxys Bulldog",
+          "weapon": "Bulldog",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 90,
+          "image": "https://media.valorant-api.com/weaponskins/26d0c312-46c2-1912-302a-b7b8f62640ca/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_araxys_outlaw",
+          "name": "Araxys Outlaw",
+          "weapon": "Outlaw",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 18,
+          "image": "https://media.valorant-api.com/weaponskins/6d73609b-4256-7bf7-46aa-9887c6918992/displayicon.png"
+        },
+        "weight": 20.72
+      },
+      {
+        "skin": {
+          "id": "val_araxys_shorty",
+          "name": "Araxys Shorty",
+          "weapon": "Shorty",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 12,
+          "image": "https://media.valorant-api.com/weaponskins/4e98f273-472c-3376-7195-46a1f81402cc/displayicon.png"
+        },
+        "weight": 20.72
+      }
+    ]
+  },
+  {
+    "id": "val_glitchpop",
+    "name": "Glitchpop Kasası",
+    "subtitle": "Sadece Glitchpop Koleksiyonu",
+    "game": "val",
+    "cost": 1,
+    "icon": "fa-gamepad",
+    "image": "https://media.valorant-api.com/weaponskins/ddc025b2-475f-889a-2800-80b4215582bc/displayicon.png",
+    "items": [
+      {
+        "skin": {
+          "id": "val_glitchpop_dagger",
+          "name": "Glitchpop Hançeri",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/ddc025b2-475f-889a-2800-80b4215582bc/displayicon.png"
+        },
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_glitchpop_axe",
+          "name": "Glitchpop Baltası",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3000,
+          "image": "https://media.valorant-api.com/weaponskins/f0c42e14-4a92-132d-dfd4-cbbef103340c/displayicon.png"
+        },
+        "weight": 0.45
       },
       {
         "skin": {
@@ -1193,212 +1384,117 @@ window.INITIAL_CASES = [
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 390,
+          "basePrice": 450,
           "image": "https://media.valorant-api.com/weaponskins/74789f33-4632-8052-96d7-258538721a32/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_smite_classic",
-          "name": "Smite Classic",
-          "weapon": "Classic",
+          "id": "val_glitchpop_phantom",
+          "name": "Glitchpop Phantom",
+          "weapon": "Phantom",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 1.2,
-          "image": "https://media.valorant-api.com/weaponskins/22fdc42d-4ad6-2bec-8033-8a8bdf178826/displayicon.png"
+          "rarity": "exclusive",
+          "basePrice": 440,
+          "image": "https://media.valorant-api.com/weaponskins/25a7f0f2-4bce-7e45-b4b0-ca9264f5dfcc/displayicon.png"
         },
-        "weight": 25
+        "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_altitude_odin",
-          "name": "Altitude Odin",
-          "weapon": "Odin",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 2.2,
-          "image": "https://media.valorant-api.com/weaponskins/89be9866-4807-6235-2a95-499cd23828df/displayicon.png"
-        },
-        "weight": 22
-      },
-      {
-        "skin": {
-          "id": "val_sensation_vandal",
-          "name": "Sensation Vandal",
-          "weapon": "Vandal",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 3,
-          "image": "https://media.valorant-api.com/weaponskins/72c1e90b-40ca-4304-02eb-28bb2aea4ed2/displayicon.png"
-        },
-        "weight": 18
-      },
-      {
-        "skin": {
-          "id": "val_infantry_operator",
-          "name": "Infantry Operator",
+          "id": "val_glitchpop_operator",
+          "name": "Glitchpop Operator",
           "weapon": "Operator",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 2.5,
-          "image": "https://media.valorant-api.com/weaponskins/341ef273-43fb-7911-71e8-50adada4cee1/displayicon.png"
+          "rarity": "premium",
+          "basePrice": 420,
+          "image": "https://media.valorant-api.com/weaponskins/a491b943-43e3-4e98-64a6-fc87fca43605/displayicon.png"
         },
-        "weight": 15
+        "weight": 11.51
       },
       {
         "skin": {
-          "id": "val_schema_stinger",
-          "name": "Schema Stinger",
-          "weapon": "Stinger",
+          "id": "val_glitchpop_odin",
+          "name": "Glitchpop Odin",
+          "weapon": "Odin",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 1.5,
-          "image": "https://media.valorant-api.com/weaponskins/46c8b165-4ba5-d42c-79e9-4fba8951ca48/displayicon.png"
-        },
-        "weight": 12.65
-      }
-    ]
-  },
-  {
-    "id": "val_flaneur_edition",
-    "name": "Flâneur & Yelpaze Kasası",
-    "subtitle": "1 Sarı, 2 Kırmızı",
-    "game": "val",
-    "cost": 1,
-    "icon": "fa-fan",
-    "image": "https://media.valorant-api.com/weaponskins/1cd09fbd-43cb-a5f6-90fa-08994342d747/displayicon.png",
-    "items": [
-      {
-        "skin": {
-          "id": "val_ignite_fan",
-          "name": "Ignite Fan",
-          "weapon": "Melee",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 2900,
-          "image": "https://media.valorant-api.com/weaponskins/1cd09fbd-43cb-a5f6-90fa-08994342d747/displayicon.png"
-        },
-        "weight": 0.5
-      },
-      {
-        "skin": {
-          "id": "val_kuronami_vandal",
-          "name": "Kuronami Vandal",
-          "weapon": "Vandal",
-          "game": "val",
-          "rarity": "exclusive",
-          "basePrice": 480,
-          "image": "https://media.valorant-api.com/weaponskins/d8d5d7a1-4d81-8560-54bc-0692ab40f69b/displayicon.png"
-        },
-        "weight": 3.5
-      },
-      {
-        "skin": {
-          "id": "val_prime_vandal",
-          "name": "Prime Vandal",
-          "weapon": "Vandal",
-          "game": "val",
-          "rarity": "exclusive",
+          "rarity": "premium",
           "basePrice": 400,
-          "image": "https://media.valorant-api.com/weaponskins/b9ee2457-481c-6776-3f5b-0ca8e8f90c89/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskins/97af88e4-4176-9fa3-4a26-57919443dab7/displayicon.png"
         },
-        "weight": 3.5
+        "weight": 11.51
       },
       {
         "skin": {
-          "id": "val_luxe_ghost",
-          "name": "Luxe Ghost",
-          "weapon": "Ghost",
+          "id": "val_glitchpop_judge",
+          "name": "Glitchpop Judge",
+          "weapon": "Judge",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 120,
+          "image": "https://media.valorant-api.com/weaponskins/28a659a4-439e-fcd0-6236-d39979ee5c51/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_glitchpop_bulldog",
+          "name": "Glitchpop Bulldog",
+          "weapon": "Bulldog",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 90,
+          "image": "https://media.valorant-api.com/weaponskins/285c6731-4451-b930-7a3d-c5a736d00f5e/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_glitchpop_frenzy",
+          "name": "Glitchpop Frenzy",
+          "weapon": "Frenzy",
           "game": "val",
           "rarity": "select",
-          "basePrice": 1.8,
-          "image": "https://media.valorant-api.com/weaponskins/cb98b0d6-4e26-973c-c10d-a38637d04b65/displayicon.png"
+          "basePrice": 18,
+          "image": "https://media.valorant-api.com/weaponskins/5596d764-4b62-210b-59db-7982e9d4c23f/displayicon.png"
         },
-        "weight": 24
+        "weight": 20.72
       },
       {
         "skin": {
-          "id": "val_smite_classic",
-          "name": "Smite Classic",
+          "id": "val_glitchpop_classic",
+          "name": "Glitchpop Classic",
           "weapon": "Classic",
           "game": "val",
           "rarity": "select",
-          "basePrice": 1.2,
-          "image": "https://media.valorant-api.com/weaponskins/22fdc42d-4ad6-2bec-8033-8a8bdf178826/displayicon.png"
+          "basePrice": 12,
+          "image": "https://media.valorant-api.com/weaponskins/8b2598eb-4db9-6338-4a25-c780402c780e/displayicon.png"
         },
-        "weight": 22
-      },
-      {
-        "skin": {
-          "id": "val_convex_judge",
-          "name": "Convex Judge",
-          "weapon": "Judge",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 1.6,
-          "image": "https://media.valorant-api.com/weaponskins/03751fa0-46db-0df3-b8cb-99adf373ecda/displayicon.png"
-        },
-        "weight": 18
-      },
-      {
-        "skin": {
-          "id": "val_endeavour_bulldog",
-          "name": "Endeavour Bulldog",
-          "weapon": "Bulldog",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 1.8,
-          "image": "https://media.valorant-api.com/weaponskins/3f8be578-4e47-8afd-1e6c-cb9bb326e8b5/displayicon.png"
-        },
-        "weight": 15
-      },
-      {
-        "skin": {
-          "id": "val_altitude_odin",
-          "name": "Altitude Odin",
-          "weapon": "Odin",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 2.2,
-          "image": "https://media.valorant-api.com/weaponskins/89be9866-4807-6235-2a95-499cd23828df/displayicon.png"
-        },
-        "weight": 13.5
+        "weight": 20.72
       }
     ]
   },
   {
     "id": "val_oni_samurai",
-    "name": "Oni & Samuray Kasası",
-    "subtitle": "Onimaru Kunitsuna & Oni Koleksiyonu",
+    "name": "Oni Kasası",
+    "subtitle": "Sadece Oni Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-khanda",
-    "image": "https://media.valorant-api.com/weaponskins/4e7342a5-4820-2d79-a488-0fa51a4357f7/displayicon.png",
+    "image": "https://media.valorant-api.com/weaponskins/206fc3fe-45a0-6c19-c367-229b98b6a2aa/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_onimaru_kunitsuna",
-          "name": "★ Onimaru Kunitsuna Katana",
+          "id": "val_oni_claw",
+          "name": "Oni Pençesi",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3500,
-          "image": "https://media.valorant-api.com/weaponskins/4e7342a5-4820-2d79-a488-0fa51a4357f7/displayicon.png"
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/206fc3fe-45a0-6c19-c367-229b98b6a2aa/displayicon.png"
         },
-        "weight": 0.4
-      },
-      {
-        "skin": {
-          "id": "val_ruined_king_blade",
-          "name": "★ Mahvolmuş Kralın Kılıcı",
-          "weapon": "Melee",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 2950,
-          "image": "https://media.valorant-api.com/weaponskins/b1e9530d-4618-4f2e-1b75-f1a90c91b19e/displayicon.png"
-        },
-        "weight": 0.5
+        "weight": 0.45
       },
       {
         "skin": {
@@ -1419,225 +1515,189 @@ window.INITIAL_CASES = [
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 450,
+          "basePrice": 440,
           "image": "https://media.valorant-api.com/weaponskins/36791b03-452d-8dad-0091-898cc28d2196/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_ion_vandal",
-          "name": "İyon Vandal",
-          "weapon": "Vandal",
+          "id": "val_oni_guardian",
+          "name": "Oni Guardian",
+          "weapon": "Guardian",
           "game": "val",
           "rarity": "premium",
           "basePrice": 420,
-          "image": "https://media.valorant-api.com/weaponskins/596ce51d-40e3-dc21-b02d-b08d070a7883/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskins/850fea42-419f-f284-84ae-40ae1eabbb5b/displayicon.png"
         },
-        "weight": 4
+        "weight": 11.57
       },
       {
         "skin": {
-          "id": "val_ruination_phantom",
-          "name": "Mahvolmuş Phantom",
-          "weapon": "Phantom",
+          "id": "val_oni_ares",
+          "name": "Oni Ares",
+          "weapon": "Ares",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 390,
-          "image": "https://media.valorant-api.com/weaponskins/5b43d27b-419c-f2bc-53fe-d7829dad46b3/displayicon.png"
+          "basePrice": 400,
+          "image": "https://media.valorant-api.com/weaponskins/759bca71-4764-19f8-8890-239eedb78fa3/displayicon.png"
         },
-        "weight": 6
+        "weight": 11.57
       },
       {
         "skin": {
-          "id": "val_sovereign_ghost",
-          "name": "Asil Ruh Ghost",
-          "weapon": "Ghost",
+          "id": "val_oni_bulldog",
+          "name": "Oni Bulldog",
+          "weapon": "Bulldog",
           "game": "val",
           "rarity": "deluxe",
           "basePrice": 120,
-          "image": "https://media.valorant-api.com/weaponskins/a9890917-41ea-eb55-47e7-ee990a87fa4e/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskins/325d2274-487b-8672-84d6-6db8e9798447/displayicon.png"
         },
-        "weight": 15
+        "weight": 13.88
       },
       {
         "skin": {
-          "id": "val_sakura_vandal",
-          "name": "Sakura Vandal",
-          "weapon": "Vandal",
+          "id": "val_oni_bucky",
+          "name": "Oni Bucky",
+          "weapon": "Bucky",
           "game": "val",
           "rarity": "deluxe",
-          "basePrice": 60,
-          "image": "https://media.valorant-api.com/weaponskins/f946ef5c-46ab-e146-a712-1d99a1651356/displayicon.png"
+          "basePrice": 90,
+          "image": "https://media.valorant-api.com/weaponskins/7da96a2a-43ce-91c2-28f9-0c95529d133e/displayicon.png"
         },
-        "weight": 20
+        "weight": 13.88
       },
       {
         "skin": {
-          "id": "val_sakura_classic",
-          "name": "Sakura Classic",
-          "weapon": "Classic",
+          "id": "val_oni_frenzy",
+          "name": "Oni Frenzy",
+          "weapon": "Frenzy",
           "game": "val",
           "rarity": "select",
           "basePrice": 18,
-          "image": "https://media.valorant-api.com/weaponskins/6ba7a7a0-4057-4d5c-7c98-579f232db298/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskins/7a20502f-45b2-6781-b408-08bc86c5e5e2/displayicon.png"
         },
-        "weight": 23
+        "weight": 20.83
       },
       {
         "skin": {
-          "id": "val_kohaku_classic",
-          "name": "Kohaku & Matsuba Classic",
-          "weapon": "Classic",
+          "id": "val_oni_shorty",
+          "name": "Oni Shorty",
+          "weapon": "Shorty",
           "game": "val",
           "rarity": "select",
           "basePrice": 12,
-          "image": "https://media.valorant-api.com/weaponskins/be7cf362-4993-b9e4-9ba9-cdac6c99b8e4/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskins/b36dad11-4105-6c08-0486-17ba96d0f2a4/displayicon.png"
         },
-        "weight": 24.1
+        "weight": 20.82
       }
     ]
   },
   {
     "id": "val_chaos_singularity",
-    "name": "Kaos & Tekillik Kasası",
-    "subtitle": "Kaosun Başlangıcı & Singularity",
+    "name": "Tekillik Kasası",
+    "subtitle": "Sadece Tekillik Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-meteor",
-    "image": "https://media.valorant-api.com/weaponskins/6e0496c1-4c98-7abe-16c4-7ca3653e5cd8/displayicon.png",
+    "image": "https://media.valorant-api.com/weaponskins/151ee26c-4e82-e7ca-dad1-099e7fb34774/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_blade_of_chaos",
-          "name": "★ Kaosun Kılıcı",
-          "weapon": "Melee",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 3600,
-          "image": "https://media.valorant-api.com/weaponskins/6e0496c1-4c98-7abe-16c4-7ca3653e5cd8/displayicon.png"
-        },
-        "weight": 0.35
-      },
-      {
-        "skin": {
-          "id": "val_singularity_butterfly",
-          "name": "★ Singularity Kelebek Bıçağı",
+          "id": "val_singularity_knife",
+          "name": "Tekillik Bıçağı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
           "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/151ee26c-4e82-e7ca-dad1-099e7fb34774/displayicon.png"
+        },
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_singularity_butterfly_knife",
+          "name": "Tekillik Kelebek Bıçağı",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3000,
           "image": "https://media.valorant-api.com/weaponskins/a114e83d-4662-6a6f-4717-bfb82fd9b8e0/displayicon.png"
         },
         "weight": 0.45
       },
       {
         "skin": {
-          "id": "val_rgx_firefly",
-          "name": "★ RGX 11z Pro Firefly Kelebek",
-          "weapon": "Melee",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 3200,
-          "image": "https://media.valorant-api.com/weaponskins/03de6b1a-4497-72e8-ae0c-2984b2e7e2b9/displayicon.png"
-        },
-        "weight": 0.45
-      },
-      {
-        "skin": {
-          "id": "val_prelude_vandal",
-          "name": "Kaosun Başlangıcı Vandal",
-          "weapon": "Vandal",
-          "game": "val",
-          "rarity": "exclusive",
-          "basePrice": 490,
-          "image": "https://media.valorant-api.com/weaponskins/522a264e-4ca7-adb0-6cf1-28b2ef938727/displayicon.png"
-        },
-        "weight": 3.25
-      },
-      {
-        "skin": {
           "id": "val_singularity_vandal",
-          "name": "Singularity Vandal",
+          "name": "Tekillik Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 470,
+          "basePrice": 450,
           "image": "https://media.valorant-api.com/weaponskins/d6c7ff28-467e-bb3f-3c0c-c5b9445e55ca/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_rgx_vandal",
-          "name": "RGX 11z Pro Vandal",
-          "weapon": "Vandal",
-          "game": "val",
-          "rarity": "premium",
-          "basePrice": 460,
-          "image": "https://media.valorant-api.com/weaponskins/e5490f71-455b-74ad-f762-f5a876d4dff9/displayicon.png"
-        },
-        "weight": 4
-      },
-      {
-        "skin": {
           "id": "val_singularity_phantom",
-          "name": "Singularity Phantom",
+          "name": "Tekillik Phantom",
           "weapon": "Phantom",
           "game": "val",
-          "rarity": "premium",
-          "basePrice": 450,
+          "rarity": "exclusive",
+          "basePrice": 440,
           "image": "https://media.valorant-api.com/weaponskins/5eec4ce6-443d-e9b5-4c5b-2b967d426bd3/displayicon.png"
         },
-        "weight": 4
+        "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_sentinels_vandal",
-          "name": "Işığın Muhafızı Vandal",
-          "weapon": "Vandal",
+          "id": "val_singularity_sheriff",
+          "name": "Tekillik Sheriff",
+          "weapon": "Sheriff",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 380,
-          "image": "https://media.valorant-api.com/weaponskins/e8df3725-40de-b8ec-77bd-62a989685a85/displayicon.png"
+          "basePrice": 420,
+          "image": "https://media.valorant-api.com/weaponskins/bfd9e773-4376-1f6a-98f2-dc93f0c0607c/displayicon.png"
         },
-        "weight": 6
+        "weight": 11.51
       },
       {
         "skin": {
-          "id": "val_minima_phantom",
-          "name": "Minima Phantom",
-          "weapon": "Phantom",
+          "id": "val_singularity_spectre",
+          "name": "Tekillik Spectre",
+          "weapon": "Spectre",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 400,
+          "image": "https://media.valorant-api.com/weaponskins/0eab3e5c-4de4-e221-34fb-2ab435c89eb6/displayicon.png"
+        },
+        "weight": 11.51
+      },
+      {
+        "skin": {
+          "id": "val_singularity_ares",
+          "name": "Tekillik Ares",
+          "weapon": "Ares",
           "game": "val",
           "rarity": "deluxe",
-          "basePrice": 50,
-          "image": "https://media.valorant-api.com/weaponskins/2e3538f1-450f-cfe6-f93e-73862cd39314/displayicon.png"
+          "basePrice": 120,
+          "image": "https://media.valorant-api.com/weaponskins/e901bdeb-405f-d06c-0733-6783274d85b0/displayicon.png"
         },
-        "weight": 18
+        "weight": 27.63
       },
       {
         "skin": {
-          "id": "val_prism_phantom",
-          "name": "Prizma Phantom",
-          "weapon": "Phantom",
-          "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 40,
-          "image": "https://media.valorant-api.com/weaponskins/6586a7db-4041-6a29-f37c-d6817657caa5/displayicon.png"
-        },
-        "weight": 25
-      },
-      {
-        "skin": {
-          "id": "val_reverie_classic",
-          "name": "Hülya Classic",
-          "weapon": "Classic",
+          "id": "val_singularity_ghost",
+          "name": "Tekillik Ghost",
+          "weapon": "Ghost",
           "game": "val",
           "rarity": "select",
-          "basePrice": 14,
-          "image": "https://media.valorant-api.com/weaponskins/8bc021a4-4832-300e-2844-afa3d1d9465f/displayicon.png"
+          "basePrice": 18,
+          "image": "https://media.valorant-api.com/weaponskins/4582dd2b-4528-845d-dec8-16911ca7ba50/displayicon.png"
         },
-        "weight": 35
+        "weight": 41.45
       }
     ]
   },
@@ -2178,33 +2238,45 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_magepunk",
-    "name": "Magepunk & Kıvılcım Kasası",
-    "subtitle": "Magepunk Koleksiyonu & Buji Bıçak",
+    "name": "Büyücüpunk Kasası",
+    "subtitle": "Sadece Büyücüpunk Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-bolt",
-    "image": "https://media.valorant-api.com/weaponskins/6029ac35-4eca-8428-26d5-0896013e4c63/displayicon.png",
+    "image": "https://media.valorant-api.com/weaponskins/c18e781e-40a0-80e6-256a-54ae7355e7eb/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_magepunk_sparkswitch",
-          "name": "Magepunk Sparkswitch",
+          "id": "val_magepunk_electroblade",
+          "name": "Büyücüpunk Elektro Bıçağı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3350,
-          "image": "https://media.valorant-api.com/weaponskins/6029ac35-4eca-8428-26d5-0896013e4c63/displayicon.png"
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/c18e781e-40a0-80e6-256a-54ae7355e7eb/displayicon.png"
         },
-        "weight": 0.5
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_magepunk_shock_gauntlet",
+          "name": "Büyücüpunk Şok Eldiveni",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 2900,
+          "image": "https://media.valorant-api.com/weaponskins/59f627f1-42f3-670d-5323-3499c2913289/displayicon.png"
+        },
+        "weight": 0.45
       },
       {
         "skin": {
           "id": "val_magepunk_vandal",
-          "name": "Magepunk Vandal",
+          "name": "Büyücüpunk Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 1400,
+          "basePrice": 1450,
           "image": "https://media.valorant-api.com/weaponskins/148d7f02-4259-9c17-a1a4-6fa220a56551/displayicon.png"
         },
         "weight": 3.5
@@ -2212,7 +2284,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_phantom",
-          "name": "Magepunk Phantom",
+          "name": "Büyücüpunk Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
@@ -2224,283 +2296,343 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_operator",
-          "name": "Magepunk Operator",
+          "name": "Büyücüpunk Operator",
           "weapon": "Operator",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 780,
+          "basePrice": 800,
           "image": "https://media.valorant-api.com/weaponskins/7e831918-4580-5e2a-089a-84ad58fe1aae/displayicon.png"
         },
-        "weight": 12.5
+        "weight": 7.68
       },
       {
         "skin": {
-          "id": "val_magepunk_ghost",
-          "name": "Magepunk Ghost",
-          "weapon": "Ghost",
+          "id": "val_magepunk_guardian",
+          "name": "Büyücüpunk Guardian",
+          "weapon": "Guardian",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 450,
-          "image": "https://media.valorant-api.com/weaponskins/33824a13-453b-0636-4ec4-e19708aa934e/displayicon.png"
+          "basePrice": 700,
+          "image": "https://media.valorant-api.com/weaponskins/80dbfa46-4a1f-c7a4-2e88-1499308c7b9a/displayicon.png"
         },
-        "weight": 15
+        "weight": 7.68
+      },
+      {
+        "skin": {
+          "id": "val_magepunk_marshal",
+          "name": "Büyücüpunk Marshal",
+          "weapon": "Marshal",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 600,
+          "image": "https://media.valorant-api.com/weaponskins/27ab5ed6-4614-d5c2-c53f-5391febe7099/displayicon.png"
+        },
+        "weight": 7.68
       },
       {
         "skin": {
           "id": "val_magepunk_sheriff",
-          "name": "Magepunk Sheriff",
+          "name": "Büyücüpunk Sheriff",
           "weapon": "Sheriff",
           "game": "val",
-          "rarity": "premium",
-          "basePrice": 480,
+          "rarity": "deluxe",
+          "basePrice": 380,
           "image": "https://media.valorant-api.com/weaponskins/6460edbf-458d-bf61-7519-519305ba5da2/displayicon.png"
         },
-        "weight": 16
+        "weight": 13.82
       },
       {
         "skin": {
           "id": "val_magepunk_spectre",
-          "name": "Magepunk Spectre",
+          "name": "Büyücüpunk Spectre",
           "weapon": "Spectre",
           "game": "val",
           "rarity": "deluxe",
-          "basePrice": 320,
+          "basePrice": 300,
           "image": "https://media.valorant-api.com/weaponskins/a3f8e1b3-4654-f3ea-15ba-9eb9fd6a0b0d/displayicon.png"
         },
-        "weight": 23
+        "weight": 13.82
       },
       {
         "skin": {
           "id": "val_magepunk_ares",
-          "name": "Magepunk Ares",
+          "name": "Büyücüpunk Ares",
           "weapon": "Ares",
           "game": "val",
           "rarity": "select",
-          "basePrice": 160,
+          "basePrice": 180,
           "image": "https://media.valorant-api.com/weaponskins/0fac1dcf-48d0-c6c4-675e-2a8013bc879c/displayicon.png"
         },
-        "weight": 26
+        "weight": 20.7
+      },
+      {
+        "skin": {
+          "id": "val_magepunk_ghost",
+          "name": "Büyücüpunk Ghost",
+          "weapon": "Ghost",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 170,
+          "image": "https://media.valorant-api.com/weaponskins/33824a13-453b-0636-4ec4-e19708aa934e/displayicon.png"
+        },
+        "weight": 20.72
       }
     ]
   },
   {
-    "id": "val_cryostasis_sovereign",
-    "name": "Buzul & Hükümdar Kasası",
-    "subtitle": "Cryostasis & Hükümdar Koleksiyonu",
+    "id": "val_sovereign",
+    "name": "Hükümdar Kasası",
+    "subtitle": "Sadece Hükümdar Koleksiyonu",
     "game": "val",
     "cost": 1,
-    "icon": "fa-snowflake",
-    "image": "https://media.valorant-api.com/weaponskins/feb4eb97-4ab3-793a-9a92-1b8af59dc023/displayicon.png",
+    "icon": "fa-crown",
+    "image": "https://media.valorant-api.com/weaponskins/2e77ac95-4681-3d87-bbdc-93a50ff6b1f6/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_cryostasis_impact_drill",
-          "name": "Cryostasis Impact Drill",
+          "id": "val_sovereign_sword",
+          "name": "Hükümdar Kılıcı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 2900,
-          "image": "https://media.valorant-api.com/weaponskins/feb4eb97-4ab3-793a-9a92-1b8af59dc023/displayicon.png"
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/2e77ac95-4681-3d87-bbdc-93a50ff6b1f6/displayicon.png"
         },
-        "weight": 0.5
+        "weight": 0.45
       },
       {
         "skin": {
-          "id": "val_cryostasis_vandal",
-          "name": "Cryostasis Vandal",
-          "weapon": "Vandal",
-          "game": "val",
-          "rarity": "exclusive",
-          "basePrice": 1350,
-          "image": "https://media.valorant-api.com/weaponskins/f328add7-4710-ab8d-95bb-409bc8278a35/displayicon.png"
-        },
-        "weight": 3.5
-      },
-      {
-        "skin": {
-          "id": "val_cryostasis_operator",
-          "name": "Cryostasis Operator",
-          "weapon": "Operator",
+          "id": "val_sovereign_phantom",
+          "name": "Hükümdar Phantom",
+          "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
           "basePrice": 1450,
-          "image": "https://media.valorant-api.com/weaponskins/b2783916-483a-9112-89c6-64b8d927b78c/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskins/42fe7bf8-40ba-b1f4-df5e-34a6f51f29bf/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
           "id": "val_sovereign_guardian",
-          "name": "Sovereign Guardian",
+          "name": "Hükümdar Guardian",
           "weapon": "Guardian",
           "game": "val",
-          "rarity": "premium",
-          "basePrice": 650,
+          "rarity": "exclusive",
+          "basePrice": 1400,
           "image": "https://media.valorant-api.com/weaponskins/7122d78b-4e60-eb4d-5f65-738d7c1ce9ae/displayicon.png"
         },
-        "weight": 14.5
+        "weight": 3.5
       },
       {
         "skin": {
           "id": "val_sovereign_marshal",
-          "name": "Sovereign Marshal",
+          "name": "Hükümdar Marshal",
           "weapon": "Marshal",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 580,
+          "basePrice": 800,
           "image": "https://media.valorant-api.com/weaponskins/5211efa8-4efd-09bb-6cee-72b86a8a5972/displayicon.png"
         },
-        "weight": 15
+        "weight": 11.57
       },
       {
         "skin": {
-          "id": "val_cryostasis_bulldog",
-          "name": "Cryostasis Bulldog",
-          "weapon": "Bulldog",
+          "id": "val_sovereign_odin",
+          "name": "Hükümdar Odin",
+          "weapon": "Odin",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 700,
+          "image": "https://media.valorant-api.com/weaponskins/a7995818-409f-c79b-20b7-28ad642f3135/displayicon.png"
+        },
+        "weight": 11.57
+      },
+      {
+        "skin": {
+          "id": "val_sovereign_judge",
+          "name": "Hükümdar Judge",
+          "weapon": "Judge",
           "game": "val",
           "rarity": "deluxe",
-          "basePrice": 340,
-          "image": "https://media.valorant-api.com/weaponskins/d832f94c-4490-176e-c625-c3a1130cea19/displayicon.png"
+          "basePrice": 380,
+          "image": "https://media.valorant-api.com/weaponskins/bd034009-469c-88a6-41aa-278dd54b12e6/displayicon.png"
         },
-        "weight": 18
+        "weight": 13.88
       },
       {
         "skin": {
-          "id": "val_avalanche_vandal",
-          "name": "Avalanche Vandal",
-          "weapon": "Vandal",
+          "id": "val_sovereign_ghost",
+          "name": "Hükümdar Ghost",
+          "weapon": "Ghost",
           "game": "val",
           "rarity": "deluxe",
-          "basePrice": 290,
-          "image": "https://media.valorant-api.com/weaponskins/41b55c92-4aeb-9c86-854a-4abcd48ea0ba/displayicon.png"
+          "basePrice": 300,
+          "image": "https://media.valorant-api.com/weaponskins/a9890917-41ea-eb55-47e7-ee990a87fa4e/displayicon.png"
         },
-        "weight": 21
+        "weight": 13.88
       },
       {
         "skin": {
-          "id": "val_cryostasis_classic",
-          "name": "Cryostasis Classic",
-          "weapon": "Classic",
+          "id": "val_sovereign_frenzy",
+          "name": "Hükümdar Frenzy",
+          "weapon": "Frenzy",
           "game": "val",
           "rarity": "select",
-          "basePrice": 140,
-          "image": "https://media.valorant-api.com/weaponskins/edb386a1-4d02-4fd0-2f84-f8bf6434e5c4/displayicon.png"
+          "basePrice": 180,
+          "image": "https://media.valorant-api.com/weaponskins/daaeb0f9-413a-732d-e6f0-598b9dff65a7/displayicon.png"
         },
-        "weight": 24
+        "weight": 20.83
+      },
+      {
+        "skin": {
+          "id": "val_sovereign_stinger",
+          "name": "Hükümdar Stinger",
+          "weapon": "Stinger",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 170,
+          "image": "https://media.valorant-api.com/weaponskins/8fb27bb1-4080-581d-bcd3-53ae01861654/displayicon.png"
+        },
+        "weight": 20.82
       }
     ]
   },
   {
-    "id": "val_chronovoid_overdrive",
-    "name": "ChronoVoid & Overdrive Kasası",
-    "subtitle": "Küre Bıçak & Zamanın Ötesi",
+    "id": "val_ion",
+    "name": "İyon Kasası",
+    "subtitle": "Sadece İyon Koleksiyonu",
     "game": "val",
     "cost": 1,
-    "icon": "fa-compass",
-    "image": "https://media.valorant-api.com/weaponskins/6bea8564-48a8-5011-dbf7-a2856713de08/displayicon.png",
+    "icon": "fa-atom",
+    "image": "https://media.valorant-api.com/weaponskins/46664f5b-49ca-3e09-4fe5-56bdef536335/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_overdrive_blade",
-          "name": "Overdrive Blade",
-          "weapon": "Blade",
+          "id": "val_ion_energy_sword",
+          "name": "İyon Enerji Kılıcı",
+          "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3450,
-          "image": "https://media.valorant-api.com/weaponskins/6bea8564-48a8-5011-dbf7-a2856713de08/displayicon.png"
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/46664f5b-49ca-3e09-4fe5-56bdef536335/displayicon.png"
         },
-        "weight": 0.5
+        "weight": 0.45
       },
       {
         "skin": {
-          "id": "val_chronovoid_vandal",
-          "name": "ChronoVoid Vandal",
+          "id": "val_ion_karambit",
+          "name": "İyon Karambit",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 2900,
+          "image": "https://media.valorant-api.com/weaponskins/a590c03a-43b1-a408-4c6b-0bb9fdda1570/displayicon.png"
+        },
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_ion_vandal",
+          "name": "İyon Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 1480,
-          "image": "https://media.valorant-api.com/weaponskins/8e762a1f-4102-b7ce-d6a0-9690c5bfe160/displayicon.png"
+          "basePrice": 1450,
+          "image": "https://media.valorant-api.com/weaponskins/596ce51d-40e3-dc21-b02d-b08d070a7883/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_chronovoid_phantom",
-          "name": "ChronoVoid Phantom",
+          "id": "val_ion_phantom",
+          "name": "İyon Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 1480,
-          "image": "https://media.valorant-api.com/weaponskins/2aac8bb3-4cfa-b806-21e4-5a8e9904caa4/displayicon.png"
+          "basePrice": 1400,
+          "image": "https://media.valorant-api.com/weaponskins/e86bf7e4-4dd3-fbee-533b-fa875344bbaf/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_overdrive_vandal",
-          "name": "Overdrive Vandal",
-          "weapon": "Vandal",
+          "id": "val_ion_operator",
+          "name": "İyon Operator",
+          "weapon": "Operator",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 820,
-          "image": "https://media.valorant-api.com/weaponskins/bbd3a52f-411e-3475-a6aa-ea88b54de53c/displayicon.png"
+          "basePrice": 800,
+          "image": "https://media.valorant-api.com/weaponskins/bbf8ffb9-49c0-75c0-cc7d-8f8f03a4bd36/displayicon.png"
         },
-        "weight": 14.5
+        "weight": 11.51
       },
       {
         "skin": {
-          "id": "val_chronovoid_sheriff",
-          "name": "ChronoVoid Sheriff",
+          "id": "val_ion_sheriff",
+          "name": "İyon Sheriff",
           "weapon": "Sheriff",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 520,
-          "image": "https://media.valorant-api.com/weaponskins/e1fdd246-4a6c-af26-f0a0-65a48f2586da/displayicon.png"
+          "basePrice": 700,
+          "image": "https://media.valorant-api.com/weaponskins/83778c03-45a3-67a2-3c89-6b8598327d58/displayicon.png"
         },
-        "weight": 15
+        "weight": 11.51
       },
       {
         "skin": {
-          "id": "val_chronovoid_judge",
-          "name": "ChronoVoid Judge",
-          "weapon": "Judge",
+          "id": "val_ion_spectre",
+          "name": "İyon Spectre",
+          "weapon": "Spectre",
           "game": "val",
           "rarity": "deluxe",
-          "basePrice": 350,
-          "image": "https://media.valorant-api.com/weaponskins/4d2ec3f4-446e-a501-74d8-5ab750f50984/displayicon.png"
+          "basePrice": 380,
+          "image": "https://media.valorant-api.com/weaponskins/eacea54e-4e53-2715-cd4a-5d860aa68449/displayicon.png"
         },
-        "weight": 18
+        "weight": 13.82
       },
       {
         "skin": {
-          "id": "val_overdrive_bucky",
-          "name": "Overdrive Bucky",
+          "id": "val_ion_ares",
+          "name": "İyon Ares",
+          "weapon": "Ares",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 300,
+          "image": "https://media.valorant-api.com/weaponskins/0f4b0478-4759-911d-c44b-2a907534789d/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_ion_bucky",
+          "name": "İyon Bucky",
           "weapon": "Bucky",
-          "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 260,
-          "image": "https://media.valorant-api.com/weaponskins/4fca7cd4-48b6-130f-01fc-fa87974bb622/displayicon.png"
-        },
-        "weight": 21
-      },
-      {
-        "skin": {
-          "id": "val_silvanus_vandal",
-          "name": "Silvanus Vandal",
-          "weapon": "Vandal",
           "game": "val",
           "rarity": "select",
           "basePrice": 180,
-          "image": "https://media.valorant-api.com/weaponskins/d758abc0-4d99-62d3-b22b-0db0e57de881/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskins/31f6f214-4379-749a-9285-04a5561e2d03/displayicon.png"
         },
-        "weight": 24
+        "weight": 20.72
+      },
+      {
+        "skin": {
+          "id": "val_ion_frenzy",
+          "name": "İyon Frenzy",
+          "weapon": "Frenzy",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 170,
+          "image": "https://media.valorant-api.com/weaponskins/906dcda9-477a-6d09-f85d-599ccb86e168/displayicon.png"
+        },
+        "weight": 20.72
       }
     ]
   },
   {
     "id": "val_neo_frontier",
-    "name": "Neo Frontier & Kovboy Kasası",
-    "subtitle": "Vahşi Batı & Balta Koleksiyonu",
+    "name": "Yeni Sınır Kasası",
+    "subtitle": "Sadece Yeni Sınır Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-hat-cowboy",
@@ -2509,205 +2641,241 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neo_frontier_axe",
-          "name": "Neo Frontier Axe",
+          "name": "Yeni Sınır Baltası",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3600,
+          "basePrice": 3400,
           "image": "https://media.valorant-api.com/weaponskins/cdcfab50-425d-6410-7a54-6aa913b7ce48/displayicon.png"
         },
-        "weight": 0.5
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_neo_frontier_lasso",
+          "name": "Yeni Sınır Kementi",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 2900,
+          "image": "https://media.valorant-api.com/weaponskins/38d47ee7-414d-8cee-5bbd-aca16656cda9/displayicon.png"
+        },
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_neo_frontier_vandal",
+          "name": "Yeni Sınır Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1450,
+          "image": "https://media.valorant-api.com/weaponskins/5ef15ada-4332-093f-ea15-8a8891d863d0/displayicon.png"
+        },
+        "weight": 3.5
       },
       {
         "skin": {
           "id": "val_neo_frontier_phantom",
-          "name": "Neo Frontier Phantom",
+          "name": "Yeni Sınır Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 1450,
+          "basePrice": 1400,
           "image": "https://media.valorant-api.com/weaponskins/52417dc8-48b7-111a-b63b-5db108b2e63a/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_neo_frontier_sheriff",
-          "name": "Neo Frontier Sheriff",
-          "weapon": "Sheriff",
-          "game": "val",
-          "rarity": "exclusive",
-          "basePrice": 1250,
-          "image": "https://media.valorant-api.com/weaponskins/b73f455a-4d77-44e7-fd90-1db9db82a8f6/displayicon.png"
-        },
-        "weight": 3.5
-      },
-      {
-        "skin": {
           "id": "val_neo_frontier_marshal",
-          "name": "Neo Frontier Marshal",
+          "name": "Yeni Sınır Marshal",
           "weapon": "Marshal",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 680,
+          "basePrice": 800,
           "image": "https://media.valorant-api.com/weaponskins/d70d33ff-4a88-bf66-f256-bcb05fa9bd60/displayicon.png"
         },
-        "weight": 14.5
+        "weight": 11.51
+      },
+      {
+        "skin": {
+          "id": "val_neo_frontier_sheriff",
+          "name": "Yeni Sınır Sheriff",
+          "weapon": "Sheriff",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 700,
+          "image": "https://media.valorant-api.com/weaponskins/b73f455a-4d77-44e7-fd90-1db9db82a8f6/displayicon.png"
+        },
+        "weight": 11.51
       },
       {
         "skin": {
           "id": "val_neo_frontier_odin",
-          "name": "Neo Frontier Odin",
+          "name": "Yeni Sınır Odin",
           "weapon": "Odin",
           "game": "val",
-          "rarity": "premium",
-          "basePrice": 590,
+          "rarity": "deluxe",
+          "basePrice": 380,
           "image": "https://media.valorant-api.com/weaponskins/bd647d56-4542-19cd-e1ed-4fb429c78cf9/displayicon.png"
         },
-        "weight": 15
-      },
-      {
-        "skin": {
-          "id": "val_wasteland_vandal",
-          "name": "Wasteland Vandal",
-          "weapon": "Vandal",
-          "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 310,
-          "image": "https://media.valorant-api.com/weaponskins/32b87592-45ad-c5a6-44ae-a9b844137c58/displayicon.png"
-        },
-        "weight": 19
-      },
-      {
-        "skin": {
-          "id": "val_wasteland_sheriff",
-          "name": "Wasteland Sheriff",
-          "weapon": "Sheriff",
-          "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 240,
-          "image": "https://media.valorant-api.com/weaponskins/9913da36-48b4-f0f5-db4e-43847a21e476/displayicon.png"
-        },
-        "weight": 21
+        "weight": 27.63
       },
       {
         "skin": {
           "id": "val_neo_frontier_shorty",
-          "name": "Neo Frontier Shorty",
+          "name": "Yeni Sınır Shorty",
           "weapon": "Shorty",
           "game": "val",
           "rarity": "select",
-          "basePrice": 150,
+          "basePrice": 180,
           "image": "https://media.valorant-api.com/weaponskins/de88d366-4d2b-655f-345c-719b97ddf9d9/displayicon.png"
         },
-        "weight": 23
+        "weight": 41.45
       }
     ]
   },
   {
-    "id": "val_protocol_xeno",
-    "name": "Protokol & Yaratık Avcısı Kasası",
-    "subtitle": "Protokol Yapay Zeka & Xenohunter",
+    "id": "val_rgx",
+    "name": "RGX 11z Pro Kasası",
+    "subtitle": "Sadece RGX 11z Pro Koleksiyonu",
     "game": "val",
     "cost": 1,
-    "icon": "fa-robot",
-    "image": "https://media.valorant-api.com/weaponskins/c5482640-4652-6948-29c6-769e8198db27/displayicon.png",
+    "icon": "fa-microchip",
+    "image": "https://media.valorant-api.com/weaponskins/9fb366b6-46df-a722-0cf2-9c9b85936f17/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_xenohunter_knife",
-          "name": "Xenohunter Knife",
-          "weapon": "Knife",
+          "id": "val_rgx_11z_pro_blade",
+          "name": "RGX 11z Pro Bıçağı",
+          "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3700,
-          "image": "https://media.valorant-api.com/weaponskins/c5482640-4652-6948-29c6-769e8198db27/displayicon.png"
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/9fb366b6-46df-a722-0cf2-9c9b85936f17/displayicon.png"
         },
-        "weight": 0.5
+        "weight": 0.45
       },
       {
         "skin": {
-          "id": "val_protocol_781_a_phantom",
-          "name": "Protocol 781-A Phantom",
-          "weapon": "Phantom",
+          "id": "val_rgx_11z_pro_firefly",
+          "name": "RGX 11z Pro Ateşböceği",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 2900,
+          "image": "https://media.valorant-api.com/weaponskins/03de6b1a-4497-72e8-ae0c-2984b2e7e2b9/displayicon.png"
+        },
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_rgx_11z_pro_vandal",
+          "name": "RGX 11z Pro Vandal",
+          "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 1550,
-          "image": "https://media.valorant-api.com/weaponskins/9877d50b-43b1-837a-802a-bf8a3b98e2dd/displayicon.png"
+          "basePrice": 1450,
+          "image": "https://media.valorant-api.com/weaponskins/e5490f71-455b-74ad-f762-f5a876d4dff9/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_protocol_781_a_sheriff",
-          "name": "Protocol 781-A Sheriff",
+          "id": "val_rgx_11z_pro_phantom",
+          "name": "RGX 11z Pro Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1400,
+          "image": "https://media.valorant-api.com/weaponskins/499acf05-4f79-e345-3714-57bf7aa163ea/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_rgx_11z_pro_operator",
+          "name": "RGX 11z Pro Operator",
+          "weapon": "Operator",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 800,
+          "image": "https://media.valorant-api.com/weaponskins/2e1936ed-4582-628f-da9c-25a7f47323cc/displayicon.png"
+        },
+        "weight": 7.68
+      },
+      {
+        "skin": {
+          "id": "val_rgx_11z_pro_guardian",
+          "name": "RGX 11z Pro Guardian",
+          "weapon": "Guardian",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 700,
+          "image": "https://media.valorant-api.com/weaponskins/da29ce1e-43bb-c043-9cbc-34850517dc23/displayicon.png"
+        },
+        "weight": 7.68
+      },
+      {
+        "skin": {
+          "id": "val_rgx_11z_pro_sheriff",
+          "name": "RGX 11z Pro Sheriff",
           "weapon": "Sheriff",
           "game": "val",
-          "rarity": "exclusive",
-          "basePrice": 1350,
-          "image": "https://media.valorant-api.com/weaponskins/84589da8-4e2b-11bf-ca52-b88e6b7e1dbd/displayicon.png"
+          "rarity": "premium",
+          "basePrice": 600,
+          "image": "https://media.valorant-api.com/weaponskins/142be691-42a0-c0a1-f6ed-57b3158def7e/displayicon.png"
         },
-        "weight": 3.5
+        "weight": 7.68
       },
       {
         "skin": {
-          "id": "val_protocol_781_a_spectre",
-          "name": "Protocol 781-A Spectre",
+          "id": "val_rgx_11z_pro_spectre",
+          "name": "RGX 11z Pro Spectre",
           "weapon": "Spectre",
           "game": "val",
-          "rarity": "premium",
-          "basePrice": 750,
-          "image": "https://media.valorant-api.com/weaponskins/eaa73ab9-4688-0c40-09ad-85b535a50723/displayicon.png"
+          "rarity": "deluxe",
+          "basePrice": 380,
+          "image": "https://media.valorant-api.com/weaponskins/4f0c9544-469c-0c62-df2e-95b15d6f2333/displayicon.png"
         },
-        "weight": 14.5
+        "weight": 13.82
       },
       {
         "skin": {
-          "id": "val_protocol_781_a_bulldog",
-          "name": "Protocol 781-A Bulldog",
-          "weapon": "Bulldog",
-          "game": "val",
-          "rarity": "premium",
-          "basePrice": 620,
-          "image": "https://media.valorant-api.com/weaponskins/1daefbff-4581-aef3-5ed6-da894d7e4cc7/displayicon.png"
-        },
-        "weight": 15
-      },
-      {
-        "skin": {
-          "id": "val_xenohunter_phantom",
-          "name": "Xenohunter Phantom",
-          "weapon": "Phantom",
+          "id": "val_rgx_11z_pro_frenzy",
+          "name": "RGX 11z Pro Frenzy",
+          "weapon": "Frenzy",
           "game": "val",
           "rarity": "deluxe",
-          "basePrice": 360,
-          "image": "https://media.valorant-api.com/weaponskins/fac0cea1-45a9-1549-c120-af8f0150e562/displayicon.png"
+          "basePrice": 300,
+          "image": "https://media.valorant-api.com/weaponskins/d5ea8ae9-4055-9b65-1f39-ed97372d887a/displayicon.png"
         },
-        "weight": 18
+        "weight": 13.82
       },
       {
         "skin": {
-          "id": "val_xenohunter_odin",
-          "name": "Xenohunter Odin",
-          "weapon": "Odin",
-          "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 290,
-          "image": "https://media.valorant-api.com/weaponskins/94c085e6-48e1-c879-2552-88bf7850c5a8/displayicon.png"
-        },
-        "weight": 21
-      },
-      {
-        "skin": {
-          "id": "val_xenohunter_bucky",
-          "name": "Xenohunter Bucky",
-          "weapon": "Bucky",
+          "id": "val_rgx_11z_pro_outlaw",
+          "name": "RGX 11z Pro Outlaw",
+          "weapon": "Outlaw",
           "game": "val",
           "rarity": "select",
-          "basePrice": 160,
-          "image": "https://media.valorant-api.com/weaponskins/0666931c-4580-efd0-af47-afb9f2f72e55/displayicon.png"
+          "basePrice": 180,
+          "image": "https://media.valorant-api.com/weaponskins/fdeb2877-4030-e396-f0cb-998868362c12/displayicon.png"
         },
-        "weight": 24
+        "weight": 20.7
+      },
+      {
+        "skin": {
+          "id": "val_rgx_11z_pro_classic",
+          "name": "RGX 11z Pro Classic",
+          "weapon": "Classic",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 170,
+          "image": "https://media.valorant-api.com/weaponskins/111680fd-4562-f658-af1c-ed8f9cfe9f9c/displayicon.png"
+        },
+        "weight": 20.72
       }
     ]
   },
@@ -3248,8 +3416,8 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_mystbloom",
-    "name": "Büyüçiçeği Kasası",
-    "subtitle": "Mystbloom Çiçek Koleksiyonu & Kunai",
+    "name": "Sisçiçeği Kasası",
+    "subtitle": "Sadece Sisçiçeği Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-spa",
@@ -3258,19 +3426,31 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_kunai",
-          "name": "Mystbloom Kunai",
+          "name": "Sisçiçeği Kunai",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3600,
+          "basePrice": 3400,
           "image": "https://media.valorant-api.com/weaponskins/516e0013-480b-6c1f-b05a-b6b616bffbfc/displayicon.png"
         },
-        "weight": 0.5
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_fanblade",
+          "name": "Sisçiçeği Yelpaze Bıçağı",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 2900,
+          "image": "https://media.valorant-api.com/weaponskins/a0d4ac37-416b-ae62-aa36-48803714e25f/displayicon.png"
+        },
+        "weight": 0.45
       },
       {
         "skin": {
           "id": "val_mystbloom_vandal",
-          "name": "Mystbloom Vandal",
+          "name": "Sisçiçeği Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
@@ -3282,11 +3462,11 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_phantom",
-          "name": "Mystbloom Phantom",
+          "name": "Sisçiçeği Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 1450,
+          "basePrice": 1400,
           "image": "https://media.valorant-api.com/weaponskins/ce85f078-474a-eae4-3844-03a49625df15/displayicon.png"
         },
         "weight": 3.5
@@ -3294,94 +3474,118 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_operator",
-          "name": "Mystbloom Operator",
+          "name": "Sisçiçeği Operator",
           "weapon": "Operator",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 780,
+          "basePrice": 800,
           "image": "https://media.valorant-api.com/weaponskins/d9a34604-42e9-3a01-a875-9293e08183a9/displayicon.png"
         },
-        "weight": 14.5
+        "weight": 11.51
       },
       {
         "skin": {
           "id": "val_mystbloom_sheriff",
-          "name": "Mystbloom Sheriff",
+          "name": "Sisçiçeği Sheriff",
           "weapon": "Sheriff",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 520,
+          "basePrice": 700,
           "image": "https://media.valorant-api.com/weaponskins/c0a39e8b-4d52-bfbc-21f2-a88b0f8c4856/displayicon.png"
         },
-        "weight": 15
-      },
-      {
-        "skin": {
-          "id": "val_mystbloom_ghost",
-          "name": "Mystbloom Ghost",
-          "weapon": "Ghost",
-          "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 380,
-          "image": "https://media.valorant-api.com/weaponskins/82511942-465b-5600-76d7-778159d01bf4/displayicon.png"
-        },
-        "weight": 19
-      },
-      {
-        "skin": {
-          "id": "val_mystbloom_judge",
-          "name": "Mystbloom Judge",
-          "weapon": "Judge",
-          "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 280,
-          "image": "https://media.valorant-api.com/weaponskins/5c8d1196-48d8-2bbc-fac0-57af71a18c97/displayicon.png"
-        },
-        "weight": 21
+        "weight": 11.51
       },
       {
         "skin": {
           "id": "val_mystbloom_ares",
-          "name": "Mystbloom Ares",
+          "name": "Sisçiçeği Ares",
           "weapon": "Ares",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 160,
+          "rarity": "deluxe",
+          "basePrice": 380,
           "image": "https://media.valorant-api.com/weaponskins/c976f29d-4a83-3a40-2907-8dadbb7c5940/displayicon.png"
         },
-        "weight": 23
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_judge",
+          "name": "Sisçiçeği Judge",
+          "weapon": "Judge",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 300,
+          "image": "https://media.valorant-api.com/weaponskins/5c8d1196-48d8-2bbc-fac0-57af71a18c97/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_ghost",
+          "name": "Sisçiçeği Ghost",
+          "weapon": "Ghost",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 180,
+          "image": "https://media.valorant-api.com/weaponskins/82511942-465b-5600-76d7-778159d01bf4/displayicon.png"
+        },
+        "weight": 20.72
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_outlaw",
+          "name": "Sisçiçeği Outlaw",
+          "weapon": "Outlaw",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 170,
+          "image": "https://media.valorant-api.com/weaponskins/1a097db1-4778-7049-b62e-6fa071ad7193/displayicon.png"
+        },
+        "weight": 20.72
       }
     ]
   },
   {
     "id": "val_gaias_vengeance",
     "name": "Gaia'nın İntikamı Kasası",
-    "subtitle": "Doğanın Gücü & Gaia's Fury Baltası",
+    "subtitle": "Sadece Gaia'nın İntikamı Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-tree",
-    "image": "https://media.valorant-api.com/weaponskins/4fc1bb49-4847-7262-8cfe-fcaf0f62f0d1/displayicon.png",
+    "image": "https://media.valorant-api.com/weaponskins/f91a1dd8-4f5f-bce4-f01d-4da95322c485/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_gaia_s_fury",
-          "name": "Gaia's Fury",
+          "id": "val_gaia_s_wrath",
+          "name": "Gaia'nın Gazabı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3500,
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/f91a1dd8-4f5f-bce4-f01d-4da95322c485/displayicon.png"
+        },
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_gaia_s_fury",
+          "name": "Gaia'nın Öfkesi",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 2900,
           "image": "https://media.valorant-api.com/weaponskins/4fc1bb49-4847-7262-8cfe-fcaf0f62f0d1/displayicon.png"
         },
-        "weight": 0.5
+        "weight": 0.45
       },
       {
         "skin": {
           "id": "val_gaia_s_vengeance_vandal",
-          "name": "Gaia's Vengeance Vandal",
+          "name": "Gaia'nın İntikamı Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 1400,
+          "basePrice": 1450,
           "image": "https://media.valorant-api.com/weaponskins/000ad7b1-44b0-9345-ea47-9cbd7dcdbb38/displayicon.png"
         },
         "weight": 3.5
@@ -3389,7 +3593,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_gaia_s_vengeance_phantom",
-          "name": "Gaia's Vengeance Phantom",
+          "name": "Gaia'nın İntikamı Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
@@ -3400,70 +3604,82 @@ window.INITIAL_CASES = [
       },
       {
         "skin": {
-          "id": "val_gaia_s_vengeance_marshal",
-          "name": "Gaia's Vengeance Marshal",
-          "weapon": "Marshal",
-          "game": "val",
-          "rarity": "premium",
-          "basePrice": 650,
-          "image": "https://media.valorant-api.com/weaponskins/fc802ceb-4a39-39ac-adf5-02a812be2f8e/displayicon.png"
-        },
-        "weight": 14.5
-      },
-      {
-        "skin": {
           "id": "val_gaia_s_vengeance_guardian",
-          "name": "Gaia's Vengeance Guardian",
+          "name": "Gaia'nın İntikamı Guardian",
           "weapon": "Guardian",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 580,
+          "basePrice": 800,
           "image": "https://media.valorant-api.com/weaponskins/abd5415f-4851-244f-4b8b-31af8e268822/displayicon.png"
         },
-        "weight": 15
+        "weight": 11.51
       },
       {
         "skin": {
-          "id": "val_gaia_s_vengeance_ghost",
-          "name": "Gaia's Vengeance Ghost",
-          "weapon": "Ghost",
+          "id": "val_gaia_s_vengeance_marshal",
+          "name": "Gaia'nın İntikamı Marshal",
+          "weapon": "Marshal",
           "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 350,
-          "image": "https://media.valorant-api.com/weaponskins/daed0e44-4ab6-22b4-a5a5-57a4957a056b/displayicon.png"
+          "rarity": "premium",
+          "basePrice": 700,
+          "image": "https://media.valorant-api.com/weaponskins/fc802ceb-4a39-39ac-adf5-02a812be2f8e/displayicon.png"
         },
-        "weight": 19
+        "weight": 11.51
       },
       {
         "skin": {
           "id": "val_gaia_s_vengeance_ares",
-          "name": "Gaia's Vengeance Ares",
+          "name": "Gaia'nın İntikamı Ares",
           "weapon": "Ares",
           "game": "val",
           "rarity": "deluxe",
-          "basePrice": 280,
+          "basePrice": 380,
           "image": "https://media.valorant-api.com/weaponskins/1e5ee5bf-43d5-28ee-b2f7-96a53b783dc2/displayicon.png"
         },
-        "weight": 21
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_gaia_s_vengeance_ghost",
+          "name": "Gaia'nın İntikamı Ghost",
+          "weapon": "Ghost",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 300,
+          "image": "https://media.valorant-api.com/weaponskins/daed0e44-4ab6-22b4-a5a5-57a4957a056b/displayicon.png"
+        },
+        "weight": 13.82
+      },
+      {
+        "skin": {
+          "id": "val_gaia_s_vengeance_bucky",
+          "name": "Gaia'nın İntikamı Bucky",
+          "weapon": "Bucky",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 180,
+          "image": "https://media.valorant-api.com/weaponskins/892b5053-4c0b-149e-38d0-c3a8d6f24384/displayicon.png"
+        },
+        "weight": 20.72
       },
       {
         "skin": {
           "id": "val_gaia_s_vengeance_shorty",
-          "name": "Gaia's Vengeance Shorty",
+          "name": "Gaia'nın İntikamı Shorty",
           "weapon": "Shorty",
           "game": "val",
           "rarity": "select",
-          "basePrice": 150,
+          "basePrice": 170,
           "image": "https://media.valorant-api.com/weaponskins/4c583a37-42d7-23db-5e38-1eafe96f2b9d/displayicon.png"
         },
-        "weight": 23
+        "weight": 20.72
       }
     ]
   },
   {
     "id": "val_neptune",
     "name": "Neptün Kasası",
-    "subtitle": "Akvaryum Koleksiyonu & Çapa Bıçak",
+    "subtitle": "Sadece Neptün Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-water",
@@ -3472,23 +3688,35 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neptune_anchor",
-          "name": "Neptune Anchor",
+          "name": "Neptün Çapası",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3300,
+          "basePrice": 3400,
           "image": "https://media.valorant-api.com/weaponskins/c3f1c9d6-441b-7def-1bf2-2c82719a4de8/displayicon.png"
         },
-        "weight": 0.5
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_neptune_hook",
+          "name": "Neptün Kancası",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 2900,
+          "image": "https://media.valorant-api.com/weaponskins/4670c2c9-4445-1604-7000-fd99093b3504/displayicon.png"
+        },
+        "weight": 0.45
       },
       {
         "skin": {
           "id": "val_neptune_vandal",
-          "name": "Neptune Vandal",
+          "name": "Neptün Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 1380,
+          "basePrice": 1450,
           "image": "https://media.valorant-api.com/weaponskins/db91451c-4309-2c8c-eded-bf842d844e52/displayicon.png"
         },
         "weight": 3.5
@@ -3496,11 +3724,11 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neptune_phantom",
-          "name": "Neptune Phantom",
+          "name": "Neptün Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 1380,
+          "basePrice": 1400,
           "image": "https://media.valorant-api.com/weaponskins/516ff0cb-4d4b-bf0e-d460-92b3c8d27259/displayicon.png"
         },
         "weight": 3.5
@@ -3508,276 +3736,336 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neptune_guardian",
-          "name": "Neptune Guardian",
+          "name": "Neptün Guardian",
           "weapon": "Guardian",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 620,
+          "basePrice": 800,
           "image": "https://media.valorant-api.com/weaponskins/1082032a-4f20-12db-93ea-549332f91ddf/displayicon.png"
         },
-        "weight": 14.5
-      },
-      {
-        "skin": {
-          "id": "val_neptune_bulldog",
-          "name": "Neptune Bulldog",
-          "weapon": "Bulldog",
-          "game": "val",
-          "rarity": "premium",
-          "basePrice": 520,
-          "image": "https://media.valorant-api.com/weaponskins/8c6f8399-447b-a7de-7c93-b69273b054ac/displayicon.png"
-        },
-        "weight": 15
+        "weight": 11.51
       },
       {
         "skin": {
           "id": "val_neptune_spectre",
-          "name": "Neptune Spectre",
+          "name": "Neptün Spectre",
           "weapon": "Spectre",
           "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 320,
+          "rarity": "premium",
+          "basePrice": 700,
           "image": "https://media.valorant-api.com/weaponskins/55153919-4598-cb0f-4759-7ea546c6d121/displayicon.png"
         },
-        "weight": 19
-      },
-      {
-        "skin": {
-          "id": "val_neptune_classic",
-          "name": "Neptune Classic",
-          "weapon": "Classic",
-          "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 240,
-          "image": "https://media.valorant-api.com/weaponskins/97d19265-4fa2-70ef-5f8c-6b9f03860705/displayicon.png"
-        },
-        "weight": 21
+        "weight": 11.51
       },
       {
         "skin": {
           "id": "val_neptune_odin",
-          "name": "Neptune Odin",
+          "name": "Neptün Odin",
           "weapon": "Odin",
-          "game": "val",
-          "rarity": "select",
-          "basePrice": 160,
-          "image": "https://media.valorant-api.com/weaponskins/a67c2daa-4f4d-1af0-0ff4-6fafde471776/displayicon.png"
-        },
-        "weight": 23
-      }
-    ]
-  },
-  {
-    "id": "val_spectrum_zedd",
-    "name": "Spectrum Kasası",
-    "subtitle": "Zedd Spectrum Ses & Işık Koleksiyonu",
-    "game": "val",
-    "cost": 1,
-    "icon": "fa-music",
-    "image": "https://media.valorant-api.com/weaponskins/400bb847-4f4f-a39e-cd52-589f00b2204f/displayicon.png",
-    "items": [
-      {
-        "skin": {
-          "id": "val_waveform",
-          "name": "Waveform",
-          "weapon": "Melee",
-          "game": "val",
-          "rarity": "knife",
-          "basePrice": 3900,
-          "image": "https://media.valorant-api.com/weaponskins/400bb847-4f4f-a39e-cd52-589f00b2204f/displayicon.png"
-        },
-        "weight": 0.5
-      },
-      {
-        "skin": {
-          "id": "val_spectrum_phantom",
-          "name": "Spectrum Phantom",
-          "weapon": "Phantom",
-          "game": "val",
-          "rarity": "exclusive",
-          "basePrice": 1650,
-          "image": "https://media.valorant-api.com/weaponskins/980fa063-436e-e51f-c38d-70a5b93a0f1c/displayicon.png"
-        },
-        "weight": 3.5
-      },
-      {
-        "skin": {
-          "id": "val_prelude_to_chaos_vandal",
-          "name": "Prelude to Chaos Vandal",
-          "weapon": "Vandal",
-          "game": "val",
-          "rarity": "exclusive",
-          "basePrice": 1480,
-          "image": "https://media.valorant-api.com/weaponskins/522a264e-4ca7-adb0-6cf1-28b2ef938727/displayicon.png"
-        },
-        "weight": 3.5
-      },
-      {
-        "skin": {
-          "id": "val_spectrum_classic",
-          "name": "Spectrum Classic",
-          "weapon": "Classic",
-          "game": "val",
-          "rarity": "premium",
-          "basePrice": 780,
-          "image": "https://media.valorant-api.com/weaponskins/46f32f75-4fc8-7121-8a77-db8db43afc67/displayicon.png"
-        },
-        "weight": 14.5
-      },
-      {
-        "skin": {
-          "id": "val_spectrum_bulldog",
-          "name": "Spectrum Bulldog",
-          "weapon": "Bulldog",
-          "game": "val",
-          "rarity": "premium",
-          "basePrice": 680,
-          "image": "https://media.valorant-api.com/weaponskins/fbe04552-445f-f202-923e-6fbd61b7e2aa/displayicon.png"
-        },
-        "weight": 15
-      },
-      {
-        "skin": {
-          "id": "val_spectrum_guardian",
-          "name": "Spectrum Guardian",
-          "weapon": "Guardian",
           "game": "val",
           "rarity": "deluxe",
           "basePrice": 380,
-          "image": "https://media.valorant-api.com/weaponskins/04ccfe05-497c-2d52-2bd0-64a68955175e/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskins/a67c2daa-4f4d-1af0-0ff4-6fafde471776/displayicon.png"
         },
-        "weight": 19
+        "weight": 13.82
       },
       {
         "skin": {
-          "id": "val_prelude_to_chaos_bulldog",
-          "name": "Prelude to Chaos Bulldog",
+          "id": "val_neptune_bulldog",
+          "name": "Neptün Bulldog",
           "weapon": "Bulldog",
           "game": "val",
           "rarity": "deluxe",
-          "basePrice": 290,
-          "image": "https://media.valorant-api.com/weaponskins/c5676fb6-4268-d5bd-f2f7-f3a1334ca8b8/displayicon.png"
+          "basePrice": 300,
+          "image": "https://media.valorant-api.com/weaponskins/8c6f8399-447b-a7de-7c93-b69273b054ac/displayicon.png"
         },
-        "weight": 21
+        "weight": 13.82
       },
       {
         "skin": {
-          "id": "val_prelude_to_chaos_sheriff",
-          "name": "Prelude to Chaos Sheriff",
-          "weapon": "Sheriff",
+          "id": "val_neptune_classic",
+          "name": "Neptün Classic",
+          "weapon": "Classic",
           "game": "val",
           "rarity": "select",
           "basePrice": 180,
-          "image": "https://media.valorant-api.com/weaponskins/81bd181f-4124-9e58-ffd4-09964dc0d2cc/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskins/97d19265-4fa2-70ef-5f8c-6b9f03860705/displayicon.png"
         },
-        "weight": 23
+        "weight": 20.72
+      },
+      {
+        "skin": {
+          "id": "val_neptune_shorty",
+          "name": "Neptün Shorty",
+          "weapon": "Shorty",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 170,
+          "image": "https://media.valorant-api.com/weaponskins/646e713f-4999-6c56-094c-dd9114bdb35a/displayicon.png"
+        },
+        "weight": 20.72
       }
     ]
   },
   {
-    "id": "val_nocturnum",
-    "name": "Nocturnum Kasası",
-    "subtitle": "Karanlığın Tırpanı & Gece Koleksiyonu",
+    "id": "val_wasteland",
+    "name": "Çorak Ülke Kasası",
+    "subtitle": "Sadece Çorak Ülke Koleksiyonu",
     "game": "val",
     "cost": 1,
-    "icon": "fa-moon",
-    "image": "https://media.valorant-api.com/weaponskins/b20bf3b2-4d71-0a6f-a3b4-a8b699656529/displayicon.png",
+    "icon": "fa-radiation",
+    "image": "https://media.valorant-api.com/weaponskins/9ccde738-4d26-44e3-189e-ddaebb95e64e/displayicon.png",
     "items": [
       {
         "skin": {
-          "id": "val_nocturnum_scythe",
-          "name": "Nocturnum Scythe",
+          "id": "val_wasteland_crowbar",
+          "name": "Çorak Ülke Levyesi",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
-          "basePrice": 3700,
-          "image": "https://media.valorant-api.com/weaponskins/b20bf3b2-4d71-0a6f-a3b4-a8b699656529/displayicon.png"
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/9ccde738-4d26-44e3-189e-ddaebb95e64e/displayicon.png"
         },
-        "weight": 0.5
+        "weight": 0.45
       },
       {
         "skin": {
-          "id": "val_nocturnum_phantom",
-          "name": "Nocturnum Phantom",
-          "weapon": "Phantom",
-          "game": "val",
-          "rarity": "exclusive",
-          "basePrice": 1550,
-          "image": "https://media.valorant-api.com/weaponskins/320c4baa-41e8-ac8f-91eb-0fbc7bf3c145/displayicon.png"
-        },
-        "weight": 3.5
-      },
-      {
-        "skin": {
-          "id": "val_aemondir_vandal",
-          "name": "Aemondir Vandal",
+          "id": "val_wasteland_vandal",
+          "name": "Çorak Ülke Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
-          "basePrice": 1350,
-          "image": "https://media.valorant-api.com/weaponskins/1df79598-42a0-a433-0aa5-c79047c32779/displayicon.png"
+          "basePrice": 1450,
+          "image": "https://media.valorant-api.com/weaponskins/32b87592-45ad-c5a6-44ae-a9b844137c58/displayicon.png"
         },
         "weight": 3.5
       },
       {
         "skin": {
-          "id": "val_nocturnum_marshal",
-          "name": "Nocturnum Marshal",
+          "id": "val_wasteland_phantom",
+          "name": "Çorak Ülke Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1400,
+          "image": "https://media.valorant-api.com/weaponskins/33f1ae2c-4bd3-97eb-1798-57ab067ce805/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_wasteland_marshal",
+          "name": "Çorak Ülke Marshal",
           "weapon": "Marshal",
           "game": "val",
           "rarity": "premium",
-          "basePrice": 690,
-          "image": "https://media.valorant-api.com/weaponskins/685af060-4934-e262-543d-5d96ed42257d/displayicon.png"
+          "basePrice": 800,
+          "image": "https://media.valorant-api.com/weaponskins/19f06522-40c8-8dc6-a0cd-92808b24751f/displayicon.png"
         },
-        "weight": 14.5
+        "weight": 7.71
       },
       {
         "skin": {
-          "id": "val_nocturnum_bulldog",
-          "name": "Nocturnum Bulldog",
-          "weapon": "Bulldog",
-          "game": "val",
-          "rarity": "premium",
-          "basePrice": 580,
-          "image": "https://media.valorant-api.com/weaponskins/970e24f7-41df-3ebb-c668-61a180d9d2f2/displayicon.png"
-        },
-        "weight": 15
-      },
-      {
-        "skin": {
-          "id": "val_nocturnum_classic",
-          "name": "Nocturnum Classic",
-          "weapon": "Classic",
-          "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 320,
-          "image": "https://media.valorant-api.com/weaponskins/051f5a50-4b95-9452-f18a-a1add8266757/displayicon.png"
-        },
-        "weight": 19
-      },
-      {
-        "skin": {
-          "id": "val_aemondir_sheriff",
-          "name": "Aemondir Sheriff",
+          "id": "val_wasteland_sheriff",
+          "name": "Çorak Ülke Sheriff",
           "weapon": "Sheriff",
           "game": "val",
-          "rarity": "deluxe",
-          "basePrice": 260,
-          "image": "https://media.valorant-api.com/weaponskins/db41461d-4cee-b397-09ff-f2b0d8f012f4/displayicon.png"
+          "rarity": "premium",
+          "basePrice": 700,
+          "image": "https://media.valorant-api.com/weaponskins/9913da36-48b4-f0f5-db4e-43847a21e476/displayicon.png"
         },
-        "weight": 21
+        "weight": 7.71
       },
       {
         "skin": {
-          "id": "val_aemondir_bucky",
-          "name": "Aemondir Bucky",
+          "id": "val_wasteland_spectre",
+          "name": "Çorak Ülke Spectre",
+          "weapon": "Spectre",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 600,
+          "image": "https://media.valorant-api.com/weaponskins/f7da43d8-450b-a03f-ceb7-c4b20f738392/displayicon.png"
+        },
+        "weight": 7.71
+      },
+      {
+        "skin": {
+          "id": "val_wasteland_bulldog",
+          "name": "Çorak Ülke Bulldog",
+          "weapon": "Bulldog",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 380,
+          "image": "https://media.valorant-api.com/weaponskins/ffb2f24f-43bd-8735-f9bd-36bde08d86cb/displayicon.png"
+        },
+        "weight": 13.88
+      },
+      {
+        "skin": {
+          "id": "val_wasteland_bucky",
+          "name": "Çorak Ülke Bucky",
           "weapon": "Bucky",
           "game": "val",
-          "rarity": "select",
-          "basePrice": 150,
-          "image": "https://media.valorant-api.com/weaponskins/ce298668-4034-ebe2-3324-67963d4d3629/displayicon.png"
+          "rarity": "deluxe",
+          "basePrice": 300,
+          "image": "https://media.valorant-api.com/weaponskins/949e3298-4875-c495-9978-ec87f3a85118/displayicon.png"
         },
-        "weight": 23
+        "weight": 13.88
+      },
+      {
+        "skin": {
+          "id": "val_wasteland_outlaw",
+          "name": "Çorak Ülke Outlaw",
+          "weapon": "Outlaw",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 180,
+          "image": "https://media.valorant-api.com/weaponskins/04b1d687-4e86-1011-56a4-a9816cf3f5e0/displayicon.png"
+        },
+        "weight": 20.84
+      },
+      {
+        "skin": {
+          "id": "val_wasteland_shorty",
+          "name": "Çorak Ülke Shorty",
+          "weapon": "Shorty",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 170,
+          "image": "https://media.valorant-api.com/weaponskins/30635237-4877-4ea4-5ac4-239474d3a662/displayicon.png"
+        },
+        "weight": 20.82
+      }
+    ]
+  },
+  {
+    "id": "val_minima",
+    "name": "Minima Kasası",
+    "subtitle": "Sadece Minima Koleksiyonu",
+    "game": "val",
+    "cost": 1,
+    "icon": "fa-cube",
+    "image": "https://media.valorant-api.com/weaponskins/a5f8a5c8-4af6-620d-4834-46a14ea50162/displayicon.png",
+    "items": [
+      {
+        "skin": {
+          "id": "val_minima_karambit",
+          "name": "Minima Karambit",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3400,
+          "image": "https://media.valorant-api.com/weaponskins/a5f8a5c8-4af6-620d-4834-46a14ea50162/displayicon.png"
+        },
+        "weight": 0.45
+      },
+      {
+        "skin": {
+          "id": "val_minima_vandal",
+          "name": "Minima Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1450,
+          "image": "https://media.valorant-api.com/weaponskins/b7d1f96a-4cd1-42f3-ff31-86bbc6fa3576/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_minima_phantom",
+          "name": "Minima Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1400,
+          "image": "https://media.valorant-api.com/weaponskins/2e3538f1-450f-cfe6-f93e-73862cd39314/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_minima_operator",
+          "name": "Minima Operator",
+          "weapon": "Operator",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 800,
+          "image": "https://media.valorant-api.com/weaponskins/a0a446f1-443d-3dc8-49c7-f2a70849f092/displayicon.png"
+        },
+        "weight": 7.71
+      },
+      {
+        "skin": {
+          "id": "val_minima_marshal",
+          "name": "Minima Marshal",
+          "weapon": "Marshal",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 700,
+          "image": "https://media.valorant-api.com/weaponskins/62b71917-4a70-5c39-f29b-3198dcbacaf0/displayicon.png"
+        },
+        "weight": 7.71
+      },
+      {
+        "skin": {
+          "id": "val_minima_sheriff",
+          "name": "Minima Sheriff",
+          "weapon": "Sheriff",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 600,
+          "image": "https://media.valorant-api.com/weaponskins/46ffe3ea-4fb5-7773-6242-f5b57bf53ef8/displayicon.png"
+        },
+        "weight": 7.71
+      },
+      {
+        "skin": {
+          "id": "val_minima_spectre",
+          "name": "Minima Spectre",
+          "weapon": "Spectre",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 380,
+          "image": "https://media.valorant-api.com/weaponskins/2d28e21f-4986-650d-70bd-a2927a0e337b/displayicon.png"
+        },
+        "weight": 13.88
+      },
+      {
+        "skin": {
+          "id": "val_minima_ares",
+          "name": "Minima Ares",
+          "weapon": "Ares",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 300,
+          "image": "https://media.valorant-api.com/weaponskins/cd8eb70d-443c-d9fd-48cd-98bace9d5132/displayicon.png"
+        },
+        "weight": 13.88
+      },
+      {
+        "skin": {
+          "id": "val_minima_bulldog",
+          "name": "Minima Bulldog",
+          "weapon": "Bulldog",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 180,
+          "image": "https://media.valorant-api.com/weaponskins/9187ef8b-46fd-9c8a-2956-29ba60dfe565/displayicon.png"
+        },
+        "weight": 20.84
+      },
+      {
+        "skin": {
+          "id": "val_minima_ghost",
+          "name": "Minima Ghost",
+          "weapon": "Ghost",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 170,
+          "image": "https://media.valorant-api.com/weaponskins/b1f873fd-44c9-a012-4bc3-9b9b524d5a94/displayicon.png"
+        },
+        "weight": 20.82
       }
     ]
   }
