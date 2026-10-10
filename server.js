@@ -1120,6 +1120,10 @@ io.on('connection', (socket) => {
         return socket.emit('upgrade:error', { message: 'Hedef skin bulunamadı.' });
       }
 
+      if (String(targetSkin.name || '').toLowerCase().includes('champions') || String(targetSkin.id || '').toLowerCase().includes('champs')) {
+        return socket.emit('upgrade:error', { message: 'Champions serisi skinler yükselticiden elde edilemez! (Upgrader yasağı)' });
+      }
+
       const result = db.upgradeItem(session.userId, inputInstanceId, targetSkin, getOfficialBasePrice, secureRandom);
       if (!result.success) {
         return socket.emit('upgrade:error', { message: result.message || 'Yükseltme başarısız oldu.' });

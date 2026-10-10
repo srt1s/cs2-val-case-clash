@@ -350,6 +350,22 @@ module.exports = {
     }
 
     const inputItem = user.inventory[index];
+
+    // Champions Serisi Skinler Yükseltici Yasağı (Özel koleksiyon eşyaları yükseltilemez veya kazanılamaz)
+    const isChampSkin = (it) => {
+      if (!it) return false;
+      const n = String(it.name || '').toLowerCase();
+      const id = String(it.id || '').toLowerCase();
+      return n.includes('champions') || id.includes('champs') || id.includes('champions');
+    };
+
+    if (isChampSkin(inputItem)) {
+      return { success: false, message: 'Champions serisi skinler yükselticide feda edilemez veya kullanılamaz!' };
+    }
+    if (isChampSkin(targetSkin)) {
+      return { success: false, message: 'Champions serisi skinler yükselticiden elde edilemez! (Upgrader yasağı)' };
+    }
+
     const inputPrice = Math.max(1, Number(priceFn(inputItem)) || 1);
     const targetPrice = Math.max(1, Number(priceFn(targetSkin)) || 1);
 

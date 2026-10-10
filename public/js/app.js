@@ -2218,6 +2218,13 @@ let isUpgradingRolling = false;
 let upgCurrentMultiplierFilter = 'all';
 let upgCurrentNeedleRotation = 0;
 
+function isChampionsSkin(item) {
+  if (!item) return false;
+  const n = String(item.name || '').toLowerCase();
+  const id = String(item.id || '').toLowerCase();
+  return n.includes('champions') || id.includes('champs') || id.includes('champions');
+}
+
 function getAllAvailableTargetSkins() {
   const skinsMap = new Map();
   const casesToScan = (allCases && allCases.length > 0) ? allCases : (window.INITIAL_CASES || []);
@@ -2225,6 +2232,8 @@ function getAllAvailableTargetSkins() {
     if (!c.items) continue;
     for (const it of c.items) {
       if (it.skin && it.skin.id && !skinsMap.has(it.skin.id)) {
+        // Champions skinleri yükselticiden kazanılamaz (hedef olarak seçilemez)
+        if (isChampionsSkin(it.skin)) continue;
         skinsMap.set(it.skin.id, it.skin);
       }
     }
@@ -2252,16 +2261,27 @@ function renderUpgraderInventory() {
   const sorted = [...inventory].sort((a, b) => (Number(b.officialBasePrice || b.basePrice) || 0) - (Number(a.officialBasePrice || a.basePrice) || 0));
 
   sorted.forEach(item => {
+    const isChamp = isChampionsSkin(item);
     const el = document.createElement('div');
-    el.className = 'upg-mini-item' + (upgSelectedInputItem && upgSelectedInputItem.instanceId === item.instanceId ? ' selected' : '');
+    el.className = 'upg-mini-item' + (upgSelectedInputItem && upgSelectedInputItem.instanceId === item.instanceId ? ' selected' : '') + (isChamp ? ' banned' : '');
     const price = Number(item.officialBasePrice || item.basePrice || 0);
+    if (isChamp) {
+      el.style.opacity = '0.5';
+      el.style.border = '1px dashed #ef4444';
+      el.title = 'Champions serisi skinler yükselticide feda edilemez!';
+    }
     el.innerHTML = `
       <img src="${item.image}" class="upg-mini-img" alt="${escapeHtml(item.name)}">
       <div class="upg-mini-name" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</div>
       <div class="upg-mini-price">₺${price.toLocaleString()}</div>
+      ${isChamp ? '<div style="font-size:0.6rem; color:#ef4444; font-weight:800; margin-top:2px;"><i class="fa-solid fa-ban"></i> YASAKLI</div>' : ''}
     `;
     el.addEventListener('click', () => {
       if (isUpgradingRolling) return;
+      if (isChamp) {
+        showInAppToast('Champions serisi skinler yükselticide feda edilemez veya kullanılamaz!', false);
+        return;
+      }
       selectUpgraderInput(item);
     });
     container.appendChild(el);
@@ -2269,6 +2289,10 @@ function renderUpgraderInventory() {
 }
 
 function selectUpgraderInput(item) {
+  if (isChampionsSkin(item)) {
+    showInAppToast('Champions serisi skinler yükselticide feda edilemez!', false);
+    return;
+  }
   upgSelectedInputItem = item;
   const preview = document.getElementById('upgInputPreview');
   const priceBadge = document.getElementById('upgInputPriceBadge');
@@ -2350,6 +2374,10 @@ function renderUpgraderTargets() {
 }
 
 function selectUpgraderTarget(skin) {
+  if (isChampionsSkin(skin)) {
+    showInAppToast('Champions serisi skinler yükselticiden elde edilemez! (Upgrader yasağı)', false);
+    return;
+  }
   upgSelectedTargetSkin = skin;
   const preview = document.getElementById('upgTargetPreview');
   const priceBadge = document.getElementById('upgTargetPriceBadge');
@@ -2447,6 +2475,11 @@ function initUpgraderEvents() {
       if (isUpgradingRolling) return;
       if (!upgSelectedInputItem || !upgSelectedTargetSkin) {
         showInAppToast('Lütfen önce eşyaları seçin.', false);
+        return;
+      }
+
+      if (isChampionsSkin(upgSelectedInputItem) || isChampionsSkin(upgSelectedTargetSkin)) {
+        showInAppToast('Champions serisi skinler yükselticide yasaklıdır!', false);
         return;
       }
 
