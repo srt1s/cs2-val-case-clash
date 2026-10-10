@@ -3999,7 +3999,7 @@ const CASES = [
           "game": "val",
           "rarity": "exclusive",
           "basePrice": 1400,
-          "image": "https://media.valorant-api.com/weaponskins/7122d78b-4e60-eb4d-5f65-738d7c1ce9ae/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskinlevels/8f8f82f4-4133-82c9-50b2-3c9c67e0f9fb/displayicon.png"
         },
         "weight": 3.5
       },
@@ -4011,7 +4011,7 @@ const CASES = [
           "game": "val",
           "rarity": "premium",
           "basePrice": 800,
-          "image": "https://media.valorant-api.com/weaponskins/5211efa8-4efd-09bb-6cee-72b86a8a5972/displayicon.png"
+          "image": "https://media.valorant-api.com/weaponskinlevels/c5dd6298-4928-5d64-5cd0-7fa41ea89d81/displayicon.png"
         },
         "weight": 11.57
       },
