@@ -2331,6 +2331,1077 @@ const CASES = [
       }
     ]
   }
+,
+  {
+    "id": "cs2_danger_zone",
+    "name": "Tehlikeli Bölge Kasası",
+    "subtitle": "1 Bıçak, 2 Kırmızı (Asiimov & Neo-Noir)",
+    "game": "cs2",
+    "cost": 1,
+    "icon": "fa-skull-crossbones",
+    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_fr3MVv_H4a6FucPPBWjDIkbdz4rg4Syyyxxsi5mzRntuvJCqVbwAgDZBwRPlK7EcZJ5GkQA",
+    "items": [
+      {
+        "skin": {
+          "id": "cs2_stiletto_knife_crimson_web",
+          "name": "★ Stiletto Knife | Crimson Web",
+          "weapon": "Stiletto Knife",
+          "game": "cs2",
+          "rarity": "knife",
+          "basePrice": 4200,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1I-_uibbB5L8-bF1iHxOxlj-1gSCGn2xl-426HnourJHKWaQYkDpt5FLMKuxW4m9bvNO7k4ALYjIxNxH77iHxXrnE8aQrZRtQ"
+        },
+        "weight": 0.5
+      },
+      {
+        "skin": {
+          "id": "cs2_ak_47_asiimov",
+          "name": "AK-47 | Asiimov",
+          "weapon": "AK-47",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 450,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0POlPPNSIeOaB2qf19F6ueZhW2e2wEt-t2jcytf6dymSO1JxA5oiRecLsRa5kIfkYr-241aLgotHz3-rkGoXuUp8oX57"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "cs2_awp_neo_noir",
+          "name": "AWP | Neo-Noir",
+          "weapon": "AWP",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 320,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk7uW-V6poL_6cB3WvzedxuPUnHirrxR4l423SyI39I3KXPwdxWZclQeNZ5EXskYfnNeyw71OMi9lNzDK-0H3r66pOTw"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "cs2_desert_eagle_mecha_industries",
+          "name": "Desert Eagle | Mecha Industries",
+          "weapon": "Desert Eagle",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 65,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL1m5fn8Sdk6OGRbKFsJ_yWMWqVwuZ3j-1gSCGn20h042vSyY2tdyjCZwIlXJBxQeNe4EWxxoHkMOq0sQGIid5Fnyr42HtXrnE8p4gbgvE"
+        },
+        "weight": 14.5
+      },
+      {
+        "skin": {
+          "id": "cs2_ump_45_momentum",
+          "name": "UMP-45 | Momentum",
+          "weapon": "UMP-45",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 32,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkk4a0qB1Y-s27ZbRSIeKBAXCD_uJ_t-l9ASzrx0txsWiBydv4JCmSaFdzDJt0TOYN5hbtwYWzNerl5QeIj4IXyX3gznQeadzF8t4"
+        },
+        "weight": 16
+      },
+      {
+        "skin": {
+          "id": "cs2_galil_ar_signal",
+          "name": "Galil AR | Signal",
+          "weapon": "Galil AR",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 11,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2n5rp8SNJ0Pq3V6NsLPmfMXSZxuB3vN57Si2MmRQguynLnIqvIy-TO1UlXJMjEeAN4UGwk9DkZLnltgPYjYkTnCn6iy8buips5PFCD_QZl2QaUg"
+        },
+        "weight": 20
+      },
+      {
+        "skin": {
+          "id": "cs2_usp_s_flashback",
+          "name": "USP-S | Flashback",
+          "weapon": "USP-S",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 9,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkjYbf7itX6vytbbZSI-WsG3SA_uh6sfJhTSiwniIrujqNjsH6dnKfbAdxAsF3ELQCu0Hsmty1N76z71GIit4RySX_2CJI6yk9tucLT-N7rUYlhjC0"
+        },
+        "weight": 21
+      },
+      {
+        "skin": {
+          "id": "cs2_glock_18_oxide_blaze",
+          "name": "Glock-18 | Oxide Blaze",
+          "weapon": "Glock-18",
+          "game": "cs2",
+          "rarity": "milspec",
+          "basePrice": 3,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1Y-s2pZKtuK6HLMWSf0_x5tORncCW6khUz_T_Xn9f6dnvDb1UkDsdwF7IItES6kYK1M-7k7wSI3YwQm3_63XlAvH51o7FVwJirs7M"
+        },
+        "weight": 21
+      }
+    ]
+  },
+  {
+    "id": "cs2_chroma_2",
+    "name": "Kroma 2 Kasası",
+    "subtitle": "1 Bıçak, 2 Kırmızı (Hyper Beast & Neon Rider)",
+    "game": "cs2",
+    "cost": 1,
+    "icon": "fa-gem",
+    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_fqmwOuKD2PqI6caDBWDeUkO8uteM9SnDglklw6miEn9j6IHKfblNxA5pxW6dU5UH4LtBe",
+    "items": [
+      {
+        "skin": {
+          "id": "cs2_m9_bayonet_doppler",
+          "name": "★ M9 Bayonet | Doppler",
+          "weapon": "M9 Bayonet",
+          "game": "cs2",
+          "rarity": "knife",
+          "basePrice": 6200,
+          "image": "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJf3qr3czxb49KzgL-Kmsj2P7rSnXtU6dd9teTA5475jV2urhcDPzCkfMKLcAE-aV3R-lO5l-e61sfqvZ2fyiBgvikqsXiMyRGw1U1Ja-dm06adSULeWfJvEZCxug"
+        },
+        "weight": 0.5
+      },
+      {
+        "skin": {
+          "id": "cs2_m4a1_s_hyper_beast",
+          "name": "M4A1-S | Hyper Beast",
+          "weapon": "M4A1-S",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 410,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_OGMWrEwL9JuPh5SjuMlxgmoCm6lob-KT-JbwF1WZEjR-YJskK9k9XiYePltAeNjYlAxSn5j34dvCZstb4LB6Ut-7qX0V8Xkv5_2A"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "cs2_mac_10_neon_rider",
+          "name": "MAC-10 | Neon Rider",
+          "weapon": "MAC-10",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 120,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5WxrR1Y-s2jaac8cM-dC2ie0-dytfNWQyC0nQlp5DzTntmgdC7COABxX5NxQrUOtUS5w4LgMu6zsVCK2IJCmyisjitM6DErvbicsEA0SQ"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "cs2_galil_ar_eco",
+          "name": "Galil AR | Eco",
+          "weapon": "Galil AR",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 45,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2n5rp8SNJ0PG7V6NsLPmfMWKTztF6ueZhW2exwExw4WrcyImrcHmTbQAlWcQkQudYt0O5lNfgP-nh5AOL3otAziz7kGoXua-HTb4P"
+        },
+        "weight": 14.5
+      },
+      {
+        "skin": {
+          "id": "cs2_five_seven_monkey_business",
+          "name": "Five-SeveN | Monkey Business",
+          "weapon": "Five-SeveN",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 35,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL3l4Dl7idN6vyRa7FSJvmFC3SV1-t4j-NoQSi9lCIrujqNjsGheXmXPQcoWMFzEO5ZtUOwkILjY7yzsg3ci91DySiohn4buCht4eYET-N7rZVO80Su"
+        },
+        "weight": 16
+      },
+      {
+        "skin": {
+          "id": "cs2_awp_worm_god",
+          "name": "AWP | Worm God",
+          "weapon": "AWP",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 18,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_DNk7uW-V7B6Kf6WMWuZxuZi_uRoGH3iw0wh4j7cnt6ucSqSZwUkCMB5TLIPsES_kNbuYeOwtgXai4NbjXKpZ4kj0o0"
+        },
+        "weight": 20
+      },
+      {
+        "skin": {
+          "id": "cs2_mag_7_heat",
+          "name": "MAG-7 | Heat",
+          "weapon": "MAG-7",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 12,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5G3wiFO0P-vb_NSMvWXBmiE_uJ_t-l9AX7nzBsk623dm46odHmUbFd1Dcd2RbINtBXtkNDjMbzj5AGKjt4UyijgznQe8JftFTE"
+        },
+        "weight": 21
+      },
+      {
+        "skin": {
+          "id": "cs2_ump_45_grand_prix",
+          "name": "UMP-45 | Grand Prix",
+          "weapon": "UMP-45",
+          "game": "cs2",
+          "rarity": "milspec",
+          "basePrice": 3,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkk4a0qB1a4s27ZbRSMvGQC3WvzOtyufRkASjjxU1x42nVyo2rdnKQbA9xX5ohRrYMtBntmtW1N7zj5lDZgthFzC3gznQezoUeLLY"
+        },
+        "weight": 21
+      }
+    ]
+  },
+  {
+    "id": "cs2_chroma_3",
+    "name": "Kroma 3 Kasası",
+    "subtitle": "1 Bıçak, 2 Kırmızı (Chantico Fire & Judgement)",
+    "game": "cs2",
+    "cost": 1,
+    "icon": "fa-fire",
+    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frHAVuKf7PaJucPLHW2TExb9z4OdvHirixEomtW7cyduvci2VZ1AiCsR2Q_lK7EdW_VBhrw",
+    "items": [
+      {
+        "skin": {
+          "id": "cs2_bayonet_tiger_tooth",
+          "name": "★ Bayonet | Tiger Tooth",
+          "weapon": "Bayonet",
+          "game": "cs2",
+          "rarity": "knife",
+          "basePrice": 3800,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLzn4_v8ydP0POgV7BkJ_WBMWiCwOBxtd5lRi67gVMhsGrTntn4ci-ROAYlXMBwE7YL5BaxxIHjY-vq7w3X398RxS78iylK8G81tBow9RWL"
+        },
+        "weight": 0.5
+      },
+      {
+        "skin": {
+          "id": "cs2_m4a1_s_chantico_s_fire",
+          "name": "M4A1-S | Chantico's Fire",
+          "weapon": "M4A1-S",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 480,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_OGMWrEwL9lj_JmWiWnlBYioQKJk4jxNWXFZ1IgC5MiQuZeuhK4wIXnMuPhslCM2oMTxH75hnxK6Htjse4BVqd25OSJ2DU2Q_CD"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "cs2_pp_bizon_judgement_of_anubis",
+          "name": "PP-Bizon | Judgement of Anubis",
+          "weapon": "PP-Bizon",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 85,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLzl4zv8x1Y-s2sYb5iLs-QG3WDxNF6ueZhW2fkzU0isDvTnomsdS7BbwF0A8ElROJfshC8wN3jYu-2tQ3c2osTxCitkGoXuVioOA3_"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "cs2_p250_asiimov",
+          "name": "P250 | Asiimov",
+          "weapon": "P250",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 55,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLhzMOwwiFO0OL8PfRSIeOaB2qf19F6ueZhW2fixx53tWqEm4ugeXuebQN0CZJyRrMJuxm4loCyPr_i51TfjtgXzi79kGoXuUXmUJzm"
+        },
+        "weight": 14.5
+      },
+      {
+        "skin": {
+          "id": "cs2_ump_45_primal_saber",
+          "name": "UMP-45 | Primal Saber",
+          "weapon": "UMP-45",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 38,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLkk4a0qB1Y-s27ZbQ5dc-DHG6dwOJlseNsXRa_nBovp3PRn478JHmePQ8hDcF2Q7YDtxXrk92zYbyw7gXYjIhEyCn_3Hsbui44_a9cBklqRdMs"
+        },
+        "weight": 16
+      },
+      {
+        "skin": {
+          "id": "cs2_ssg_08_ghost_crusader",
+          "name": "SSG 08 | Ghost Crusader",
+          "weapon": "SSG 08",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 14,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLijZGwpR1c_M29e6M9eM-SHGqRwuFktd5lRi67gVN_6jnQzYmhc3jFbgUoA5J3ReYIsRO8ktGyM-iz4AaMi4hDzyqsiSJJ8G81tKe_wmAg"
+        },
+        "weight": 20
+      },
+      {
+        "skin": {
+          "id": "cs2_galil_ar_firefight",
+          "name": "Galil AR | Firefight",
+          "weapon": "Galil AR",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 9,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2n5rp8SNJ0PW9V6NsLPmfD3WvyOB1te9sXSinmg8YvzSCkpu3eH_EZ1IgDsR1ReYPshm6x9XnZe204VCMiIsXzS_33S0b7X5t4-dQUb1lpPOTHSUAOw"
+        },
+        "weight": 21
+      },
+      {
+        "skin": {
+          "id": "cs2_tec_9_re_entry",
+          "name": "Tec-9 | Re-Entry",
+          "weapon": "Tec-9",
+          "game": "cs2",
+          "rarity": "milspec",
+          "basePrice": 3,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLlm5W5wiNW0Oara_1SMvWXDGuR0vpJvOhuRz39lkp-4j_QnoytcS-RPwEgDZt1FuAJshG6ktW1NLy34gCPj44WmH7-jzQJsHhOKqOsYw"
+        },
+        "weight": 21
+      }
+    ]
+  },
+  {
+    "id": "cs2_shattered_web",
+    "name": "Parçalanmış Ağ Kasası",
+    "subtitle": "1 Bıçak, 2 Kırmızı (Containment Breach & Stalker)",
+    "game": "cs2",
+    "cost": 1,
+    "icon": "fa-spider",
+    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_fr3EVvKD6MKU_cKPKXWHFxLkls7FsSnDqwUl_sWTczoqheHifbwMmD5F1RvlK7Ec_KL6Q_A",
+    "items": [
+      {
+        "skin": {
+          "id": "cs2_nomad_knife_fade",
+          "name": "★ Nomad Knife | Fade",
+          "weapon": "Nomad Knife",
+          "game": "cs2",
+          "rarity": "knife",
+          "basePrice": 4600,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1U-uaqZ6t_H_GSMWGRxetJvOhuRz39wUUksW7Vm4n7d3yUO1InXsdxTeQDukO4l9zuN7_j5QzYjIlFy3n6jDQJsHjNMoy1vA"
+        },
+        "weight": 0.5
+      },
+      {
+        "skin": {
+          "id": "cs2_awp_containment_breach",
+          "name": "AWP | Containment Breach",
+          "weapon": "AWP",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 580,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf_jdk7uW-V7JkMuWAMWuZxuZi_rQ6SXq1xURysj_Vw4uhJHOVPQ8oCZt4QrRbtRi6ldPlPu_g4FHaiYNbjXKpcPI_17A"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "cs2_mac_10_stalker",
+          "name": "MAC-10 | Stalker",
+          "weapon": "MAC-10",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 140,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8n5WxrR1c_M2jaac8cM-AGmacyutkj-1gSCGn20V0t27Tw974Jy-WOg9yW8N3QOQDsxG4x9O0ZOPqtgHZ399HzST8ji9XrnE8CxAHwFY"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "cs2_tec_9_decimator",
+          "name": "Tec-9 | Decimator",
+          "weapon": "Tec-9",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 42,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLlm5W5wiVI0Oara_1SJPWQB2qR1eFkj-1gSCGn20h16j-Ew9j6Jy6QbQB1XJJzQLVYshXqm92xY-7g4wze3dpAySz2iXlXrnE8_HmWmcE"
+        },
+        "weight": 14.5
+      },
+      {
+        "skin": {
+          "id": "cs2_sg_553_colony_iv",
+          "name": "SG 553 | Colony IV",
+          "weapon": "SG 553",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 35,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLimcO1qx1Y-s29b_E4c8-BC2aT1eFkj-1gSCGn20Qit2yAn9n8IHKealB2DZIjTO8JsBW7ktDlYu_m5ADWit4Rznn63XtXrnE82sW2soE"
+        },
+        "weight": 16
+      },
+      {
+        "skin": {
+          "id": "cs2_ak_47_rat_rod",
+          "name": "AK-47 | Rat Rod",
+          "weapon": "AK-47",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 22,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiVI0POlPPNSLvmRDGuV09F6ueZhW2fklBx362TTnN36dHiRa1AmW5QlQuVftxO9k4HhZuvksVDc398Rzy32kGoXuR34FNLu"
+        },
+        "weight": 20
+      },
+      {
+        "skin": {
+          "id": "cs2_p250_inferno",
+          "name": "P250 | Inferno",
+          "weapon": "P250",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 11,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLhzMOwwiVI0OL8PfRSKf6VC3WeztF6ueZhW2e3wUgi6z7WmI6gc3LDPQAgXsB2E7Veshbpl4DiNL_htQDZ2NlHy3qvkGoXuXYeEedL"
+        },
+        "weight": 21
+      },
+      {
+        "skin": {
+          "id": "cs2_mp5_sd_acid_wash",
+          "name": "MP5-SD | Acid Wash",
+          "weapon": "MP5-SD",
+          "game": "cs2",
+          "rarity": "milspec",
+          "basePrice": 3,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8jsPz-R1c_M2jePFSJeSQBlicyOl-pK9rTnjqlkkitmTVn437IiiePQRyX8F4FuBc5xS_lYHgZevj7wzagosX02yg2cdA74dF"
+        },
+        "weight": 21
+      }
+    ]
+  },
+  {
+    "id": "cs2_gamma",
+    "name": "Gama Kasası",
+    "subtitle": "1 Bıçak, 2 Kırmızı (Mecha Industries & Wasteland)",
+    "game": "cs2",
+    "cost": 1,
+    "icon": "fa-radiation",
+    "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frHEVtvP5bPZrd6XECmOSxe0v4bRoTnnjwBkitWrRm4yoeX3GagMnCZZ2FPlK7EcEv22BnQ",
+    "items": [
+      {
+        "skin": {
+          "id": "cs2_m9_bayonet_gamma_doppler",
+          "name": "★ M9 Bayonet | Gamma Doppler",
+          "weapon": "M9 Bayonet",
+          "game": "cs2",
+          "rarity": "knife",
+          "basePrice": 6800,
+          "image": "https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJf3qr3czxb49KzgL-KmsjxPr7Dl2dV18hwmOvN8IXvjVCLpxo7Oy3tIYKVIVNtYFjS_FC2yLvogMK4vM7NmHQ36CMgsHfbmhHkh0tEO-dtg-veFwv998pqQw"
+        },
+        "weight": 0.5
+      },
+      {
+        "skin": {
+          "id": "cs2_m4a1_s_mecha_industries",
+          "name": "M4A1-S | Mecha Industries",
+          "weapon": "M4A1-S",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 380,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_eAMWrEwL9JveRqRyiMnBMjpi6RiIb8MhTLN1F4TowiE7EMtRW7ltzlMbvi5wPej4pDmCT2i3tKuHo4sOoEWKFz8qPS3F7BL_Rjtn0I4s52"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "cs2_glock_18_wasteland_rebel",
+          "name": "Glock-18 | Wasteland Rebel",
+          "weapon": "Glock-18",
+          "game": "cs2",
+          "rarity": "covert",
+          "basePrice": 95,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL2kpnj9h1Y-s2pZKtuK8-ED3SExOJ3vuVWXSyxkBEYvzSCkpu3Iy7GPFUnC5t3EO4I4Bm6w4DmNu3k4lCN3YNNniz23HsY6Xxv5rwCU71lpPMpvj9PCw"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "cs2_m4a4_desolate_space",
+          "name": "M4A4 | Desolate Space",
+          "weapon": "M4A4",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 65,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwiFO0P_6afBSJPWAAWuR1etJo_FoTCyMmRQguynLnNepJXPEaQJyDZJ0QOdbsxi7ktS0Y-Li4ADegthGn32ojCJJ7CxosfFCD_SyjfEkHg"
+        },
+        "weight": 14.5
+      },
+      {
+        "skin": {
+          "id": "cs2_scar_20_bloodsport",
+          "name": "SCAR-20 | Bloodsport",
+          "weapon": "SCAR-20",
+          "game": "cs2",
+          "rarity": "classified",
+          "basePrice": 32,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLinZfyr3Jk6OGRe6dsMqLDMWWczuFyo_FmXT2MmRQguynLnoqrcHPCaFdzDMF5F-8P4Bbum9fkYuvrsVffjI5AyS75inlL5ixjsvFCD_R20nqesQ"
+        },
+        "weight": 16
+      },
+      {
+        "skin": {
+          "id": "cs2_awp_phobos",
+          "name": "AWP | Phobos",
+          "weapon": "AWP",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 18,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwiYbf-jFk7uW-V7RlL_KcHVicyOl-pK84GXHmwk115D6GzdqudHyUbwRxW5R3ROZbtEG8wYDiY7-x5VOKgotB02yg2bdJjfAf"
+        },
+        "weight": 20
+      },
+      {
+        "skin": {
+          "id": "cs2_r8_revolver_reboot",
+          "name": "R8 Revolver | Reboot",
+          "weapon": "R8 Revolver",
+          "game": "cs2",
+          "rarity": "restricted",
+          "basePrice": 10,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLjm4Dv8TRe_c2tfZt_eM-QF2WV0_1mv_N9cCW6khUz_WjRyouseHqUPwQoXMNyQbMM4ETulNSxNuq3s1DZi95CzH_-2Cgf7Hp1o7FVySZFkkA"
+        },
+        "weight": 21
+      },
+      {
+        "skin": {
+          "id": "cs2_five_seven_violent_daimyo",
+          "name": "Five-SeveN | Violent Daimyo",
+          "weapon": "Five-SeveN",
+          "game": "cs2",
+          "rarity": "milspec",
+          "basePrice": 3,
+          "image": "https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL3l4Dl7idN6vyRa7FSJvmFC1iDxPhzvt5tTiC-jBIYvzSCkpu3cXjCPAB2WZMmQ-EK4BTqlNSzNOLk71GI3tpGmX2oii5N6nk667kDWL1lpPNv4wCTtw"
+        },
+        "weight": 21
+      }
+    ]
+  },
+  {
+    "id": "val_mystbloom",
+    "name": "Büyüçiçeği Kasası",
+    "subtitle": "Mystbloom Çiçek Koleksiyonu & Kunai",
+    "game": "val",
+    "cost": 1,
+    "icon": "fa-spa",
+    "image": "https://media.valorant-api.com/weaponskins/516e0013-480b-6c1f-b05a-b6b616bffbfc/displayicon.png",
+    "items": [
+      {
+        "skin": {
+          "id": "val_mystbloom_kunai",
+          "name": "Mystbloom Kunai",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3600,
+          "image": "https://media.valorant-api.com/weaponskins/516e0013-480b-6c1f-b05a-b6b616bffbfc/displayicon.png"
+        },
+        "weight": 0.5
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_vandal",
+          "name": "Mystbloom Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1450,
+          "image": "https://media.valorant-api.com/weaponskins/4fc36214-4492-ef57-f8fb-4cab81863545/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_phantom",
+          "name": "Mystbloom Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1450,
+          "image": "https://media.valorant-api.com/weaponskins/ce85f078-474a-eae4-3844-03a49625df15/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_operator",
+          "name": "Mystbloom Operator",
+          "weapon": "Operator",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 780,
+          "image": "https://media.valorant-api.com/weaponskins/d9a34604-42e9-3a01-a875-9293e08183a9/displayicon.png"
+        },
+        "weight": 14.5
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_sheriff",
+          "name": "Mystbloom Sheriff",
+          "weapon": "Sheriff",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 520,
+          "image": "https://media.valorant-api.com/weaponskins/c0a39e8b-4d52-bfbc-21f2-a88b0f8c4856/displayicon.png"
+        },
+        "weight": 15
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_ghost",
+          "name": "Mystbloom Ghost",
+          "weapon": "Ghost",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 380,
+          "image": "https://media.valorant-api.com/weaponskins/82511942-465b-5600-76d7-778159d01bf4/displayicon.png"
+        },
+        "weight": 19
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_judge",
+          "name": "Mystbloom Judge",
+          "weapon": "Judge",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 280,
+          "image": "https://media.valorant-api.com/weaponskins/5c8d1196-48d8-2bbc-fac0-57af71a18c97/displayicon.png"
+        },
+        "weight": 21
+      },
+      {
+        "skin": {
+          "id": "val_mystbloom_ares",
+          "name": "Mystbloom Ares",
+          "weapon": "Ares",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 160,
+          "image": "https://media.valorant-api.com/weaponskins/c976f29d-4a83-3a40-2907-8dadbb7c5940/displayicon.png"
+        },
+        "weight": 23
+      }
+    ]
+  },
+  {
+    "id": "val_gaias_vengeance",
+    "name": "Gaia'nın İntikamı Kasası",
+    "subtitle": "Doğanın Gücü & Gaia's Fury Baltası",
+    "game": "val",
+    "cost": 1,
+    "icon": "fa-tree",
+    "image": "https://media.valorant-api.com/weaponskins/4fc1bb49-4847-7262-8cfe-fcaf0f62f0d1/displayicon.png",
+    "items": [
+      {
+        "skin": {
+          "id": "val_gaia_s_fury",
+          "name": "Gaia's Fury",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3500,
+          "image": "https://media.valorant-api.com/weaponskins/4fc1bb49-4847-7262-8cfe-fcaf0f62f0d1/displayicon.png"
+        },
+        "weight": 0.5
+      },
+      {
+        "skin": {
+          "id": "val_gaia_s_vengeance_vandal",
+          "name": "Gaia's Vengeance Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1400,
+          "image": "https://media.valorant-api.com/weaponskins/000ad7b1-44b0-9345-ea47-9cbd7dcdbb38/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_gaia_s_vengeance_phantom",
+          "name": "Gaia's Vengeance Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1400,
+          "image": "https://media.valorant-api.com/weaponskins/7ae63121-4cf0-b4db-00ed-eb8ef05572b1/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_gaia_s_vengeance_marshal",
+          "name": "Gaia's Vengeance Marshal",
+          "weapon": "Marshal",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 650,
+          "image": "https://media.valorant-api.com/weaponskins/fc802ceb-4a39-39ac-adf5-02a812be2f8e/displayicon.png"
+        },
+        "weight": 14.5
+      },
+      {
+        "skin": {
+          "id": "val_gaia_s_vengeance_guardian",
+          "name": "Gaia's Vengeance Guardian",
+          "weapon": "Guardian",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 580,
+          "image": "https://media.valorant-api.com/weaponskins/abd5415f-4851-244f-4b8b-31af8e268822/displayicon.png"
+        },
+        "weight": 15
+      },
+      {
+        "skin": {
+          "id": "val_gaia_s_vengeance_ghost",
+          "name": "Gaia's Vengeance Ghost",
+          "weapon": "Ghost",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 350,
+          "image": "https://media.valorant-api.com/weaponskins/daed0e44-4ab6-22b4-a5a5-57a4957a056b/displayicon.png"
+        },
+        "weight": 19
+      },
+      {
+        "skin": {
+          "id": "val_gaia_s_vengeance_ares",
+          "name": "Gaia's Vengeance Ares",
+          "weapon": "Ares",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 280,
+          "image": "https://media.valorant-api.com/weaponskins/1e5ee5bf-43d5-28ee-b2f7-96a53b783dc2/displayicon.png"
+        },
+        "weight": 21
+      },
+      {
+        "skin": {
+          "id": "val_gaia_s_vengeance_shorty",
+          "name": "Gaia's Vengeance Shorty",
+          "weapon": "Shorty",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 150,
+          "image": "https://media.valorant-api.com/weaponskins/4c583a37-42d7-23db-5e38-1eafe96f2b9d/displayicon.png"
+        },
+        "weight": 23
+      }
+    ]
+  },
+  {
+    "id": "val_neptune",
+    "name": "Neptün Kasası",
+    "subtitle": "Akvaryum Koleksiyonu & Çapa Bıçak",
+    "game": "val",
+    "cost": 1,
+    "icon": "fa-water",
+    "image": "https://media.valorant-api.com/weaponskins/c3f1c9d6-441b-7def-1bf2-2c82719a4de8/displayicon.png",
+    "items": [
+      {
+        "skin": {
+          "id": "val_neptune_anchor",
+          "name": "Neptune Anchor",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3300,
+          "image": "https://media.valorant-api.com/weaponskins/c3f1c9d6-441b-7def-1bf2-2c82719a4de8/displayicon.png"
+        },
+        "weight": 0.5
+      },
+      {
+        "skin": {
+          "id": "val_neptune_vandal",
+          "name": "Neptune Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1380,
+          "image": "https://media.valorant-api.com/weaponskins/db91451c-4309-2c8c-eded-bf842d844e52/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_neptune_phantom",
+          "name": "Neptune Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1380,
+          "image": "https://media.valorant-api.com/weaponskins/516ff0cb-4d4b-bf0e-d460-92b3c8d27259/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_neptune_guardian",
+          "name": "Neptune Guardian",
+          "weapon": "Guardian",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 620,
+          "image": "https://media.valorant-api.com/weaponskins/1082032a-4f20-12db-93ea-549332f91ddf/displayicon.png"
+        },
+        "weight": 14.5
+      },
+      {
+        "skin": {
+          "id": "val_neptune_bulldog",
+          "name": "Neptune Bulldog",
+          "weapon": "Bulldog",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 520,
+          "image": "https://media.valorant-api.com/weaponskins/8c6f8399-447b-a7de-7c93-b69273b054ac/displayicon.png"
+        },
+        "weight": 15
+      },
+      {
+        "skin": {
+          "id": "val_neptune_spectre",
+          "name": "Neptune Spectre",
+          "weapon": "Spectre",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 320,
+          "image": "https://media.valorant-api.com/weaponskins/55153919-4598-cb0f-4759-7ea546c6d121/displayicon.png"
+        },
+        "weight": 19
+      },
+      {
+        "skin": {
+          "id": "val_neptune_classic",
+          "name": "Neptune Classic",
+          "weapon": "Classic",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 240,
+          "image": "https://media.valorant-api.com/weaponskins/97d19265-4fa2-70ef-5f8c-6b9f03860705/displayicon.png"
+        },
+        "weight": 21
+      },
+      {
+        "skin": {
+          "id": "val_neptune_odin",
+          "name": "Neptune Odin",
+          "weapon": "Odin",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 160,
+          "image": "https://media.valorant-api.com/weaponskins/a67c2daa-4f4d-1af0-0ff4-6fafde471776/displayicon.png"
+        },
+        "weight": 23
+      }
+    ]
+  },
+  {
+    "id": "val_spectrum_zedd",
+    "name": "Spectrum Kasası",
+    "subtitle": "Zedd Spectrum Ses & Işık Koleksiyonu",
+    "game": "val",
+    "cost": 1,
+    "icon": "fa-music",
+    "image": "https://media.valorant-api.com/weaponskins/400bb847-4f4f-a39e-cd52-589f00b2204f/displayicon.png",
+    "items": [
+      {
+        "skin": {
+          "id": "val_waveform",
+          "name": "Waveform",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3900,
+          "image": "https://media.valorant-api.com/weaponskins/400bb847-4f4f-a39e-cd52-589f00b2204f/displayicon.png"
+        },
+        "weight": 0.5
+      },
+      {
+        "skin": {
+          "id": "val_spectrum_phantom",
+          "name": "Spectrum Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1650,
+          "image": "https://media.valorant-api.com/weaponskins/980fa063-436e-e51f-c38d-70a5b93a0f1c/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_prelude_to_chaos_vandal",
+          "name": "Prelude to Chaos Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1480,
+          "image": "https://media.valorant-api.com/weaponskins/522a264e-4ca7-adb0-6cf1-28b2ef938727/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_spectrum_classic",
+          "name": "Spectrum Classic",
+          "weapon": "Classic",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 780,
+          "image": "https://media.valorant-api.com/weaponskins/46f32f75-4fc8-7121-8a77-db8db43afc67/displayicon.png"
+        },
+        "weight": 14.5
+      },
+      {
+        "skin": {
+          "id": "val_spectrum_bulldog",
+          "name": "Spectrum Bulldog",
+          "weapon": "Bulldog",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 680,
+          "image": "https://media.valorant-api.com/weaponskins/fbe04552-445f-f202-923e-6fbd61b7e2aa/displayicon.png"
+        },
+        "weight": 15
+      },
+      {
+        "skin": {
+          "id": "val_spectrum_guardian",
+          "name": "Spectrum Guardian",
+          "weapon": "Guardian",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 380,
+          "image": "https://media.valorant-api.com/weaponskins/04ccfe05-497c-2d52-2bd0-64a68955175e/displayicon.png"
+        },
+        "weight": 19
+      },
+      {
+        "skin": {
+          "id": "val_prelude_to_chaos_bulldog",
+          "name": "Prelude to Chaos Bulldog",
+          "weapon": "Bulldog",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 290,
+          "image": "https://media.valorant-api.com/weaponskins/c5676fb6-4268-d5bd-f2f7-f3a1334ca8b8/displayicon.png"
+        },
+        "weight": 21
+      },
+      {
+        "skin": {
+          "id": "val_prelude_to_chaos_sheriff",
+          "name": "Prelude to Chaos Sheriff",
+          "weapon": "Sheriff",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 180,
+          "image": "https://media.valorant-api.com/weaponskins/81bd181f-4124-9e58-ffd4-09964dc0d2cc/displayicon.png"
+        },
+        "weight": 23
+      }
+    ]
+  },
+  {
+    "id": "val_nocturnum",
+    "name": "Nocturnum Kasası",
+    "subtitle": "Karanlığın Tırpanı & Gece Koleksiyonu",
+    "game": "val",
+    "cost": 1,
+    "icon": "fa-moon",
+    "image": "https://media.valorant-api.com/weaponskins/b20bf3b2-4d71-0a6f-a3b4-a8b699656529/displayicon.png",
+    "items": [
+      {
+        "skin": {
+          "id": "val_nocturnum_scythe",
+          "name": "Nocturnum Scythe",
+          "weapon": "Melee",
+          "game": "val",
+          "rarity": "knife",
+          "basePrice": 3700,
+          "image": "https://media.valorant-api.com/weaponskins/b20bf3b2-4d71-0a6f-a3b4-a8b699656529/displayicon.png"
+        },
+        "weight": 0.5
+      },
+      {
+        "skin": {
+          "id": "val_nocturnum_phantom",
+          "name": "Nocturnum Phantom",
+          "weapon": "Phantom",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1550,
+          "image": "https://media.valorant-api.com/weaponskins/320c4baa-41e8-ac8f-91eb-0fbc7bf3c145/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_aemondir_vandal",
+          "name": "Aemondir Vandal",
+          "weapon": "Vandal",
+          "game": "val",
+          "rarity": "exclusive",
+          "basePrice": 1350,
+          "image": "https://media.valorant-api.com/weaponskins/1df79598-42a0-a433-0aa5-c79047c32779/displayicon.png"
+        },
+        "weight": 3.5
+      },
+      {
+        "skin": {
+          "id": "val_nocturnum_marshal",
+          "name": "Nocturnum Marshal",
+          "weapon": "Marshal",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 690,
+          "image": "https://media.valorant-api.com/weaponskins/685af060-4934-e262-543d-5d96ed42257d/displayicon.png"
+        },
+        "weight": 14.5
+      },
+      {
+        "skin": {
+          "id": "val_nocturnum_bulldog",
+          "name": "Nocturnum Bulldog",
+          "weapon": "Bulldog",
+          "game": "val",
+          "rarity": "premium",
+          "basePrice": 580,
+          "image": "https://media.valorant-api.com/weaponskins/970e24f7-41df-3ebb-c668-61a180d9d2f2/displayicon.png"
+        },
+        "weight": 15
+      },
+      {
+        "skin": {
+          "id": "val_nocturnum_classic",
+          "name": "Nocturnum Classic",
+          "weapon": "Classic",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 320,
+          "image": "https://media.valorant-api.com/weaponskins/051f5a50-4b95-9452-f18a-a1add8266757/displayicon.png"
+        },
+        "weight": 19
+      },
+      {
+        "skin": {
+          "id": "val_aemondir_sheriff",
+          "name": "Aemondir Sheriff",
+          "weapon": "Sheriff",
+          "game": "val",
+          "rarity": "deluxe",
+          "basePrice": 260,
+          "image": "https://media.valorant-api.com/weaponskins/db41461d-4cee-b397-09ff-f2b0d8f012f4/displayicon.png"
+        },
+        "weight": 21
+      },
+      {
+        "skin": {
+          "id": "val_aemondir_bucky",
+          "name": "Aemondir Bucky",
+          "weapon": "Bucky",
+          "game": "val",
+          "rarity": "select",
+          "basePrice": 150,
+          "image": "https://media.valorant-api.com/weaponskins/ce298668-4034-ebe2-3324-67963d4d3629/displayicon.png"
+        },
+        "weight": 23
+      }
+    ]
+  }
 ];
 
 module.exports = {
