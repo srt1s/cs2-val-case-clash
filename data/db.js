@@ -273,6 +273,17 @@ module.exports = {
     if (!Number.isFinite(user.balance)) user.balance = 0;
     if (!Array.isArray(user.inventory)) user.inventory = [];
 
+    // KEY TO TL MIGRATION: 1 Key = 34 TL
+    if (user.balance > 0) {
+      user.tlBalance = Math.min(MAX_TL, Math.max(0, Math.round(((user.tlBalance || 0) + user.balance * 34) * 100) / 100));
+      user.balance = 0;
+    }
+
+    const bonusGiven = isNewHwid && (!trustedBackup || !trustedBackup.inventory || trustedBackup.inventory.length === 0);
+    if (bonusGiven && (!user.tlBalance || user.tlBalance === 0)) {
+      user.tlBalance = 170; // 5 x 34 TL starter bonus
+    }
+
     // Ensure every inventory item has a valid, unique instanceId
     const seen = new Set();
     user.inventory = user.inventory.filter(item => item && typeof item === 'object');
@@ -296,7 +307,7 @@ module.exports = {
       success: true,
       user,
       isNewHwid,
-      bonusGiven: isNewHwid && (!trustedBackup || !trustedBackup.inventory || trustedBackup.inventory.length === 0)
+      bonusGiven
     };
   },
 
@@ -415,17 +426,18 @@ module.exports = {
     };
   },
 
-  // Modify Kasa Opening Balance (1 Kasa = 1 Bakiye) — Max 1000 Anahtar
+  // Modify Kasa Opening Balance — Redirected to TL (1 Key = 34 TL)
   updateBalance(userId, delta) {
     const user = this.getUserById(userId);
-    if (!user) return null;
+    if (!user) return 0;
     const d = Number(delta);
-    const current = Number.isFinite(user.balance) ? user.balance : 0;
-    if (!Number.isFinite(d)) return current;
-    user.balance = Math.min(MAX_KEYS, Math.max(0, Math.round((current + d) * 100) / 100));
+    if (Number.isFinite(d) && d !== 0) {
+      this.updateTLBalance(userId, d * 34);
+    }
+    user.balance = 0;
     saveDb();
     notifyChange(userId);
-    return user.balance;
+    return 0;
   },
 
   // Modify Turkish Liras Balance (₺ TL)
@@ -441,53 +453,11 @@ module.exports = {
     return user.tlBalance;
   },
 
-  // Convert TL to Key/Case Balance (20 TL = 1 Anahtar) — Max 1000 Anahtar Sınırı
+  // Convert TL to Key/Case Balance — Disabled since cases open with TL
   convertTLToCaseBalance(userId, count) {
-    const user = this.getUserById(userId);
-    if (!user) return { success: false, message: 'Kullanıcı bulunamadı.' };
-
-    const currentBalance = Number.isFinite(user.balance) ? user.balance : 0;
-    const spaceLeft = Math.max(0, Math.floor(MAX_KEYS - currentBalance));
-    if (spaceLeft <= 0) {
-      return {
-        success: false,
-        message: 'Zaten maksimum 1.000 anahtar sınırındasınız! Daha fazla anahtar alamazsınız.'
-      };
-    }
-
-    const caseCount = Math.floor(Number(count));
-    if (!Number.isSafeInteger(caseCount) || caseCount <= 0) {
-      return { success: false, message: 'Geçersiz anahtar miktarı.' };
-    }
-
-    if (caseCount > spaceLeft) {
-      return {
-        success: false,
-        message: `Maksimum 1.000 anahtar sınırını aşamazsınız! En fazla ${spaceLeft} anahtar daha alabilirsiniz.`
-      };
-    }
-
-    const keyPrice = module.exports.KEY_PRICE_TL || 70;
-    const requiredTL = caseCount * keyPrice;
-    const currentTL = Number.isFinite(user.tlBalance) ? user.tlBalance : 0;
-    if (currentTL < requiredTL) {
-      return {
-        success: false,
-        message: `Yetersiz TL bakiyesi! ${caseCount} anahtar almak için ₺${requiredTL} gerekiyor. Mevcut TL: ₺${currentTL}`
-      };
-    }
-
-    user.tlBalance = Math.round((currentTL - requiredTL) * 100) / 100;
-    user.balance = Math.min(MAX_KEYS, currentBalance + caseCount);
-    saveDb();
-    notifyChange(userId);
-
     return {
-      success: true,
-      convertedCases: caseCount,
-      costTL: requiredTL,
-      newTL: user.tlBalance,
-      newBalance: user.balance
+      success: false,
+      message: 'Kasalar artık doğrudan TL bakiyenizle açılmaktadır, anahtara gerek yoktur!'
     };
   },
 

@@ -241,13 +241,14 @@ setInterval(() => {
     for (const [socketId, session] of activeSockets.entries()) {
       if (session.userId && !rewardedUserIds.has(session.userId)) {
         rewardedUserIds.add(session.userId);
-        const newBalance = db.updateBalance(session.userId, 1);
+        const newTLBalance = db.updateTLBalance(session.userId, 34);
         const targetSocket = io.sockets.sockets.get(socketId);
         if (targetSocket) {
           targetSocket.emit('credit:reward', {
-            added: 1,
-            newBalance,
-            message: 'Çevrimiçi ödülü: +1 Anahtar hesabınıza tanımlandı.'
+            added: 34,
+            newBalance: 0,
+            newTLBalance,
+            message: 'Çevrimiçi ödülü: +34 TL hesabınıza tanımlandı.'
           });
         }
       }
@@ -280,15 +281,15 @@ setInterval(() => {
       });
     } else {
       const winner = onlineUsers[Math.floor(Math.random() * onlineUsers.length)];
-      const newBalance = db.updateBalance(winner.id, 50);
+      const newTLBalance = db.updateTLBalance(winner.id, 1700);
 
-      console.log(`[RAFFLE] Kazanan: "${winner.username}" (${onlineUsers.length} oyuncu arasından 50 Anahtar kazandı!)`);
+      console.log(`[RAFFLE] Kazanan: "${winner.username}" (${onlineUsers.length} oyuncu arasından 1.700 TL kazandı!)`);
 
       // Broadcast winner to all players
       io.emit('raffle:winner', {
         winnerId: winner.id,
         winnerUsername: winner.username,
-        prize: 50,
+        prize: 1700,
         playerCount: onlineUsers.length
       });
 
@@ -297,7 +298,7 @@ setInterval(() => {
         id: 'sys_raffle_' + Date.now(),
         userId: 'system',
         username: 'BÜYÜK ÇEKİLİŞ',
-        text: `🎉 TEBRİKLER! [${winner.username}], ${onlineUsers.length} çevrimiçi oyuncu arasından 50 ANAHTAR KAZANDI!`,
+        text: `🎉 TEBRİKLER! [${winner.username}], ${onlineUsers.length} çevrimiçi oyuncu arasından 1.700 TL KAZANDI!`,
         timestamp: Date.now(),
         isHighlight: true
       };
@@ -307,7 +308,7 @@ setInterval(() => {
       // Real-time balance update for winner
       for (const [sId, info] of activeSockets.entries()) {
         if (info.userId === winner.id) {
-          io.to(sId).emit('balance:update', { balance: newBalance });
+          io.to(sId).emit('balance:update', { balance: 0, tlBalance: newTLBalance });
         }
       }
     }
@@ -734,18 +735,18 @@ io.on('connection', (socket) => {
         tabId: cleanTab
       });
 
-      console.log(`[AUTH] Login success for user: "${user.username}" (Balance: ${user.balance}, Bonus: ${result.bonusGiven})`);
+      console.log(`[AUTH] Login success for user: "${user.username}" (TL: ${user.tlBalance}, Bonus: ${result.bonusGiven})`);
 
       socket.emit('auth:success', {
         user: {
           id: user.id,
           username: user.username,
-          balance: user.balance,
+          balance: 0,
           tlBalance: user.tlBalance !== undefined ? user.tlBalance : 0,
           inventory: user.inventory
         },
         cases: CASES,
-        keyPriceTL: KEY_PRICE_TL,
+        keyPriceTL: 34,
         isNewHwid: result.isNewHwid,
         bonusGiven: result.bonusGiven,
         luckEvent,
@@ -784,13 +785,14 @@ io.on('connection', (socket) => {
       return socket.emit('case:error', { message: 'Bu kasa şu anda açılamıyor.' });
     }
 
-    // Validate balance
-    if (!Number.isFinite(user.balance) || user.balance < caseCost) {
-      return socket.emit('case:error', { message: `Yetersiz anahtar! Bu kasa için ${caseCost} anahtar gerekiyor.` });
+    // Validate TL balance
+    const currentTL = Number.isFinite(user.tlBalance) ? user.tlBalance : 0;
+    if (currentTL < caseCost) {
+      return socket.emit('case:error', { message: `Yetersiz bakiye! Bu kasa için ${caseCost} TL gerekiyor (Mevcut bakiyeniz: ₺${currentTL.toLocaleString()}).` });
     }
 
     // Deduct cost
-    db.updateBalance(user.id, -caseCost);
+    db.updateTLBalance(user.id, -caseCost);
 
     // Check if luck event is currently active on this case
     const isBoosted = luckEvent.active && luckEvent.caseId === caseId;
@@ -816,7 +818,7 @@ io.on('connection', (socket) => {
       item: savedItem,
       winningIndex,
       strip,
-      newBalance: user.balance,
+      newBalance: 0,
       newTLBalance: user.tlBalance || 0,
       isBoosted
     });
@@ -1087,20 +1089,8 @@ io.on('connection', (socket) => {
 
   // Wallet: Convert TL to Kasa Balance
   socket.on('wallet:convert_tl', (payload) => {
-    const session = activeSockets.get(socket.id);
-    if (!session) return socket.emit('session:lost');
-
-    const caseCount = payload && payload.caseCount;
-    const res = db.convertTLToCaseBalance(session.userId, caseCount);
-    if (!res.success) {
-      return socket.emit('wallet:error', { message: res.message });
-    }
-
-    socket.emit('wallet:converted', {
-      convertedCases: res.convertedCases,
-      costTL: res.costTL,
-      newTL: res.newTL,
-      newBalance: res.newBalance
+    socket.emit('wallet:error', {
+      message: 'Kasalar artık doğrudan TL bakiyenizle açılmaktadır, anahtara gerek yoktur!'
     });
   });
 
@@ -1184,28 +1174,26 @@ io.on('connection', (socket) => {
 
     const addTL = Math.min(100000000, Math.max(0, Math.floor(Number(tlAmount) || 0)));
     const addCase = Math.min(1000, Math.max(0, Math.floor(Number(caseAmount) || 0)));
+    const totalAddTL = addTL + (addCase * 34);
 
-    if (addTL > 0) {
-      db.updateTLBalance(targetUser.id, addTL);
-    }
-    if (addCase > 0) {
-      db.updateBalance(targetUser.id, addCase);
+    if (totalAddTL > 0) {
+      db.updateTLBalance(targetUser.id, totalAddTL);
     }
 
     // Real-time broadcast balance update to target user
     for (const [sId, info] of activeSockets.entries()) {
       if (info.userId === targetUser.id) {
         io.to(sId).emit('balance:update', {
-          balance: targetUser.balance,
+          balance: 0,
           tlBalance: targetUser.tlBalance || 0
         });
       }
     }
 
     socket.emit('admin:success', {
-      message: `"${targetUser.username}" kullanıcısına +₺${addTL.toLocaleString()} TL ve +${addCase} Anahtar tanımlandı!`,
+      message: `"${targetUser.username}" kullanıcısına +₺${totalAddTL.toLocaleString()} TL bakiye tanımlandı!`,
       targetUsername: targetUser.username,
-      newBalance: targetUser.balance,
+      newBalance: 0,
       newTLBalance: targetUser.tlBalance
     });
   });

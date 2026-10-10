@@ -281,9 +281,10 @@ function setupEventListeners() {
         showLoginError('Kasa açabilmek için lütfen giriş yapın.');
         return;
       }
-      const cost = selectedCase.cost || 1;
-      if (currentUser.balance < cost) {
-        showInAppToast(`Yetersiz anahtar! Bu kasa için ${cost} anahtar gerekiyor (Mevcut: ${currentUser.balance}).`, false);
+      const cost = selectedCase.cost || 34;
+      const currentTL = currentUser && currentUser.tlBalance !== undefined ? currentUser.tlBalance : 0;
+      if (currentTL < cost) {
+        showInAppToast(`Yetersiz bakiye! Bu kasa için ${cost} TL gerekiyor (Mevcut: ₺${currentTL.toLocaleString()}).`, false);
         const walletModal = document.getElementById('walletModal');
         if (walletModal) {
           updateBalanceUI();
@@ -309,7 +310,7 @@ function setupEventListeners() {
           btnOpenCase.disabled = false;
           const btnText = document.getElementById('openCurrentCaseBtnText');
           if (btnText && selectedCase) {
-            btnText.textContent = `KASAYI AÇ (${selectedCase.cost || 1} ANAHTAR)`;
+            btnText.textContent = `KASAYI AÇ (${selectedCase.cost || 34} TL)`;
           }
           showInAppToast('Sunucudan yanıt alınamadı. İşlem iptal edildi.', false);
         }
@@ -699,7 +700,7 @@ function setupEventListeners() {
 
       setTimeout(() => {
         btnAdminGrantBalance.disabled = false;
-        btnAdminGrantBalance.innerHTML = '<i class="fa-solid fa-gift"></i> ANAHTARLARI YÜKLE';
+        btnAdminGrantBalance.innerHTML = '<i class="fa-solid fa-gift"></i> BAKİYEYİ YÜKLE';
       }, 600);
     });
   }
@@ -1134,15 +1135,16 @@ socket.on('credit_timer:tick', (data) => {
 
 socket.on('credit:reward', (data) => {
   if (currentUser) {
-    currentUser.balance = data.newBalance;
+    if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
+    if (data.newBalance !== undefined) currentUser.balance = data.newBalance;
     updateBalanceUI(currentUser.balance, currentUser.tlBalance);
     saveUserBackup(currentUser);
-    showInAppToast('+1 Anahtar eklendi! (1 dk çevrimiçi ödülü)', true);
+    showInAppToast(data.message || '+34 TL eklendi! (1 dk çevrimiçi ödülü)', true);
     try { window.soundEngine.playWin(); } catch(e) {}
   }
 });
 
-// 2.6. Automatic 10-Minute 50-Key Raffle Handlers
+// 2.6. Automatic 5-Minute 1.700 TL Raffle Handlers
 socket.on('raffle_timer:tick', (data) => {
   const rem = data.remainingSeconds !== undefined ? data.remainingSeconds : 0;
   const mins = Math.floor(rem / 60);
@@ -1154,12 +1156,13 @@ socket.on('raffle_timer:tick', (data) => {
 });
 
 socket.on('raffle:winner', (data) => {
+  const prize = Number(data.prize || 1700).toLocaleString();
   if (currentUser && currentUser.id === data.winnerId) {
-    showInAppToast(`🎉 TEBRİKLER! 50 Anahtar Çekilişini Kazandınız! (${data.playerCount} oyuncu arasından)`, true);
+    showInAppToast(`🎉 TEBRİKLER! ${prize} TL Çekilişini Kazandınız! (${data.playerCount} oyuncu arasından)`, true);
     try { window.soundEngine.playRareWin(); } catch(e) {}
     try { launchConfetti(); } catch(e) {}
   } else {
-    showInAppToast(`🎁 [${data.winnerUsername}] 50 Anahtar çekilişini kazandı!`, false);
+    showInAppToast(`🎁 [${data.winnerUsername}] ${prize} TL çekilişini kazandı!`, false);
   }
 });
 
@@ -1312,10 +1315,10 @@ socket.on('case:error', (data) => {
   clearTimeout(caseOpeningSafetyTimer);
   isSpinning = false;
   document.getElementById('btnOpenCurrentCase').disabled = false;
-  const cost = selectedCase ? (selectedCase.cost || 1) : 1;
+  const cost = selectedCase ? (selectedCase.cost || 34) : 34;
   const btnText = document.getElementById('openCurrentCaseBtnText');
   if (btnText) {
-    btnText.textContent = `KASAYI AÇ (${cost} ANAHTAR)`;
+    btnText.textContent = `KASAYI AÇ (${cost} TL)`;
   }
   showInAppToast(data.message || 'Kasa açılamadı.', false);
 });
@@ -1645,7 +1648,7 @@ function renderCases() {
       <h3 class="case-title">${c.name}</h3>
       <p class="case-subtitle">${c.subtitle}</p>
       <button class="btn-open-case" data-id="${c.id}" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); display: flex; align-items: center; justify-content: center; gap: 8px;">
-        <i class="fa-solid fa-magnifying-glass"></i> KASAYI İNCELE (${c.cost || 1} ANAHTAR)
+        <i class="fa-solid fa-magnifying-glass"></i> KASAYI İNCELE (${c.cost || 34} TL)
       </button>
     `;
 
@@ -1660,12 +1663,12 @@ function renderCases() {
 // Setup Opener View
 function openOpenerView(caseObj) {
   selectedCase = caseObj;
-  const cost = caseObj.cost || 1;
+  const cost = caseObj.cost || 34;
   document.getElementById('openerCaseTitle').textContent = caseObj.name;
-  document.getElementById('openerCasePrice').innerHTML = `Maliyet: <strong>${cost} Anahtar</strong> | İçerik: ${caseObj.items.length} Eşya`;
+  document.getElementById('openerCasePrice').innerHTML = `Maliyet: <strong>${cost} TL</strong> | İçerik: ${caseObj.items.length} Eşya`;
   const btnText = document.getElementById('openCurrentCaseBtnText');
   if (btnText) {
-    btnText.textContent = `KASAYI AÇ (${cost} ANAHTAR)`;
+    btnText.textContent = `KASAYI AÇ (${cost} TL)`;
   }
   
   // Render contents preview
@@ -1789,10 +1792,10 @@ function animateSpinner(strip, winningIndex, winningItem) {
   setTimeout(() => {
     isSpinning = false;
     document.getElementById('btnOpenCurrentCase').disabled = false;
-    const cost = selectedCase ? (selectedCase.cost || 1) : 1;
+    const cost = selectedCase ? (selectedCase.cost || 34) : 34;
     const btnText = document.getElementById('openCurrentCaseBtnText');
     if (btnText) {
-      btnText.textContent = `KASAYI AÇ (${cost} ANAHTAR)`;
+      btnText.textContent = `KASAYI AÇ (${cost} TL)`;
     }
 
     // Highlight winning card on the track
