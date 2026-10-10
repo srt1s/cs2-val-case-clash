@@ -1215,8 +1215,8 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_araxys_glitchpop",
-    "name": "Araxys Kasası",
-    "subtitle": "Sadece Araxys Koleksiyonu",
+    "name": "Yıldız Belası Kasası",
+    "subtitle": "Sadece Yıldız Belası Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-bug",
@@ -1225,7 +1225,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_araxys_bio_harvester",
-          "name": "Araxys Biyo Hasatçı",
+          "name": "Yıldız Belası Biyo Hasatçı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -1237,7 +1237,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_araxys_bio_atomizers",
-          "name": "Araxys Biyo Atomizör",
+          "name": "Yıldız Belası Biyo Atomizör",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -1249,7 +1249,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_araxys_vandal",
-          "name": "Araxys Vandal",
+          "name": "Yıldız Belası Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
@@ -1261,7 +1261,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_araxys_phantom",
-          "name": "Araxys Phantom",
+          "name": "Yıldız Belası Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
@@ -1273,7 +1273,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_araxys_operator",
-          "name": "Araxys Operator",
+          "name": "Yıldız Belası Operator",
           "weapon": "Operator",
           "game": "val",
           "rarity": "premium",
@@ -1285,7 +1285,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_araxys_guardian",
-          "name": "Araxys Guardian",
+          "name": "Yıldız Belası Guardian",
           "weapon": "Guardian",
           "game": "val",
           "rarity": "premium",
@@ -1297,7 +1297,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_araxys_sheriff",
-          "name": "Araxys Sheriff",
+          "name": "Yıldız Belası Sheriff",
           "weapon": "Sheriff",
           "game": "val",
           "rarity": "deluxe",
@@ -1309,7 +1309,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_araxys_bulldog",
-          "name": "Araxys Bulldog",
+          "name": "Yıldız Belası Bulldog",
           "weapon": "Bulldog",
           "game": "val",
           "rarity": "deluxe",
@@ -1321,7 +1321,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_araxys_outlaw",
-          "name": "Araxys Outlaw",
+          "name": "Yıldız Belası Outlaw",
           "weapon": "Outlaw",
           "game": "val",
           "rarity": "select",
@@ -1333,7 +1333,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_araxys_shorty",
-          "name": "Araxys Shorty",
+          "name": "Yıldız Belası Shorty",
           "weapon": "Shorty",
           "game": "val",
           "rarity": "select",
@@ -1346,8 +1346,8 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_glitchpop",
-    "name": "Glitchpop Kasası",
-    "subtitle": "Sadece Glitchpop Koleksiyonu",
+    "name": "Delipop Kasası",
+    "subtitle": "Sadece Delipop Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-gamepad",
@@ -1356,7 +1356,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_glitchpop_dagger",
-          "name": "Glitchpop Hançeri",
+          "name": "Delipop Hançeri",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -1368,7 +1368,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_glitchpop_axe",
-          "name": "Glitchpop Baltası",
+          "name": "Delipop Baltası",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -1380,7 +1380,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_glitchpop_vandal",
-          "name": "Glitchpop Vandal",
+          "name": "Delipop Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
@@ -1392,7 +1392,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_glitchpop_phantom",
-          "name": "Glitchpop Phantom",
+          "name": "Delipop Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
@@ -1404,7 +1404,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_glitchpop_operator",
-          "name": "Glitchpop Operator",
+          "name": "Delipop Operator",
           "weapon": "Operator",
           "game": "val",
           "rarity": "premium",
@@ -1416,7 +1416,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_glitchpop_odin",
-          "name": "Glitchpop Odin",
+          "name": "Delipop Odin",
           "weapon": "Odin",
           "game": "val",
           "rarity": "premium",
@@ -1428,7 +1428,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_glitchpop_judge",
-          "name": "Glitchpop Judge",
+          "name": "Delipop Judge",
           "weapon": "Judge",
           "game": "val",
           "rarity": "deluxe",
@@ -1440,7 +1440,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_glitchpop_bulldog",
-          "name": "Glitchpop Bulldog",
+          "name": "Delipop Bulldog",
           "weapon": "Bulldog",
           "game": "val",
           "rarity": "deluxe",
@@ -1452,7 +1452,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_glitchpop_frenzy",
-          "name": "Glitchpop Frenzy",
+          "name": "Delipop Frenzy",
           "weapon": "Frenzy",
           "game": "val",
           "rarity": "select",
@@ -1464,7 +1464,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_glitchpop_classic",
-          "name": "Glitchpop Classic",
+          "name": "Delipop Classic",
           "weapon": "Classic",
           "game": "val",
           "rarity": "select",
@@ -1596,8 +1596,8 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_chaos_singularity",
-    "name": "Tekillik Kasası",
-    "subtitle": "Sadece Tekillik Koleksiyonu",
+    "name": "Anomali Kasası",
+    "subtitle": "Sadece Anomali Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-meteor",
@@ -1606,7 +1606,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_singularity_knife",
-          "name": "Tekillik Bıçağı",
+          "name": "Anomali Bıçağı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -1618,7 +1618,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_singularity_butterfly_knife",
-          "name": "Tekillik Kelebek Bıçağı",
+          "name": "Anomali Kelebek Bıçağı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -1630,7 +1630,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_singularity_vandal",
-          "name": "Tekillik Vandal",
+          "name": "Anomali Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
@@ -1642,7 +1642,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_singularity_phantom",
-          "name": "Tekillik Phantom",
+          "name": "Anomali Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
@@ -1654,7 +1654,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_singularity_sheriff",
-          "name": "Tekillik Sheriff",
+          "name": "Anomali Sheriff",
           "weapon": "Sheriff",
           "game": "val",
           "rarity": "premium",
@@ -1666,7 +1666,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_singularity_spectre",
-          "name": "Tekillik Spectre",
+          "name": "Anomali Spectre",
           "weapon": "Spectre",
           "game": "val",
           "rarity": "premium",
@@ -1678,7 +1678,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_singularity_ares",
-          "name": "Tekillik Ares",
+          "name": "Anomali Ares",
           "weapon": "Ares",
           "game": "val",
           "rarity": "deluxe",
@@ -1690,7 +1690,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_singularity_ghost",
-          "name": "Tekillik Ghost",
+          "name": "Anomali Ghost",
           "weapon": "Ghost",
           "game": "val",
           "rarity": "select",
@@ -2238,8 +2238,8 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_magepunk",
-    "name": "Büyücüpunk Kasası",
-    "subtitle": "Sadece Büyücüpunk Koleksiyonu",
+    "name": "Sihirpunk Kasası",
+    "subtitle": "Sadece Sihirpunk Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-bolt",
@@ -2248,7 +2248,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_electroblade",
-          "name": "Büyücüpunk Elektro Bıçağı",
+          "name": "Sihirpunk Elektro Bıçağı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -2260,7 +2260,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_shock_gauntlet",
-          "name": "Büyücüpunk Şok Eldiveni",
+          "name": "Sihirpunk Şok Eldiveni",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -2272,7 +2272,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_vandal",
-          "name": "Büyücüpunk Vandal",
+          "name": "Sihirpunk Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
@@ -2284,7 +2284,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_phantom",
-          "name": "Büyücüpunk Phantom",
+          "name": "Sihirpunk Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
@@ -2296,7 +2296,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_operator",
-          "name": "Büyücüpunk Operator",
+          "name": "Sihirpunk Operator",
           "weapon": "Operator",
           "game": "val",
           "rarity": "premium",
@@ -2308,7 +2308,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_guardian",
-          "name": "Büyücüpunk Guardian",
+          "name": "Sihirpunk Guardian",
           "weapon": "Guardian",
           "game": "val",
           "rarity": "premium",
@@ -2320,7 +2320,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_marshal",
-          "name": "Büyücüpunk Marshal",
+          "name": "Sihirpunk Marshal",
           "weapon": "Marshal",
           "game": "val",
           "rarity": "premium",
@@ -2332,7 +2332,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_sheriff",
-          "name": "Büyücüpunk Sheriff",
+          "name": "Sihirpunk Sheriff",
           "weapon": "Sheriff",
           "game": "val",
           "rarity": "deluxe",
@@ -2344,7 +2344,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_spectre",
-          "name": "Büyücüpunk Spectre",
+          "name": "Sihirpunk Spectre",
           "weapon": "Spectre",
           "game": "val",
           "rarity": "deluxe",
@@ -2356,7 +2356,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_ares",
-          "name": "Büyücüpunk Ares",
+          "name": "Sihirpunk Ares",
           "weapon": "Ares",
           "game": "val",
           "rarity": "select",
@@ -2368,7 +2368,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_magepunk_ghost",
-          "name": "Büyücüpunk Ghost",
+          "name": "Sihirpunk Ghost",
           "weapon": "Ghost",
           "game": "val",
           "rarity": "select",
@@ -2381,8 +2381,8 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_sovereign",
-    "name": "Hükümdar Kasası",
-    "subtitle": "Sadece Hükümdar Koleksiyonu",
+    "name": "Fatih Kasası",
+    "subtitle": "Sadece Fatih Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-crown",
@@ -2391,7 +2391,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_sovereign_sword",
-          "name": "Hükümdar Kılıcı",
+          "name": "Fatih Kılıcı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -2403,7 +2403,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_sovereign_phantom",
-          "name": "Hükümdar Phantom",
+          "name": "Fatih Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
@@ -2415,7 +2415,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_sovereign_guardian",
-          "name": "Hükümdar Guardian",
+          "name": "Fatih Guardian",
           "weapon": "Guardian",
           "game": "val",
           "rarity": "exclusive",
@@ -2427,7 +2427,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_sovereign_marshal",
-          "name": "Hükümdar Marshal",
+          "name": "Fatih Marshal",
           "weapon": "Marshal",
           "game": "val",
           "rarity": "premium",
@@ -2439,7 +2439,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_sovereign_odin",
-          "name": "Hükümdar Odin",
+          "name": "Fatih Odin",
           "weapon": "Odin",
           "game": "val",
           "rarity": "premium",
@@ -2451,7 +2451,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_sovereign_judge",
-          "name": "Hükümdar Judge",
+          "name": "Fatih Judge",
           "weapon": "Judge",
           "game": "val",
           "rarity": "deluxe",
@@ -2463,7 +2463,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_sovereign_ghost",
-          "name": "Hükümdar Ghost",
+          "name": "Fatih Ghost",
           "weapon": "Ghost",
           "game": "val",
           "rarity": "deluxe",
@@ -2475,7 +2475,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_sovereign_frenzy",
-          "name": "Hükümdar Frenzy",
+          "name": "Fatih Frenzy",
           "weapon": "Frenzy",
           "game": "val",
           "rarity": "select",
@@ -2487,7 +2487,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_sovereign_stinger",
-          "name": "Hükümdar Stinger",
+          "name": "Fatih Stinger",
           "weapon": "Stinger",
           "game": "val",
           "rarity": "select",
@@ -2631,8 +2631,8 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_neo_frontier",
-    "name": "Yeni Sınır Kasası",
-    "subtitle": "Sadece Yeni Sınır Koleksiyonu",
+    "name": "Seri Tetik Kasası",
+    "subtitle": "Sadece Seri Tetik Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-hat-cowboy",
@@ -2641,7 +2641,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neo_frontier_axe",
-          "name": "Yeni Sınır Baltası",
+          "name": "Seri Tetik Baltası",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -2653,7 +2653,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neo_frontier_lasso",
-          "name": "Yeni Sınır Kementi",
+          "name": "Seri Tetik Kementi",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -2665,7 +2665,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neo_frontier_vandal",
-          "name": "Yeni Sınır Vandal",
+          "name": "Seri Tetik Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
@@ -2677,7 +2677,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neo_frontier_phantom",
-          "name": "Yeni Sınır Phantom",
+          "name": "Seri Tetik Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
@@ -2689,7 +2689,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neo_frontier_marshal",
-          "name": "Yeni Sınır Marshal",
+          "name": "Seri Tetik Marshal",
           "weapon": "Marshal",
           "game": "val",
           "rarity": "premium",
@@ -2701,7 +2701,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neo_frontier_sheriff",
-          "name": "Yeni Sınır Sheriff",
+          "name": "Seri Tetik Sheriff",
           "weapon": "Sheriff",
           "game": "val",
           "rarity": "premium",
@@ -2713,7 +2713,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neo_frontier_odin",
-          "name": "Yeni Sınır Odin",
+          "name": "Seri Tetik Odin",
           "weapon": "Odin",
           "game": "val",
           "rarity": "deluxe",
@@ -2725,7 +2725,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_neo_frontier_shorty",
-          "name": "Yeni Sınır Shorty",
+          "name": "Seri Tetik Shorty",
           "weapon": "Shorty",
           "game": "val",
           "rarity": "select",
@@ -3416,8 +3416,8 @@ window.INITIAL_CASES = [
   },
   {
     "id": "val_mystbloom",
-    "name": "Sisçiçeği Kasası",
-    "subtitle": "Sadece Sisçiçeği Koleksiyonu",
+    "name": "Sırçiçeği Kasası",
+    "subtitle": "Sadece Sırçiçeği Koleksiyonu",
     "game": "val",
     "cost": 1,
     "icon": "fa-spa",
@@ -3426,7 +3426,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_kunai",
-          "name": "Sisçiçeği Kunai",
+          "name": "Sırçiçeği Kunai",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -3438,7 +3438,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_fanblade",
-          "name": "Sisçiçeği Yelpaze Bıçağı",
+          "name": "Sırçiçeği Yelpaze Bıçağı",
           "weapon": "Melee",
           "game": "val",
           "rarity": "knife",
@@ -3450,7 +3450,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_vandal",
-          "name": "Sisçiçeği Vandal",
+          "name": "Sırçiçeği Vandal",
           "weapon": "Vandal",
           "game": "val",
           "rarity": "exclusive",
@@ -3462,7 +3462,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_phantom",
-          "name": "Sisçiçeği Phantom",
+          "name": "Sırçiçeği Phantom",
           "weapon": "Phantom",
           "game": "val",
           "rarity": "exclusive",
@@ -3474,7 +3474,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_operator",
-          "name": "Sisçiçeği Operator",
+          "name": "Sırçiçeği Operator",
           "weapon": "Operator",
           "game": "val",
           "rarity": "premium",
@@ -3486,7 +3486,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_sheriff",
-          "name": "Sisçiçeği Sheriff",
+          "name": "Sırçiçeği Sheriff",
           "weapon": "Sheriff",
           "game": "val",
           "rarity": "premium",
@@ -3498,7 +3498,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_ares",
-          "name": "Sisçiçeği Ares",
+          "name": "Sırçiçeği Ares",
           "weapon": "Ares",
           "game": "val",
           "rarity": "deluxe",
@@ -3510,7 +3510,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_judge",
-          "name": "Sisçiçeği Judge",
+          "name": "Sırçiçeği Judge",
           "weapon": "Judge",
           "game": "val",
           "rarity": "deluxe",
@@ -3522,7 +3522,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_ghost",
-          "name": "Sisçiçeği Ghost",
+          "name": "Sırçiçeği Ghost",
           "weapon": "Ghost",
           "game": "val",
           "rarity": "select",
@@ -3534,7 +3534,7 @@ window.INITIAL_CASES = [
       {
         "skin": {
           "id": "val_mystbloom_outlaw",
-          "name": "Sisçiçeği Outlaw",
+          "name": "Sırçiçeği Outlaw",
           "weapon": "Outlaw",
           "game": "val",
           "rarity": "select",
