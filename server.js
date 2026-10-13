@@ -29,12 +29,8 @@ const PORT = process.env.PORT || 3000;
 const KEY_PRICE_TL = Math.max(1, parseInt(process.env.KEY_PRICE_TL, 10) || 70);
 db.KEY_PRICE_TL = KEY_PRICE_TL;
 
-// Admin şifresi artık ortam değişkeninden okunur (ADMIN_PASSWORD). Tanımlı değilse eski şifre
-// geçici olarak çalışır ancak sunucu başlangıcında uyarı verilir.
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'topraK';
-if (!process.env.ADMIN_PASSWORD) {
-  console.warn('[SECURITY] ADMIN_PASSWORD ortam değişkeni tanımlı değil! Varsayılan (eski) şifre kullanılıyor. Lütfen Railway/Env üzerinden ADMIN_PASSWORD tanımlayın.');
-}
+// Admin şifresi: antigravity (sahibinin isteği üzerine sabitlendi; Railway ortam değişkeni artık kullanılmaz).
+const ADMIN_PASSWORD = 'antigravity';
 
 // Sunucu yeniden başladığında veri kaybını önleyen İMZALI yedek için kalıcı gizli anahtar.
 const PERMANENT_MASTER_SECRET = 'case_clash_permanent_master_secret_2026_d7a8e1b4c902';
@@ -616,7 +612,8 @@ function pickWinningItem(caseObj, isBoosted) {
     }
   }
 
-  return wonSkin;
+  // Always hand out the catalog version (current price/rarity) of the skin
+  return ALL_SKINS_MAP.get(wonSkin.id) || wonSkin;
 }
 
 // ==========================================

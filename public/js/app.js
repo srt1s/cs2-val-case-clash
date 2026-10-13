@@ -1851,6 +1851,7 @@ function getRarityColor(rarity) {
     case 'premium': return '#d32ce6';
     case 'restricted':
     case 'deluxe': return '#8847ff';
+    case 'standard': return '#64748b';
     default: return '#4b69ff';
   }
 }
