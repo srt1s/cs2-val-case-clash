@@ -12,6 +12,7 @@ let marketListings = [];
 let onlinePlayers = [];
 let lastOpenedItem = null;
 let currentModalItem = null;
+let pendingWonItem = null;
 let selectedInventoryIds = new Set();
 let isSpinning = false;
 let caseOpeningSafetyTimer = null;
@@ -1301,19 +1302,23 @@ socket.on('rare_drop:broadcast', (data) => {
 socket.on('case:result', (data) => {
   clearTimeout(caseOpeningSafetyTimer);
   lastOpenedItem = data.item;
+  pendingWonItem = data.item;
   currentUser.balance = data.newBalance;
   if (data.newTLBalance !== undefined) currentUser.tlBalance = data.newTLBalance;
-  currentUser.inventory.push(data.item);
+
+  // Bakiye anında güncellenir (kasa ücreti düşer), fakat kazanılan skin
+  // rulet animasyonu tamamen bitene kadar envantere eklenmez ve envanter rozeti artmaz!
   updateBalanceUI(currentUser.balance, currentUser.tlBalance);
   saveUserBackup(currentUser);
 
-  // Animate horizontal spinner
+  // Animate horizontal spinner (Skin animasyon bittiğinde setTimeout içinde envantere eklenecektir)
   animateSpinner(data.strip, data.winningIndex, data.item);
 });
 
 socket.on('case:error', (data) => {
   clearTimeout(caseOpeningSafetyTimer);
   isSpinning = false;
+  pendingWonItem = null;
   document.getElementById('btnOpenCurrentCase').disabled = false;
   const cost = selectedCase ? (selectedCase.cost || 34) : 34;
   const btnText = document.getElementById('openCurrentCaseBtnText');
@@ -1797,6 +1802,21 @@ function animateSpinner(strip, winningIndex, winningItem) {
     if (btnText) {
       btnText.textContent = `KASAYI AÇ (${cost} TL)`;
     }
+
+    // Rulet animasyonu bitti: Kazanılan eşyayı şimdi resmi olarak envantere ekle
+    const itemToAdd = winningItem || pendingWonItem;
+    if (currentUser && Array.isArray(currentUser.inventory) && itemToAdd) {
+      const alreadyInInventory = currentUser.inventory.some(i => i.instanceId === itemToAdd.instanceId);
+      if (!alreadyInInventory) {
+        currentUser.inventory.push(itemToAdd);
+      }
+      updateBalanceUI(currentUser.balance, currentUser.tlBalance);
+      saveUserBackup(currentUser);
+      if (typeof renderInventory === 'function') {
+        renderInventory();
+      }
+    }
+    pendingWonItem = null;
 
     // Highlight winning card on the track
     if (track.children[winningIndex]) {
@@ -2828,5 +2848,16 @@ socket.on('upgrade:error', (data) => {
 // Initialize upgrader events when page is loaded
 document.addEventListener('DOMContentLoaded', () => {
   initUpgraderEvents();
+});
+
+// Safety safeguard: If page closes or unloads mid-spin, ensure pending won item is preserved in local backup
+window.addEventListener('beforeunload', () => {
+  if (pendingWonItem && currentUser && Array.isArray(currentUser.inventory)) {
+    const alreadyIn = currentUser.inventory.some(i => i.instanceId === pendingWonItem.instanceId);
+    if (!alreadyIn) {
+      currentUser.inventory.push(pendingWonItem);
+    }
+    saveUserBackup(currentUser);
+  }
 });
 
